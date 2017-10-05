@@ -15,8 +15,8 @@ return [
     */
 
     'mailgun' => [
-        'domain' => 'mg.da4.info',
-        'secret' => 'key-3c7d0322f97e0ebb6a9a1cbc415854e7',
+        'domain' => '184.173.153.201',
+        'secret' => 'key-eeb8c24900b1deb54a21b831e2a01cbb',
     ],
 
     'ses' => [

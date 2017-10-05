@@ -1,81 +1,57 @@
-<div class="page-signin" ng-controller="AuthCtrl">
-    <div class="signin-header">
-        <section class="logo text-center">
-			<div class="wrap-logo">
-				<a href="/">
-					<img src="/img/logo.png" alt="BugGira" />
-				</a>
-			</div>
-        </section>
-    </div>
+<div class="login-wrapper" ng-controller="AuthCtrl">
+    <!--div class="back-link">
+        <a href="/" class="btn btn-add">Back to Dashboard</a>
+    </div-->
 
-    <div class="signin-body">
-        <div class="container">
-			<div class="row">
-				<div class="col-md-12">
-					<div class="email-send text-center" ng-show="visible" ng-model="visible">
-					  	<div uib-alert ng-class="'alert-' + (alerts.type || 'info')">
-					  		<p>
-					  			{{ __("Your account isn't active. You should confirm your registration from the activation letter. If you didn't receive the letter you can resend it") }}
-					  		</p>
-					  		<button class="btn btn-info" ng-click="resend()">{{ __("Resend Confirmation Letter") }}</button>
-				  		</div>
-					</div>	
-				</div>
-				<div class="col-md-12">
-					<div class="panel panel-default">
-						<div class="form-container">
-							<form class="form-horizontal" name="form" method="post" novalidate="novalidate">
-								<fieldset>
-									<div class="form-group">
-										<div class="input-group input-group-first">
-											<span class="input-group-addon">
-												<span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
-											</span>
-											<input 	type="email"
-													name="users_email"
-													class="form-control input-lg"
-													placeholder="{{ __('Email') }}"
-													ng-model="auth.users_email" 
-													required="required"
-												   />
-										</div>
-									</div>
-									
-									<div class="form-group">
-										<div class="input-group">
-											<span class="input-group-addon">
-												<span class="glyphicon glyphicon-lock" aria-hidden="true"></span>
-											</span>
-											<input type="password"
-												   name="password"
-												   class="form-control input-lg"
-												   placeholder="{{ __('Password') }}"
-												   ng-model="auth.password"
-												   required="required"
-												   />
-										</div>
-									</div>
-									
-									<div class="form-group form-group_margin">
-										<button 
-										   type="submit"
-										   class="btn btn-success btn-lg btn-block text-center"
-										   ng-click="signin()">{{ __('Sign in') }}</button>
-									</div>
-								</fieldset>
-							</form>
-							
-							<section class="additional-info">
-								<p class="text-right">
-									<a href="/auth/recovery" class="additional-info_password">{{ __('Forgot your password?') }}</a>
-								</p>
-							</section>
-						</div>
-					</div>
-				</div>
-        	</div>
-    	</div>
-	</div>
+    <div class="container-center">
+	    <div class="login-area">
+	        <div class="panel panel-bd panel-custom">
+	            <div class="panel-heading">
+	                <div class="view-header">
+	                    <div class="header-icon">
+	                        <i class="pe-7s-unlock"></i>
+	                    </div>
+
+	                    <div class="header-title">
+	                        <h3>Sign in</h3>
+	                        <small><strong>Please enter your credentials to login.</strong></small>
+	                    </div>
+	                </div>
+	            </div>
+
+	            <div class="panel-body">
+	                <form id="loginForm" name="form" method="post" novalidate="novalidate">
+	                    <div class="form-group">
+	                        <label class="control-label" for="users_email">Email</label>
+	                        <input  type="email"
+									name="users_email"
+									class="form-control input-lg"
+									placeholder="{{ __('Email') }}"
+									ng-model="auth.users_email"
+									required="required"
+									class="form-control" />
+	                        <span class="help-block small">Your unique username to app</span>
+	                    </div>
+
+	                    <div class="form-group">
+	                        <label class="control-label" for="password">Password</label>
+	                        <input type="password"
+								   name="password"
+								   class="form-control input-lg"
+								   placeholder="{{ __('Password') }}"
+								   ng-model="auth.password"
+								   required="required"
+								   class="form-control" />
+	                        <span class="help-block small">Your strong password</span>
+	                    </div>
+
+	                    <div>
+	                        <button type="submit" class="btn btn-add" ng-click="signin()">{{ __('Sign in') }}</button>
+	                        <a href="/auth/signup/" class="btn btn-warning">Register</a>
+	                    </div>
+	                </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-					

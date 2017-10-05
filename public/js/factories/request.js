@@ -40,7 +40,7 @@
                         (callback)(data);
                     }
                 }, function (response) {
-                    
+
                 }, function (event) {
                     var progress = parseInt(100.0 * event.loaded / event.total);
                     if (percentsCallback)
