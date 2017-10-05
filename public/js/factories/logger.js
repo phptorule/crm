@@ -38,10 +38,9 @@
 					}
 				}
 
-                var data = JSON.parse(data.data);
-                if (data)
+                if (data.data)
                 {
-					return data;
+					return JSON.parse(data.data);
 				}
 				else
 				{

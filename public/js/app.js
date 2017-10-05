@@ -40,7 +40,7 @@
                     }
                 }
             };
-            
+
             $routeProvider.when(url, config);
             return $routeProvider;
         };
@@ -50,8 +50,8 @@
         });
 
         $routeProvider.when('/', {templateUrl: '/view/dashboard'});
-    }]); 
-})(); 
+    }]);
+})();
 
 ;
 

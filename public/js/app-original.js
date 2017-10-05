@@ -28,7 +28,7 @@
         'app.page',
         'app.table',
         'app.task',
-        'app.calendar',	
+        'app.calendar',
     ]);
 
 
@@ -37,7 +37,7 @@
 ;
 
 (function(){
-		
+
 	angular.module('app')
 		.directive('phoneInput', function($filter, $browser) {
 		return {
@@ -76,7 +76,7 @@
 
 		};
 	});
-	
+
 	angular.module('app')
 		.filter('tel', function () {
 		return function (tel) {
@@ -119,7 +119,7 @@
 
 		};
 	});
-	
+
 })()
 
 ;
@@ -159,7 +159,7 @@
 						}
 					}
 				};
-				
+
                 $routeProvider.when(url, config);
                 return $routeProvider;
             };
@@ -170,9 +170,9 @@
 
            $routeProvider
                 .when('/', {templateUrl: '/pub/pages/dashboard'});
-		}]); 
+		}]);
 
-})(); 
+})();
 
 ;
 
@@ -182,35 +182,33 @@
     angular.module('app')
         .controller('AppCtrl', [ '$scope', '$rootScope', '$window', '$http', '$timeout', 'logger', AppCtrl]); // overall control
 
-    
+
     function AppCtrl($scope, $rootScope, $window, $http, $timeout, logger) {
 		$scope.main = {
-            brand: 'Buggira',
+            brand: 'CRM',
             name: 'Lisa Doe' // those which use i18n directive will not be updated for now
         };
-		
+
 		$scope.user = {};
-		
+
 		$scope.init = function(){
 			$http.post("/api/users/user", {}).success(function(data){
 				$scope.user = data.result;
 			});
 		}
-		
-		
-		
+
 		$timeout(function(){
-			$scope.init();		
-		}, 2000);	
-		
-		
+			$scope.init();
+		}, 2000);
+
+
 		$scope.logout = function() {
 			$http.post("/api/users/signout", {}).success(function(data){
 				if(logger.check(data))
 				{
 					$timeout(function(){
 						$window.location.href = "/";
-					}, 2000);					
+					}, 2000);
 				}
 			});
 		}
@@ -274,7 +272,7 @@
 
     }
 
-})(); 
+})();
 ;
 (function () {
     'use strict'
@@ -364,7 +362,7 @@
     function i18nFilter(localize) {
         return function(input) {
             return localize.getLocalizedString(input);
-        };        
+        };
     }
 
     function i18nDirective(localize) {
@@ -463,13 +461,13 @@
 
     }
 
-})(); 
+})();
 ;
 (function () {
     'use strict';
 
     angular.module('app.chart', []);
-})(); 
+})();
 ;
 (function () {
     'use strict';
@@ -1112,7 +1110,7 @@
                 content: "%p.0%, %s",
                 defaultTheme: false
             }
-        };        
+        };
     }
 
     function sparklineCtrl($scope) {
@@ -1202,11 +1200,11 @@
                 width: '150px',
                 height: '150px'
             }
-        };        
+        };
     }
 
 
-})(); 
+})();
 ;
 (function () {
     'use strict';
@@ -1232,12 +1230,12 @@
             var data, options, plot;
             data = scope.data;
             options = scope.options;
-            
+
             // console.log data
             // console.log options
 
-            plot = $.plot(ele[0], data, options);            
-        }        
+            plot = $.plot(ele[0], data, options);
+        }
     }
 
     function flotChartRealtime() {
@@ -1285,7 +1283,7 @@
                     }
                     return res;
                 }
-                return getRandomData;    
+                return getRandomData;
             }
 
             getRandomData1 = makeGetRandomData(data1, 28, 42);
@@ -1323,8 +1321,8 @@
             });
 
             update();
-         
-        }        
+
+        }
     }
 
     function sparkline() {
@@ -1357,17 +1355,17 @@
                 sparkResize = setTimeout(sparklineDraw, 200);
             });
 
-            sparklineDraw();           
-        }        
-    }    
+            sparklineDraw();
+        }
+    }
 
-})(); 
+})();
 ;
 (function () {
     'use strict';
 
     angular.module('app.ui.form', []);
-})(); 
+})();
 ;
 (function () {
     'use strict';
@@ -1504,7 +1502,7 @@
 
     }
 
-})(); 
+})();
 ;
 (function () {
     'use strict';
@@ -1521,17 +1519,17 @@
             restrict: 'A',
             link: function(scope, ele) {
                 ele.slider();
-            }            
+            }
         }
     }
-    
+
     // Dependency: https://github.com/grevory/bootstrap-file-input
     function uiFileUpload() {
         return {
             restrict: 'A',
             link: function(scope, ele) {
                 ele.bootstrapFileInput();
-            }            
+            }
         }
     }
 
@@ -1558,17 +1556,17 @@
             restrict: 'A',
             link: function(scope, ele) {
                 ele.steps()
-            }            
+            }
         }
     }
 
-})(); 
+})();
 ;
 (function () {
     'use strict';
 
     angular.module('app.ui.form.validation', []);
-})(); 
+})();
 ;
 (function () {
     'use strict';
@@ -1681,7 +1679,7 @@
 
     }
 
-})(); 
+})();
 ;
 (function () {
     'use strict';
@@ -1725,14 +1723,14 @@
         }
     }
 
-})(); 
+})();
 ;
 (function () {
     'use strict';
 
     angular.module('app.nav', []);
 
-})(); 
+})();
 ;
 (function () {
     'use strict';
@@ -1765,7 +1763,7 @@
                     $rootScope.$broadcast('nav:reset');
                 }
                 return e.preventDefault();
-            });            
+            });
         }
     }
 
@@ -1840,7 +1838,7 @@
                 clearTimeout(t);
                 t = setTimeout(updateClass, 300);
             });
-          
+
         }
     }
 
@@ -1903,18 +1901,18 @@
         function link(scope, ele, attrs) {
             ele.on('click', function() {
                 return $('#app').toggleClass('on-canvas');
-            });         
+            });
         }
     }
 
 
-})(); 
+})();
 ;
 (function () {
     'use strict';
 
     angular.module('app.page', []);
-})(); 
+})();
 ;
 (function () {
     'use strict';
@@ -1925,10 +1923,10 @@
 
     function invoiceCtrl($scope, $window) {
         var printContents, originalContents, popupWin;
-        
+
         $scope.printInvoice = function() {
             printContents = document.getElementById('invoice').innerHTML;
-            originalContents = document.body.innerHTML;        
+            originalContents = document.body.innerHTML;
             popupWin = window.open();
             popupWin.document.open();
             popupWin.document.write('<html><head><link rel="stylesheet" type="text/css" href="styles/main.css" /></head><body onload="window.print()">' + printContents + '</html>');
@@ -1937,13 +1935,13 @@
     }
 
     function authCtrl($scope, $window, $location, $http, $timeout, logger) {
-           
+
 			$scope.signin = function() {
 				if ( ! $scope.form.$error.required && ! $scope.form.$error.email)
 				{
 					var post_mas = {users_email: $scope.email,
 									users_password: $scope.password};
-					
+
 					$http.post("/api/users/signin", post_mas).success(function(data, status, headers, config) {
 						if (logger.check(data))
 						{
@@ -1951,18 +1949,18 @@
 								$window.location.href = "/";
 							}, 2000);
 						}
-						
+
 					});
 				}
             };
-			
-			
+
+
             $scope.signup = function() {
                 var post_mas = {
 						users_email: $scope.users_email,
 						users_password: $scope.users_password
 						};
-					
+
 					$http.post("/api/users/signup", post_mas).success(function(data, status, headers, config) {
 						if (logger.check(data))
 						{
@@ -1970,13 +1968,13 @@
 								$window.location.href = "/";
 							}, 2000);
 						}
-						
+
 					});
             }
 
             $scope.reset =  function() {
                 var post_mas = {recovery_email: $scope.recovery_email};
-					
+
 					$http.post("/api/users/recovery", post_mas).success(function(data, status, headers, config) {
 						if (logger.check(data))
 						{
@@ -1984,16 +1982,16 @@
 								$window.location.href = "/";
 							}, 2000);
 						}
-						
+
 					});
             }
 
             $scope.unlock =  function() {
                 $location.url('/')
-            }   
+            }
     }
 
-})(); 
+})();
 ;
 (function () {
     'use strict';
@@ -2043,16 +2041,16 @@
                 }
                 return addBg($location.path());
             });
-        }        
+        }
     }
- 
-})(); 
+
+})();
 ;
 (function () {
     'use strict';
 
     angular.module('app.table', []);
-})(); 
+})();
 ;
 (function () {
     'use strict';
@@ -2251,7 +2249,7 @@
         init();
     }
 
-})(); 
+})();
 ;
 (function () {
     'use strict';
@@ -2265,7 +2263,7 @@
 
     angular.module('app.task')
         .controller('taskCtrl', [ '$scope', 'taskStorage', 'filterFilter', '$rootScope', 'logger', taskCtrl]);
-        
+
     function taskCtrl($scope, taskStorage, filterFilter, $rootScope, logger) {
         var tasks;
 
@@ -2379,7 +2377,7 @@
         });
 
     }
-})(); 
+})();
 ;
 (function () {
     'use strict';
@@ -2406,7 +2404,7 @@
         }
     }
 
-})(); 
+})();
 ;
 (function () {
     'use strict';
@@ -2437,7 +2435,7 @@
             }
         }
     }
-})(); 
+})();
 ;
 (function () {
     'use strict';
@@ -2457,7 +2455,7 @@
         var d = date.getDate();
         var m = date.getMonth();
         var y = date.getFullYear();
-        
+
         /* event source that contains custom events on the scope */
         $scope.events = [
             {title: 'All Day Event',start: new Date(y, m, 1)},
@@ -2482,7 +2480,7 @@
         $scope.calEventsExt = {
              color: '#f00',
              textColor: 'yellow',
-             events: [ 
+             events: [
                     {type:'party',title: 'Lunch',start: new Date(y, m, d, 12, 0),end: new Date(y, m, d, 14, 0),allDay: false},
                     {type:'party',title: 'Lunch 2',start: new Date(y, m, d, 12, 0),end: new Date(y, m, d, 14, 0),allDay: false},
                     {type:'party',title: 'Click for Google',start: new Date(y, m, 28),end: new Date(y, m, 29),url: 'http://google.com/'}
@@ -2562,7 +2560,7 @@
     'use strict';
 
     angular.module('app.ui', []);
-})(); 
+})();
 ;
 (function () {
     'use strict';
@@ -2920,8 +2918,8 @@
         $interval($scope.GenerateMapMarkers, 2000);
 
     }
-    
-})(); 
+
+})();
 ;
 (function () {
     'use strict';
@@ -2964,7 +2962,7 @@
             };
 
             startTime();
-        }  
+        }
     }
 
     function uiNotCloseOnClick() {
@@ -3000,7 +2998,7 @@
         };
     }
 
-})(); 
+})();
 ;
 (function () {
     'use strict';
@@ -3071,7 +3069,7 @@
 
     angular.module('app.ui.map', []);
 
-})(); 
+})();
 ;
 (function () {
     'use strict';
@@ -3180,12 +3178,12 @@
                 }
             }
         };
-        
+
     }
 
 
 
-})(); 
+})();
 ;
 (function () {
     'use strict';
@@ -3208,4 +3206,4 @@
         }
     }
 
-})(); 
+})();
