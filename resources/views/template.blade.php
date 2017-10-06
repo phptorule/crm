@@ -71,7 +71,28 @@
                 </nav>
             </header>
 
-            <aside class="main-sidebar" >
+            <aside class="main-sidebar">
+                <div class="sidebar">
+                    <ul class="sidebar-menu">
+                        <li ng-class="{'active': activeSidebar()}">
+                            <a href="/">
+                                <i class="fa fa-tachometer"></i>
+                                <span>{{ __("Dashbaord") }}</span>
+                            </a>
+                        </li>
+
+                        <li ng-class="{'active': activeSidebar('teams')}">
+                            <a href="/teams/list">
+                                <i class="fa fa-users"></i>
+                                <span>{{ __("Teams") }}</span>
+                            </a>
+                        </li>
+
+                        <li class="nav-title" ng-show="sidebar.plugins.length">
+                            <span>{{ __("Plugins") }}</span>
+                        </li>
+                    </ul>
+                </div>
             </aside>
 
             <div class="content-wrapper">
