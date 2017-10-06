@@ -5130,3 +5130,22 @@ button.toast-close-button {
         width: 25em
     }
 }
+
+.accept_page .container-center {
+    max-width: 500px;
+    margin: 5% auto 0;
+}
+
+.accept_page .header-icon {
+    font-size: 50px;
+}
+
+.ui-map-scroll {
+    height: 200px;
+    overflow: auto;
+    margin: 20px 0 20px;
+}
+
+#loginForm .form-group:first-child {
+    margin-bottom: 30px;
+}
