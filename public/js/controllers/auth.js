@@ -115,6 +115,7 @@
 				{
 					$scope.invite = data;
 					$scope.inviteAlert = langs.get('You was invited into the team :team. To continue working with this team enter you personal data and click on Confirm button', {'team': $scope.invite.team.teams_name});
+					$scope.teams_name = $scope.invite.team.teams_name;
 					$scope.auth.users_email = $scope.invite.users_email;
 					$scope.auth.users_name = $scope.invite.users_name;
 				}
