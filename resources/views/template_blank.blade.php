@@ -17,7 +17,7 @@
         <link href="/theme/plugins/emojionearea/emojionearea.min.css" rel="stylesheet" type="text/css"/>
         <link href="/theme/plugins/monthly/monthly.css" rel="stylesheet" type="text/css"/>
         <link href="/css/app.css" rel="stylesheet" type="text/css"/>
-        <link rel="stylesheet" href="/css/app_old.css" />
+      	<link href="/theme/plugins/NotificationStyles/css/ns-style-attached.css" rel="stylesheet" type="text/css" />
     </head>
 
     <body data-ng-app="app" class="hold-transition sidebar-mini" data-ng-controller="AppCtrl" data-ng-init="token('{{ csrf_token() }}')">
@@ -34,6 +34,8 @@
         <script src="/js/factories/langs.js"></script>
         <script src="/js/helpers/plugins.js"></script>
         <script src="/js/controllers/auth.js"></script>
+        <script src="/theme/plugins/NotificationStyles/js/modernizr.custom.js" type="text/javascript"></script>
+      	<script src="/theme/plugins/NotificationStyles/js/notificationFx.js" type="text/javascript"></script>
     </body>
 </html>
 

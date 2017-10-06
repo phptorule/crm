@@ -8,6 +8,6 @@
 @endcomponent
 
 <p style="text-align: center">Thanks,
-	{{ config('app.name') }}
+	{{ config('app.name') }} team
 </p>
 @endcomponent
