@@ -5149,3 +5149,10 @@ button.toast-close-button {
 #loginForm .form-group:first-child {
     margin-bottom: 30px;
 }
+
+.nav.navbar-nav .nav-username {
+    color: #fff;
+    padding: 15px 5px;
+    font-size: 16px;
+    line-height: 26px;
+}

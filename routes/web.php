@@ -22,9 +22,9 @@ Route::get('/view/{filder}/{file?}/{param?}', function($folder, $file = '', $par
 Route::any('api/{unit}/{method}', 'RoutesController')->middleware('messages');
 
 Route::any('{catchall}', function() {
-	if (Auth::check()) {
-		return view('template');
-	} else {
+	if ( ! Auth::check() || Request::segment(1) == "auth" ) {
 		return view('template_blank');
+	} else {
+		return view('template');
 	}
 })->where('catchall', '(.*)');
