@@ -17,7 +17,8 @@
         <link href="/theme/plugins/emojionearea/emojionearea.min.css" rel="stylesheet" type="text/css"/>
         <link href="/theme/plugins/monthly/monthly.css" rel="stylesheet" type="text/css"/>
         <link href="/css/app.css" rel="stylesheet" type="text/css"/>
-        <link rel="stylesheet" href="/css/app_old.css" />
+        <link href="/css/app_old.css" rel="stylesheet" />
+        <link href="/theme/plugins/NotificationStyles/css/ns-style-attached.css" rel="stylesheet" type="text/css" />
     </head>
 
     <body data-ng-app="app" class="hold-transition sidebar-mini" data-ng-class="[{'nav-collapsed-min': admin.menu === 'collapsed'}, body_class]" data-ng-controller="AppCtrl" data-ng-init="token('{{ csrf_token() }}')" data-custom-page>
@@ -120,6 +121,7 @@
         <script src="/theme/plugins/monthly/monthly.js" type="text/javascript"></script>
         <script src="/js/custom.js" type="text/javascript"></script>
         <script src="/js/dashboard.js" type="text/javascript"></script>
+        <script src="/theme/plugins/NotificationStyles/js/notificationFx.js" type="text/javascript"></script>
 
         <!--<script>
             function dash() {

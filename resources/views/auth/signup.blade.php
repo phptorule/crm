@@ -52,12 +52,15 @@
 	                        </div>-->
 	                    </div>
 
-	                    <div>
-	                        <button type="submit"
-									class="btn btn-warning"
-									ng-click="signup()">{{ __('Register') }}
-							</button>
-	                        <a class="btn btn-add" href="/">Login</a>
+	                    <div ng-class="{'btn-load': request_sent}">
+		                    <div class="loading-text">
+		                        <button type="submit"
+										class="btn btn-warning"
+										ng-click="signup()">{{ __('Register') }}
+								</button>
+		                        <a class="btn btn-add" href="/">Login</a>
+		                    </div>
+		                    <i class="fa fa-spinner fa-pulse fa-3x fa-fw loading-icon"></i>
 	                    </div>
 	                </form>
                 </div>

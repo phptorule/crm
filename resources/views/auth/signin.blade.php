@@ -45,9 +45,15 @@
 	                        <span class="help-block small">Your strong password</span>
 	                    </div>
 
-	                    <div>
-	                        <button type="submit" class="btn btn-add" ng-click="signin()">{{ __('Sign in') }}</button>
-	                        <a href="/auth/signup/" class="btn btn-warning">Register</a>
+	                    <div ng-class="{'btn-load': request_sent}">
+	                    	<div class="loading-text">
+		                        <button type="submit"
+		                        		class="btn btn-add"
+		                        		ng-click="signin()">{{ __('Sign in') }}
+	                        	</button>
+		                        <a href="/auth/signup/" class="btn btn-warning">Register</a>
+	                   		</div>
+	                   		<i class="fa fa-spinner fa-pulse fa-3x fa-fw loading-icon"></i>
 	                    </div>
 	                </form>
                 </div>

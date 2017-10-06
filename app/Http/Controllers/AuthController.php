@@ -23,7 +23,7 @@ class AuthController extends Controller
             $auth = ['users_email'=>$post['users_email'], 'password' => $post['password'] ];
             if (Auth::validate($auth))
             {
-                $user = Users::where('users_email', $auth['users_email'])->first();                
+                $user = Users::where('users_email', $auth['users_email'])->first();
                 if (!empty($user->users_active))
                 {
                     Auth::attempt($auth);
@@ -31,11 +31,10 @@ class AuthController extends Controller
                 }
                 else
                 {
-                    $this->message(__('Your account isn\'t active'));                    
-                    $response['resend_letters'] = TRUE;                    
-                    return $response;                    
+                    $this->message(__('Your account isn\'t active'));
+                    $response['resend_letters'] = TRUE;
+                    return $response;
                 }
-                
             }
             else
             {
@@ -43,11 +42,11 @@ class AuthController extends Controller
             }
         }
         return FALSE;
-        
+
     }
-    
+
     public function signup($post = [])
-    {   
+    {
         $users_email = $post['users_email'];
         $password = $post['password'];
         $current = Users::where('users_email', $users_email)->first();
@@ -69,9 +68,9 @@ class AuthController extends Controller
             }
         }
     }
-    
+
     public function accept($post = [])
-    {        
+    {
         $users_name = $post['users_name'];
         $hash = $post['url'];
         $user = Users::whereRaw('MD5(users_id) = "'. $hash.'"')->where('users_active',0)->first();
@@ -89,15 +88,15 @@ class AuthController extends Controller
             return FALSE;
         }
     }
-    
+
     public function signout()
     {
-        Auth::logout();        
+        Auth::logout();
         return TRUE;
     }
-    
+
     public function recovery($post = [])
-    {   
+    {
         $users_email = $post['users_email'];
         $user = Users::whereRaw('LOWER(users_email) = "'.strtolower($users_email).'"')->first();
         if ($user)
@@ -117,10 +116,10 @@ class AuthController extends Controller
         }
         return $post;
     }
-    
+
     public function resend($post = [])
     {
-        $email = strtolower($post['users_email']);        
+        $email = strtolower($post['users_email']);
         $user = Users::whereRaw('LOWER(users_email) = "'.$email.'"')->first();
         if ($user && $this->activate($user))
         {
@@ -133,16 +132,16 @@ class AuthController extends Controller
             return FALSE;
         }
     }
-    
+
     private function activate($user)
     {
         $user->activate_link = url('/auth/accept', [md5($user->users_id)]);
-        try 
+        try
         {
             Mail::to($user->users_email)->send(new \App\Mail\UsersNewRegister($user));
             return TRUE;
-        } 
-        catch (Exception $ex) 
+        }
+        catch (Exception $ex)
         {
             return FALSE;
         }

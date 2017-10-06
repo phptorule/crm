@@ -14,6 +14,7 @@
 			error *= validate.check($scope.form.password, 'Password');
 			if (error)
 			{
+				$rootScope.request_sent = true;
 				request.send('/auth/signin', $scope.auth, function(data) {
 					if (data)
 					{
@@ -28,6 +29,10 @@
 							}, 2000);
 						}
 					}
+					else
+					{
+						$rootScope.request_sent = false;
+					}
 				});
 			}
 		};
@@ -40,19 +45,24 @@
 				$scope.visible = false;
 			}, 1000);
 		};
-			
+
         $scope.signup = function() {
 			var error = 1;
 			error *= validate.check($scope.form.users_email, 'Email');
 			error *= validate.check($scope.form.password, 'Password');
 			if (error)
 			{
+				$rootScope.request_sent = true;
 				request.send('/auth/signup', $scope.auth, function(data) {
 					if (data)
 					{
 						$timeout(function() {
 							$window.location.href = "/";
 						}, 2000);
+					}
+					else
+					{
+						$rootScope.request_sent = false;
 					}
 				});
 			}
@@ -73,7 +83,7 @@
 					}
 				});
 			}
-		};  
+		};
 
 		$scope.accept = function() {
 			var post_mas = {users_name: $scope.users_name};

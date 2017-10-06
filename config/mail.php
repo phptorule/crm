@@ -56,8 +56,8 @@ return [
     */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'no-reply@buggira.com'),
-        'name' => env('MAIL_FROM_NAME', 'BugGira - Project Manager'),
+        'address' => env('MAIL_FROM_ADDRESS', 'no-reply@crm.com'),
+        'name' => env('MAIL_FROM_NAME', 'CRM - Project Manager'),
     ],
 
     /*

@@ -4,7 +4,7 @@
         <section class="logo text-center">
             <div class="wrap-logo">
                 <a href="/">
-                    <img src="/img/logo.png" alt="BugGira" />
+                    <img src="/img/logo.png" alt="CRM" />
                 </a>
             </div>
         </section>
@@ -26,10 +26,10 @@
                                             <input  type="text"
                                                     class="form-control input-lg"
                                                     placeholder="{{ __('Username') }}"
-                                                    ng-model="users_name" 
+                                                    ng-model="users_name"
                                                     required="required"
                                                     name="users_name"
-                                                   />
+                                               />
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -39,12 +39,12 @@
                                     </div>
                                     <div class="form-group">
                                         <label class="ui-checkbox">
-                                            <input 
-                                                    ng-model="terms_and_conditions" 
-                                                    name="checkbox1" 
-                                                    type="checkbox" 
+                                            <input  ng-model="terms_and_conditions"
+                                                    name="checkbox1"
+                                                    type="checkbox"
                                                     required="required"
-                                                    value="">
+                                                    value=""
+                                                />
                                             <span class="ft-greay">{{ __('I have read and agree to the terms and conditions of service koritsuvannya BugGira.com') }}</span>
                                         </label>
                                     </div>
