@@ -14,7 +14,7 @@
     <section class="panel panel-default table-dynamic" ng-show="pagesList.length">
         <table class="table table-bordered table-striped table-responsive">
             <thead>
-                <tr>
+                <tr class="info">
 					<th class="td-id">
 						<div class="th">
 							{{ __("#ID") }}
@@ -211,9 +211,14 @@
 		    </div>
 
 		    <div class="modal-footer">
-				<button type="submit" class="btn btn-primary" ng-click="save()" ng-if=" ! view">{{ __('Save') }}</button>
-				<button type="button" class="btn btn-default" ng-click="cancel()" ng-if=" ! view">{{ __('Cancel') }}</button>
-				<button type="button" class="btn btn-default" ng-click="cancel()" ng-if="view">{{ __('Close') }}</button>
+		    	<div ng-class="{'btn-load': request_sent}">
+			    	<div class="loading-text">
+						<button type="submit" class="btn btn-primary" ng-click="save()" ng-if=" ! view">{{ __('Save') }}</button>
+						<button type="button" class="btn btn-default" ng-click="cancel()" ng-if=" ! view">{{ __('Cancel') }}</button>
+					</div>
+					<button type="button" class="btn btn-default" ng-click="cancel()" ng-if="view">{{ __('Close') }}</button>
+					<i class="fa fa-spinner fa-pulse fa-3x fa-fw loading-icon"></i>
+			    </div>
 		    </div>
 		</form>
 	</script>

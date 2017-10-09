@@ -88,7 +88,7 @@
 		    modalInstance.result.then(function(response) {
 				$scope.print(response);
 		    }, function () {
-				
+
 		    });
 		};
 
@@ -109,7 +109,7 @@
             modalInstance.result.then(function(response) {
                 $scope.print(response);
             }, function () {
-                
+
             });
         };
 
@@ -156,6 +156,7 @@
     function ModalTeamsCreateCtrl($rootScope, $scope, $uibModalInstance, request, validate, logger, langs, items) {
         $scope.team = angular.copy(items.team);
     	$scope.view = items.view;
+        $rootScope.request_sent = false;
         $rootScope.user.pivot = {'teams_leader': 1,
                                  'teams_invite': 1,
                                  'teams_approved': 1};
@@ -192,7 +193,7 @@
     		if (data)
     		{
     			$scope.members.push(data);
-    			$scope.email = '';
+     			$scope.email = '';
     		}
     	};
 
@@ -224,6 +225,7 @@
 			error *= validate.check($scope.form.teams_name, 'Name');
 			if (error)
 			{
+                $rootScope.request_sent = true;
                 delete $scope.team.pivot;
                 delete $scope.team.users;
                 delete $scope.team.plugins;
@@ -232,6 +234,10 @@
 					{
 						$uibModalInstance.close(data);
 					}
+                    else
+                    {
+                        $rootScope.request_sent = false;
+                    }
 				});
 			}
 		};
@@ -275,7 +281,7 @@
                 $scope.plugins_list[$scope.plugins[k].plugins_id] = $scope.isChecked($scope.plugins[k].plugins_id);
             }
         };
-        
+
         $scope.setPlugin = function(plugins_id) {
             plugins.save($scope.team.teams_id, plugins_id, $scope.plugins_list[plugins_id]);
         };
