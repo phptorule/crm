@@ -9,6 +9,9 @@ use App\Notifications\TeamsInvite;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\MessageBag;
+use \Validator;
+use Illuminate\Validation\Rule;
 
 class TeamsController extends Controller
 {
@@ -32,13 +35,27 @@ class TeamsController extends Controller
 
     public function save($post = [])
     {
+        $messages = [
+            'unique' => 'The name "' . $post['team']['teams_name'] . '" has already been taken.'
+        ];
+
+        $validator = $this->validate(request(), [
+            'team.teams_name' => 'unique:teams,teams_name'
+        ], $messages);
+
+        if ($validator->fails())
+        {
+            return FALSE;
+        }
+
     	$team = Teams::firstOrNew(['teams_id' => empty($post['team']['teams_id']) ? 0 : $post['team']['teams_id']]);
     	foreach ($post['team'] as $key => $value)
     	{
     		$team->$key = $value;
     	}
-    	$team->save();
-        
+
+        $team->save();
+
         $exists = [];
         foreach ($team->users as $user)
         {
@@ -127,7 +144,7 @@ class TeamsController extends Controller
     {
         $team = Teams::find($post['teams_id']);
         $team->users()->detach(Auth::id());
-        
+
         $this->message(__('You successfully left the team'), 'success');
         return $this->get();
     }
@@ -136,7 +153,7 @@ class TeamsController extends Controller
     {
         $team = Teams::find($post['teams_id']);
         $team->users()->detach(Auth::id());
-        
+
         $this->message(__('You successfully decline the invitation'), 'success');
         return $this->get();
     }
