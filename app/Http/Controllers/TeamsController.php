@@ -9,9 +9,8 @@ use App\Notifications\TeamsInvite;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\MessageBag;
-use \Validator;
 use Illuminate\Validation\Rule;
+use \Validator;
 
 class TeamsController extends Controller
 {
@@ -40,7 +39,7 @@ class TeamsController extends Controller
         ];
 
         $validator = $this->validate(request(), [
-            'team.teams_name' => 'unique:teams,teams_name'
+            'team.teams_name' => 'unique:teams,teams_name,' . (empty($post['team']['teams_id']) ? 0 : $post['team']['teams_id']) . ',teams_id'
         ], $messages);
 
         if ($validator->fails())

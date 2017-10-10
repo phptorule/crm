@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Users;
 use App\Services\UsersService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
@@ -21,7 +22,7 @@ class UsersController extends Controller
 
         return $user;
     }
-    
+
     public function check($post = [])
     {
     	$user = Users::where('users_email', $post['email'])->where('users_id', '<>', Auth::id())->first();
@@ -56,5 +57,10 @@ class UsersController extends Controller
 
         $this->message(__('All changes were saved'), 'success');
         return $this->info();
+    }
+
+    public function getTeams($post = []) {
+        $data = DB::table('users_teams')->where([['users_id', '=', $post['user_id']], ['teams_approved', '=', '1']])->get();
+        return $data;
     }
 }

@@ -12,7 +12,6 @@
 
     			post_mas._token = $rootScope.token;
     			post_mas._method = method;
-
     			$http.post('/api' + adrress, post_mas).then(function(response) {
     				var data = logger.check(response.data);
     				if (callback)

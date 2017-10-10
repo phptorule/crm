@@ -58,9 +58,9 @@
 (function () {
     'use strict';
 
-    angular.module('app').controller('AppCtrl', [ '$scope', '$rootScope', '$window', '$timeout', '$location', 'request', 'plugins', AppCtrl]);
+    angular.module('app').controller('AppCtrl', [ '$scope', '$rootScope', '$uibModal', '$window', '$timeout', '$location', 'request', 'plugins', AppCtrl]);
 
-    function AppCtrl($scope, $rootScope, $window, $timeout, $location, request, plugins) {
+    function AppCtrl($scope, $rootScope, $uibModal, $window, $timeout, $location, request, plugins) {
         $rootScope.token = '';
         $rootScope.body_class = '';
         $rootScope.open = 1;
@@ -72,6 +72,40 @@
         $scope.token = function(token) {
             $rootScope.token = token;
             $scope.init();
+        };
+
+        $scope.switchTeam = function(user_id) {
+            user_id = user_id || false;
+            $scope.teams_id = [];
+
+            request.send('/users/getTeams', {'user_id' : user_id}, function(data) {
+                if (data)
+                {
+                    for (var k in data)
+                    {
+                        $scope.teams_id[k] = data[k].teams_id;
+                    }
+                }
+            });
+
+            var modalInstance = $uibModal.open({
+                animation: true,
+                templateUrl: 'SwitchTeam.html',
+                controller: 'ModalSwitchTeamCtrl',
+                resolve: {
+                    items: function () {
+                        return {
+                            'teams_id' : $scope.teams_id
+                        };
+                    }
+                }
+            });
+
+            modalInstance.result.then(function(response) {
+                $scope.reloadData();
+            }, function () {
+
+            });
         };
 
         $scope.signout = function() {
@@ -103,6 +137,18 @@
 
         $scope.sidebar = plugins.sidebar();
         plugins.getSidebar();
+    };
+})();
+
+;
+
+(function () {
+    'use strict';
+
+    angular.module('app').controller('ModalSwitchTeamCtrl', ['$rootScope', '$scope', '$uibModalInstance', 'request', 'validate', 'logger', 'langs', 'items', ModalSwitchTeamCtrl]);
+
+    function ModalSwitchTeamCtrl($rootScope, $scope, $uibModalInstance, request, validate, logger, langs, items) {
+        console.log(items);
     };
 })();
 
