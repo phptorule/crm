@@ -21,7 +21,7 @@
         <link href="/theme/plugins/NotificationStyles/css/ns-style-attached.css" rel="stylesheet" type="text/css" />
     </head>
 
-    <body data-ng-app="app" class="hold-transition sidebar-mini" data-ng-class="[{'nav-collapsed-min': admin.menu === 'collapsed'}, body_class]" data-ng-controller="AppCtrl" data-ng-init="token('{{ csrf_token() }}')" data-custom-page>
+    <body data-ng-app="app" class="hold-transition sidebar-mini" data-ng-controller="AppCtrl" data-ng-init="token('{{ csrf_token() }}')">
         <div id="preloader">
             <div id="status"></div>
         </div>
@@ -57,7 +57,7 @@
                         <ul class="nav navbar-nav">
                             <li class="nav-username">
                                 <span class="hidden-xs">
-                                    <span>@{{ user.users_name }}</span>
+                                    <span>@{{ user.users_name }} (@{{ team.teams_name }})</span>
                                 </span>
                             </li>
                             <li class="dropdown dropdown-user">
@@ -65,9 +65,9 @@
                                     <img src="/img/avatar5.png" class="img-circle" width="45" height="45" alt="user">
                                 </a>
 
-                                <ul class="dropdown-menu" >
+                                <ul class="dropdown-menu">
                                     <li><a href="profile.html"><i class="fa fa-user"></i> User Profile</a></li>
-                                    <li><a href="#"><i class="fa fa-inbox"></i> Inbox</a></li>
+                                    <li><a href="javascript:void(0);" ng-click="switchTeam(user.users_id)"><i class="fa fa-users"></i> Teams</a></li>
                                     <li><a href="javascript:void(0);" ng-click="signout()"><i class="fa fa-sign-out"></i> Signout</a></li>
                                 </ul>
                             </li>
@@ -96,6 +96,34 @@
                         <li class="nav-title" ng-show="sidebar.plugins.length">
                             <span>{{ __("Plugins") }}</span>
                         </li>
+
+                        <li class="treeview" ng-show="sidebar.plugins.indexOf('Customers') != -1">
+                            <a href="javascript:void(0)">
+                                <i class="fa fa-cogs"></i>
+                                <span>Customers</span>
+                                <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li><a href="/customers/add">Add customer</a></li>
+                                <li><a href="/customers/get">List all customers</a></li>
+                            </ul>
+                        </li>
+
+                        <li class="treeview" ng-show="sidebar.plugins.indexOf('Finances') != -1">
+                            <a href="javascript:void(0)">
+                                <i class="fa fa-cogs"></i>
+                                <span>Finances</span>
+                                <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li><a href="/customers/add">Add finances</a></li>
+                                <li><a href="/customers/get">List all finances</a></li>
+                            </ul>
+                        </li>
                     </ul>
                 </div>
             </aside>
@@ -119,6 +147,33 @@
             <footer class="main-footer">
                 <strong>Copyright &copy; 2016-2017 <a href="#">Thememinister</a>.</strong> All rights reserved.
             </footer>
+
+            <script type="text/ng-template" id="SwitchTeam.html">
+                <form name="form" method="post" novalidate="novalidate">
+                    <div class="modal-header" ng-if=" ! view">
+                        <h3 class="modal-title">{{ __("Switch your team") }}</h3>
+                    </div>
+
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-sm-6 col-xs-12">
+                                <div class="form-group">
+                                    <label>{{ __("Choose team") }}</label>
+                                    <select class="form-control" name="user_teams" ng-model="current_team" required="required">
+                                        <option value="0" disabled="disabled">Choose your team</option>
+                                        <option ng-repeat="team in teams" value="@{{ team.teams_id }}">@{{ team.teams_name }}</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary" ng-click="save()">{{ __('Save') }}</button>
+                        <button type="button" class="btn btn-default" ng-click="cancel()">{{ __('Cancel') }}</button>
+                    </div>
+                </form>
+            </script>
         </div>
 
         <script src="/js/vendor.js"></script>
@@ -134,6 +189,7 @@
         <script src="/js/controllers/teams.js"></script>
         <script src="/js/controllers/users.js"></script>
         <script src="/js/controllers/finances.js"></script>
+        <script src="/js/controllers/customers.js"></script>
         <script src="/theme/plugins/jQuery/jquery-1.12.4.min.js" type="text/javascript"></script>
         <script src="/theme/plugins/jquery-ui-1.12.1/jquery-ui.min.js" type="text/javascript"></script>
         <script src="/theme/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>

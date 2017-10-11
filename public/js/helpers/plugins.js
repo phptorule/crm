@@ -9,7 +9,7 @@
 
     	factory.list = function(refresh) {
             refresh = refresh || false;
-            
+
             var deferred = $q.defer();
             if ( ! factory.plugins || refresh)
             {
@@ -32,7 +32,13 @@
             request.send('/plugins/forUser', {}, function(data) {
                 if (data)
                 {
-                    factory.sidebar.plugins = data;
+                    factory.sidebar.plugins = [];
+                    for (var k in data)
+                    {
+                        factory.sidebar.plugins[k] = data[k].plugins_name;
+                    }
+                    //console.log(factory.sidebar.plugins);
+                    //factory.sidebar.plugins = data;
                 }
             }, 'GET');
         };
