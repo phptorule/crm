@@ -4,8 +4,8 @@
     angular.module('app').controller('CustomersCtrl', ['$rootScope', '$scope', '$uibModal', '$filter', 'request', 'validate', 'logger', 'langs', 'plugins', CustomersCtrl]);
 
     function CustomersCtrl($rootScope, $scope, $uibModal, $filter, request, validate, logger, langs, plugins) {
-    	$scope.teams = [];
         $scope.currentTeam = {};
+        $scope.customers.customer_type = 0;
         /*if (true)
         {
         	$scope.customers.contact_person = '';
@@ -33,37 +33,25 @@
         }*/
 
     	$scope.init = function() {
-			$scope.getTeams();
+			$scope.getCurrentTeam();
 		};
 
-		$scope.getTeams = function() {
-			request.send('/teams/getLeaderTeams', {}, function(data) {
-				if (data)
-				{
-					$scope.teams = data;
-					$scope.changeTeam($scope.teams[0].teams_id);
-				}
-			}, 'GET');
-		};
-
-		$scope.changeTeam = function(teams_id) {
-			for (var k in $scope.teams)
-			{
-				if ($scope.teams[k].teams_id == teams_id)
-				{
-					$scope.currentTeam = $scope.teams[k];
-				}
-			}
-
-			//$scope.reloadData();
-		};
+        $scope.getCurrentTeam = function () {
+            request.send('/users/getCurrentTeam', {}, function(data) {
+                if (data)
+                {
+                   $scope.team = data[0];
+                }
+            });
+        };
 
 		$scope.save = function() {
 	    	var error = 1;
 			error *= validate.check($scope.form.company_name, 'Nazwa firmy');
 			if (error)
 			{
-				console.log($scope.customers);
+                $scope.customers.team_id = $scope.team.teams_id;
+                $scope.customers.customer_type = $scope.customer_type;
 				request.send('/customers/save', $scope.customers, function(data) {
 
 				});

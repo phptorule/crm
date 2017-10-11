@@ -169,11 +169,11 @@
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label>Komentarze</label>
-                                <textarea class="form-control" rows="3" name="comments" ng-model="customers.comments"></textarea>
+                                <textarea class="form-control" rows="3" name="comments" ng-model="comments"></textarea>
                             </div>
                             <div class="form-group">
                                 <label>Typ osoby</label>
-                                <select class="form-control" name="customer_type" ng-model="customers.customer_type">
+                                <select class="form-control" name="customer_type" ng-model="customer_type">
                                     <option value="0">regular</option>
                                     <option value="1">vendor</option>
                                     <option value="2">vip</option>
