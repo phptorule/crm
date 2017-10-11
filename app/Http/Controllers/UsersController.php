@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Users;
+use App\Teams;
 use App\Services\UsersService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -60,7 +61,18 @@ class UsersController extends Controller
     }
 
     public function getTeams($post = []) {
-        $data = DB::table('users_teams')->where([['users_id', '=', $post['user_id']], ['teams_approved', '=', '1']])->get();
-        return $data;
+        $teams = Auth::user();
+        return $teams->teams;
+    }
+
+    public function getCurrentTeam() {
+        $current_team = array();
+        $current_team_id = session('current_team');
+        $current_team = Teams::find(['teams_id' => $current_team_id]);
+        return $current_team;
+    }
+
+    public function saveTeam($post = []) {
+        session(['current_team' => $post['current_team']]);
     }
 }

@@ -72,39 +72,33 @@
         $scope.token = function(token) {
             $rootScope.token = token;
             $scope.init();
+            $scope.getCurrentTeam();
         };
 
-        $scope.switchTeam = function(user_id) {
-            user_id = user_id || false;
-            $scope.teams_id = [];
-
-            request.send('/users/getTeams', {'user_id' : user_id}, function(data) {
+        $scope.switchTeam = function() {
+            request.send('/users/getTeams', {}, function(data) {
                 if (data)
                 {
-                    for (var k in data)
-                    {
-                        $scope.teams_id[k] = data[k].teams_id;
-                    }
+                    var modalInstance = $uibModal.open({
+                        animation: true,
+                        templateUrl: 'SwitchTeam.html',
+                        controller: 'ModalSwitchTeamCtrl',
+                        resolve: {
+                            items: function () {
+                                return data;
+                            }
+                        }
+                    });
                 }
             });
+        };
 
-            var modalInstance = $uibModal.open({
-                animation: true,
-                templateUrl: 'SwitchTeam.html',
-                controller: 'ModalSwitchTeamCtrl',
-                resolve: {
-                    items: function () {
-                        return {
-                            'teams_id' : $scope.teams_id
-                        };
-                    }
+        $scope.getCurrentTeam = function () {
+            request.send('/users/getCurrentTeam', {}, function(data) {
+                if (data)
+                {
+                   $rootScope.team = data[0];
                 }
-            });
-
-            modalInstance.result.then(function(response) {
-                $scope.reloadData();
-            }, function () {
-
             });
         };
 
@@ -145,10 +139,23 @@
 (function () {
     'use strict';
 
-    angular.module('app').controller('ModalSwitchTeamCtrl', ['$rootScope', '$scope', '$uibModalInstance', 'request', 'validate', 'logger', 'langs', 'items', ModalSwitchTeamCtrl]);
+    angular.module('app').controller('ModalSwitchTeamCtrl', ['$rootScope', '$scope', '$uibModalInstance', '$window', 'request', 'validate', 'logger', 'langs', 'items', ModalSwitchTeamCtrl]);
 
-    function ModalSwitchTeamCtrl($rootScope, $scope, $uibModalInstance, request, validate, logger, langs, items) {
-        console.log(items);
+    function ModalSwitchTeamCtrl($rootScope, $scope, $uibModalInstance, $window, request, validate, logger, langs, items) {
+        $scope.teams = items;
+        $scope.current_team = '0';
+
+        $scope.save = function () {
+            $scope.teams.current_team = $scope.current_team;
+            request.send('/users/saveTeam', {'current_team' : $scope.teams.current_team}, function(data) {
+                $uibModalInstance.close();
+                $window.location.reload();
+            });
+        };
+
+        $scope.cancel = function() {
+            $uibModalInstance.dismiss('cancel');
+        };
     };
 })();
 

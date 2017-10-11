@@ -57,7 +57,7 @@
                         <ul class="nav navbar-nav">
                             <li class="nav-username">
                                 <span class="hidden-xs">
-                                    <span>@{{ user.users_name }}</span>
+                                    <span>@{{ user.users_name }} (@{{ team.teams_name }})</span>
                                 </span>
                             </li>
                             <li class="dropdown dropdown-user">
@@ -97,7 +97,7 @@
                             <span>{{ __("Plugins") }}</span>
                         </li>
 
-                        <li class="treeview">
+                        <li class="treeview" ng-show="sidebar.plugins.indexOf('Customers') != -1">
                             <a href="javascript:void(0)">
                                 <i class="fa fa-cogs"></i>
                                 <span>Customers</span>
@@ -108,6 +108,20 @@
                             <ul class="treeview-menu">
                                 <li><a href="/customers/add">Add customer</a></li>
                                 <li><a href="/customers/get">List all customers</a></li>
+                            </ul>
+                        </li>
+
+                        <li class="treeview" ng-show="sidebar.plugins.indexOf('Finances') != -1">
+                            <a href="javascript:void(0)">
+                                <i class="fa fa-cogs"></i>
+                                <span>Finances</span>
+                                <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li><a href="/customers/add">Add finances</a></li>
+                                <li><a href="/customers/get">List all finances</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -137,8 +151,7 @@
             <script type="text/ng-template" id="SwitchTeam.html">
                 <form name="form" method="post" novalidate="novalidate">
                     <div class="modal-header" ng-if=" ! view">
-                        <h3 class="modal-title" ng-show=" ! upwork.upwork_id">{{ __("Add New Proposal") }}</h3>
-                        <h3 class="modal-title" ng-show="upwork.upwork_id">{{ __("Edit Existing Proposal") }}</h3>
+                        <h3 class="modal-title">{{ __("Switch your team") }}</h3>
                     </div>
 
                     <div class="modal-body">
@@ -146,9 +159,9 @@
                             <div class="col-sm-6 col-xs-12">
                                 <div class="form-group">
                                     <label>{{ __("Choose team") }}</label>
-                                    <select class="form-control" name="upwork_type" ng-model="upwork.upwork_type" required="required">
-                                        <option value="0">{{ __("Team 1") }}</option>
-                                        <option value="1">{{ __("Team 2") }}</option>
+                                    <select class="form-control" name="user_teams" ng-model="current_team" required="required">
+                                        <option value="0" disabled="disabled">Choose your team</option>
+                                        <option ng-repeat="team in teams" value="@{{ team.teams_id }}">@{{ team.teams_name }}</option>
                                     </select>
                                 </div>
                             </div>

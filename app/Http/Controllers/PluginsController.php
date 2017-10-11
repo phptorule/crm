@@ -17,23 +17,27 @@ class PluginsController extends Controller
     {
     	$exist_ids = [];
     	$result = [];
-    	$teams = Auth::user()->teams()->wherePivot('teams_approved', TRUE)->get();
-    	foreach ($teams as $team)
-    	{
-    		$plugins = $team->plugins()->get();
-    		foreach ($plugins as $plugin)
-    		{
-    			$config = json_decode($plugin->plugins_config, TRUE);
-    			if ( ! empty($config['only_leaders']) && ! empty($team->pivot->teams_leader) || empty($config['only_leaders']))
-    			{
-    				if ( ! in_array($plugin->plugins_id, $exist_ids))
-    				{
-	    				$exist_ids[] = $plugin->plugins_id;
-	    				$result[] = $plugin;
-    				}
-    			}
-    		}
-    	}
+
+        $current_team = session()->get('current_team');
+
+        $teams = Auth::user()->teams()->wherePivot('teams_id', '=', $current_team, 'and', 'teams_approved', '=', true)->get();
+        foreach ($teams as $team)
+        {
+            $plugins = $team->plugins()->get();
+            foreach ($plugins as $plugin)
+            {
+                $config = json_decode($plugin->plugins_config, TRUE);
+                if ( ! empty($config['only_leaders']) && ! empty($team->pivot->teams_leader) || empty($config['only_leaders']))
+                {
+                    if ( ! in_array($plugin->plugins_id, $exist_ids))
+                    {
+                        $exist_ids[] = $plugin->plugins_id;
+                        $result[] = $plugin;
+                    }
+                }
+            }
+        }
+
     	return $result;
     }
 
