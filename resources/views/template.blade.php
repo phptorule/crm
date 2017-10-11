@@ -107,7 +107,7 @@
                             </a>
                             <ul class="treeview-menu">
                                 <li><a href="/customers/add">Add customer</a></li>
-                                <li><a href="/customers/get">List all customers</a></li>
+                                <li><a href="/customers/list">List all customers</a></li>
                             </ul>
                         </li>
 
@@ -121,7 +121,7 @@
                             </a>
                             <ul class="treeview-menu">
                                 <li><a href="/customers/add">Add finances</a></li>
-                                <li><a href="/customers/get">List all finances</a></li>
+                                <li><a href="/customers/list">List all finances</a></li>
                             </ul>
                         </li>
                     </ul>
