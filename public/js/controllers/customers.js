@@ -50,7 +50,7 @@
 			error *= validate.check($scope.form.company_name, 'Nazwa firmy');
 			if (error)
 			{
-                $scope.customers.team_id = $scope.team.teams_id;
+                $scope.customers.teams_id = $scope.team.teams_id;
                 $scope.customers.customer_type = $scope.customer_type;
 				request.send('/customers/save', $scope.customers, function(data) {
 

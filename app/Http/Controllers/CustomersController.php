@@ -13,7 +13,7 @@ class CustomersController extends Controller
 	{
 		$customer = Customers::firstOrNew(['id' => empty($post['id']) ? 0 : $post['id']]);
 
-    	$customer->teams_id = $post['team_id'];
+    	$customer->teams_id = $post['teams_id'];
     	$customer->company_name = $post['company_name'];
         $customer->contact_person = empty($post['contact_person']) ? '' : $post['contact_person'];
         $customer->customer_type = empty($post['customer_type']) ? 0 : $post['customer_type'];
