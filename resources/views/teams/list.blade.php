@@ -1,6 +1,7 @@
 <div class="page page-table" data-ng-controller="TeamsCtrl" data-ng-init="get()">
 	<h2>
 		<div class="pull-right">
+			<button type="button" class="btn btn-default" ng-click="switchTeam()">Switch team</button>
     		<button type="button" class="btn btn-success" ng-click="create()"><i class="fa fa-plus-circle"></i> {{ __("Create Own Team") }}</button>
     	</div>
 
@@ -262,4 +263,31 @@
 		    </div>
 		</form>
 	</script>
+
+	<script type="text/ng-template" id="SwitchTeam.html">
+        <form name="form" method="post" novalidate="novalidate">
+            <div class="modal-header" ng-if=" ! view">
+                <h3 class="modal-title">{{ __("Switch your team") }}</h3>
+            </div>
+
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-6 col-xs-12">
+                        <div class="form-group">
+                            <label>{{ __("Choose team") }}</label>
+                            <select class="form-control" name="user_teams" ng-model="current_team" required="required">
+                                <option value="0" disabled="disabled">Choose your team</option>
+                                <option ng-repeat="team in teams" value="@{{ team.teams_id }}">@{{ team.teams_name }}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary" ng-click="save()">{{ __('Save') }}</button>
+                <button type="button" class="btn btn-default" ng-click="cancel()">{{ __('Cancel') }}</button>
+            </div>
+        </form>
+    </script>
 </div>

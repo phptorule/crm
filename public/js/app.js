@@ -75,24 +75,6 @@
             $scope.getCurrentTeam();
         };
 
-        $scope.switchTeam = function() {
-            request.send('/users/getTeams', {}, function(data) {
-                if (data)
-                {
-                    var modalInstance = $uibModal.open({
-                        animation: true,
-                        templateUrl: 'SwitchTeam.html',
-                        controller: 'ModalSwitchTeamCtrl',
-                        resolve: {
-                            items: function () {
-                                return data;
-                            }
-                        }
-                    });
-                }
-            });
-        };
-
         $scope.getCurrentTeam = function () {
             request.send('/users/getCurrentTeam', {}, function(data) {
                 if (data)
@@ -131,31 +113,6 @@
 
         $scope.sidebar = plugins.sidebar();
         plugins.getSidebar();
-    };
-})();
-
-;
-
-(function () {
-    'use strict';
-
-    angular.module('app').controller('ModalSwitchTeamCtrl', ['$rootScope', '$scope', '$uibModalInstance', '$window', 'request', 'validate', 'logger', 'langs', 'items', ModalSwitchTeamCtrl]);
-
-    function ModalSwitchTeamCtrl($rootScope, $scope, $uibModalInstance, $window, request, validate, logger, langs, items) {
-        $scope.teams = items;
-        $scope.current_team = '0';
-
-        $scope.save = function () {
-            $scope.teams.current_team = $scope.current_team;
-            request.send('/users/saveTeam', {'current_team' : $scope.teams.current_team}, function(data) {
-                $uibModalInstance.close();
-                $window.location.reload();
-            });
-        };
-
-        $scope.cancel = function() {
-            $uibModalInstance.dismiss('cancel');
-        };
     };
 })();
 
