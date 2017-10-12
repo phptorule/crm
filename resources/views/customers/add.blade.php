@@ -1,4 +1,4 @@
-<div class="row" data-ng-controller="CustomersCtrl" data-ng-init="init()">
+<div class="row" data-ng-controller="CustomersCtrl" data-ng-init="getCurrentTeam()">
     <!-- Form controls -->
     <div class="col-sm-12">
         <div class="panel panel-bd lobidrag">
@@ -14,7 +14,7 @@
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label>Nazwa firmy</label><span class="req_field"> *</span>
-                                <input type="text" class="form-control" name="company_name" placeholder="Nazwa firmy" ng-model="company_name" required />
+                                <input type="text" class="form-control" name="company_name" placeholder="Nazwa firmy" ng-model="customers.company_name" required />
                             </div>
 
                             <div class="form-group">
@@ -24,7 +24,7 @@
 
                             <div class="form-group">
                                 <label>Telefon</label>
-                                <input type="email" class="form-control" name="phone_number" placeholder="Telefon" ng-model="customers.phone_number" />
+                                <input type="text" class="form-control" name="phone_number" placeholder="Telefon" ng-model="customers.phone_number" />
                             </div>
 
                             <div class="form-group">
