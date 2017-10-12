@@ -13,8 +13,8 @@
                     <div class="row">
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <label>Nazwa firmy</label>
-                                <input type="text" class="form-control" name="company_name" placeholder="Nazwa firmy" ng-model="customers.company_name" required />
+                                <label>Nazwa firmy</label><span class="req_field"> *</span>
+                                <input type="text" class="form-control" name="company_name" placeholder="Nazwa firmy" ng-model="company_name" required />
                             </div>
 
                             <div class="form-group">
@@ -71,6 +71,7 @@
                         </div>
                     </div>
                 </form>
+                <p>(<span class="req_field">*</span>) - required fields</p>
             </div>
         </div>
     </div>
@@ -84,7 +85,7 @@
             </div>
 
             <div class="panel-body">
-                <form  name="address_form" method="post" novalidate="novalidate">
+                <form  name="form_address" method="post" novalidate="novalidate">
                     <div class="row">
                         <div class="col-sm-6">
                             <div class="form-group">
@@ -151,6 +152,7 @@
                         </div>
                     </div>
                 </form>
+                <p>(<span class="req_field">*</span>) - required fields</p>
             </div>
         </div>
     </div>
@@ -164,7 +166,7 @@
             </div>
 
             <div class="panel-body">
-                <form  name="rest_form" method="post" novalidate="novalidate">
+                <form  name="form_rest" method="post" novalidate="novalidate">
                     <div class="row">
                         <div class="col-sm-6">
                             <div class="form-group">
@@ -173,7 +175,7 @@
                             </div>
                             <div class="form-group">
                                 <label>Typ osoby</label>
-                                <select class="form-control" name="customer_type" ng-model="customer_type">
+                                <select class="form-control" name="customer_type" ng-model="customers.customer_type">
                                     <option value="0">regular</option>
                                     <option value="1">vendor</option>
                                     <option value="2">vip</option>
@@ -182,6 +184,7 @@
                         </div>
                     </div>
                 </form>
+                <p>(<span class="req_field">*</span>) - required fields</p>
             </div>
         </div>
     </div>
