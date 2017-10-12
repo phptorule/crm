@@ -86,7 +86,7 @@
                         <td>@{{ customer.company_name }}</td>
                         <td>@{{ customer.phone_number }}</td>
                         <td>@{{ customer.email }}</td>
-                        <td>@{{ customer.invoice_street }}</td>
+                        <td>@{{ customer.invoice_town }}</td>
                         <td>
                            <span ng-show="customer.customer_type == '0'">Regular</span>
                            <span ng-show="customer.customer_type == '1'">Vendor</span>
