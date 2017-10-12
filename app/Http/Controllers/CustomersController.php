@@ -9,6 +9,12 @@ use App\Customers;
 
 class CustomersController extends Controller
 {
+    public function get($post = [])
+    {
+        $customers = Customers::where('teams_id', $post['teams_id'])->get();
+        return $customers;
+    }
+
 	public function save($post = [])
 	{
 		$customer = Customers::firstOrNew(['id' => empty($post['id']) ? 0 : $post['id']]);

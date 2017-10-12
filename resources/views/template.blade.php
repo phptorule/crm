@@ -168,6 +168,13 @@
         <script src="/theme/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
         <script src="/theme/plugins/lobipanel/lobipanel.min.js" type="text/javascript"></script>
         <script src="/theme/plugins/pace/pace.min.js" type="text/javascript"></script>
+        <script src="/theme/plugins/table-export/tableExport.js" type="text/javascript"></script>
+        <script src="/theme/plugins/table-export/jquery.base64.js" type="text/javascript"></script>
+        <script src="/theme/plugins/table-export/html2canvas.js" type="text/javascript"></script>
+        <script src="/theme/plugins/table-export/sprintf.js" type="text/javascript"></script>
+        <script src="/theme/plugins/table-export/jspdf.js" type="text/javascript"></script>
+        <script src="/theme/plugins/table-export/base64.js" type="text/javascript"></script>
+        <script src="/theme/plugins/datatables/dataTables.min.js" type="text/javascript"></script>
         <script src="/theme/plugins/slimScroll/jquery.slimscroll.min.js" type="text/javascript"></script>
         <script src="/theme/plugins/fastclick/fastclick.min.js" type="text/javascript"></script>
         <script src="/theme/plugins/chartJs/Chart.min.js" type="text/javascript"></script>
