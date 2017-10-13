@@ -68,5 +68,52 @@
 				request.send('/customers/save', $scope.customers, function(data) {});
 			}
 		};
+
+        $scope.remove = function(customer_id) {
+            var modalInstance = $uibModal.open({
+                animation: true,
+                templateUrl: 'CustomersDelete.html',
+                controller: 'ModalCustomersDeleteCtrl',
+                resolve: {
+                    items: function () {
+                        return {
+                            'customer_id': customer_id
+                        };
+                    }
+                }
+            });
+
+            modalInstance.result.then(function(response) {
+                $scope.reloadData();
+            }, function () {
+
+            });
+        };
+
+        $scope.reloadData = function() {
+            $scope.get();
+        };
     };
 })();
+
+(function () {
+    'use strict';
+
+    angular.module('app').controller('ModalCustomersDeleteCtrl', ['$rootScope', '$scope', '$uibModalInstance', '$filter', 'request', 'validate', 'logger', 'langs', 'items', ModalCustomersDeleteCtrl]);
+
+    function ModalCustomersDeleteCtrl($rootScope, $scope, $uibModalInstance, $filter, request, validate, logger, langs, items) {
+        $scope.customer_id = items.customer_id;
+
+        $scope.delete = function(customer_id) {
+            request.send('/customers/delete', {'customer_id': customer_id, 'teams_id' : $scope.team.teams_id}, function(data) {
+                $uibModalInstance.close();
+            });
+        };
+
+        $scope.cancel = function() {
+            $uibModalInstance.dismiss('cancel');
+        };
+    };
+})();
+
+;

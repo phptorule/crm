@@ -6,20 +6,24 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Customers;
+use App\Teams;
 
 class CustomersController extends Controller
 {
     public function get($post = [])
     {
-        $customers = Customers::where('teams_id', $post['teams_id'])->get();
+        $team_id = empty($post['teams_id']) ? $post : $post['teams_id'];
+        $team = Teams::find($team_id);
+        //dd($team);
+
+        $customers = $team->customers()->get();
         return $customers;
     }
 
 	public function save($post = [])
 	{
-		$customer = Customers::firstOrNew(['id' => empty($post['id']) ? 0 : $post['id']]);
+		$customer = Customers::firstOrNew(['customer_id' => empty($post['customer_id']) ? 0 : $post['customer_id']]);
 
-    	$customer->teams_id = $post['teams_id'];
     	$customer->company_name = $post['company_name'];
         $customer->contact_person = empty($post['contact_person']) ? '' : $post['contact_person'];
         $customer->customer_type = empty($post['customer_type']) ? 0 : $post['customer_type'];
@@ -47,8 +51,18 @@ class CustomersController extends Controller
         $customer->comments = empty($post['comments']) ? '' : $post['comments'];
 
         $customer->save();
+        $customer->teams()->syncWithoutDetaching([$post['teams_id']]);
 
         $this->message(__('Customer was successfully saved'), 'success');
-		//return $this->get();
 	}
+
+    public function delete($post = [])
+    {
+        $customer = Customers::find($post['customer_id']);
+        $customer->teams()->detach($post['teams_id']);
+        $customer->delete();
+
+        $this->message(__('Record was successfully deleted'), 'success');
+        return $this->get($post['teams_id']);
+    }
 }
