@@ -1,6 +1,6 @@
 <div class="row" data-ng-controller="CustomersCtrl" data-ng-init="init()">
    <div class="col-sm-12">
-      <div class="panel panel-bd lobidrag">
+      <div class="panel panel-bd">
          <div class="panel-heading">
             <div class="btn-group" id="buttonexport">
                   <h4>List of customers</h4>
@@ -66,6 +66,34 @@
                   </li>
                </ul>
             </div>
+
+            <div class="search_box">
+               <form>
+                  <div class="row">
+                        <div class="col-sm-12">
+                           <div class="form-group">
+                              <label>Szukaj</label>
+                              <input type="text" class="form-control" name="search_input" placeholder="Szukaj" ng-model="searchInput" />
+                           </div>
+                        </div>
+
+                        <!--div class="col-sm-6">
+                           <div class="form-group">
+                              <label>W</label>
+                              <select class="form-control">
+                                 <option>Nazwa firmy</option>
+                                 <option>Telefon</option>
+                                 <option>Email</option>
+                                 <option>Address</option>
+                                 <option>type</option>
+                                 <option>join</option>
+                                 <option>Strona WWW</option>
+                              </select>
+                           </div>
+                        </div-->
+                  </div>
+               </form>
+            </div>
             <!-- Plugin content:powerpoint,txt,pdf,png,word,xl -->
             <div class="table-responsive">
                <table id="dataTableExample1" class="table table-bordered table-striped table-hover">
@@ -82,7 +110,7 @@
                      </tr>
                   </thead>
                   <tbody>
-                     <tr ng-repeat="customer in pagesList">
+                     <tr ng-repeat="customer in pagesList | filter:searchInput">
                         <td>@{{ customer.company_name }}</td>
                         <td>@{{ customer.phone_number }}</td>
                         <td>@{{ customer.email }}</td>
@@ -95,7 +123,7 @@
                         <td>@{{ customer.created_at }}</td>
                         <td>@{{ customer.website }}</td>
                         <td>
-                           <button type="button" class="btn btn-add btn-sm" data-toggle="modal" data-target="#customer1"><i class="fa fa-pencil"></i></button>
+                           <a href="/customers/add/@{{ customer.customer_id }}" class="btn btn-add btn-sm"><i class="fa fa-pencil"></i></a>
                            <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" ng-click="remove(customer.customer_id)"><i class="fa fa-trash-o"></i> </button>
                         </td>
                      </tr>

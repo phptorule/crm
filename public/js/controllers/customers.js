@@ -1,9 +1,9 @@
 (function () {
     'use strict';
 
-    angular.module('app').controller('CustomersCtrl', ['$rootScope', '$scope', '$uibModal', '$filter', 'request', 'validate', 'logger', 'langs', 'plugins', CustomersCtrl]);
+    angular.module('app').controller('CustomersCtrl', ['$rootScope', '$scope', '$uibModal', '$filter', '$location', 'request', 'validate', 'logger', 'langs', 'plugins', CustomersCtrl]);
 
-    function CustomersCtrl($rootScope, $scope, $uibModal, $filter, request, validate, logger, langs, plugins) {
+    function CustomersCtrl($rootScope, $scope, $uibModal, $filter, $location, request, validate, logger, langs, plugins) {
         $scope.currentTeam = {};
         $scope.list = [];
         $scope.listFiltered = [];
@@ -14,26 +14,28 @@
         $scope.customers = {};
         $scope.customers.customer_type = '0';
 
+        var customer_id = $location.path().split('/')[3];
+        $scope.customer_id = customer_id;
+
     	$scope.init = function() {
-			$scope.getCurrentTeam();
             $scope.get();
 		};
-
-        $scope.getCurrentTeam = function () {
-            request.send('/users/getCurrentTeam', {}, function(data) {
-                if (data)
-                {
-                   $scope.team = data[0];
-                }
-            });
-        };
 
         $scope.get = function() {
             if ($scope.team)
             {
-                request.send('/customers/get', {'teams_id' : $scope.team.teams_id}, function(data) {
-                    $scope.print(data);
-                });
+                if (customer_id)
+                {
+                    request.send('/customers/get', {'teams_id' : $scope.team.teams_id, 'customer_id' : customer_id}, function(data) {
+                        $scope.customers = data[0];
+                    });
+                }
+                else
+                {
+                    request.send('/customers/get', {'teams_id' : $scope.team.teams_id}, function(data) {
+                        $scope.print(data);
+                    });
+                }
             }
         };
 
