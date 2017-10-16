@@ -13,6 +13,11 @@
 
         $scope.customers = {};
         $scope.customers.customer_type = '0';
+        $scope.options = [
+            {id: 0, label: 'Regular'},
+            {id: 1, label: 'Vendor'},
+            {id: 2, label: 'V.I.P.'}
+        ];
 
         var customer_id = $location.path().split('/')[3];
         $scope.customer_id = customer_id;
@@ -28,6 +33,7 @@
                 {
                     request.send('/customers/get', {'teams_id' : $scope.team.teams_id, 'customer_id' : customer_id}, function(data) {
                         $scope.customers = data[0];
+                        $scope.customers.customer_type = $scope.customers.customer_type.toString();
                     });
                 }
                 else
