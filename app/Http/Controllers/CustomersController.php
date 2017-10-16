@@ -57,6 +57,7 @@ class CustomersController extends Controller
         $customer->send_post_code = empty($post['send_post_code']) ? '' : $post['send_post_code'];
         $customer->send_region = empty($post['send_region']) ? '' : $post['send_region'];
         $customer->comments = empty($post['comments']) ? '' : $post['comments'];
+        $customer->description = empty($post['description']) ? '' : $post['description'];
 
         $customer->save();
         $customer->teams()->syncWithoutDetaching([$post['teams_id']]);

@@ -183,11 +183,14 @@
             <div class="panel-body">
                 <form  name="form_rest" method="post" novalidate="novalidate">
                     <div class="row">
-                        <div class="col-sm-6">
+                        <div class="col-sm-12">
                             <div class="form-group">
-                                <label>Komentarze</label>
-                                <textarea class="form-control" rows="3" name="comments" ng-model="customers.comments"></textarea>
+                                <label>Opis</label>
+                                <textarea class="form-control" rows="1" name="description" ng-model="customers.description"></textarea>
                             </div>
+                        </div>
+                        <div class="col-sm-6">
+
                             <div class="form-group">
                                 <label>Typ osoby</label>
                                 <select class="form-control" name="customer_type" ng-model="customers.customer_type">
@@ -200,6 +203,29 @@
                     </div>
                 </form>
                 <p>(<span class="req_field">*</span>) - required fields</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-12" ng-show="customer_id">
+        <div class="panel panel-bd lobidrag">
+            <div class="panel-heading">
+                <div class="btn-group" id="buttonlist">
+                    <h3>Komentarze</h3>
+                </div>
+            </div>
+
+            <div class="panel-body">
+                <form>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label>Komentarze</label>
+                                <textarea class="form-control" rows="3" name="comments" ng-model="customers.comments"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
