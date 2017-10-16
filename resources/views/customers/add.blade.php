@@ -14,59 +14,74 @@
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label>Nazwa firmy</label><span class="req_field"> *</span>
-                                <input type="text" class="form-control" name="company_name" placeholder="Nazwa firmy" ng-model="customers.company_name" required />
+                                <input type="text" class="form-control" name="company_name" ng-model="customers.company_name" required />
                             </div>
 
                             <div class="form-group">
                                 <label>Osoba kontaktowa</label>
-                                <input type="text" class="form-control" name="contact_person" placeholder="Osoba kontaktowa" ng-model="customers.contact_person" />
+                                <input type="text" class="form-control" name="contact_person" ng-model="customers.contact_person" />
                             </div>
 
                             <div class="form-group">
                                 <label>Telefon</label>
-                                <input type="text" class="form-control" name="phone_number" placeholder="Telefon" ng-model="customers.phone_number" />
+                                <input type="text" class="form-control" name="phone_number" ng-model="customers.phone_number" />
                             </div>
 
                             <div class="form-group">
                                 <label>Telefon dodatkowy</label>
-                                <input type="text" class="form-control" name="extra_phone_number" placeholder="Telefon dodatkowy" ng-model="customers.extra_phone_number" />
+                                <input type="text" class="form-control" name="extra_phone_number" ng-model="customers.extra_phone_number" />
                             </div>
 
                             <div class="form-group">
                                 <label>Email</label>
-                                <input type="text" class="form-control" name="email" placeholder="Email" ng-model="customers.email" />
+                                <input type="text" class="form-control" name="email" ng-model="customers.email" />
                             </div>
 
                             <div class="form-group">
                                 <label>Email dodatkowy</label>
-                                <input type="text" class="form-control" name="extra_email" placeholder="Email dodatkowy" ng-model="customers.extra_email" />
+                                <input type="text" class="form-control" name="extra_email" ng-model="customers.extra_email" />
                             </div>
                         </div>
 
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label>Numer NIP</label>
-                                <input type="text" class="form-control" name="nip" placeholder="Numer NIP" ng-model="customers.nip" />
+                                <input type="text" class="form-control" name="nip" ng-model="customers.nip" />
                             </div>
 
                             <div class="form-group">
                                 <label>Przypisany do</label>
-                                <input type="text" class="form-control" name="assign_to" placeholder="Przypisany do" ng-model="customers.assign_to" />
+                                <input type="text" class="form-control" name="assign_to" ng-model="customers.assign_to" />
                             </div>
 
                             <div class="form-group">
                                 <label>Konto bankowe</label>
-                                <input type="text" class="form-control" name="bank_account" placeholder="Konto bankowe" ng-model="customers.bank_account" />
+                                <input type="text" class="form-control" name="bank_account" ng-model="customers.bank_account" />
                             </div>
 
                             <div class="form-group">
                                 <label>Strona WWW</label>
-                                <input type="text" class="form-control" name="website" placeholder="Strona WWW" ng-model="customers.website" />
+                                <input type="text" class="form-control" name="website" ng-model="customers.website" />
                             </div>
 
                             <div class="form-group">
                                 <label>Facebook Id</label>
-                                <input type="text" class="form-control" name="fb_link" placeholder="Facebook Id" ng-model="customers.fb_link" />
+                                <input type="text" class="form-control" name="fb_link" ng-model="customers.fb_link" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" ng-show="customer_id">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>Czas utworzenia</label>
+                                <input type="text" class="form-control" name="created_date" disabled="disabled" ng-model="customers.created_at" />
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>Czas modyfikacji</label>
+                                <input type="text" class="form-control" name="updated_date" disabled="disabled" ng-model="customers.updated_at" />
                             </div>
                         </div>
                     </div>
@@ -90,64 +105,64 @@
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label>Ulica</label>
-                                <input type="text" class="form-control" name="invoice_street" placeholder="Ulica" ng-model="customers.invoice_street" />
+                                <input type="text" class="form-control" name="invoice_street" ng-model="customers.invoice_street" />
                             </div>
 
                             <div class="form-group">
                                 <label>Skrytka Pocztowa do faktury</label>
-                                <input type="text" class="form-control" name="invoice_mailbox" placeholder="Skrytka Pocztowa do faktury" ng-model="customers.invoice_mailbox" />
+                                <input type="text" class="form-control" name="invoice_mailbox" ng-model="customers.invoice_mailbox" />
                             </div>
 
                             <div class="form-group">
                                 <label>Miejscowosc</label>
-                                <input type="text" class="form-control" name="invoice_town" placeholder="Miejscowosc" ng-model="customers.invoice_town" />
+                                <input type="text" class="form-control" name="invoice_town" ng-model="customers.invoice_town" />
                             </div>
 
                             <div class="form-group">
                                 <label>Wojewodztwo</label>
-                                <input type="text" class="form-control" name="invoice_province" placeholder="Wojewodztwo" ng-model="customers.invoice_province"  />
+                                <input type="text" class="form-control" name="invoice_province" ng-model="customers.invoice_province"  />
                             </div>
 
                             <div class="form-group">
                                 <label>Kod</label>
-                                <input type="text" class="form-control" name="invoice_post_code" placeholder="Kod" ng-model="customers.invoice_post_code" />
+                                <input type="text" class="form-control" name="invoice_post_code" ng-model="customers.invoice_post_code" />
                             </div>
 
                             <div class="form-group">
                                 <label>Kraj</label>
-                                <input type="text" class="form-control" name="invoice_region" placeholder="Kraj" ng-model="customers.invoice_region" />
+                                <input type="text" class="form-control" name="invoice_region" ng-model="customers.invoice_region" />
                             </div>
                         </div>
 
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label>Ulica - Adres wysylki</label>
-                                <input type="text" class="form-control" name="send_street" placeholder="Ulica" ng-model="customers.send_street" />
+                                <input type="text" class="form-control" name="send_street" ng-model="customers.send_street" />
                             </div>
 
                             <div class="form-group">
                                 <label>Skrytka Pocztowa do wysylki</label>
-                                <input type="text" class="form-control" name="send_mailbox" placeholder="Skrytka Pocztowa do faktury" ng-model="customers.send_mailbox" />
+                                <input type="text" class="form-control" name="send_mailbox" ng-model="customers.send_mailbox" />
                             </div>
 
                             <div class="form-group">
                                 <label>Miejscowosc - Adres wysylki</label>
-                                <input type="text" class="form-control" name="send_town" placeholder="Miejscowosc" ng-model="customers.send_town" />
+                                <input type="text" class="form-control" name="send_town" ng-model="customers.send_town" />
                             </div>
 
                             <div class="form-group">
                                 <label>Wojewodztwo - Adres wysylki</label>
-                                <input type="text" class="form-control" name="send_province" placeholder="Wojewodztwo" ng-model="customers.send_province" />
+                                <input type="text" class="form-control" name="send_province" ng-model="customers.send_province" />
                             </div>
 
                             <div class="form-group">
                                 <label>Kod - Adres wysylki</label>
-                                <input type="text" class="form-control" name="send_post_code" placeholder="Kod" ng-model="customers.send_post_code" />
+                                <input type="text" class="form-control" name="send_post_code" ng-model="customers.send_post_code" />
                             </div>
 
                             <div class="form-group">
                                 <label>Kraj - Adres wysylki</label>
-                                <input type="text" class="form-control" name="send_region" placeholder="Kraj" ng-model="customers.send_region" />
+                                <input type="text" class="form-control" name="send_region" ng-model="customers.send_region" />
                             </div>
                         </div>
                     </div>
@@ -171,7 +186,7 @@
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label>Komentarze</label>
-                                <textarea class="form-control" rows="3" name="comments" ng-model="comments"></textarea>
+                                <textarea class="form-control" rows="3" name="comments" ng-model="customers.comments"></textarea>
                             </div>
                             <div class="form-group">
                                 <label>Typ osoby</label>
