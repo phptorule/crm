@@ -13,10 +13,18 @@ class CustomersController extends Controller
     public function get($post = [])
     {
         $team_id = empty($post['teams_id']) ? $post : $post['teams_id'];
+        $customer_id = empty($post['customer_id']) ? 0 : $post['customer_id'];
         $team = Teams::find($team_id);
-        //dd($team);
 
-        $customers = $team->customers()->get();
+        if ($customer_id)
+        {
+            $customers = $team->customers()->wherePivot('customer_id', $customer_id)->get();
+        }
+        else
+        {
+            $customers = $team->customers()->get();
+        }
+
         return $customers;
     }
 

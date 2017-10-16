@@ -1823,7 +1823,7 @@ i.fa-dot-circle-o {
     box-shadow: none;
     border-radius: 0px;
     border: none;
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23); /* lobipanel boxshadow imitation*/
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
 }
 .panel .panel-heading h1,
 .panel .panel-heading h2,
@@ -5166,4 +5166,13 @@ button.toast-close-button {
 
 .req_field {
     color: #E5343D;
+}
+
+.search_box {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.panel-body .btn-group {
+    margin-right: 50px;
 }

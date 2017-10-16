@@ -1,4 +1,4 @@
-<div class="row" data-ng-controller="CustomersCtrl" data-ng-init="getCurrentTeam()">
+<div class="row" data-ng-controller="CustomersCtrl" ng-init="get()">
     <!-- Form controls -->
     <div class="col-sm-12">
         <div class="panel panel-bd lobidrag">
@@ -190,6 +190,7 @@
     </div>
 
     <div class="col-sm-12 text-right">
-        <button type="submit" class="btn btn-success" ng-click="save()">{{ __('Add new customer') }}</button>
+        <button type="submit" class="btn btn-success" ng-show=" ! customer_id" ng-click="save()">{{ __('Add new customer') }}</button>
+        <button type="submit" class="btn btn-success" ng-show="customer_id" ng-click="save()">{{ __('Save') }}</button>
     </div>
 </div>

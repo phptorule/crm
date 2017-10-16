@@ -14,48 +14,6 @@ $(function() {
         return false;
     });
 
-    //lobipanel
-    $('.lobidrag').lobiPanel({
-        sortable: true,
-        editTitle: {
-            icon: 'ti-pencil'
-        },
-        unpin: {
-            icon: 'ti-move'
-        },
-        reload: {
-            icon: 'ti-reload'
-        },
-        minimize: {
-            icon: 'ti-minus',
-            icon2: 'ti-plus'
-        },
-        close: {
-            icon: 'ti-close'
-        },
-        expand: {
-            icon: 'ti-fullscreen',
-            icon2: 'ti-fullscreen'
-        }
-    });
-
-    $('.lobidisable').lobiPanel({
-        reload: false,
-        close: false,
-        editTitle: false,
-        sortable: true,
-        unpin: {
-            icon: 'ti-move'
-        },
-        minimize: {
-            icon: 'ti-minus',
-            icon2: 'ti-plus'
-        },
-        expand: {
-            icon: 'ti-fullscreen',
-            icon2: 'ti-fullscreen'
-        }
-    });
     //search
     $('a[href="#search"]').on('click', function(event) {
         event.preventDefault();

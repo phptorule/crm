@@ -111,8 +111,56 @@
             return path[1] == segment;
         };
 
+        $scope.initLobipanel = function() {
+            $('.lobidrag').lobiPanel({
+                sortable: true,
+                editTitle: {
+                    icon: 'ti-pencil'
+                },
+                unpin: {
+                    icon: 'ti-move'
+                },
+                reload: {
+                    icon: 'ti-reload'
+                },
+                minimize: {
+                    icon: 'ti-minus',
+                    icon2: 'ti-plus'
+                },
+                close: {
+                    icon: 'ti-close'
+                },
+                expand: {
+                    icon: 'ti-fullscreen',
+                    icon2: 'ti-fullscreen'
+                }
+            });
+
+            $('.lobidisable').lobiPanel({
+                reload: false,
+                close: false,
+                editTitle: false,
+                sortable: true,
+                unpin: {
+                    icon: 'ti-move'
+                },
+                minimize: {
+                    icon: 'ti-minus',
+                    icon2: 'ti-plus'
+                },
+                expand: {
+                    icon: 'ti-fullscreen',
+                    icon2: 'ti-fullscreen'
+                }
+            });
+        };
+
         $scope.sidebar = plugins.sidebar();
         plugins.getSidebar();
+
+        $scope.$on('$viewContentLoaded', function(){
+            $scope.initLobipanel();
+        });
     };
 })();
 
