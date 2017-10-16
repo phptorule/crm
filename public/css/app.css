@@ -5176,3 +5176,12 @@ button.toast-close-button {
 .panel-body .btn-group {
     margin-right: 50px;
 }
+
+#customers_table th,
+#customers_table td {
+    max-width: 150px;
+    white-space: nowrap;
+    overflow: hidden;
+    padding: 5px;
+    text-overflow: ellipsis;
+}
