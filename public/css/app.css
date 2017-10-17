@@ -105,8 +105,8 @@ This file contains the common info of this theme.
        ------------------------------------------------------------------------------*/
 /*
 # [Color codes]
-# base color code:#009688
-# light teal: #009688
+# base color code:#2278cf
+# light teal: #2278cf
 # Black (sidebar) #222d32
 ----------------------------------------------------------------------------- */
 /* General Styling & Typography
@@ -197,7 +197,7 @@ body {
 .right-side {
     min-height: 100%;
     z-index: 800;
-    background-color: #ecedef;
+    background-color: #ececec;
 }
 .main-footer {
     background: #dedede;
@@ -262,12 +262,12 @@ body.hold-transition .main-header .logo {
 
 ::-moz-selection {
     color: #fff;
-    background: #009688;
+    background: #2278cf;
     text-shadow: none;
 }
 ::selection {
     color: #fff;
-    background: #009688;
+    background: #2278cf;
     text-shadow: none;
 }
 /* H1 - H6 font */
@@ -293,7 +293,7 @@ p {
 /* General Links */
 
 a {
-    color: #009688;
+    color: #2278cf;
     text-decoration: none;
 }
 a:hover,
@@ -301,7 +301,7 @@ a:active,
 a:focus {
     outline: none;
     text-decoration: none;
-    color: #00968899;
+    color: #2278cf99;
     -webkit-transition: all .3s;
     transition: all .3s;
 }
@@ -444,7 +444,7 @@ hr {
     border-color: #FFB61E;
 }
 .bg-custom {
-    background: #009688;
+    background: #2278cf;
 }
 /*background color*/
 
@@ -489,8 +489,8 @@ hr {
     border: none;
     min-height: 60px;
     border-radius: 0;
-    background-color: #2A3F54;
-    border-bottom: 1px solid #2A3F54;
+    background-color: #585858;
+    border-bottom: 1px solid #585858;
 }
 .layout-top-nav .main-header .navbar {
     margin-left: 0;
@@ -555,7 +555,7 @@ hr {
     display: none;
 }
 a.sidebar-toggle .pe-7s-angle-left-circle:hover {
-    color: #009688;
+    color: #2278cf;
     font-weight: 500;
     font-size: 28px;
 }
@@ -591,11 +591,11 @@ a.sidebar-toggle .pe-7s-angle-left-circle {
     padding: 0 15px;
     font-weight: 300;
     overflow: hidden;
-    background-color: #0c0b0c;
+    background-color: #fff;
     color: #241d1d;
     -webkit-transition: width 0.3s ease-in-out;
     transition: width 0.3s ease-in-out;
-    border-bottom: 2px solid #0c0b0c;
+    border-bottom: 2px solid #fff;
 }
 .main-header .logo .logo-lg {
     display: block;
@@ -624,7 +624,7 @@ a.sidebar-toggle .pe-7s-angle-left-circle {
 }
 .content-header .header-icon {
     font-size: 48px;
-    color: #009688;
+    color: #2278cf;
     width: 68px;
     float: left;
     margin-top: -10px;
@@ -680,28 +680,28 @@ a.sidebar-toggle .pe-7s-angle-left-circle {
 .navbar-nav > li > a {
     padding: 4px 9px;
     position: relative;
-    color: #009688;
+    color: #2278cf;
     word-spacing: 2px;
 }
 .navbar-nav > li > a:hover {
     background-color: none;
     background: none;
-    color: #009688;
+    color: #2278cf;
 }
 .navbar-nav > li > a:focus {
     background-color: #222;
     background: #222;
-    color: #009688;
+    color: #2278cf;
 }
 .navbar-nav > li > a:visited {
     background-color: #222;
     background: #222;
-    color: #009688;
+    color: #2278cf;
 }
 .navbar-nav > li > a:active {
     background-color: #222;
     background: #222;
-    color: #009688;
+    color: #2278cf;
 }
 .navbar-nav > li > a > i {
     padding: 10px 3px;
@@ -722,7 +722,7 @@ a.sidebar-toggle .pe-7s-angle-left-circle {
     padding: 10px 3px;
     width: 36px;
     text-align: center;
-    color: #009688;
+    color: #2278cf;
     height: 52px;
     font-size: 28px;
     font-weight: 500;
@@ -915,8 +915,8 @@ a.sidebar-toggle .pe-7s-angle-left-circle {
     top: 15px;
     right: 15px;
     color: #fff;
-    background-color: #009688;
-    border-color: #009688;
+    background-color: #2278cf;
+    border-color: #2278cf;
     opacity: 1;
     padding: 10px 17px;
     font-size: 27px;
@@ -963,7 +963,7 @@ a.sidebar-toggle .pe-7s-angle-left-circle {
     transition: width 0.3s ease-in-out, -webkit-transform 0.3s ease-in-out;
     transition: transform 0.3s ease-in-out, width 0.3s ease-in-out;
     transition: transform 0.3s ease-in-out, width 0.3s ease-in-out, -webkit-transform 0.3s ease-in-out;
-    background-color: #010a0f;
+    background-color: #fff;
 }
 @media (max-width: 767px) {
     .main-sidebar,
@@ -1055,7 +1055,7 @@ a.sidebar-toggle .pe-7s-angle-left-circle {
 .sidebar-menu > li > a {
     padding: 12px 5px 12px 15px;
     display: block;
-    color: #fefefe;
+    color: #707070;
     position: relative;
     font-size: 14px;
     font-weight: 500;
@@ -1076,8 +1076,8 @@ a.sidebar-toggle .pe-7s-angle-left-circle {
 }
 .sidebar-menu > li:hover > a,
 .sidebar-menu > li.active > a {
-    color: #fff;
-    background:#010a0f;
+    color: #707070;
+    background: #fafafa;
 }
 .sidebar-menu > li > a > .fa,
 .sidebar-menu > li > a > .glyphicon,
@@ -1118,7 +1118,7 @@ a.sidebar-toggle .pe-7s-angle-left-circle {
     padding: 5px 0 10px;
     margin: 0;
     padding-left: 35px;
-    background-color:#07161e;
+    background-color: #ececec;
 }
 .sidebar-menu .treeview-menu:before {
     width: 2px;
@@ -1139,7 +1139,7 @@ a.sidebar-toggle .pe-7s-angle-left-circle {
 .sidebar-menu .treeview-menu > li > a {
     padding: 5px 5px 5px 20px;
     display: block;
-    color: #f9f9f9;
+    color: #707070;
     letter-spacing: 0.3px;
     font-weight: 500;
     font-size: 13px;
@@ -1310,7 +1310,7 @@ a.sidebar-toggle .pe-7s-angle-left-circle {
     padding: 5px 20px;
 }
 .dropdown-menu > li > a:hover {
-    color: #009688;
+    color: #2278cf;
 }
 .dropdown-menu > li > a > .glyphicon,
 .dropdown-menu > li > a > .fa,
@@ -1606,7 +1606,7 @@ the class .animated-dropdown-menu to the .dropdown-menu ul (or ol)*/
     box-shadow: 0 0 5px #888;
     color: #e4e5e7;
     cursor: pointer;
-    background-color: #009688;
+    background-color: #2278cf;
     height: 130px;
     margin-bottom: 25px;
     border-radius: 4px;
@@ -1617,7 +1617,7 @@ the class .animated-dropdown-menu to the .dropdown-menu ul (or ol)*/
     box-shadow: 0 0 5px #888;
     color: #e4e5e7;
     cursor: pointer;
-    background-color: #009688;
+    background-color: #2278cf;
     height: 130px;
     margin-bottom: 25px;
     border-radius: 4px;
@@ -1628,7 +1628,7 @@ the class .animated-dropdown-menu to the .dropdown-menu ul (or ol)*/
     box-shadow: 0 0 5px #888;
     color: #e4e5e7;
     cursor: pointer;
-    background-color: #009688;
+    background-color: #2278cf;
     height: 130px;
     margin-bottom: 25px;
     border-radius: 4px;
@@ -1639,7 +1639,7 @@ the class .animated-dropdown-menu to the .dropdown-menu ul (or ol)*/
     box-shadow: 0 0 5px #888;
     color: #e4e5e7;
     cursor: pointer;
-    background-color: #009688;
+    background-color: #2278cf;
     height: 130px;
     margin-bottom: 25px;
     border-radius: 4px;
@@ -1677,7 +1677,7 @@ span.count-number {
 .searchdate {
     margin-top: -34px;
     margin-right: 35px;
-    background-color: #009688;
+    background-color: #2278cf;
 }
 .yearlabel {
     padding-left: 15px;
@@ -1745,7 +1745,7 @@ i.fa-ban {
     width: 30px;
 }
 .work-touchpoint-date .month {
-    background-color: #009688;
+    background-color: #2278cf;
     color: #fff;
     display: block;
     font-size: 9px;
@@ -1773,7 +1773,7 @@ i.fa-ban {
     font-weight: 600;
 }
 i.fa-dot-circle-o {
-    color: #009688;
+    color: #2278cf;
 }
 .Pendingwork a {
     color: #222;
@@ -1843,7 +1843,7 @@ i.fa-dot-circle-o {
 }
 .panel-bd > .panel-heading {
     color: #010611;
-    background-color: #e8f1f3;
+    background-color: #d1d1d1;
     border-color: #b7b9bf;
     position: relative;
 }
@@ -2360,15 +2360,15 @@ i.fa-dot-circle-o {
 .tabs-left>li.active>a,
 .tabs-left>li.active>a:hover,
 .tabs-left>li.active>a:focus {
-    border-bottom-color: #009688;
-    border-right-color: #009688;
-    background-color: #009688;
+    border-bottom-color: #2278cf;
+    border-right-color: #2278cf;
+    background-color: #2278cf;
     color: #fff;
 }
 .tabs-right>li.active>a,
 .tabs-right>li.active>a:hover,
 .tabs-right>li.active>a:focus {
-    border-bottom: 1px solid #009688;
+    border-bottom: 1px solid #2278cf;
     border-left-color: transparent;
 }
 .tabs-left>li>a {
@@ -2516,7 +2516,7 @@ pre .arg {
     color: #4C4C4C;
 }
 .tree li a:hover {
-    color: #009688;
+    color: #2278cf;
 }
 .tree li button,
 .tree li button:active,
@@ -2545,7 +2545,7 @@ pre .arg {
     font-size: 8px;
     font-weight: 600;
     line-height: 12px;
-    background-color: #009688;
+    background-color: #2278cf;
 }
 .progress-animated {
     -webkit-animation-duration: 5s;
@@ -3266,8 +3266,8 @@ pre .arg {
 }
 .label-custom {
     color: white;
-    background-color: #009688;
-    border: 2px solid #009688;
+    background-color: #2278cf;
+    border: 2px solid #2278cf;
 }
 /*--- Badges ---*/
 
@@ -3296,7 +3296,7 @@ pre .arg {
 }
 .badge {
     color: white;
-    background-color: #009688;
+    background-color: #2278cf;
     font-size: 10px;
     border-radius: 5px;
     padding: 6px 7px;
@@ -3387,7 +3387,7 @@ pre .arg {
 }
 .lock-wrapper-page .form-control {
     padding-left: 40px;
-    border: 1px solid #009688;
+    border: 1px solid #2278cf;
 }
 .lock-wrapper-page .fa-key {
     left: 15px;
@@ -3433,7 +3433,7 @@ pre .arg {
 }
 .view-header .header-icon {
     font-size: 60px;
-    color: #009688;
+    color: #2278cf;
     width: 68px;
     float: left;
     margin-top: -8px;
@@ -3469,7 +3469,7 @@ pre .arg {
     margin-top: 30px;
 }
 .error-desc .navbar-form .form-control {
-    border: 1px solid #009688;
+    border: 1px solid #2278cf;
 }
 @media (max-width: 767px) {
     .error-text h1 {
@@ -3648,7 +3648,7 @@ pre .arg {
 
 .dropzone {
     min-height: 200px;
-    border: 2px dashed #009688;
+    border: 2px dashed #2278cf;
 }
 .dropzone .dz-message {
     margin: 4em 0;
@@ -3890,7 +3890,7 @@ pre .arg {
 }
 .icon_list li:hover {
     color: #fff;
-    background-color: #009688;
+    background-color: #2278cf;
 }
 .icon_list li i {
     font-size: 28px;
@@ -4016,10 +4016,10 @@ pre .arg {
     outline: 0;
 }
 .glyphs.character-mapping input:focus {
-    border: 1px solid #009688;
+    border: 1px solid #2278cf;
 }
 .glyphs.character-mapping input:hover {
-    border: 1px solid #009688;
+    border: 1px solid #2278cf;
 }
 .glyphs.css-mapping {
     margin: 0 0 30px 0;
@@ -4061,10 +4061,10 @@ pre .arg {
     float: right;
 }
 .glyphs.css-mapping input:focus {
-    border: 1px solid #009688;
+    border: 1px solid #2278cf;
 }
 .glyphs.css-mapping input:hover {
-    border: 1px solid #009688;
+    border: 1px solid #2278cf;
 }
 @media(min-width: 768px) and (max-width:1199px) {
     .glyphs.css-mapping li {
@@ -4148,16 +4148,16 @@ pre .arg {
     font-size: 14px;
 }
 .profile-usermenu ul li a:hover {
-    background-color: #009688;
+    background-color: #2278cf;
     color: #fff;
 }
 .profile-usermenu ul li.active {
     border-bottom: none;
 }
 .profile-usermenu ul li.active a {
-    color: #009688;
+    color: #2278cf;
     background-color: #0843684d;
-    border-left: 2px solid #009688;
+    border-left: 2px solid #2278cf;
     margin-left: -2px;
 }
 .profile-usermenu h6 {
@@ -4305,7 +4305,7 @@ table.text-center th {
     border: 1px solid #e4e5e7;
 }
 .form-control:focus {
-    border-color: #009688;
+    border-color: #2278cf;
     box-shadow: none;
 }
 .note-editor.note-frame {
@@ -4386,7 +4386,7 @@ table.text-center th {
     top: 0;
     left: 0;
     height: 1px;
-    background: #009688;
+    background: #2278cf;
 }
 .f1-step {
     position: relative;
@@ -4407,15 +4407,15 @@ table.text-center th {
 }
 .f1-step.activated .f1-step-icon {
     background: #fff;
-    border: 1px solid #009688;
-    color: #009688;
+    border: 1px solid #2278cf;
+    color: #2278cf;
     line-height: 38px;
 }
 .f1-step.active .f1-step-icon {
     width: 48px;
     height: 48px;
     margin-top: 0;
-    background: #009688;
+    background: #2278cf;
     font-size: 22px;
     line-height: 48px;
 }
@@ -4500,7 +4500,7 @@ table.text-center th {
 }
 ::-webkit-scrollbar-thumb:vertical {
     height: 15px;
-    background-color: #009688;
+    background-color: #2278cf;
 }
 /*--- back to top ---*/
 
@@ -4513,8 +4513,8 @@ table.text-center th {
     z-index: 10;
 }
 .back-top {
-    background-color: #009688;
-    border: 1px solid #009688;
+    background-color: #2278cf;
+    border: 1px solid #2278cf;
     padding: 7px 9px;
     height: 34px;
     width: 34px;
@@ -4536,38 +4536,38 @@ table.text-center th {
 ==============================================================================*/
 
 .btn-rating {
-    background: #009688;
+    background: #2278cf;
     color: #fbfbfb;
     border: 1px solid #1b366c00;
     text-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
 }
 .btn-rating:hover {
-    background: #2A3F54;
+    background: #585858;
     color: #fff;
-    border: 1px solid #2A3F54;
+    border: 1px solid #585858;
 }
 .btn-exp {
-    background: #009688;
+    background: #ee8a43;
     color: #fbfbfb;
-    border: 1px solid #009688;
+    border: 1px solid #ee8a43;
     margin-bottom: 5px;
 }
 .btn-exp:hover {
-    background: #009691;
+    background: #f5a46b;
     color: #fbfbfb;
-    border: 1px solid #009691;
+    border: 1px solid #f5a46b;
     margin-bottom: 5px;
 }
 .btn-add {
-    background: #009688;
+    background: #ee8a43;
     color: #fbfbfb !important;
-    border: 1px solid #009688;
+    border: 1px solid #ee8a43;
     ;
 }
 .btn-add:hover {
-    background: #009688;
+    background: #f5a46b;
     color: #fbfbfb;
-    border: 1px solid #009688;
+    border: 1px solid #f5a46b;
 }
 .card {
     margin-bottom: 20px;
@@ -4606,7 +4606,7 @@ table.text-center th {
     height: 6em;
     width: 6em;
     border-radius: 50%;
-    border: 2px solid #009688;
+    border: 2px solid #2278cf;
     background-image: url(../img/avatar.png);
     background-size: cover;
     background-position: center center;
@@ -4685,7 +4685,7 @@ table.text-center th {
     font-size: 0.9em;
 }
 .card-footer-message {
-    background-color: #009688;
+    background-color: #2278cf;
     padding: 15px;
     border-bottom-left-radius: 4px;
     border-bottom-right-radius: 4px;
@@ -4774,8 +4774,8 @@ table.text-center th {
     z-index: 3;
     color: #fff;
     cursor: default;
-    background-color: #009688;
-    border-color: #009688;
+    background-color: #2278cf;
+    border-color: #2278cf;
 }
 .buttonexport {
     padding-bottom: 5px;
@@ -5159,7 +5159,7 @@ button.toast-close-button {
 }
 
 .sidebar-menu .nav-title {
-    color: #fff;
+    color: #707070;
     font-weight: 700;
     padding: 20px 0 0 15px;
 }
@@ -5177,11 +5177,27 @@ button.toast-close-button {
     margin-right: 50px;
 }
 
-#customers_table th,
-#customers_table td {
+#content th,
+#content td {
     max-width: 150px;
     white-space: nowrap;
     overflow: hidden;
     padding: 5px;
     text-overflow: ellipsis;
+
+}
+
+#content .table>tbody>tr.info>td,
+#content .table>tbody>tr.info>th,
+#content .table>tbody>tr>td.info,
+#content .table>tbody>tr>th.info,
+#content .table>tfoot>tr.info>td,
+#content .table>tfoot>tr.info>th,
+#content .table>tfoot>tr>td.info,
+#content .table>tfoot>tr>th.info,
+#content .table>thead>tr.info>td,
+#content .table>thead>tr.info>th,
+#content .table>thead>tr>td.info,
+#content .table>thead>tr>th.info {
+    background-color: #d1d1d1;
 }

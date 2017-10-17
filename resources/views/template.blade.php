@@ -17,7 +17,7 @@
         <link href="/theme/plugins/emojionearea/emojionearea.min.css" rel="stylesheet" type="text/css"/>
         <link href="/theme/plugins/monthly/monthly.css" rel="stylesheet" type="text/css"/>
         <link href="/css/app.css" rel="stylesheet" type="text/css"/>
-        <link href="/css/app_old.css" rel="stylesheet" />
+        <!--link href="/css/app_old.css" rel="stylesheet" /-->
         <link href="/theme/plugins/NotificationStyles/css/ns-style-attached.css" rel="stylesheet" type="text/css" />
     </head>
 
@@ -29,11 +29,11 @@
         <div class="wrapper">
             <header class="main-header" id="header">
                 <a href="index.html" class="logo">
-                    <span class="logo-mini">
+                    <span class="logo-mini" ng-show="false">
                         <img src="/img/mini-logo.png" alt="">
                     </span>
                     <span class="logo-lg">
-                        <img src="/img/logo.png" alt="">
+                        <img src="/img/logo.jpg" alt="">
                     </span>
                 </a>
 
@@ -49,7 +49,7 @@
 
                         <form>
                             <input type="search" value="" placeholder="Search.." />
-                            <button type="submit" class="btn btn-add">Search...</button>
+                            <button type="submit" class="btn btn-add">Szukaj...</button>
                         </form>
                     </div>
 
@@ -100,14 +100,14 @@
                         <li class="treeview" ng-show="sidebar.plugins.indexOf('Customers') != -1">
                             <a href="javascript:void(0)">
                                 <i class="fa fa-cogs"></i>
-                                <span>Customers</span>
+                                <span>Kontrahent</span>
                                 <span class="pull-right-container">
                                     <i class="fa fa-angle-left pull-right"></i>
                                 </span>
                             </a>
                             <ul class="treeview-menu">
-                                <li><a href="/customers/add">Add customer</a></li>
-                                <li><a href="/customers/list">List all customers</a></li>
+                                <li><a href="/customers/add">Utwórz Kontrahenta</a></li>
+                                <li><a href="/customers/list">Lista kontrahentów</a></li>
                             </ul>
                         </li>
 

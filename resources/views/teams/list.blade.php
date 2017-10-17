@@ -2,10 +2,10 @@
 	<h2>
 		<div class="pull-right">
 			<button type="button" class="btn btn-default" ng-click="switchTeam()">Switch team</button>
-    		<button type="button" class="btn btn-success" ng-click="create()"><i class="fa fa-plus-circle"></i> {{ __("Create Own Team") }}</button>
+    		<button type="button" class="btn btn-add" ng-click="create()"><i class="fa fa-plus-circle"></i> {{ __("Create Own Team") }}</button>
     	</div>
 
-		{{ __("Teams") }}
+		{{ __("Zespoły") }}
 	</h2>
 
 	<div uib-alert class="alert-info" ng-show=" ! pagesList.length">
@@ -159,7 +159,7 @@
 			    	<div class="input-group">
 						<input type="email" name="email" class="form-control" ng-model="email" placeholder="{{ __('To invite other user just input his email here') }}" />
 						<span class="input-group-btn">
-							<button class="btn btn-primary" type="button" ng-click="addMember()">{{ __('Invite') }}</button>
+							<button class="btn btn-add" type="button" ng-click="addMember()">{{ __('Invite') }}</button>
 						</span>
 					</div>
 		    	</div>
@@ -214,8 +214,8 @@
 		    <div class="modal-footer">
 		    	<div ng-class="{'btn-load': request_sent}">
 			    	<div class="loading-text">
-						<button type="submit" class="btn btn-primary" ng-click="save()" ng-if=" ! view">{{ __('Save') }}</button>
-						<button type="button" class="btn btn-default" ng-click="cancel()" ng-if=" ! view">{{ __('Cancel') }}</button>
+						<button type="submit" class="btn btn-add" ng-click="save()" ng-if=" ! view">{{ __('Zapisz') }}</button>
+						<button type="button" class="btn btn-default" ng-click="cancel()" ng-if=" ! view">{{ __('Anuluj') }}</button>
 					</div>
 					<button type="button" class="btn btn-default" ng-click="cancel()" ng-if="view">{{ __('Close') }}</button>
 					<i class="fa fa-spinner fa-pulse fa-3x fa-fw loading-icon"></i>
@@ -285,8 +285,8 @@
             </div>
 
             <div class="modal-footer">
-                <button type="submit" class="btn btn-primary" ng-click="save()">{{ __('Save') }}</button>
-                <button type="button" class="btn btn-default" ng-click="cancel()">{{ __('Cancel') }}</button>
+                <button type="submit" class="btn btn-add" ng-click="save()">{{ __('Zapisz') }}</button>
+                <button type="button" class="btn btn-default" ng-click="cancel()">{{ __('Anuluj') }}</button>
             </div>
         </form>
     </script>
