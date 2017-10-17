@@ -1,9 +1,9 @@
 (function () {
     'use strict';
 
-    angular.module('app').controller('CustomersCtrl', ['$rootScope', '$scope', '$uibModal', '$filter', '$location', 'request', 'validate', 'logger', 'langs', 'plugins', CustomersCtrl]);
+    angular.module('app').controller('CustomersCtrl', ['$rootScope', '$scope', '$uibModal', '$filter', '$location', 'request', 'validate', 'logger', 'langs', 'plugins', 'Page', CustomersCtrl]);
 
-    function CustomersCtrl($rootScope, $scope, $uibModal, $filter, $location, request, validate, logger, langs, plugins) {
+    function CustomersCtrl($rootScope, $scope, $uibModal, $filter, $location, request, validate, logger, langs, plugins, Page) {
         $scope.currentTeam = {};
         $scope.list = [];
         $scope.listFiltered = [];
@@ -101,6 +101,25 @@
         $scope.reloadData = function() {
             $scope.get();
         };
+
+        /*Setting page titles*/
+        if (customer_id)
+        {
+            Page.setTitle('Kontrahent');
+            Page.setIcon('fa fa-user');
+        }
+
+        if ($location.path() == '/customers/add/')
+        {
+            Page.setTitle('Utwórz Kontrahenta');
+            Page.setIcon('fa fa-user-plus');
+        }
+
+        if ($location.path() == '/customers/list/')
+        {
+            Page.setTitle('Lista Kontrahentów');
+            Page.setIcon('fa fa-list');
+        }
     };
 })();
 

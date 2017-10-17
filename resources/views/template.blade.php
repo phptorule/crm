@@ -131,12 +131,11 @@
             <div class="content-wrapper">
                 <section class="content-header">
                     <div class="header-icon">
-                        <i class="fa fa-dashboard"></i>
+                        <i class="@{{ Page.icon() }}"></i>
                     </div>
 
                     <div class="header-title">
-                        <h1>CRM Admin Dashboard</h1>
-                        <small>Very detailed & featured admin.</small>
+                        <h1>@{{ Page.title() }}</h1>
                     </div>
                 </section>
 

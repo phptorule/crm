@@ -55,15 +55,41 @@
 
 ;
 
+(function() {
+    'use strict';
+
+    angular.module('app').factory('Page', [Page]);
+
+    function Page() {
+        var title = 'CRM';
+        var icon = 'fa fa-dashboard';
+        return {
+            title: function() {
+                return title;
+            },
+            setTitle: function(newTitle) {
+                title = newTitle;
+            },
+            icon: function() {
+                return icon;
+            },
+            setIcon: function(newIcon) {
+                icon = newIcon;
+            }
+        };
+    };
+})();
+
 (function () {
     'use strict';
 
-    angular.module('app').controller('AppCtrl', [ '$scope', '$rootScope', '$uibModal', '$window', '$timeout', '$location', 'request', 'plugins', AppCtrl]);
+    angular.module('app').controller('AppCtrl', [ '$scope', '$rootScope', '$uibModal', '$window', '$timeout', '$location', 'request', 'plugins', 'Page', AppCtrl]);
 
-    function AppCtrl($scope, $rootScope, $uibModal, $window, $timeout, $location, request, plugins) {
+    function AppCtrl($scope, $rootScope, $uibModal, $window, $timeout, $location, request, plugins, Page) {
         $rootScope.token = '';
         $rootScope.body_class = '';
         $rootScope.open = 1;
+        $scope.Page = Page;
 
         $scope.openSidebar = function() {
             $rootScope.open = 1 - $rootScope.open;

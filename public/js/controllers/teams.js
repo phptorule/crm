@@ -1,9 +1,9 @@
 (function () {
     'use strict';
 
-    angular.module('app').controller('TeamsCtrl', ['$rootScope', '$scope', '$uibModal', '$filter', 'request', 'langs', 'plugins', TeamsCtrl]);
+    angular.module('app').controller('TeamsCtrl', ['$rootScope', '$scope', '$uibModal', '$filter', 'request', 'langs', 'plugins', 'Page', TeamsCtrl]);
 
-    function TeamsCtrl($rootScope, $scope, $uibModal, $filter, request, langs, plugins) {
+    function TeamsCtrl($rootScope, $scope, $uibModal, $filter, request, langs, plugins, Page) {
     	$scope.list = [];
     	$scope.listFiltered = [];
 		$scope.pagesList = [];
@@ -161,6 +161,10 @@
                 }
             });
         };
+
+        /*Setting page title*/
+        Page.setTitle('Zespoły');
+        Page.setIcon('fa fa-users');
     };
 })();
 
