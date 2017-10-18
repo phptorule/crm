@@ -211,7 +211,7 @@
         <div class="panel panel-bd lobidrag">
             <div class="panel-heading">
                 <div class="btn-group" id="buttonlist">
-                    <h3>Komentarze</h3>
+                    <h3>Komentarze i notatki</h3>
                 </div>
             </div>
 
@@ -220,24 +220,22 @@
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="comments_area">
-                                <div ng-repeat="comment in comments">
+                                <div class="comment_box" ng-repeat="comment in comments">
                                     <p>@{{ comment.comment_text }}</p>
                                     <p>
-                                        <span>Author: @{{ comment.author }}</span>
-                                        <span></span>
-                                        <span></span>
+                                        <span>Autor: @{{ comment.author + ' (' + comment.created_at + ')' }} </span>
                                     </p>
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <label>Komentarze</label>
+                                <label>Dodaj komentarz</label>
                                 <textarea class="form-control" rows="3" name="comments" ng-model="customers.comments"></textarea>
                             </div>
                         </div>
 
                         <div class="col-sm-12 text-left">
-                            <button type="submit" class="btn btn-add" ng-click="addComment()">{{ __('Dodaj komentarz') }}</button>
+                            <button type="submit" class="btn btn-add" ng-click="addComment()">{{ __('Zapisz') }}</button>
                         </div>
                     </div>
                 </form>

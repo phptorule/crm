@@ -111,6 +111,7 @@
                 'comment_text' : $scope.customers.comments
             }, function(data) {
                 $scope.getComment();
+                $scope.customers.comments = '';
             });
         };
 

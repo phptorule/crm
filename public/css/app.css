@@ -5204,4 +5204,15 @@ button.toast-close-button {
 
 .comments_area {
     height: 400px;
+    overflow: auto;
+    padding-right: 7px;
+}
+
+.comments_area span {
+    color: #2278cf;
+}
+
+.comment_box {
+    border-bottom: 1px solid #d1d1d1;
+    margin-bottom: 20px;
 }

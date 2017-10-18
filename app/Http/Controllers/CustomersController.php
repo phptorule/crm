@@ -83,7 +83,7 @@ class CustomersController extends Controller
 
         $customers_comments->customer_id = $post['customer_id'];
         $customers_comments->teams_id = $post['teams_id'];
-        $customers_comments->user_id = $user_id;
+        $customers_comments->users_id = $user_id;
         $customers_comments->author = $author;
         $customers_comments->comment_text = $post['comment_text'];
 
