@@ -1076,8 +1076,7 @@ a.sidebar-toggle .pe-7s-angle-left-circle {
 }
 .sidebar-menu > li:hover > a,
 .sidebar-menu > li.active > a {
-    color: #707070;
-    background: #fafafa;
+    color: #2278cf;
 }
 .sidebar-menu > li > a > .fa,
 .sidebar-menu > li > a > .glyphicon,
@@ -1151,12 +1150,12 @@ a.sidebar-toggle .pe-7s-angle-left-circle {
     box-shadow: none;
     opacity: .65;
 }
-.sidebar-menu .treeview-menu > li.active > a
+.sidebar-menu .treeview-menu > li > a.active
 {
-  color: #fff;
+    color: #2278cf;
 }
 .sidebar-menu .treeview-menu > li:hover > a {
-  color:;
+    color: #2278cf;
 }
 .sidebar-menu .treeview-menu > li::before {
     left: 0;
