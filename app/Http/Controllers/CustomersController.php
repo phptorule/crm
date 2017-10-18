@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Customers;
 use App\Teams;
+use App\CustomersComments;
 
 class CustomersController extends Controller
 {
@@ -56,7 +57,6 @@ class CustomersController extends Controller
         $customer->send_province = empty($post['send_province']) ? '' : $post['send_province'];
         $customer->send_post_code = empty($post['send_post_code']) ? '' : $post['send_post_code'];
         $customer->send_region = empty($post['send_region']) ? '' : $post['send_region'];
-        $customer->comments = empty($post['comments']) ? '' : $post['comments'];
         $customer->description = empty($post['description']) ? '' : $post['description'];
 
         $customer->save();
@@ -73,5 +73,27 @@ class CustomersController extends Controller
 
         $this->message(__('Record was successfully deleted'), 'success');
         return $this->get($post['teams_id']);
+    }
+
+    public function addComment($post = [])
+    {
+        $user_id = Auth::user()->users_id;
+        $author = Auth::user()->users_first_name . ' ' . Auth::user()->users_last_name;
+        $customers_comments = new CustomersComments();
+
+        $customers_comments->customer_id = $post['customer_id'];
+        $customers_comments->teams_id = $post['teams_id'];
+        $customers_comments->users_id = $user_id;
+        $customers_comments->author = $author;
+        $customers_comments->comment_text = $post['comment_text'];
+
+        $customers_comments->save();
+    }
+
+    public function getComment($post = [])
+    {
+        $customers_comments = CustomersComments::where([['customer_id', '=', $post['customer_id']], ['teams_id', '=', $post['teams_id']]])->get();
+
+        return $customers_comments;
     }
 }

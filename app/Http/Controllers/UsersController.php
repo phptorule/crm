@@ -75,4 +75,11 @@ class UsersController extends Controller
     public function saveTeam($post = []) {
         session(['current_team' => $post['current_team']]);
     }
+
+    public function getUser($post = []) {
+        $user = Users::where('users_id', $post['users_id']);
+        //dd($user->get());
+
+        return $user->get();
+    }
 }

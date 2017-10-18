@@ -1879,8 +1879,8 @@ i.fa-dot-circle-o {
 }
 .panel-custom > .panel-heading {
     color: #060606;
-    background-color: #b1d3db;
-    border-color: #b1eaec;
+    background-color: #d1d1d1;
+    border-color: #b7b9bf;
 }
 .panel-footer {
     background-color: #f7f9fa;
@@ -5200,4 +5200,19 @@ button.toast-close-button {
 #content .table>thead>tr>td.info,
 #content .table>thead>tr>th.info {
     background-color: #d1d1d1;
+}
+
+.comments_area {
+    height: 400px;
+    overflow: auto;
+    padding-right: 7px;
+}
+
+.comments_area span {
+    color: #2278cf;
+}
+
+.comment_box {
+    border-bottom: 1px solid #d1d1d1;
+    margin-bottom: 20px;
 }

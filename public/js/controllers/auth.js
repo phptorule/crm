@@ -50,6 +50,8 @@
 			var error = 1;
 			error *= validate.check($scope.form.users_email, 'Email');
 			error *= validate.check($scope.form.password, 'Password');
+			error *= validate.check($scope.form.users_first_name, 'First name');
+			error *= validate.check($scope.form.users_last_name, 'Last name');
 			if (error)
 			{
 				$rootScope.request_sent = true;
@@ -128,6 +130,8 @@
 			if ($scope.invite.users_active == '0')
 			{
 				error *= validate.check($scope.form.password, 'Password');
+				error *= validate.check($scope.form.users_first_name, 'First name');
+				error *= validate.check($scope.form.users_last_name, 'Last name');
 			}
 			error *= validate.check($scope.form.users_name, 'Username');
 			if (error)
