@@ -57,7 +57,7 @@
                         <ul class="nav navbar-nav">
                             <li class="nav-username">
                                 <span class="hidden-xs">
-                                    <span>@{{ user.users_name }} </span><span ng-show="team">(@{{ team.teams_name }})</span>
+                                    <span>@{{ user.users_first_name }} @{{ user.users_last_name }} </span><span ng-show="team">(@{{ team.teams_name }})</span>
                                 </span>
                             </li>
                             <li class="dropdown dropdown-user">

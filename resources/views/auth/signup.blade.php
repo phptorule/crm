@@ -44,13 +44,30 @@
 										name="password" />
 	                            <span class="help-block small">Your hard to guess password</span>
 	                        </div>
-
-	                        <!--<div class="form-group col-lg-6">
-	                            <label>Repeat Password</label>
-	                            <input type="password" value="" id="repeatpassword" class="form-control" name="repeatpassword">
-	                            <span class="help-block small">Please repeat your pasword</span>
-	                        </div>-->
 	                    </div>
+
+                        <div class="row">
+                            <div class="form-group col-lg-6">
+                                <label for="users_name">Enter your first name</label>
+                                <input  class="form-control input-lg"
+                                		type="text"
+                                        placeholder="{{ __('First name') }}"
+                                        ng-model="auth.users_first_name"
+                                        required="required"
+                                        name="users_first_name" />
+
+                            </div>
+
+                            <div class="form-group col-lg-6">
+                                <label for="users_name">Enter your last name</label>
+                                <input  class="form-control input-lg"
+                                		type="text"
+                                        placeholder="{{ __('Last name') }}"
+                                        ng-model="auth.users_last_name"
+                                        required="required"
+                                        name="users_last_name" />
+                            </div>
+                        </div>
 
 	                    <div ng-class="{'btn-load': request_sent}">
 		                    <div class="loading-text">

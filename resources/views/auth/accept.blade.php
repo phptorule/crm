@@ -46,6 +46,7 @@
                                        />
                                 </div>
                             </div>
+
                             <div class="form-group">
                                 <h4 class="text-center">Terms and Conditions</h4>
                                 <div class="panel-body ui-map ui-map-scroll" data-slim-scroll data-scroll-height="240px">
@@ -66,7 +67,7 @@
                             <div class="form-group">
                                 <button
                                    type="submit"
-                                   class="btn btn-success btn-lg btn-block text-center"
+                                   class="btn btn-add btn-lg btn-block text-center"
                                    ng-click="accept()">{{ __('Accept') }}</button>
                             </div>
                         </fieldset>

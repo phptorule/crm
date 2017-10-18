@@ -35,6 +35,8 @@
                         $scope.customers = data[0];
                         $scope.customers.customer_type = $scope.customers.customer_type.toString();
                     });
+
+                    $scope.getComment();
                 }
                 else
                 {
@@ -102,7 +104,23 @@
             $scope.get();
         };
 
-        /*Setting page titles*/
+        $scope.addComment = function() {
+            request.send('/customers/addComment', {
+                'teams_id' : $scope.team.teams_id,
+                'customer_id' : customer_id,
+                'comment_text' : $scope.customers.comments
+            }, function(data) {
+                $scope.getComment();
+            });
+        };
+
+        $scope.getComment = function() {
+            request.send('/customers/getComment', {'teams_id' : $scope.team.teams_id, 'customer_id' : customer_id}, function(data) {
+                $scope.comments = data;
+            });
+        };
+
+        /* Setting page titles */
         if (customer_id)
         {
             Page.setTitle('Kontrahent');

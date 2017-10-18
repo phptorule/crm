@@ -49,6 +49,8 @@ class AuthController extends Controller
     {
         $users_email = $post['users_email'];
         $password = $post['password'];
+        $users_first_name = $post['users_first_name'];
+        $users_last_name = $post['users_last_name'];
         $current = Users::where('users_email', $users_email)->first();
         if (!empty($current))
         {
@@ -61,6 +63,8 @@ class AuthController extends Controller
             $user->users_email = $users_email;
             $user->users_name = '';
             $user->users_password = bcrypt($password);
+            $user->users_first_name = $users_first_name;
+            $user->users_last_name = $users_last_name;
             if ($user->save() && $this->activate($user))
             {
                 $this->message(__('To activate account chek you email'),'success');
@@ -164,6 +168,8 @@ class AuthController extends Controller
     {
         $user = Users::find($post['users_id']);
         $user->users_name = $post['users_name'];
+        $user->users_first_name = $post['users_first_name'];
+        $user->users_last_name = $post['users_last_name'];
         $user->users_active = TRUE;
         if ( ! empty($post['password']))
         {

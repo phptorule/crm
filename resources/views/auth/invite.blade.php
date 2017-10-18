@@ -69,6 +69,36 @@
 							<div class="form-group" ng-show="invite.users_active == '0'">
 								<div class="input-group ">
 									<span class="input-group-addon">
+										<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+									</span>
+									<input  type="text"
+											class="form-control input-lg"
+											placeholder="{{ __('First name') }}"
+											ng-model="auth.users_first_name"
+											required="required"
+											name="users_first_name"
+										/>
+								</div>
+							</div>
+
+							<div class="form-group" ng-show="invite.users_active == '0'">
+								<div class="input-group ">
+									<span class="input-group-addon">
+										<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+									</span>
+									<input  type="text"
+											class="form-control input-lg"
+											placeholder="{{ __('Last name') }}"
+											ng-model="auth.users_last_name"
+											required="required"
+											name="users_last_name"
+											/>
+								</div>
+							</div>
+
+							<div class="form-group" ng-show="invite.users_active == '0'">
+								<div class="input-group ">
+									<span class="input-group-addon">
 										<span class="glyphicon glyphicon-lock" aria-hidden="true"></span>
 									</span>
 									<input  type="password"
@@ -83,7 +113,7 @@
 
 							<div class="form-group form-group_margin">
 								<button type="submit"
-										class="btn btn-success btn-lg btn-block text-center"
+										class="btn btn-add btn-lg btn-block text-center"
 										ng-click="confirm()">{{ __('Confirm Invitation') }}
 								</button>
 							</div>

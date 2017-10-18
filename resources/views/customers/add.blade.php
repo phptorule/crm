@@ -219,10 +219,25 @@
                 <form>
                     <div class="row">
                         <div class="col-sm-12">
+                            <div class="comments_area">
+                                <div ng-repeat="comment in comments">
+                                    <p>@{{ comment.comment_text }}</p>
+                                    <p>
+                                        <span>Author: @{{ comment.author }}</span>
+                                        <span></span>
+                                        <span></span>
+                                    </p>
+                                </div>
+                            </div>
+
                             <div class="form-group">
                                 <label>Komentarze</label>
                                 <textarea class="form-control" rows="3" name="comments" ng-model="customers.comments"></textarea>
                             </div>
+                        </div>
+
+                        <div class="col-sm-12 text-left">
+                            <button type="submit" class="btn btn-add" ng-click="addComment()">{{ __('Dodaj komentarz') }}</button>
                         </div>
                     </div>
                 </form>
