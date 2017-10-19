@@ -1,5 +1,8 @@
 <div class="row" data-ng-controller="CustomersCtrl" ng-init="get()">
-    <!-- Form controls -->
+    <button type="button" class="btn btn-labeled btn-danger m-b-5 delete_customer pull-right" ng-show="customer_id" ng-click="remove(customer_id)">
+        <span class="btn-label"><i class="glyphicon glyphicon-trash"></i></span>Usuń kontrahenta
+    </button>
+
     <div class="col-sm-12">
         <div class="panel panel-bd lobidrag">
             <div class="panel-heading">
@@ -310,3 +313,30 @@
         <button type="submit" class="btn btn-add" ng-show=" ! customer_id" ng-click="save()">{{ __('Dodaj nowego kontrahenta') }}</button>
     </div>
 </div>
+
+<script type="text/ng-template" id="CustomersDelete.html">
+   <div class="modal-header modal-header-primary">
+      <button type="button" class="close" ng-click="cancel()" aria-hidden="true">×</button>
+      <h3><i class="fa fa-user m-r-5"></i> Usuń kontrahenta</h3>
+   </div>
+   <div class="modal-body">
+      <div class="row">
+         <div class="col-md-12">
+            <form class="form-horizontal">
+               <fieldset>
+                  <div class="col-md-12 form-group user-form-group">
+                     <label class="control-label">Czy napewno usunąć?</label>
+                     <div class="pull-right">
+                        <button type="button" class="btn btn-danger btn-sm" ng-click="cancel()">Nie</button>
+                        <button type="submit" class="btn btn-add btn-sm" ng-click="delete(customer_id)">Tak</button>
+                     </div>
+                  </div>
+               </fieldset>
+            </form>
+         </div>
+      </div>
+   </div>
+   <div class="modal-footer">
+      <button type="button" class="btn btn-danger pull-left" ng-click="cancel()">Anuluj</button>
+   </div>
+</script>

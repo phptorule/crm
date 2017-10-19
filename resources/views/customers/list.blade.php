@@ -106,7 +106,7 @@
                         <th>type</th>
                         <th>Join</th>
                         <th>Strona WWW</th>
-                        <th>Action</th>
+                        <th>Przegląd</th>
                      </tr>
                   </thead>
                   <tbody>
@@ -122,9 +122,10 @@
                         </td>
                         <td>@{{ customer.created_at }}</td>
                         <td>@{{ customer.website }}</td>
-                        <td>
-                           <a href="/customers/add/@{{ customer.customer_id }}" class="btn btn-add btn-sm"><i class="fa fa-eye"></i></a>
-                           <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" ng-click="remove(customer.customer_id)"><i class="fa fa-trash-o"></i> </button>
+                        <td class="view_customer">
+                           <a href="/customers/add/@{{ customer.customer_id }}" class="btn btn-success btn-labeled m-b-5">
+                              <span class="btn-label"><i class="glyphicon glyphicon-info-sign"></i></span>Otwórz
+                           </a>
                         </td>
                      </tr>
                   </tbody>
@@ -134,31 +135,3 @@
       </div>
    </div>
 </div>
-<!-- Modal -->
-<!-- Customer Modal2 -->
-<script type="text/ng-template" id="CustomersDelete.html">
-   <div class="modal-header modal-header-primary">
-      <button type="button" class="close" ng-click="cancel()" aria-hidden="true">×</button>
-      <h3><i class="fa fa-user m-r-5"></i> Delete Customer</h3>
-   </div>
-   <div class="modal-body">
-      <div class="row">
-         <div class="col-md-12">
-            <form class="form-horizontal">
-               <fieldset>
-                  <div class="col-md-12 form-group user-form-group">
-                     <label class="control-label">Delete Customer</label>
-                     <div class="pull-right">
-                        <button type="button" class="btn btn-danger btn-sm" ng-click="cancel()">NO</button>
-                        <button type="submit" class="btn btn-add btn-sm" ng-click="delete(customer_id)">YES</button>
-                     </div>
-                  </div>
-               </fieldset>
-            </form>
-         </div>
-      </div>
-   </div>
-   <div class="modal-footer">
-      <button type="button" class="btn btn-danger pull-left" ng-click="cancel()">Close</button>
-   </div>
-</script>
