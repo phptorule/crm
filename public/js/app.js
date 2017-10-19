@@ -172,7 +172,10 @@
         };
 
         $scope.getClass = function (path) {
-            return ($location.path().substr(0, path.length) === path) ? 'active' : '';
+            if ( ! $location.path().split('/')[3])
+            {
+                return ($location.path().substr(0, path.length) === path) ? 'active' : '';
+            }
         }
 
         $scope.sidebar = plugins.sidebar();
