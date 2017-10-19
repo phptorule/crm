@@ -123,7 +123,7 @@
                         <td>@{{ customer.created_at }}</td>
                         <td>@{{ customer.website }}</td>
                         <td>
-                           <a href="/customers/add/@{{ customer.customer_id }}" class="btn btn-add btn-sm"><i class="fa fa-pencil"></i></a>
+                           <a href="/customers/add/@{{ customer.customer_id }}" class="btn btn-add btn-sm"><i class="fa fa-eye"></i></a>
                            <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" ng-click="remove(customer.customer_id)"><i class="fa fa-trash-o"></i> </button>
                         </td>
                      </tr>

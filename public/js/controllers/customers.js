@@ -1,15 +1,18 @@
 (function () {
     'use strict';
 
-    angular.module('app').controller('CustomersCtrl', ['$rootScope', '$scope', '$uibModal', '$filter', '$location', 'request', 'validate', 'logger', 'langs', 'plugins', 'Page', CustomersCtrl]);
+    angular.module('app').controller('CustomersCtrl', ['$rootScope', '$scope', '$uibModal', '$filter', '$location', '$timeout', '$window', 'request', 'validate', 'logger', 'langs', 'plugins', 'Page', CustomersCtrl]);
 
-    function CustomersCtrl($rootScope, $scope, $uibModal, $filter, $location, request, validate, logger, langs, plugins, Page) {
+    function CustomersCtrl($rootScope, $scope, $uibModal, $filter, $location, $timeout, $window, request, validate, logger, langs, plugins, Page) {
         $scope.currentTeam = {};
         $scope.list = [];
         $scope.listFiltered = [];
         $scope.pagesList = [];
         $scope.numPerPage = 20;
         $scope.currentPage = 1;
+        $scope.edit_on = 0;
+
+        console.log($scope.edit);
 
         $scope.customers = {};
         $scope.customers.customer_type = '0';
@@ -75,7 +78,14 @@
 			if (error)
 			{
                 $scope.customers.teams_id = $scope.team.teams_id;
-				request.send('/customers/save', $scope.customers, function(data) {});
+				request.send('/customers/save', $scope.customers, function(data) {
+                    if (data)
+                    {
+                        $timeout(function() {
+                            $window.location.href = "/customers/add/" + data;
+                        }, 2000);
+                    }
+                });
 			}
 		};
 
@@ -119,6 +129,17 @@
             request.send('/customers/getComment', {'teams_id' : $scope.team.teams_id, 'customer_id' : customer_id}, function(data) {
                 $scope.comments = data;
             });
+        };
+
+        $scope.edit = function() {
+            if ($scope.edit_on == 0)
+            {
+                $scope.edit_on = 1;
+            }
+            else
+            {
+                $scope.edit_on = 0;
+            }
         };
 
         /* Setting page titles */

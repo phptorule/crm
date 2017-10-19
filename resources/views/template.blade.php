@@ -165,7 +165,7 @@
         <script src="/theme/plugins/jQuery/jquery-1.12.4.min.js" type="text/javascript"></script>
         <script src="/theme/plugins/jquery-ui-1.12.1/jquery-ui.min.js" type="text/javascript"></script>
         <script src="/theme/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
-        <script src="/theme/plugins/lobipanel/lobipanel.js" type="text/javascript"></script>
+        <script src="/theme/plugins/lobipanel/lobipanel.min.js" type="text/javascript"></script>
         <script src="/theme/plugins/pace/pace.min.js" type="text/javascript"></script>
         <script src="/theme/plugins/table-export/tableExport.js" type="text/javascript"></script>
         <script src="/theme/plugins/table-export/jquery.base64.js" type="text/javascript"></script>
