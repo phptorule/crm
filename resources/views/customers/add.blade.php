@@ -122,7 +122,15 @@
                 </div>
 
                 <div class="custom_panel_item pull-right" ng-show="customer_id">
-                    <a href="javascript:void(0);" ng-click="edit_address = ! edit_address">Edytuj <i class="panel-control-icon ti-pencil"></i></a>
+                    <a href="javascript:void(0);" ng-show=" ! edit_address" ng-click="editCustomers('address')">Edytuj <i class="panel-control-icon ti-pencil"></i></a>
+                </div>
+
+                <div class="custom_panel_item pull-right" ng-show="customer_id && edit_address">
+                    <a href="javascript:void(0);" ng-click="save()">Zapisz <i class="fa fa-floppy-o"></i></a>
+                </div>
+
+                <div class="custom_panel_item pull-right" ng-show="customer_id && edit_address">
+                    <a href="javascript:void(0);" ng-click="cancelEdit('address')">Anuluj</a>
                 </div>
             </div>
 
@@ -219,7 +227,15 @@
                 </div>
 
                 <div class="custom_panel_item pull-right" ng-show="customer_id">
-                    <a href="javascript:void(0);" ng-click="edit_rest = ! edit_rest">Edytuj <i class="panel-control-icon ti-pencil"></i></a>
+                    <a href="javascript:void(0);" ng-show=" ! edit_rest" ng-click="editCustomers('rest')">Edytuj <i class="panel-control-icon ti-pencil"></i></a>
+                </div>
+
+                <div class="custom_panel_item pull-right" ng-show="customer_id && edit_rest">
+                    <a href="javascript:void(0);" ng-click="save()">Zapisz <i class="fa fa-floppy-o"></i></a>
+                </div>
+
+                <div class="custom_panel_item pull-right" ng-show="customer_id && edit_rest">
+                    <a href="javascript:void(0);" ng-click="cancelEdit('rest')">Anuluj</a>
                 </div>
             </div>
 
@@ -237,7 +253,9 @@
 
                             <div class="form-group">
                                 <label>Typ osoby</label>
-                                <span class="form-span" ng-model="customers.customer_type" ng-show=" ! edit_rest && customer_id">@{{ customers.customer_type }}</span>
+                                <span class="form-span" ng-show=" ! edit_rest && customer_id && customers.customer_type == '0'">Regular</span>
+                                <span class="form-span" ng-show=" ! edit_rest && customer_id && customers.customer_type == '1'">Vendor</span>
+                                <span class="form-span" ng-show=" ! edit_rest && customer_id && customers.customer_type == '2'">V.I.P.</span>
                                 <select class="form-control" name="customer_type" ng-show="edit_rest || ! customer_id" ng-model="customers.customer_type">
                                     <option value="0">Regular</option>
                                     <option value="1">Vendor</option>

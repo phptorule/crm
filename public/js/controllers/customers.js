@@ -136,17 +136,17 @@
         };
 
         $scope.editCustomers = function(block) {
-            if (block = 'general')
+            if (block == 'general')
             {
                 $scope.edit_general = true;
             }
 
-            if (block = 'address')
+            if (block == 'address')
             {
                 $scope.edit_address = true;
             }
 
-            if (block = 'rest')
+            if (block == 'rest')
             {
                 $scope.edit_rest = true;
             }
@@ -155,18 +155,18 @@
         };
 
         $scope.cancelEdit = function(block) {
-            if (block = 'general')
+            if (block == 'general')
             {
                 $scope.edit_general = false;
 
             }
 
-            if (block = 'address')
+            if (block == 'address')
             {
                 $scope.edit_address = false;
             }
 
-            if (block = 'rest')
+            if (block == 'rest')
             {
                 $scope.edit_rest = false;
             }
