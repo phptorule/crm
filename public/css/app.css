@@ -4546,27 +4546,27 @@ table.text-center th {
     border: 1px solid #585858;
 }
 .btn-exp {
-    background: #ee8a43;
+    background: #2278cf;
     color: #fbfbfb;
-    border: 1px solid #ee8a43;
+    border: 1px solid #2278cf;
     margin-bottom: 5px;
 }
 .btn-exp:hover {
-    background: #f5a46b;
+    background: #589fe6;
     color: #fbfbfb;
-    border: 1px solid #f5a46b;
+    border: 1px solid #589fe6;
     margin-bottom: 5px;
 }
 .btn-add {
-    background: #ee8a43;
+    background: #2278cf;
     color: #fbfbfb !important;
-    border: 1px solid #ee8a43;
+    border: 1px solid #2278cf;
     ;
 }
 .btn-add:hover {
-    background: #f5a46b;
+    background: #589fe6;
     color: #fbfbfb;
-    border: 1px solid #f5a46b;
+    border: 1px solid #589fe6;
 }
 .card {
     margin-bottom: 20px;
@@ -5257,4 +5257,16 @@ button.toast-close-button {
 .no-transition .form-control,
 .no-transition .form-span {
     transition: none;
+}
+
+.delete_customer {
+    margin: 0 15px 15px 0;
+}
+
+.view_customer {
+    text-align: center;
+}
+
+.view_customer a {
+    margin: 0;
 }

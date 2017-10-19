@@ -94,6 +94,7 @@
 		};
 
         $scope.remove = function(customer_id) {
+            console.log(customer_id);
             var modalInstance = $uibModal.open({
                 animation: true,
                 templateUrl: 'CustomersDelete.html',
@@ -108,7 +109,9 @@
             });
 
             modalInstance.result.then(function(response) {
-                $scope.reloadData();
+                $timeout(function() {
+                    $window.location.href = "/customers/list/";
+                }, 1000);
             }, function () {
 
             });
