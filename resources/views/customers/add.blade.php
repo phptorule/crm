@@ -6,6 +6,9 @@
                 <div class="btn-group" id="buttonlist">
                     <h3>Informacje podstawowe</h3>
                 </div>
+                <div class="custom_panel_item pull-right">
+                    <a href="javascript:void(0);" ng-click="edit()">Edytuj <i class="panel-control-icon ti-pencil"></i></a>
+                </div>
             </div>
 
             <div class="panel-body">
@@ -14,7 +17,8 @@
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label>Nazwa firmy</label><span class="req_field"> *</span>
-                                <input type="text" class="form-control" name="company_name" ng-model="customers.company_name" required />
+                                <input type="text" class="form-control animate-show-hide" name="company_name" ng-show="edit_on == 0" ng-model="customers.company_name" required />
+                                <span  class="form-span animate-show-hide" ng-model="customers.company_name" ng-show="edit_on == 1">@{{ customers.company_name }}</span>
                             </div>
 
                             <div class="form-group">

@@ -140,22 +140,14 @@
         $scope.initLobipanel = function() {
             $('.lobidrag').lobiPanel({
                 sortable: true,
-                editTitle: {
-                    icon: 'ti-pencil'
-                },
-                unpin: {
-                    icon: 'ti-move'
-                },
-                reload: {
-                    icon: 'ti-reload'
-                },
+                editTitle: false,
+                unpin: false,
+                reload: false,
                 minimize: {
                     icon: 'ti-minus',
                     icon2: 'ti-plus'
                 },
-                close: {
-                    icon: 'ti-close'
-                },
+                close: false,
                 expand: {
                     icon: 'ti-fullscreen',
                     icon2: 'ti-fullscreen'
@@ -167,9 +159,7 @@
                 close: false,
                 editTitle: false,
                 sortable: true,
-                unpin: {
-                    icon: 'ti-move'
-                },
+                unpin: false,
                 minimize: {
                     icon: 'ti-minus',
                     icon2: 'ti-plus'
@@ -180,6 +170,10 @@
                 }
             });
         };
+
+        $scope.getClass = function (path) {
+            return ($location.path().substr(0, path.length) === path) ? 'active' : '';
+        }
 
         $scope.sidebar = plugins.sidebar();
         plugins.getSidebar();

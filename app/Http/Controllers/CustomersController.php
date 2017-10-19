@@ -63,6 +63,7 @@ class CustomersController extends Controller
         $customer->teams()->syncWithoutDetaching([$post['teams_id']]);
 
         $this->message(__('Customer was successfully saved'), 'success');
+        return $customer->customer_id;
 	}
 
     public function delete($post = [])
