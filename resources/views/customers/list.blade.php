@@ -1,4 +1,4 @@
-<div class="row" data-ng-controller="CustomersCtrl" data-ng-init="init()">
+<div class="row" data-ng-controller="CustomersCtrl" data-ng-init="get()">
    <div class="col-sm-12">
       <div class="panel panel-bd">
          <div class="panel-heading">

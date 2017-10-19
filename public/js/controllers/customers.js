@@ -10,24 +10,11 @@
         $scope.pagesList = [];
         $scope.numPerPage = 20;
         $scope.currentPage = 1;
-        $scope.edit_on = 0;
-
-        console.log($scope.edit);
-
         $scope.customers = {};
         $scope.customers.customer_type = '0';
-        $scope.options = [
-            {id: 0, label: 'Regular'},
-            {id: 1, label: 'Vendor'},
-            {id: 2, label: 'V.I.P.'}
-        ];
 
         var customer_id = $location.path().split('/')[3];
         $scope.customer_id = customer_id;
-
-    	$scope.init = function() {
-            $scope.get();
-		};
 
         $scope.get = function() {
             if ($scope.team)
@@ -37,6 +24,7 @@
                     request.send('/customers/get', {'teams_id' : $scope.team.teams_id, 'customer_id' : customer_id}, function(data) {
                         $scope.customers = data[0];
                         $scope.customers.customer_type = $scope.customers.customer_type.toString();
+                        $scope.old = angular.copy($scope.customers);
                     });
 
                     $scope.getComment();
@@ -78,14 +66,30 @@
 			if (error)
 			{
                 $scope.customers.teams_id = $scope.team.teams_id;
-				request.send('/customers/save', $scope.customers, function(data) {
-                    if (data)
-                    {
-                        $timeout(function() {
-                            $window.location.href = "/customers/add/" + data;
-                        }, 2000);
-                    }
-                });
+
+                if ( ! customer_id)
+                {
+                    request.send('/customers/save', $scope.customers, function(data) {
+                        if (data)
+                        {
+                            $timeout(function() {
+                                $window.location.href = "/customers/add/" + data;
+                            }, 2000);
+                        }
+                    });
+                }
+                else
+                {
+                    request.send('/customers/save', $scope.customers, function(data) {
+                        if (data)
+                        {
+                            $scope.edit_general = false;
+                            $scope.edit_address = false;
+                            $scope.edit_rest = false;
+                            $scope.reloadData();
+                        }
+                    });
+                }
 			}
 		};
 
@@ -131,15 +135,44 @@
             });
         };
 
-        $scope.edit = function() {
-            if ($scope.edit_on == 0)
+        $scope.editCustomers = function(block) {
+            if (block = 'general')
             {
-                $scope.edit_on = 1;
+                $scope.edit_general = true;
             }
-            else
+
+            if (block = 'address')
             {
-                $scope.edit_on = 0;
+                $scope.edit_address = true;
             }
+
+            if (block = 'rest')
+            {
+                $scope.edit_rest = true;
+            }
+
+            $scope.old_customers = angular.copy($scope.customers);
+        };
+
+        $scope.cancelEdit = function(block) {
+            if (block = 'general')
+            {
+                $scope.edit_general = false;
+
+            }
+
+            if (block = 'address')
+            {
+                $scope.edit_address = false;
+            }
+
+            if (block = 'rest')
+            {
+                $scope.edit_rest = false;
+            }
+
+            $scope.customers = angular.copy($scope.old_customers);
+            delete $scope.old_customers;
         };
 
         /* Setting page titles */
