@@ -5270,3 +5270,12 @@ button.toast-close-button {
 .view_customer a {
     margin: 0;
 }
+
+.assign-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.assign-list button {
+    margin-left: 15px;
+}
