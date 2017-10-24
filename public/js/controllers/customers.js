@@ -83,6 +83,7 @@
                 }
                 else
                 {
+                    $scope.customers.users_ids = $scope.checked_ids;
                     request.send('/customers/save', $scope.customers, function(data) {
                         if (data)
                         {
@@ -191,7 +192,6 @@
                         $scope.users.push($scope.original_users[k]);
                     }
                 }
-                console.log($scope.users);
                 $scope.updateUserList();
             });
         };
