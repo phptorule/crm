@@ -61,14 +61,13 @@ class UsersController extends Controller
     }
 
     public function getTeams($post = []) {
-        $teams = Auth::user();
-        return $teams->teams;
+        $user = Auth::user();
+        return $user->teams;
     }
 
     public function getCurrentTeam() {
         $current_team = array();
-        $current_team_id = session('current_team');
-        $current_team = Teams::find(['teams_id' => $current_team_id]);
+        $current_team = Teams::find(['teams_id' => session('current_team')]);
         return $current_team;
     }
 
@@ -78,8 +77,11 @@ class UsersController extends Controller
 
     public function getUser($post = []) {
         $user = Users::where('users_id', $post['users_id']);
-        //dd($user->get());
-
         return $user->get();
+    }
+
+    public function getTeamUsers($post = []) {
+        $team = Teams::find(session('current_team'));
+        return $team->users()->get();
     }
 }

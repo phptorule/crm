@@ -98,16 +98,6 @@
         $scope.token = function(token) {
             $rootScope.token = token;
             $scope.init();
-            $scope.getCurrentTeam();
-        };
-
-        $scope.getCurrentTeam = function () {
-            request.send('/users/getCurrentTeam', {}, function(data) {
-                if (data)
-                {
-                   $rootScope.team = data[0];
-                }
-            });
         };
 
         $scope.signout = function() {

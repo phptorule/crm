@@ -1,4 +1,4 @@
-<div class="row" data-ng-controller="CustomersCtrl" ng-init="get()">
+<div class="row" data-ng-controller="CustomersCtrl" ng-init="initAdd()">
     <button type="button" class="btn btn-labeled btn-danger m-b-5 delete_customer pull-right" ng-show="customer_id" ng-click="remove(customer_id)">
         <span class="btn-label"><i class="glyphicon glyphicon-trash"></i></span>Usuń kontrahenta
     </button>
@@ -73,8 +73,33 @@
 
                             <div class="form-group">
                                 <label>Przypisany do</label>
-                                <span class="form-span" ng-model="customers.assign_to" ng-show=" ! edit_general && customer_id">@{{ customers.assign_to }}</span>
-                                <input type="text" class="form-control" name="assign_to" ng-show="edit_general || ! customer_id" ng-model="customers.assign_to" />
+                                <ul class="assign-list">
+                                    <li class="form-span" ng-show=" ! edit_general && customer_id" ng-repeat="user in users">@{{ user.users_first_name + ' ' + user.users_last_name }}</li>
+                                </ul>
+
+                                <ul class="assign-list" ng-model="customers.assign_to" ng-show="checked_users.length && (edit_general || ! customer_id)">
+                                    <li ng-repeat="user in checked_users" >
+                                        @{{ user.users_first_name + ' ' + user.users_last_name }}
+
+                                        <button type="button" class="btn btn-labeled btn-danger m-b-5" ng-click="removeUser(user.users_id)">
+                                            <span class="btn-label"><i class="fa fa-minus"></i></span>Usuń
+                                        </button>
+                                    </li>
+                                </ul>
+
+                                <div class="row" ng-show="not_checked_users.length && (edit_general || ! customer_id)">
+                                    <div class="col-sm-6">
+                                        <select class="form-control" name="assign_to" ng-model="users_list">
+                                            <option ng-repeat="user in not_checked_users" value="@{{ user.users_id }}">@{{ user.users_first_name + ' ' + user.users_last_name }}</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="col-sm-6">
+                                        <button type="button" class="btn btn-labeled btn-add m-b-5" ng-click="addUser(users_list)">
+                                           <span class="btn-label"><i class="fa fa-plus"></i></span>Dodaj
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
 
                             <div class="form-group">
@@ -305,6 +330,75 @@
                         </div>
                     </div>
                 </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-6 pull-right" ng-show="duplicate_customers">
+        <div class="panel panel-bd lobidrag">
+            <div class="panel-heading">
+                <div class="btn-group" id="buttonlist">
+                    <h3>Wykryte duplikaty</h3>
+                </div>
+            </div>
+
+            <div class="panel-body">
+                <div ng-repeat="duplicate in duplicate_customers">
+                    <div ng-show="customers.company_name == duplicate.company_name">
+                        <b>Nazwa firmy:</b> @{{ duplicate.company_name }}
+                        <a href="/customers/add/@{{ duplicate.customer_id }}" class="pull-right" target="_blank">Przejdz do kontrahenta</a>
+                    </div>
+
+                    <div ng-show="customers.contact_person == duplicate.contact_person">
+                        <b>Osoba kontaktowa:</b> @{{ duplicate.contact_person }}
+                        <a href="/customers/add/@{{ duplicate.customer_id }}" class="pull-right" target="_blank">Przejdz do kontrahenta</a>
+                    </div>
+
+                    <div ng-show="customers.phone_number == duplicate.phone_number">
+                        <b>Telefon:</b> @{{ duplicate.phone_number }}
+                        <a href="/customers/add/@{{ duplicate.customer_id }}" class="pull-right" target="_blank">Przejdz do kontrahenta</a>
+                    </div>
+
+                    <div ng-show="customers.extra_phone_number == duplicate.extra_phone_number">
+                        <b>Telefon dodatkowy:</b> @{{ duplicate.extra_phone_number }}
+                        <a href="/customers/add/@{{ duplicate.customer_id }}" class="pull-right" target="_blank">Przejdz do kontrahenta</a>
+                    </div>
+
+                    <div ng-show="customers.email == duplicate.email">
+                        <b>Email:</b> @{{ duplicate.email }}
+                        <a href="/customers/add/@{{ duplicate.customer_id }}" class="pull-right" target="_blank">Przejdz do kontrahenta</a>
+                    </div>
+
+                    <div ng-show="customers.extra_email == duplicate.extra_email">
+                        <b>Email dodatkowy:</b> @{{ duplicate.extra_email }}
+                        <a href="/customers/add/@{{ duplicate.customer_id }}" class="pull-right" target="_blank">Przejdz do kontrahenta</a>
+                    </div>
+
+                    <div ng-show="customers.nip == duplicate.nip">
+                        <b>Numer NIP:</b> @{{ duplicate.nip }}
+                        <a href="/customers/add/@{{ duplicate.customer_id }}" class="pull-right" target="_blank">Przejdz do kontrahenta</a>
+                    </div>
+
+                    <div ng-show="customers.assign_to == duplicate.assign_to">
+                        <b>Przypisany do:</b> @{{ duplicate.assign_to }}
+                        <a href="/customers/add/@{{ duplicate.customer_id }}" class="pull-right" target="_blank">Przejdz do kontrahenta</a>
+                    </div>
+
+                    <div ng-show="customers.bank_account == duplicate.bank_account">
+                        <b>Konto bankowe: </b> @{{ duplicate.bank_account }}
+                        <a href="/customers/add/@{{ duplicate.customer_id }}" class="pull-right" target="_blank">Przejdz do kontrahenta</a>
+                    </div>
+
+                    <div ng-show="customers.website == duplicate.website">
+                        <b>Strona WWW:</b> @{{ duplicate.website }}
+                        <a href="/customers/add/@{{ duplicate.customer_id }}" class="pull-right" target="_blank">Przejdz do kontrahenta</a>
+                    </div>
+
+                    <div ng-show="customers.fb_link == duplicate.fb_link">
+                        <b>Facebook Id:</b> @{{ duplicate.fb_link }}
+                        <a href="/customers/add/@{{ duplicate.customer_id }}" class="pull-right" target="_blank">Przejdz do kontrahenta</a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

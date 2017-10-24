@@ -45,4 +45,9 @@ class Users extends Authenticatable
     {
         return $this->belongsToMany('App\Teams', 'users_teams', 'users_id', 'teams_id')->withPivot(['teams_leader', 'teams_invite', 'teams_approved']);
     }
+
+    public function customers()
+    {
+        return $this->belongsToMany('App\Customers', 'customers_users', 'users_id', 'customer_id');
+    }
 }

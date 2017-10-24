@@ -13,29 +13,33 @@
         $scope.customers = {};
         $scope.customers.customer_type = '0';
 
-        var customer_id = $location.path().split('/')[3];
-        $scope.customer_id = customer_id;
+        $scope.not_checked_users = [];
+        $scope.checked_users = [];
+        $scope.checked_ids = [];
 
-        $scope.get = function() {
-            if ($scope.team)
-            {
-                if (customer_id)
-                {
-                    request.send('/customers/get', {'teams_id' : $scope.team.teams_id, 'customer_id' : customer_id}, function(data) {
-                        $scope.customers = data[0];
-                        $scope.customers.customer_type = $scope.customers.customer_type.toString();
-                        $scope.old = angular.copy($scope.customers);
-                    });
+        $scope.customer_id = $location.path().split('/')[3];
 
-                    $scope.getComment();
-                }
-                else
+        $scope.initAdd = function() {
+            request.send('/customers/get', {'customer_id': ($scope.customer_id || 0)}, function(data) {
+                if ($scope.customer_id)
                 {
-                    request.send('/customers/get', {'teams_id' : $scope.team.teams_id}, function(data) {
-                        $scope.print(data);
-                    });
+                    $scope.customers = data;
+                    $scope.checked_ids = $scope.customers.users_ids;
+                    $scope.updateUserList();
+
+                    $scope.customers.customer_type = $scope.customers.customer_type.toString();
+                    $scope.old = angular.copy($scope.customers);
                 }
-            }
+            });
+
+            $scope.getTeamUsers();
+            $scope.getComment();
+        };
+
+        $scope.initList = function() {
+            request.send('/customers/getList', {}, function(data) {
+                $scope.print(data);
+            });
         };
 
         $scope.print = function(data) {
@@ -65,21 +69,21 @@
 			error *= validate.check($scope.form.company_name, 'Nazwa firmy');
 			if (error)
 			{
-                $scope.customers.teams_id = $scope.team.teams_id;
-
-                if ( ! customer_id)
+                if ( ! $scope.customer_id)
                 {
                     request.send('/customers/save', $scope.customers, function(data) {
                         if (data)
                         {
-                            $timeout(function() {
+                            $scope.duplicate_customers = data;
+                            /*$timeout(function() {
                                 $window.location.href = "/customers/add/" + data;
-                            }, 2000);
+                            }, 2000);*/
                         }
                     });
                 }
                 else
                 {
+                    $scope.customers.users_ids = $scope.checked_ids;
                     request.send('/customers/save', $scope.customers, function(data) {
                         if (data)
                         {
@@ -94,7 +98,6 @@
 		};
 
         $scope.remove = function(customer_id) {
-            console.log(customer_id);
             var modalInstance = $uibModal.open({
                 animation: true,
                 templateUrl: 'CustomersDelete.html',
@@ -118,13 +121,12 @@
         };
 
         $scope.reloadData = function() {
-            $scope.get();
+            $scope.initAdd();
         };
 
         $scope.addComment = function() {
             request.send('/customers/addComment', {
-                'teams_id' : $scope.team.teams_id,
-                'customer_id' : customer_id,
+                'customer_id' : $scope.customer_id,
                 'comment_text' : $scope.customers.comments
             }, function(data) {
                 $scope.getComment();
@@ -133,7 +135,7 @@
         };
 
         $scope.getComment = function() {
-            request.send('/customers/getComment', {'teams_id' : $scope.team.teams_id, 'customer_id' : customer_id}, function(data) {
+            request.send('/customers/getComment', {'customer_id' : $scope.customer_id}, function(data) {
                 $scope.comments = data;
             });
         };
@@ -178,8 +180,74 @@
             delete $scope.old_customers;
         };
 
+        $scope.getTeamUsers = function() {
+            request.send('/users/getTeamUsers', {}, function(data) {
+                $scope.original_users = data;
+                $scope.users = [];
+
+                for (var k in $scope.original_users)
+                {
+                    if ($scope.inArray($scope.customers.users_ids, $scope.original_users[k].users_id))
+                    {
+                        $scope.users.push($scope.original_users[k]);
+                    }
+                }
+                $scope.updateUserList();
+            });
+        };
+
+        $scope.addUser = function(user_id) {
+            $scope.checked_ids.push(user_id);
+            $scope.updateUserList();
+        };
+
+        $scope.removeUser = function(user_id) {
+            var temp = [];
+            for (var k in $scope.checked_ids)
+            {
+                if ($scope.checked_ids[k] != user_id)
+                {
+                    temp.push($scope.checked_ids[k]);
+                }
+            }
+            $scope.checked_ids = temp;
+
+            $scope.updateUserList();
+        };
+
+        $scope.updateUserList = function() {
+            $scope.not_checked_users = [];
+            $scope.checked_users = [];
+
+            for (var k in $scope.original_users)
+            {
+                if ($scope.inArray($scope.checked_ids, $scope.original_users[k].users_id))
+                {
+                    $scope.checked_users.push($scope.original_users[k]);
+                }
+                else
+                {
+                    $scope.not_checked_users.push($scope.original_users[k]);
+                }
+            }
+        };
+
+        $scope.inArray = function(list, value) {
+            var result = false;
+
+            for (var k in list)
+            {
+                if (list[k] == value)
+                {
+                    result = true;
+                }
+            }
+
+            return result;
+        };
+
         /* Setting page titles */
-        if (customer_id)
+        if ($scope.customer_id)
         {
             Page.setTitle('Kontrahent');
             Page.setIcon('fa fa-user');
@@ -208,7 +276,7 @@
         $scope.customer_id = items.customer_id;
 
         $scope.delete = function(customer_id) {
-            request.send('/customers/delete', {'customer_id': customer_id, 'teams_id' : $scope.team.teams_id}, function(data) {
+            request.send('/customers/delete', {'customer_id': $scope.customer_id}, function(data) {
                 $uibModalInstance.close();
             });
         };
