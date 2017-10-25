@@ -4,6 +4,28 @@
     angular.module('app').controller('FinancesCtrl', ['$rootScope', '$scope', '$uibModal', '$filter', '$location', 'request', 'langs', 'Page', FinancesCtrl]);
 
     function FinancesCtrl($rootScope, $scope, $uibModal, $filter, $location, request, langs, Page) {
+    	$scope.types_list = ['By Month', 'By Year', 'Custom Period'];
+		$scope.months_list = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
+		$scope.filter = {};
+		$scope.filter.type = '0';
+		$scope.filter.month = (new Date()).getMonth().toString();
+		$scope.filter.year = (new Date()).getFullYear().toString();
+		$scope.filter.payer = '';
+		$scope.team_users = [];
+		$scope.invoice_paid = '0';
+
+		$scope.init = function() {
+			$scope.getTeamUsers();
+		};
+
+		$scope.getTeamUsers = function() {
+			console.log('data');
+            request.send('/users/getTeamUsers', {}, function(data) {
+                $scope.team_users = data;
+            });
+        };
+
     	$scope.selectCustomer = function() {
             var modalInstance = $uibModal.open({
                 animation: true,
@@ -22,20 +44,26 @@
             });
         };
 
-        $scope.getTeamUsers = function() {
-            request.send('/users/getTeamUsers', {}, function(data) {
-                $scope.original_users = data;
-                $scope.users = [];
+        $scope.dateOptions = {
+			startingDay: 1,
+			showWeeks: false
+		};
 
-                for (var k in $scope.original_users)
-                {
-                    if ($scope.inArray($scope.customers.users_ids, $scope.original_users[k].users_id))
-                    {
-                        $scope.users.push($scope.original_users[k]);
-                    }
-                }
-            });
-        };
+		$scope.date = [{
+		    opened: false
+		}, {
+		    opened: false
+		}];
+
+		$scope.calendarOpen = function(index) {
+			$scope.date[index].opened = true;
+		};
+
+		$scope.setDate = function() {
+			$scope.invoice_date = new Date();
+			$scope.payment_date = new Date();
+		};
+		$scope.setDate();
 
 	    /* Setting page titles */
 	    if ($scope.customer_id)
@@ -55,43 +83,61 @@
 (function () {
     'use strict';
 
-    angular.module('app').controller('ModalSelectCustomerCtrl', ['$rootScope', '$scope', '$uibModalInstance', '$filter', 'request', 'validate', 'logger', 'langs', 'items', ModalSelectCustomerCtrl]);
+    angular.module('app').controller('ModalSelectCustomerCtrl', ['$rootScope', '$scope', '$uibModal', '$uibModalInstance', '$filter', 'request', 'validate', 'logger', 'langs', 'items', ModalSelectCustomerCtrl]);
 
-    function ModalSelectCustomerCtrl($rootScope, $scope, $uibModalInstance, $filter, request, validate, logger, langs, items) {
-    	$scope.list = [];
-        $scope.listFiltered = [];
+    function ModalSelectCustomerCtrl($rootScope, $scope, $uibModal, $uibModalInstance, $filter, request, validate, logger, langs, items) {
+    	$scope.filteredCustomers = [];
+        $scope.customers = [];
         $scope.pagesList = [];
         $scope.numPerPage = 5;
         $scope.currentPage = 1;
+        $scope.maxSize = 5;
 
     	$scope.initList = function() {
             request.send('/customers/getList', {}, function(data) {
-            	$scope.print(data);
+            	$scope.filteredCustomers = data;
             });
         };
 
-        $scope.print = function(data) {
-            $scope.list = data;
-            $scope.listFiltered = $scope.list;
-            $scope.order('-created_at');
-        };
+        $scope.numPages = function () {
+		    return Math.ceil($scope.customers.length / $scope.numPerPage);
+		};
 
-        $scope.order = function(rowName) {
-            $scope.row = rowName;
-            $scope.listFiltered = $filter('orderBy')($scope.list, rowName);
+        $scope.$watch('currentPage + numPerPage', function() {
+		    var begin = (($scope.currentPage - 1) * $scope.numPerPage)
+		    , end = begin + $scope.numPerPage;
 
-            $scope.changePage(1);
-            return $scope.currentPage = 1;
-        };
+		    $scope.filteredCustomers = $scope.customers.slice(begin, end);
+	  	});
 
-        $scope.changePage = function(page) {
-            var end, start;
-            start = (page - 1) * $scope.numPerPage;
-            end = start + $scope.numPerPage;
-            return $scope.pagesList = $scope.listFiltered.slice(start, end);
-            //return $scope.pagesList = $scope.listFiltered;
-        };
+	  	$scope.addCustomer = function() {
+	  		$uibModalInstance.close();
+
+	  		var modalInstance = $uibModal.open({
+                animation: true,
+                templateUrl: 'CreateCustomer.html',
+                controller: 'ModalCreateCustomerCtrl',
+                resolve: {
+                    items: function () {
+                        return true;
+                    }
+                }
+            });
+
+            modalInstance.result.then(function(response) {
+            }, function () {
+
+            });
+	  	};
     };
 })();
 
-;
+(function () {
+    'use strict';
+
+    angular.module('app').controller('ModalCreateCustomerCtrl', ['$rootScope', '$scope', '$uibModalInstance', '$filter', 'request', 'validate', 'logger', 'langs', 'items', ModalCreateCustomerCtrl]);
+
+    function ModalCreateCustomerCtrl($rootScope, $scope, $uibModalInstance, $filter, request, validate, logger, langs, items) {
+    	console.log('Yahoo!');
+    };
+})();

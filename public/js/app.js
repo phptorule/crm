@@ -90,6 +90,7 @@
         $rootScope.body_class = '';
         $rootScope.open = 1;
         $scope.Page = Page;
+        $rootScope.user = {};
 
         $scope.openSidebar = function() {
             $rootScope.open = 1 - $rootScope.open;
@@ -111,12 +112,18 @@
             });
         };
 
-        $rootScope.user = {};
         $scope.init = function() {
             request.send('/users/info', {}, function(data) {
                 if (data)
                 {
                    $rootScope.user = data;
+                }
+            });
+
+            request.send('/users/getCurrentTeam', {}, function(data) {
+                if (data)
+                {
+                   $rootScope.current_team = data;
                 }
             });
         };
