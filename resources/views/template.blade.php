@@ -114,14 +114,13 @@
                         <li class="treeview" ng-show="sidebar.plugins.indexOf('Finances') != -1">
                             <a href="javascript:void(0)">
                                 <i class="fa fa-cogs"></i>
-                                <span>Finances</span>
+                                <span>Finanse</span>
                                 <span class="pull-right-container">
                                     <i class="fa fa-angle-left pull-right"></i>
                                 </span>
                             </a>
                             <ul class="treeview-menu">
-                                <li><a href="/customers/add">Add finances</a></li>
-                                <li><a href="/customers/list">List all finances</a></li>
+                                <li><a href="/finances/add" ng-class="getClass('/finances/add')">Wystaw fakturę</a></li>
                             </ul>
                         </li>
                     </ul>
