@@ -17,7 +17,6 @@
         <link href="/theme/plugins/emojionearea/emojionearea.min.css" rel="stylesheet" type="text/css"/>
         <link href="/theme/plugins/monthly/monthly.css" rel="stylesheet" type="text/css"/>
         <link href="/css/app.css" rel="stylesheet" type="text/css"/>
-        <!--link href="/css/app_old.css" rel="stylesheet" /-->
         <link href="/theme/plugins/NotificationStyles/css/ns-style-attached.css" rel="stylesheet" type="text/css" />
     </head>
 
@@ -57,7 +56,7 @@
                         <ul class="nav navbar-nav">
                             <li class="nav-username">
                                 <span class="hidden-xs">
-                                    <span>@{{ user.users_first_name + ' ' + user.users_last_name}}</span><span ng-show="team"> (@{{ team.teams_name }})</span>
+                                    <span>@{{ user.users_first_name + ' ' + user.users_last_name}}</span><span ng-show="current_team"> (@{{ current_team.teams_name }})</span>
                                 </span>
                             </li>
                             <li class="dropdown dropdown-user">
@@ -148,6 +147,7 @@
         </div>
 
         <script src="/js/vendor.js"></script>
+        <script data-require="angular-ui-bootstrap@0.3.0" data-semver="0.3.0" src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.3.0.min.js"></script>
         <script src="/js/ui.js"></script>
         <script src="/js/libs/ng-file-upload.min.js"></script>
         <script src="/js/app.js"></script>

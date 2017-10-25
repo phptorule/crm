@@ -5289,4 +5289,7 @@ button.toast-close-button {
     color: #374767;
 }
 
+.modal_content_header .btn.btn-add {
+    margin-top: 25px;
+}
 

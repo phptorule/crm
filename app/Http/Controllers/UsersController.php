@@ -67,7 +67,7 @@ class UsersController extends Controller
 
     public function getCurrentTeam() {
         $current_team = array();
-        $current_team = Teams::find(['teams_id' => session('current_team')]);
+        $current_team = Teams::where(['teams_id' => session('current_team')])->first();
         return $current_team;
     }
 
