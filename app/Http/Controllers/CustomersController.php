@@ -41,8 +41,6 @@ class CustomersController extends Controller
                 $ids[] = $user->customers()->get()->pluck('customer_id')->toArray();
             }
         }*/
-        $allow_duplicate = ! empty($post['allow_duplicate']) ? true : false;
-
         $duplicates =
         Customers::where('company_name', 'like', '%' . $post['company_name'] . '%')
             ->orWhere('contact_person', 'like', '%' . $post['contact_person'] . '%')
@@ -55,16 +53,11 @@ class CustomersController extends Controller
             ->orWhere('website', 'like', '%' . $post['website'] . '%')
             ->orWhere('fb_link', 'like', '%' . $post['fb_link'] . '%')
             ->get();
-            //dd($post);
-        if ($allow_duplicate)
-        {
-            $duplicates = false;
-        }
 
-        if ($duplicates)
+        if ($duplicates && ! empty($post['check']))
         {
             $this->message(__('Wykryto duplikat'), 'error');
-            $duplicates->put('duplicate', 1);
+            $duplicates->put('check', 0);
             return $duplicates;
         }
         else
@@ -99,7 +92,6 @@ class CustomersController extends Controller
             $customer->save();
             $customer->users()->sync($post['users_ids']);
             $customer->teams()->syncWithoutDetaching(session('current_team'));
-
             $this->message(__('Customer was successfully saved'), 'success');
             return $customer->customer_id;
         }

@@ -12,6 +12,7 @@
         $scope.currentPage = 1;
         $scope.customers = {};
         $scope.customers.customer_type = '0';
+        $scope.check = 1;
 
         $scope.not_checked_users = [];
         $scope.checked_users = [];
@@ -64,39 +65,34 @@
             return $scope.pagesList = $scope.listFiltered;
         };
 
-		$scope.save = function() {
+		$scope.save = function(check) {
 	    	var error = 1;
 			error *= validate.check($scope.form.company_name, 'Nazwa firmy');
 			if (error)
 			{
                 if ( ! $scope.customer_id)
                 {
-                    if ($scope.duplicate)
-                    {
-                        $scope.customers.allow_duplicate = 1;
-                    }
+                    $scope.customers.check = check;
                     $scope.customers.users_ids = $scope.checked_ids;
                     request.send('/customers/save', $scope.customers, function(data) {
                         if (data)
                         {
-                            $scope.duplicate_customers = data;
-
-                            if (data.duplicate)
+                            if (data.check == 0)
                             {
-                                $scope.duplicate = true;
-
-                                /*$scope.$on('$locationChangeStart', function( event ) {
-                                    var answer = confirm("Are you sure you want to leave this page?")
-                                    if (!answer) {
-                                        event.preventDefault();
-                                    }
-                                });*/
+                                $scope.duplicate_customers = data;
+                                $scope.check = data.check;
                             }
                             else
                             {
                                 $timeout(function() {
                                     $window.location.href = "/customers/add/" + data;
                                 }, 1000);
+                                /*$scope.$on('$locationChangeStart', function( event ) {
+                                    var answer = confirm("Are you sure you want to leave this page?")
+                                    if (!answer) {
+                                        event.preventDefault();
+                                    }
+                                });*/
                             }
 
                         }
