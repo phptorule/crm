@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use App\Customers;
 use App\Teams;
 use App\CustomersComments;
+use App\Users;
 
 class CustomersController extends Controller
 {
@@ -15,7 +16,10 @@ class CustomersController extends Controller
     {
         $team = Teams::find(session('current_team'));
         $customer = ! empty($post['customer_id']) ? $team->customers()->wherePivot('customer_id', $post['customer_id'])->first() : [];
-        $customer->users_ids = $customer->users()->get()->pluck('users_id')->toArray();
+        if ( ! empty($customer))
+        {
+            $customer->users_ids = $customer->users()->get()->pluck('users_id')->toArray();
+        }
 
         return $customer;
     }
@@ -28,6 +32,17 @@ class CustomersController extends Controller
 
 	public function save($post = [])
 	{
+        /*if (! empty($post['users_ids']))
+        {
+            $users = Users::whereIn('users_id', $post['users_ids'])->get();
+            $ids = [];
+
+            foreach ($users as $user) {
+                $ids[] = $user->customers()->get()->pluck('customer_id')->toArray();
+            }
+        }*/
+        $allow_duplicate = ! empty($post['allow_duplicate']) ? true : false;
+
         $duplicates =
         Customers::where('company_name', 'like', '%' . $post['company_name'] . '%')
             ->orWhere('contact_person', 'like', '%' . $post['contact_person'] . '%')
@@ -40,10 +55,16 @@ class CustomersController extends Controller
             ->orWhere('website', 'like', '%' . $post['website'] . '%')
             ->orWhere('fb_link', 'like', '%' . $post['fb_link'] . '%')
             ->get();
+            //dd($post);
+        if ($allow_duplicate)
+        {
+            $duplicates = false;
+        }
 
-        if (false)
+        if ($duplicates)
         {
             $this->message(__('Wykryto duplikat'), 'error');
+            $duplicates->put('duplicate', 1);
             return $duplicates;
         }
         else

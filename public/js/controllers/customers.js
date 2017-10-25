@@ -71,13 +71,34 @@
 			{
                 if ( ! $scope.customer_id)
                 {
+                    if ($scope.duplicate)
+                    {
+                        $scope.customers.allow_duplicate = 1;
+                    }
+                    $scope.customers.users_ids = $scope.checked_ids;
                     request.send('/customers/save', $scope.customers, function(data) {
                         if (data)
                         {
                             $scope.duplicate_customers = data;
-                            /*$timeout(function() {
-                                $window.location.href = "/customers/add/" + data;
-                            }, 2000);*/
+
+                            if (data.duplicate)
+                            {
+                                $scope.duplicate = true;
+
+                                /*$scope.$on('$locationChangeStart', function( event ) {
+                                    var answer = confirm("Are you sure you want to leave this page?")
+                                    if (!answer) {
+                                        event.preventDefault();
+                                    }
+                                });*/
+                            }
+                            else
+                            {
+                                $timeout(function() {
+                                    $window.location.href = "/customers/add/" + data;
+                                }, 1000);
+                            }
+
                         }
                     });
                 }
