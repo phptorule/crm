@@ -399,7 +399,7 @@
     </div>
 
     <div class="col-sm-12 text-right">
-        <button type="submit" class="btn btn-add" ng-show=" ! customer_id" ng-click="save()">{{ __('Dodaj nowego kontrahenta') }}</button>
+        <button type="submit" class="btn btn-add" ng-show=" ! customer_id" ng-click="save(check)">{{ __('Dodaj nowego kontrahenta') }}</button>
     </div>
 </div>
 
