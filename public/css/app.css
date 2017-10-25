@@ -5279,3 +5279,13 @@ button.toast-close-button {
 .assign-list button {
     margin-left: 15px;
 }
+
+.panel.duplicates .panel-heading h3,
+.duplicates div {
+    color: #E5343D;
+}
+
+.duplicates b {
+    color: #374767;
+}
+

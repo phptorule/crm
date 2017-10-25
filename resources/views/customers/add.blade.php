@@ -335,7 +335,7 @@
     </div>
 
     <div class="col-sm-6 pull-right" ng-show="duplicate_customers">
-        <div class="panel panel-bd lobidrag">
+        <div class="panel panel-bd lobidrag duplicates">
             <div class="panel-heading">
                 <div class="btn-group" id="buttonlist">
                     <h3>Wykryte duplikaty</h3>
@@ -376,11 +376,6 @@
 
                     <div ng-show="customers.nip == duplicate.nip">
                         <b>Numer NIP:</b> @{{ duplicate.nip }}
-                        <a href="/customers/add/@{{ duplicate.customer_id }}" class="pull-right" target="_blank">Przejdz do kontrahenta</a>
-                    </div>
-
-                    <div ng-show="customers.assign_to == duplicate.assign_to">
-                        <b>Przypisany do:</b> @{{ duplicate.assign_to }}
                         <a href="/customers/add/@{{ duplicate.customer_id }}" class="pull-right" target="_blank">Przejdz do kontrahenta</a>
                     </div>
 
