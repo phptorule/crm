@@ -34,10 +34,6 @@
 
             $scope.getTeamUsers();
             $scope.getComment();
-
-            window.onbeforeunload = function (e) {
-               return "Are you sure you want to navigate away from this page";
-            };
         };
 
         $scope.initList = function() {
