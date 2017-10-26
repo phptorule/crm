@@ -42,16 +42,16 @@ class CustomersController extends Controller
             }
         }*/
         $duplicates =
-        Customers::where('company_name', 'like', '%' . $post['company_name'] . '%')
-            ->orWhere('contact_person', 'like', '%' . $post['contact_person'] . '%')
-            ->orWhere('phone_number', 'like', '%' . $post['phone_number'] . '%')
-            ->orWhere('extra_phone_number', 'like', '%' . $post['extra_phone_number'] . '%')
-            ->orWhere('email', 'like', '%' . $post['email'] . '%')
-            ->orWhere('extra_email', 'like', '%' . $post['extra_email'] . '%')
-            ->orWhere('nip', 'like', '%' . $post['nip'] . '%')
-            ->orWhere('bank_account', 'like', '%' . $post['bank_account'] . '%')
-            ->orWhere('website', 'like', '%' . $post['website'] . '%')
-            ->orWhere('fb_link', 'like', '%' . $post['fb_link'] . '%')
+        Customers::where('company_name', 'like', ! empty($post['company_name']) ? '%' . $post['company_name'] . '%' : false)
+            ->orWhere('contact_person', 'like', ! empty($post['contact_person']) ? '%' . $post['contact_person'] . '%' : false)
+            ->orWhere('phone_number', 'like', ! empty($post['phone_number']) ? '%' . $post['phone_number'] . '%' : false)
+            ->orWhere('extra_phone_number', 'like', ! empty($post['extra_phone_number']) ? '%' . $post['extra_phone_number'] . '%' : false)
+            ->orWhere('email', 'like', ! empty($post['email']) ? '%' . $post['email'] . '%' : false)
+            ->orWhere('extra_email', 'like', ! empty($post['extra_email']) ? '%' . $post['extra_email'] . '%' : false)
+            ->orWhere('nip', 'like', ! empty($post['nip']) ? '%' . $post['nip'] . '%' : false)
+            ->orWhere('bank_account', 'like', ! empty($post['bank_account']) ? '%' . $post['bank_account'] . '%' : false)
+            ->orWhere('website', 'like', ! empty($post['website']) ? '%' . $post['website'] . '%' : false)
+            ->orWhere('fb_link', 'like', ! empty($post['fb_link']) ? '%' . $post['fb_link'] . '%' : false)
             ->get();
 
         if ($duplicates && ! empty($post['check']))
@@ -90,7 +90,10 @@ class CustomersController extends Controller
             $customer->description = empty($post['description']) ? '' : $post['description'];
 
             $customer->save();
-            $customer->users()->sync($post['users_ids']);
+            if ( ! empty($post['users_ids']))
+            {
+                $customer->users()->sync($post['users_ids']);
+            }
             $customer->teams()->syncWithoutDetaching(session('current_team'));
             $this->message(__('Customer was successfully saved'), 'success');
             return $customer->customer_id;

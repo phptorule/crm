@@ -5293,3 +5293,19 @@ button.toast-close-button {
     margin-top: 25px;
 }
 
+.modal_h3 {
+    margin: 0 0 20px 0;
+}
+
+.mb-30 {
+    margin-bottom: 30px;
+}
+
+.input-group.custom-datapicker-input .form-control {
+    width: 96%;
+}
+
+.input-group.custom-datapicker-input .input-group-btn {
+    right: 20px;
+}
+

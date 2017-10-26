@@ -344,52 +344,52 @@
 
             <div class="panel-body">
                 <div ng-repeat="duplicate in duplicate_customers">
-                    <div ng-show="customers.company_name == duplicate.company_name">
+                    <div ng-show="customers.company_name == duplicate.company_name && duplicate.company_name">
                         <b>Nazwa firmy:</b> @{{ duplicate.company_name }}
                         <a href="/customers/add/@{{ duplicate.customer_id }}" class="pull-right" target="_blank">Przejdz do kontrahenta</a>
                     </div>
 
-                    <div ng-show="customers.contact_person == duplicate.contact_person">
+                    <div ng-show="customers.contact_person == duplicate.contact_person && duplicate.contact_person">
                         <b>Osoba kontaktowa:</b> @{{ duplicate.contact_person }}
                         <a href="/customers/add/@{{ duplicate.customer_id }}" class="pull-right" target="_blank">Przejdz do kontrahenta</a>
                     </div>
 
-                    <div ng-show="customers.phone_number == duplicate.phone_number">
+                    <div ng-show="customers.phone_number == duplicate.phone_number && duplicate.phone_number">
                         <b>Telefon:</b> @{{ duplicate.phone_number }}
                         <a href="/customers/add/@{{ duplicate.customer_id }}" class="pull-right" target="_blank">Przejdz do kontrahenta</a>
                     </div>
 
-                    <div ng-show="customers.extra_phone_number == duplicate.extra_phone_number">
+                    <div ng-show="customers.extra_phone_number == duplicate.extra_phone_number && duplicate.extra_phone_number">
                         <b>Telefon dodatkowy:</b> @{{ duplicate.extra_phone_number }}
                         <a href="/customers/add/@{{ duplicate.customer_id }}" class="pull-right" target="_blank">Przejdz do kontrahenta</a>
                     </div>
 
-                    <div ng-show="customers.email == duplicate.email">
+                    <div ng-show="customers.email == duplicate.email && duplicate.email">
                         <b>Email:</b> @{{ duplicate.email }}
                         <a href="/customers/add/@{{ duplicate.customer_id }}" class="pull-right" target="_blank">Przejdz do kontrahenta</a>
                     </div>
 
-                    <div ng-show="customers.extra_email == duplicate.extra_email">
+                    <div ng-show="customers.extra_email == duplicate.extra_email && duplicate.extra_email">
                         <b>Email dodatkowy:</b> @{{ duplicate.extra_email }}
                         <a href="/customers/add/@{{ duplicate.customer_id }}" class="pull-right" target="_blank">Przejdz do kontrahenta</a>
                     </div>
 
-                    <div ng-show="customers.nip == duplicate.nip">
+                    <div ng-show="customers.nip == duplicate.nip && duplicate.nip">
                         <b>Numer NIP:</b> @{{ duplicate.nip }}
                         <a href="/customers/add/@{{ duplicate.customer_id }}" class="pull-right" target="_blank">Przejdz do kontrahenta</a>
                     </div>
 
-                    <div ng-show="customers.bank_account == duplicate.bank_account">
+                    <div ng-show="customers.bank_account == duplicate.bank_account && duplicate.bank_account">
                         <b>Konto bankowe: </b> @{{ duplicate.bank_account }}
                         <a href="/customers/add/@{{ duplicate.customer_id }}" class="pull-right" target="_blank">Przejdz do kontrahenta</a>
                     </div>
 
-                    <div ng-show="customers.website == duplicate.website">
+                    <div ng-show="customers.website == duplicate.website && duplicate.website">
                         <b>Strona WWW:</b> @{{ duplicate.website }}
                         <a href="/customers/add/@{{ duplicate.customer_id }}" class="pull-right" target="_blank">Przejdz do kontrahenta</a>
                     </div>
 
-                    <div ng-show="customers.fb_link == duplicate.fb_link">
+                    <div ng-show="customers.fb_link == duplicate.fb_link && duplicate.fb_link">
                         <b>Facebook Id:</b> @{{ duplicate.fb_link }}
                         <a href="/customers/add/@{{ duplicate.customer_id }}" class="pull-right" target="_blank">Przejdz do kontrahenta</a>
                     </div>

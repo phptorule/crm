@@ -15,7 +15,7 @@
                                 <label>Klient</label><span class="req_field"> *</span>
                                 <div class="row">
                                     <div class="col-sm-6">
-                                        <input type="text" class="form-control" name="customer" disabled="disabled" />
+                                        <input type="text" class="form-control" name="customer" disabled="disabled" ng-model="finances.company_name" />
                                     </div>
 
                                     <div class="col-sm-6">
@@ -25,15 +25,19 @@
                             </div>
 
                             <div class="form-group">
-                                <label>Numer faktury</label><span class="req_field"> *</span>
-                                <input type="text" class="form-control" name="finance_number" required />
+                                <label>Numer faktury</label>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <input type="text" class="form-control" name="finance_number" required />
+                                    </div>
+                                </div>
                             </div>
 
                             <div class="form-group">
-                                <label>Data wystawlenia</label><span class="req_field"> *</span>
+                                <label>Data wystawlenia</label>
                                 <div class="row">
                                     <div class="col-sm-6">
-                                        <div class="input-group">
+                                        <div class="input-group custom-datapicker-input">
                                             <input type="text" class="form-control" name="invoice_date" uib-datepicker-popup="dd/MM/yyyy" ng-model="invoice_date" is-open="date[0].opened" show-button-bar="false" datepicker-options="dateOptions" required="required" />
                                             <span class="input-group-btn">
                                                 <button type="button" class="btn btn-default" ng-click="calendarOpen(0)"><i class="glyphicon glyphicon-calendar"></i></button>
@@ -46,7 +50,7 @@
 
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <label>Zaplacona</label><span class="req_field"> *</span>
+                                <label>Zaplacona</label>
                                 <div class="row">
                                     <div class="col-sm-6">
                                         <select class="form-control" name="invoice_paid" ng-model="invoice_paid">
@@ -58,10 +62,10 @@
                             </div>
 
                             <div class="form-group">
-                                <label>Termin platności</label><span class="req_field"> *</span>
+                                <label>Termin platności</label>
                                 <div class="row">
                                     <div class="col-sm-6">
-                                        <div class="input-group">
+                                        <div class="input-group custom-datapicker-input">
                                             <input type="text" class="form-control" name="payment_date" uib-datepicker-popup="dd/MM/yyyy" ng-model="payment_date" is-open="date[1].opened" show-button-bar="false" datepicker-options="dateOptions" required="required" />
                                             <span class="input-group-btn">
                                                 <button type="button" class="btn btn-default" ng-click="calendarOpen(1)"><i class="glyphicon glyphicon-calendar"></i></button>
@@ -72,7 +76,7 @@
                             </div>
 
                             <div class="form-group">
-                                <label>Przypisany do</label><span class="req_field"> *</span>
+                                <label>Przypisany do</label>
                                 <div class="row">
                                     <div class="col-sm-6">
                                         <select class="form-control" name="invoice_paid" ng-model="assign_to">
@@ -103,64 +107,64 @@
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label>Ulica</label>
-                                <input type="text" class="form-control" name="invoice_street" ng-model="customers.invoice_street" />
+                                <input type="text" class="form-control" name="invoice_street" ng-model="finances.invoice_street" />
                             </div>
 
                             <div class="form-group">
                                 <label>Skrytka Pocztowa do faktury</label>
-                                <input type="text" class="form-control" name="invoice_mailbox" ng-show="edit_address || ! customer_id" ng-model="customers.invoice_mailbox" />
+                                <input type="text" class="form-control" name="invoice_mailbox" ng-model="finances.invoice_mailbox" />
                             </div>
 
                             <div class="form-group">
                                 <label>Miejscowosc</label>
-                                <input type="text" class="form-control" name="invoice_town" ng-model="customers.invoice_town" />
+                                <input type="text" class="form-control" name="invoice_town" ng-model="finances.invoice_town" />
                             </div>
 
                             <div class="form-group">
                                 <label>Wojewodztwo</label>
-                                <input type="text" class="form-control" name="invoice_province" ng-model="customers.invoice_province"  />
+                                <input type="text" class="form-control" name="invoice_province" ng-model="finances.invoice_province"  />
                             </div>
 
                             <div class="form-group">
                                 <label>Kod</label>
-                                <input type="text" class="form-control" name="invoice_post_code" ng-model="customers.invoice_post_code" />
+                                <input type="text" class="form-control" name="invoice_post_code" ng-model="finances.invoice_post_code" />
                             </div>
 
                             <div class="form-group">
                                 <label>Kraj</label>
-                                <input type="text" class="form-control" name="invoice_region" ng-model="customers.invoice_region" />
+                                <input type="text" class="form-control" name="invoice_region" ng-model="finances.invoice_region" />
                             </div>
                         </div>
 
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label>Ulica - Adres wysylki</label>
-                                <input type="text" class="form-control" name="send_street" ng-model="customers.send_street" />
+                                <input type="text" class="form-control" name="send_street" ng-model="finances.send_street" />
                             </div>
 
                             <div class="form-group">
                                 <label>Skrytka Pocztowa do wysylki</label>
-                                <input type="text" class="form-control" name="send_mailbox" ng-model="customers.send_mailbox" />
+                                <input type="text" class="form-control" name="send_mailbox" ng-model="finances.send_mailbox" />
                             </div>
 
                             <div class="form-group">
                                 <label>Miejscowosc - Adres wysylki</label>
-                                <input type="text" class="form-control" name="send_town" ng-model="customers.send_town" />
+                                <input type="text" class="form-control" name="send_town" ng-model="finances.send_town" />
                             </div>
 
                             <div class="form-group">
                                 <label>Wojewodztwo - Adres wysylki</label>
-                                <input type="text" class="form-control" name="send_province" ng-model="customers.send_province" />
+                                <input type="text" class="form-control" name="send_province" ng-model="finances.send_province" />
                             </div>
 
                             <div class="form-group">
                                 <label>Kod - Adres wysylki</label>
-                                <input type="text" class="form-control" name="send_post_code" ng-model="customers.send_post_code" />
+                                <input type="text" class="form-control" name="send_post_code" ng-model="finances.send_post_code" />
                             </div>
 
                             <div class="form-group">
                                 <label>Kraj - Adres wysylki</label>
-                                <input type="text" class="form-control" name="send_region" ng-model="customers.send_region" />
+                                <input type="text" class="form-control" name="send_region" ng-model="finances.send_region" />
                             </div>
                         </div>
                     </div>
@@ -248,7 +252,7 @@
                         </thead>
                         <tbody>
                             <tr ng-repeat="customer in filteredCustomers | filter:searchInput">
-                                <td>@{{ customer.company_name }}</td>
+                                <td><a href="javascript:void(0);" ng-click="getCustomer(customer)">@{{ customer.company_name }}</a></td>
                                 <td>@{{ customer.nip }}</td>
                                 <td>@{{ customer.invoice_town }}</td>
                             </tr>
@@ -268,140 +272,142 @@
    </div>
 
    <div class="modal-footer">
-      <button type="button" class="btn btn-danger pull-left" ng-click="cancel()">Anuluj</button>
+      <button type="button" class="btn btn-danger pull-right" ng-click="cancel()">Anuluj</button>
    </div>
 </script>
 
 <script type="text/ng-template" id="CreateCustomer.html">
     <div class="modal-header modal-header-primary" ng-init="initList()">
        <button type="button" class="close" ng-click="cancel()" aria-hidden="true">×</button>
-       <h3><i class="fa fa-user m-r-5"></i> Kontrahenci</h3>
+       <h3><i class="fa fa-user m-r-5"></i> Utwórz Kontrahenta</h3>
     </div>
     <div class="modal-body">
        <div class="row">
             <div class="col-md-12">
-                <div class="modal_content_header">
-                    <form class="no-transition" name="form" method="post" novalidate="novalidate">
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <div class="form-group">
-                                    <label>Nazwa firmy</label><span class="req_field"> *</span>
-                                    <span class="form-span" ng-model="customers.company_name" ng-show=" ! edit_general && customer_id">@{{ customers.company_name }}</span>
-                                    <input type="text" class="form-control" name="company_name" ng-show="edit_general || ! customer_id" ng-model="customers.company_name" required />
+                <form class="no-transition" name="form" method="post" novalidate="novalidate">
+                    <div class="row">
+                        <div class="col-sm-12 mb-30">
+                            <h3 class="modal_h3">Informacje podstawowe</h3>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label>Nazwa firmy</label><span class="req_field"> *</span>
+                                        <input type="text" class="form-control" name="company_name" ng-model="customers.company_name" required />
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>Numer NIP</label>
+                                        <input type="text" class="form-control" name="nip" ng-model="customers.nip" />
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>Osoba kontaktowa</label>
+                                        <input type="text" class="form-control" name="contact_person" ng-model="customers.contact_person" />
+                                    </div>
                                 </div>
 
-                                <div class="form-group">
-                                    <label>Numer NIP</label>
-                                    <span class="form-span" ng-model="customers.nip" ng-show=" ! edit_general && customer_id">@{{ customers.nip }}</span>
-                                    <input type="text" class="form-control" name="nip" ng-show="edit_general || ! customer_id" ng-model="customers.nip" />
-                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label>Telefon</label>
+                                        <input type="text" class="form-control" name="phone_number" ng-model="customers.phone_number" />
+                                    </div>
 
-                                <div class="form-group">
-                                    <label>Osoba kontaktowa</label>
-                                    <span class="form-span" ng-model="customers.contact_person" ng-show=" ! edit_general && customer_id">@{{ customers.contact_person }}</span>
-                                    <input type="text" class="form-control" name="contact_person" ng-show="edit_general || ! customer_id" ng-model="customers.contact_person" />
+                                    <div class="form-group">
+                                        <label>Email</label>
+                                        <input type="text" class="form-control" name="email" ng-model="customers.email" />
+                                    </div>
                                 </div>
-
-                                <div class="form-group">
-                                    <label>Telefon</label>
-                                    <span class="form-span" ng-model="customers.phone_number" ng-show=" ! edit_general && customer_id">@{{ customers.phone_number }}</span>
-                                    <input type="text" class="form-control" name="phone_number" ng-show="edit_general || ! customer_id" ng-model="customers.phone_number" />
-                                </div>
-
-                                <div class="form-group">
-                                    <label>Email</label>
-                                    <span class="form-span" ng-model="customers.email" ng-show=" ! edit_general && customer_id">@{{ customers.email }}</span>
-                                    <input type="text" class="form-control" name="email" ng-show="edit_general || ! customer_id" ng-model="customers.email" />
-                                </div>
-                            </div>
-
-                            <div class="col-sm-12">
-                                <div class="form-group">
-                                    <label>Ulica</label>
-                                    <span class="form-span" ng-model="customers.invoice_street" ng-show=" ! edit_address && customer_id">@{{ customers.invoice_street }}</span>
-                                    <input type="text" class="form-control" name="invoice_street" ng-show="edit_address || ! customer_id" ng-model="customers.invoice_street" />
-                                </div>
-
-                                <div class="form-group">
-                                    <label>Skrytka Pocztowa do faktury</label>
-                                    <span class="form-span" ng-model="customers.invoice_mailbox" ng-show=" ! edit_address && customer_id">@{{ customers.invoice_mailbox }}</span>
-                                    <input type="text" class="form-control" name="invoice_mailbox" ng-show="edit_address || ! customer_id" ng-model="customers.invoice_mailbox" />
-                                </div>
-
-                                <div class="form-group">
-                                    <label>Miejscowosc</label>
-                                    <span class="form-span" ng-model="customers.invoice_town" ng-show=" ! edit_address && customer_id">@{{ customers.invoice_town }}</span>
-                                    <input type="text" class="form-control" name="invoice_town" ng-show="edit_address || ! customer_id" ng-model="customers.invoice_town" />
-                                </div>
-
-                                <div class="form-group">
-                                    <label>Wojewodztwo</label>
-                                    <span class="form-span" ng-model="customers.invoice_province" ng-show=" ! edit_address && customer_id">@{{ customers.invoice_province }}</span>
-                                    <input type="text" class="form-control" name="invoice_province" ng-show="edit_address || ! customer_id" ng-model="customers.invoice_province"  />
-                                </div>
-
-                                <div class="form-group">
-                                    <label>Kod</label>
-                                    <span class="form-span" ng-model="customers.invoice_post_code" ng-show=" ! edit_address && customer_id">@{{ customers.invoice_post_code }}</span>
-                                    <input type="text" class="form-control" name="invoice_post_code" ng-show="edit_address || ! customer_id" ng-model="customers.invoice_post_code" />
-                                </div>
-
-                                <div class="form-group">
-                                    <label>Kraj</label>
-                                    <span class="form-span" ng-model="customers.invoice_region" ng-show=" ! edit_address && customer_id">@{{ customers.invoice_region }}</span>
-                                    <input type="text" class="form-control" name="invoice_region" ng-show="edit_address || ! customer_id" ng-model="customers.invoice_region" />
-                                </div>
-                            </div>
-
-                            <div class="col-sm-12">
-                                <div class="form-group">
-                                    <label>Ulica - Adres wysylki</label>
-                                    <span class="form-span" ng-model="customers.send_street" ng-show=" ! edit_address && customer_id">@{{ customers.send_street }}</span>
-                                    <input type="text" class="form-control" name="send_street" ng-show="edit_address || ! customer_id" ng-model="customers.send_street" />
-                                </div>
-
-                                <div class="form-group">
-                                    <label>Skrytka Pocztowa do wysylki</label>
-                                    <span class="form-span" ng-model="customers.send_mailbox" ng-show=" ! edit_address && customer_id">@{{ customers.send_mailbox }}</span>
-                                    <input type="text" class="form-control" name="send_mailbox" ng-show="edit_address || ! customer_id" ng-model="customers.send_mailbox" />
-                                </div>
-
-                                <div class="form-group">
-                                    <label>Miejscowosc - Adres wysylki</label>
-                                    <span class="form-span" ng-model="customers.send_town" ng-show=" ! edit_address && customer_id">@{{ customers.send_town }}</span>
-                                    <input type="text" class="form-control" name="send_town" ng-show="edit_address || ! customer_id" ng-model="customers.send_town" />
-                                </div>
-
-                                <div class="form-group">
-                                    <label>Wojewodztwo - Adres wysylki</label>
-                                    <span class="form-span" ng-model="customers.send_province" ng-show=" ! edit_address && customer_id">@{{ customers.send_province }}</span>
-                                    <input type="text" class="form-control" name="send_province" ng-show="edit_address || ! customer_id" ng-model="customers.send_province" />
-                                </div>
-
-                                <div class="form-group">
-                                    <label>Kod - Adres wysylki</label>
-                                    <span class="form-span" ng-model="customers.send_post_code" ng-show=" ! edit_address && customer_id">@{{ customers.send_post_code }}</span>
-                                    <input type="text" class="form-control" name="send_post_code" ng-show="edit_address || ! customer_id" ng-model="customers.send_post_code" />
-                                </div>
-
-                                <div class="form-group">
-                                    <label>Kraj - Adres wysylki</label>
-                                    <span class="form-span" ng-model="customers.send_region" ng-show=" ! edit_address && customer_id">@{{ customers.send_region }}</span>
-                                    <input type="text" class="form-control" name="send_region" ng-show="edit_address || ! customer_id" ng-model="customers.send_region" />
-                                </div>
-                            </div>
-
-                            <div class="col-sm-12 text-right">
-                                <button type="submit" class="btn btn-add" ng-show=" ! customer_id" ng-click="save(check)">{{ __('Dodaj nowego kontrahenta') }}</button>
                             </div>
                         </div>
-                    </form>
-                </div>
+
+                        <div class="col-sm-12 mb-30">
+                            <h3 class="modal_h3">Informacje adresowe do faktury</h3>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label>Ulica</label>
+                                        <input type="text" class="form-control" name="invoice_street" ng-model="customers.invoice_street" />
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>Skrytka Pocztowa do faktury</label>
+                                        <input type="text" class="form-control" name="invoice_mailbox" ng-model="customers.invoice_mailbox" />
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>Miejscowosc</label>
+                                        <input type="text" class="form-control" name="invoice_town" ng-model="customers.invoice_town" />
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label>Wojewodztwo</label>
+                                        <input type="text" class="form-control" name="invoice_province" ng-model="customers.invoice_province"  />
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>Kod</label>
+                                        <input type="text" class="form-control" name="invoice_post_code" ng-model="customers.invoice_post_code" />
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>Kraj</label>
+                                        <input type="text" class="form-control" name="invoice_region" ng-model="customers.invoice_region" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12">
+                            <h3 class="modal_h3">Informacje adresowe do wysylki</h3>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label>Ulica - Adres wysylki</label>
+                                        <input type="text" class="form-control" name="send_street" ng-model="customers.send_street" />
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>Skrytka Pocztowa do wysylki</label>
+                                        <input type="text" class="form-control" name="send_mailbox" ng-model="customers.send_mailbox" />
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>Miejscowosc - Adres wysylki</label>
+                                        <input type="text" class="form-control" name="send_town" ng-model="customers.send_town" />
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label>Wojewodztwo - Adres wysylki</label>
+                                        <input type="text" class="form-control" name="send_province" ng-model="customers.send_province" />
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>Kod - Adres wysylki</label>
+                                        <input type="text" class="form-control" name="send_post_code" ng-model="customers.send_post_code" />
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>Kraj - Adres wysylki</label>
+                                        <input type="text" class="form-control" name="send_region" ng-model="customers.send_region" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12 text-right">
+                            <button type="submit" class="btn btn-add" ng-click="saveCustomer()">{{ __('Dodaj nowego kontrahenta') }}</button>
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
    </div>
 
    <div class="modal-footer">
-      <button type="button" class="btn btn-danger pull-left" ng-click="cancel()">Anuluj</button>
+      <button type="button" class="btn btn-danger pull-right" ng-click="cancel()">Anuluj</button>
    </div>
 </script>
