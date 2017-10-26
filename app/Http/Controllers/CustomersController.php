@@ -27,7 +27,14 @@ class CustomersController extends Controller
     public function getList()
     {
         $team = Teams::find(session('current_team'));
-        return $team->customers()->get();
+        $customers = $team->customers()->get();
+
+        foreach ($customers as $customer)
+        {
+            $customer->users_ids = $customer->users()->get()->pluck('users_id')->toArray();
+        }
+
+        return $customers;
     }
 
 	public function save($post = [])

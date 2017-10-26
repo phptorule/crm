@@ -79,8 +79,8 @@
                                 <label>Przypisany do</label>
                                 <div class="row">
                                     <div class="col-sm-6">
-                                        <select class="form-control" name="invoice_paid" ng-model="assign_to">
-                                            <option ng-repeat="user in team_users" value="@{{ user.users_id }}">@{{ user.users_first_name + ' ' + user.users_last_name }}</option>
+                                        <select class="form-control" name="assign_to" ng-model="finances.assign_to">
+                                            <option ng-repeat="user in getUsersList()" value="@{{ user.users_id }}">@{{ user.users_first_name + ' ' + user.users_last_name }}</option>
                                         </select>
                                     </div>
                                 </div>
@@ -98,6 +98,11 @@
             <div class="panel-heading">
                 <div class="btn-group" id="buttonlist">
                     <h3>Informacje adresowe</h3>
+                </div>
+
+                <div class="custom_panel_item pull-right">
+                    <a href="javascript:void(0);" ng-click="copySendAddress()">Kopiuj adres wysylki <i class="fa fa-clone"></i></a>
+                    <a href="javascript:void(0);" ng-click="copyInvoiceAddress()">Kopiuj adres podstawowy <i class="fa fa-clone"></i></a>
                 </div>
             </div>
 

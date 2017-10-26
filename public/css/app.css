@@ -5227,7 +5227,7 @@ button.toast-close-button {
 }
 
 .custom_panel_item a {
-    display: block;
+    display: inline-block;
     cursor: pointer;
     padding: 5px;
     outline: 0;
