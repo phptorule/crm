@@ -14,13 +14,13 @@
 		$scope.filter.payer = '';
 		$scope.team_users = [];
 		$scope.invoice_paid = '0';
+		$scope.finances = {};
 
-		$scope.init = function() {
+		$scope.init = function(data) {
 			$scope.getTeamUsers();
 		};
 
 		$scope.getTeamUsers = function() {
-			console.log('data');
             request.send('/users/getTeamUsers', {}, function(data) {
                 $scope.team_users = data;
             });
@@ -39,6 +39,7 @@
             });
 
             modalInstance.result.then(function(response) {
+            	$scope.finances = response;
             }, function () {
 
             });
@@ -95,7 +96,8 @@
 
     	$scope.initList = function() {
             request.send('/customers/getList', {}, function(data) {
-            	$scope.filteredCustomers = data;
+            	//$scope.filteredCustomers = data;
+            	$scope.pagination(data);
             });
         };
 
@@ -103,16 +105,21 @@
 		    return Math.ceil($scope.customers.length / $scope.numPerPage);
 		};
 
-        $scope.$watch('currentPage + numPerPage', function() {
-		    var begin = (($scope.currentPage - 1) * $scope.numPerPage)
-		    , end = begin + $scope.numPerPage;
+		$scope.pagination = function(customers) {
+			$scope.$watch('currentPage + numPerPage', function() {
+			    var begin = (($scope.currentPage - 1) * $scope.numPerPage)
+			    , end = begin + $scope.numPerPage;
 
-		    $scope.filteredCustomers = $scope.customers.slice(begin, end);
-	  	});
+			    $scope.filteredCustomers = customers.slice(begin, end);
+		  	});
+		};
+
+
+	  	$scope.getCustomer = function(customer) {
+	  		$uibModalInstance.close(customer);
+	  	};
 
 	  	$scope.addCustomer = function() {
-	  		$uibModalInstance.close();
-
 	  		var modalInstance = $uibModal.open({
                 animation: true,
                 templateUrl: 'CreateCustomer.html',
@@ -125,10 +132,15 @@
             });
 
             modalInstance.result.then(function(response) {
+            	$uibModalInstance.close(response);
             }, function () {
 
             });
 	  	};
+
+	  	$scope.cancel = function() {
+            $uibModalInstance.dismiss('cancel');
+        };
     };
 })();
 
@@ -138,6 +150,31 @@
     angular.module('app').controller('ModalCreateCustomerCtrl', ['$rootScope', '$scope', '$uibModalInstance', '$filter', 'request', 'validate', 'logger', 'langs', 'items', ModalCreateCustomerCtrl]);
 
     function ModalCreateCustomerCtrl($rootScope, $scope, $uibModalInstance, $filter, request, validate, logger, langs, items) {
-    	console.log('Yahoo!');
+    	$scope.cancel = function() {
+            $uibModalInstance.dismiss('cancel');
+        };
+
+        $scope.saveCustomer = function() {
+        	var error = 1;
+			error *= validate.check($scope.form.company_name, 'Nazwa firmy');
+			if (error)
+			{
+	            request.send('/customers/save', $scope.customers, function(data) {
+	                if (data)
+	                {
+	                    $scope.getCustomer(data);
+	                }
+	            });
+        	}
+        };
+
+        $scope.getCustomer = function(customer_id) {
+        	request.send('/customers/get', {'customer_id': customer_id}, function(data) {
+                if (data)
+                {
+                	$uibModalInstance.close(data);
+                }
+            });
+        };
     };
 })();
