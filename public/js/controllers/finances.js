@@ -16,14 +16,59 @@
 		$scope.invoice_paid = '0';
 		$scope.finances = {};
 
+		$scope.defaultUser = function() {
+			$scope.finances.assign_to = $rootScope.user.user_id;
+		};
+
+		$scope.getUsersList = function() {
+			var list = [];
+			list.push($rootScope.user);
+
+			return list;
+		};
+
 		$scope.init = function(data) {
 			$scope.getTeamUsers();
+			$scope.getUsersList();
+
+			if ( ! $rootScope.user.users_id) {
+				$rootScope.queue.push($scope.defaultUser);
+			} else {
+				$scope.defaultUser();
+			}
 		};
 
 		$scope.getTeamUsers = function() {
             request.send('/users/getTeamUsers', {}, function(data) {
                 $scope.team_users = data;
+				$scope.users = [];
+
+                for (var k in $scope.team_users)
+                {
+                    if ($scope.inArray($scope.finances.users_ids, $scope.team_users[k].users_id))
+                    {
+                        $scope.users.push($scope.team_users[k]);
+                    }
+                }
             });
+        };
+
+        $scope.copyInvoiceAddress = function() {
+        	$scope.finances.send_street = $scope.finances.invoice_street;
+        	$scope.finances.send_mailbox = $scope.finances.invoice_mailbox;
+        	$scope.finances.send_town = $scope.finances.invoice_town;
+        	$scope.finances.send_province = $scope.finances.invoice_province;
+        	$scope.finances.send_post_code = $scope.finances.invoice_post_code;
+        	$scope.finances.send_region = $scope.finances.invoice_region;
+        };
+
+        $scope.copySendAddress = function() {
+        	$scope.finances.invoice_street = $scope.finances.send_street;
+        	$scope.finances.invoice_mailbox = $scope.finances.send_mailbox;
+        	$scope.finances.invoice_town = $scope.finances.send_town;
+        	$scope.finances.invoice_province = $scope.finances.send_province;
+        	$scope.finances.invoice_post_code = $scope.finances.send_post_code;
+        	$scope.finances.invoice_region = $scope.finances.send_region;
         };
 
     	$scope.selectCustomer = function() {
@@ -40,6 +85,7 @@
 
             modalInstance.result.then(function(response) {
             	$scope.finances = response;
+            	$scope.getTeamUsers();
             }, function () {
 
             });
@@ -65,6 +111,20 @@
 			$scope.payment_date = new Date();
 		};
 		$scope.setDate();
+
+		$scope.inArray = function(list, value) {
+            var result = false;
+
+            for (var k in list)
+            {
+                if (list[k] == value)
+                {
+                    result = true;
+                }
+            }
+
+            return result;
+        };
 
 	    /* Setting page titles */
 	    if ($scope.customer_id)
@@ -96,7 +156,6 @@
 
     	$scope.initList = function() {
             request.send('/customers/getList', {}, function(data) {
-            	//$scope.filteredCustomers = data;
             	$scope.pagination(data);
             });
         };

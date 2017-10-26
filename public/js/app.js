@@ -91,6 +91,7 @@
         $rootScope.open = 1;
         $scope.Page = Page;
         $rootScope.user = {};
+        $rootScope.queue = [];
 
         $scope.openSidebar = function() {
             $rootScope.open = 1 - $rootScope.open;
@@ -116,7 +117,11 @@
             request.send('/users/info', {}, function(data) {
                 if (data)
                 {
-                   $rootScope.user = data;
+                    $rootScope.user = data;
+                    for (var k in $rootScope.queue)
+                    {
+                        $rootScope.queue[k]();
+                    }
                 }
             });
 
