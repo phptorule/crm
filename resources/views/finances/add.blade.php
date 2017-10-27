@@ -234,29 +234,35 @@
                                         <button type="submit" class="btn btn-add" ng-click="discount_window = ! discount_window">Rabat</button>
                                         <div class="discount_window" ng-show="discount_window">
                                             <div class="discount_header">
-                                                <h4>Kwota całkowita netto: </h4>
+                                                <h4>Kwota całkowita netto: @{{ getSumWithDiscount() }}</h4>
                                                 <button type="button" class="close" ng-click="discount_window = ! discount_window" aria-hidden="true">×</button>
                                             </div>
 
-                                            <div class="i-check">
-                                                <input type="radio" id="square-radio-1" value="without" name="square-radio" checked />
-                                                <label for="square-radio-1" ng-click="setDiscount('without')">Bez rabatu</label>
+                                            <div class="form-group">
+                                                <input type="radio" id="square-radio-1" ng-model="discount_radio" ng-click="setDiscount('without')" value="without" />
+                                                <label for="square-radio-1">Bez rabatu</label>
                                             </div>
 
                                             <div class="discount_block">
-                                                <div class="i-check">
-                                                    <input type="radio" id="square-radio-2" value="percent" name="square-radio" />
-                                                    <label for="square-radio-2" ng-click="setDiscount('percent')">% Procentowy</label>
-                                                </div>
+                                                <div class="form-group">
+                                                    <input type="radio" id="square-radio-2" ng-model="discount_radio" ng-click="setDiscount('percent')" value="percent"  />
+                                                    <label for="square-radio-2">% Procentowy</label>
 
-                                                <div class="discount_input pull-right" ng-show="discount_radio == 'percent'">
-                                                    <input type="text" class="form-control" name="percent_discount" /> %
+                                                    <div class="discount_input pull-right" ng-show="discount_radio == 'percent'">
+                                                        <input type="text" class="form-control" ng-model="discount_percent" name="discount_percent" /> %
+                                                    </div>
                                                 </div>
                                             </div>
 
-                                            <div class="i-check">
-                                                <input type="radio" id="square-radio-3" value="regular" name="square-radio" />
-                                                <label for="square-radio-3" ng-click="setDiscount('regular')">Wartosciowy</label>
+                                            <div class="discount_block">
+                                                <div class="form-group">
+                                                    <input type="radio" id="square-radio-3" ng-model="discount_radio" ng-click="setDiscount('regular')" value="regular" />
+                                                    <label for="square-radio-3">Wartosciowy</label>
+
+                                                    <div class="discount_input pull-right" ng-show="discount_radio == 'regular'">
+                                                        <input type="text" class="form-control" ng-model="discount_regular" name="discount_regular" />
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -266,22 +272,40 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <button type="submit" class="btn btn-add" ng-click="">Podatek VAT</button>
+                                        <button type="submit" class="btn btn-add" ng-click="vat_window = ! vat_window">Podatek VAT</button>
+                                        <div class="vat_window" ng-show="vat_window">
+                                            <div class="discount_header">
+                                                <h4>Kwota netto: @{{ getSumWithDiscount() }}</h4>
+                                                <button type="button" class="close" ng-click="vat_window = ! vat_window" aria-hidden="true">×</button>
+                                            </div>
+
+                                            <div class="discount_block">
+                                                <div class="form-group">
+                                                    <div class="discount_input">
+                                                        <input type="text" class="form-control" ng-model="product_vat" name="product_vat" /> %
+                                                    </div>
+
+                                                    <div class="discount_input pull-right">
+                                                        VAT <input type="text" class="form-control" ng-model="product_vat_sum" name="product_vat_sum" disabled="disabled" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </td>
 
                                 <td>
-                                    <div class="form-group">0</div>
-                                    <div class="form-group">0</div>
-                                    <div class="form-group">0</div>
-                                    <div class="form-group">0</div>
+                                    <div class="form-group">@{{ getSumNetto() }}</div>
+                                    <div class="form-group">@{{ getDiscount() }}</div>
+                                    <div class="form-group">@{{ getSumWithDiscount() }}</div>
+                                    <div class="form-group">@{{ getVat() }}</div>
                                 </td>
 
                                 <td>
                                     <div class="form-group">&nbsp;</div>
                                     <div class="form-group">&nbsp;</div>
                                     <div class="form-group">&nbsp;</div>
-                                    <div class="form-group">0</div>
+                                    <div class="form-group">@{{ getSumBrutto() }}</div>
                                 </td>
                             </tr>
                         </tbody>

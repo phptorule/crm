@@ -17,6 +17,13 @@
 		$scope.finances = {};
 		$scope.finances.currency = '0';
 		$scope.discount_window = false;
+        $scope.vat_window = false;
+    	$scope.discount_percent = 0;
+    	$scope.discount_regular = 0;
+    	$scope.finances.product_count = 0;
+        $scope.finances.product_cost = 0;
+        $scope.product_vat = 0;
+        $scope.discount_radio = 'without';
 
 		$scope.defaultUser = function() {
 			$scope.finances.assign_to = $rootScope.user.user_id;
@@ -145,23 +152,106 @@
         };
 
         $scope.setDiscount = function(discount) {
-        	if (discount == 'percent')
+        	if (discount == 'without')
     		{
-    			$scope.discount_radio = 'percent';
+    			$scope.discount_percent = 0;
+    			$scope.discount_regular = 0;
     		}
 
-    		if (discount == 'without')
+    		if (discount == 'percent')
     		{
-    			$scope.discount_radio = 'without';
+    			$scope.discount_regular = 0;
     		}
 
     		if (discount == 'regular')
     		{
-    			$scope.discount_radio = 'regular';
+    			$scope.discount_percent = 0;
     		}
+        };
 
+        $scope.getDiscount = function() {
+        	var sumOfPercent = 0;
 
-    		console.log($scope.discount_radio);
+        	if ($scope.discount_percent == 0 && $scope.discount_regular == 0)
+        	{
+        		return '0.00';
+        	}
+
+        	if ($scope.discount_percent != 0)
+        	{
+        		sumOfPercent = ($scope.getSumNetto() - $scope.getSumWithDiscount()).toFixed(2);
+        		return sumOfPercent;
+        	}
+
+        	if ($scope.discount_regular != 0)
+        	{
+        		return $scope.discount_regular;
+        	}
+        };
+
+        $scope.getSumWithDiscount = function() {
+        	var nettoSum = 0;
+	    	var discountNettoSum = 0;
+
+	    	if ($scope.discount_percent != 0)
+	    	{
+	    		nettoSum = $scope.getSumNetto();
+				discountNettoSum = nettoSum * ((100 - $scope.discount_percent) / 100);
+				return discountNettoSum.toFixed(2);
+	    	}
+	    	else
+	    	{
+	    		nettoSum = $scope.getSumNetto();
+				discountNettoSum = nettoSum - $scope.discount_regular;
+				return discountNettoSum.toFixed(2);
+	    	}
+        };
+
+        $scope.getSumNetto = function() {
+        	if ($scope.finances.product_count == 0 || $scope.finances.product_cost == 0)
+    		{
+    			return '0.00';
+    		}
+    		else
+    		{
+    			return ($scope.finances.product_count * $scope.finances.product_cost).toFixed(2);
+    		}
+        };
+
+        $scope.getVat = function() {
+        	var sumWithDiscount = parseInt($scope.getSumWithDiscount());
+        	var vat_sum = 0;
+
+        	if ($scope.product_vat == 0)
+        	{
+        		$scope.product_vat_sum = '0.00';
+        		return '0.00';
+        	}
+
+        	if (sumWithDiscount)
+        	{
+        		$scope.product_vat_sum = ((sumWithDiscount * $scope.product_vat) / 100).toFixed(2);
+        		vat_sum = ((sumWithDiscount * $scope.product_vat) / 100 + sumWithDiscount).toFixed(2);
+
+        		return $scope.product_vat_sum;
+        	}
+        };
+
+        $scope.getSumBrutto = function() {
+        	if ($scope.getSumWithDiscount() == 0 && $scope.getVat() == 0)
+        	{
+        		return '0.00';
+        	}
+
+        	if ($scope.getSumWithDiscount() && $scope.getVat() == 0)
+        	{
+        		return $scope.getSumWithDiscount()
+        	}
+
+        	if ($scope.getVat())
+        	{
+        		return (parseInt($scope.getVat()) + parseInt($scope.getSumWithDiscount())).toFixed(2);
+        	}
         };
 
 	    /* Setting page titles */
