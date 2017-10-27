@@ -24,9 +24,10 @@
         $scope.finances.product_cost = 0;
         $scope.product_vat = 0;
         $scope.discount_radio = 'without';
+        $scope.finances.pay_type = '0';
 
 		$scope.defaultUser = function() {
-			$scope.finances.assign_to = $rootScope.user.user_id;
+			$scope.finances.assign_to = $rootScope.user.users_id.toString();
 		};
 
 		$scope.getUsersList = function() {

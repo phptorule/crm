@@ -201,6 +201,7 @@
             request.send('/users/getTeamUsers', {}, function(data) {
                 $scope.original_users = data;
                 $scope.users = [];
+                $scope.users_list = $scope.original_users[0].users_id.toString();
 
                 for (var k in $scope.original_users)
                 {

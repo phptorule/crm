@@ -46,9 +46,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <div class="col-sm-6">
                             <div class="form-group">
                                 <label>Zaplacona</label>
                                 <div class="row">
@@ -60,7 +58,9 @@
                                     </div>
                                 </div>
                             </div>
+                        </div>
 
+                        <div class="col-sm-6">
                             <div class="form-group">
                                 <label>Termin platności</label><span class="req_field"> *</span>
                                 <div class="row">
@@ -81,6 +81,18 @@
                                     <div class="col-sm-6">
                                         <select class="form-control" name="assign_to" ng-model="finances.assign_to" required>
                                             <option ng-repeat="user in getUsersList()" value="@{{ user.users_id }}">@{{ user.users_first_name + ' ' + user.users_last_name }}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Sposób płatności</label>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <select class="form-control" name="assign_to" ng-model="finances.pay_type" required>
+                                            <option value="0">Gotówką</option>
+                                            <option value="1">Przelew </option>
                                         </select>
                                     </div>
                                 </div>
