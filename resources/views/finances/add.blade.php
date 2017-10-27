@@ -62,7 +62,7 @@
                             </div>
 
                             <div class="form-group">
-                                <label>Termin platności</label>
+                                <label>Termin platności</label><span class="req_field"> *</span>
                                 <div class="row">
                                     <div class="col-sm-6">
                                         <div class="input-group custom-datapicker-input">
@@ -76,7 +76,7 @@
                             </div>
 
                             <div class="form-group">
-                                <label>Przypisany do</label>
+                                <label>Przypisany do</label><span class="req_field"> *</span>
                                 <div class="row">
                                     <div class="col-sm-6">
                                         <select class="form-control" name="assign_to" ng-model="finances.assign_to">
@@ -102,7 +102,7 @@
 
                 <div class="custom_panel_item pull-right">
                     <a href="javascript:void(0);" ng-click="copySendAddress()">Kopiuj adres wysylki <i class="fa fa-clone"></i></a>
-                    <a href="javascript:void(0);" ng-click="copyInvoiceAddress()">Kopiuj adres podstawowy <i class="fa fa-clone"></i></a>
+                    <a href="javascript:void(0);" ng-click="copyInvoiceAddress()">Kopiuj adres do faktury <i class="fa fa-clone"></i></a>
                 </div>
             </div>
 
@@ -110,13 +110,14 @@
                 <form class="no-transition" name="form_address" method="post" novalidate="novalidate">
                     <div class="row">
                         <div class="col-sm-6">
+                            <h4>Adres do faktury</h4>
                             <div class="form-group">
-                                <label>Ulica</label>
+                                <label>Ulica</label><span class="req_field"> *</span>
                                 <input type="text" class="form-control" name="invoice_street" ng-model="finances.invoice_street" />
                             </div>
 
                             <div class="form-group">
-                                <label>Skrytka Pocztowa do faktury</label>
+                                <label>Skrytka Pocztowa</label>
                                 <input type="text" class="form-control" name="invoice_mailbox" ng-model="finances.invoice_mailbox" />
                             </div>
 
@@ -142,33 +143,34 @@
                         </div>
 
                         <div class="col-sm-6">
+                            <h4>Adres do wysylki</h4>
                             <div class="form-group">
-                                <label>Ulica - Adres wysylki</label>
+                                <label>Ulica</label><span class="req_field"> *</span>
                                 <input type="text" class="form-control" name="send_street" ng-model="finances.send_street" />
                             </div>
 
                             <div class="form-group">
-                                <label>Skrytka Pocztowa do wysylki</label>
+                                <label>Skrytka Pocztowa</label>
                                 <input type="text" class="form-control" name="send_mailbox" ng-model="finances.send_mailbox" />
                             </div>
 
                             <div class="form-group">
-                                <label>Miejscowosc - Adres wysylki</label>
+                                <label>Miejscowosc</label>
                                 <input type="text" class="form-control" name="send_town" ng-model="finances.send_town" />
                             </div>
 
                             <div class="form-group">
-                                <label>Wojewodztwo - Adres wysylki</label>
+                                <label>Wojewodztwo</label>
                                 <input type="text" class="form-control" name="send_province" ng-model="finances.send_province" />
                             </div>
 
                             <div class="form-group">
-                                <label>Kod - Adres wysylki</label>
+                                <label>Kod</label>
                                 <input type="text" class="form-control" name="send_post_code" ng-model="finances.send_post_code" />
                             </div>
 
                             <div class="form-group">
-                                <label>Kraj - Adres wysylki</label>
+                                <label>Kraj</label>
                                 <input type="text" class="form-control" name="send_region" ng-model="finances.send_region" />
                             </div>
                         </div>
@@ -188,7 +190,7 @@
             </div>
 
             <div class="panel-body">
-                <table id="customers_table" class="table table-bordered table-striped table-hover">
+                <table id="finances_product_table" class="table table-bordered table-striped table-hover">
                     <thead>
                         <tr class="info">
                             <th>Nazwa pozycji</th>
@@ -202,12 +204,84 @@
 
                     <tbody>
                         <tr>
-                            <td>test</td>
-                            <td>test</td>
-                            <td>test</td>
-                            <td>test</td>
-                            <td>test</td>
-                            <td>test</td>
+                            <td>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" name="invoice_street" ng-model="finances.product_name" />
+                                </div>
+                            </td>
+
+                            <td>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" name="invoice_street" ng-model="finances.product_count" />
+                                </div>
+                            </td>
+
+                            <td>
+                                <select class="form-control" ng-model="finances.currency">
+                                    <option selected="selected" value="0">PLN</option>
+                                    <option value="1">EUR</option>
+                                    <option value="2">USD</option>
+                                </select>
+                            </td>
+
+                            <td class="text-right discount">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" name="invoice_street" ng-model="finances.product_cost" />
+                                </div>
+
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-add" ng-click="discount_window = ! discount_window">Rabat</button>
+                                    <div class="discount_window" ng-show="discount_window">
+                                        <div class="discount_header">
+                                            <h4>Kwota całkowita netto: </h4>
+                                            <button type="button" class="close" ng-click="discount_window = ! discount_window" aria-hidden="true">×</button>
+                                        </div>
+
+                                        <div class="i-check">
+                                            <input type="radio" id="square-radio-1" value="without" name="square-radio" checked />
+                                            <label for="square-radio-1" ng-click="setDiscount('without')">Bez rabatu</label>
+                                        </div>
+
+                                        <div class="discount_block">
+                                            <div class="i-check">
+                                                <input type="radio" id="square-radio-2" value="percent" name="square-radio" />
+                                                <label for="square-radio-2" ng-click="setDiscount('percent')">% Procentowy</label>
+                                            </div>
+
+                                            <div class="discount_input pull-right" ng-show="discount_radio == 'percent'">
+                                                <input type="text" class="form-control" name="percent_discount" /> %
+                                            </div>
+                                        </div>
+
+                                        <div class="i-check">
+                                            <input type="radio" id="square-radio-3" value="regular" name="square-radio" />
+                                            <label for="square-radio-3" ng-click="setDiscount('regular')">Wartosciowy</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <span>Po rabacie:</span>
+                                </div>
+
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-add" ng-click="">Podatek VAT</button>
+                                </div>
+                            </td>
+
+                            <td>
+                                <div class="form-group">0</div>
+                                <div class="form-group">0</div>
+                                <div class="form-group">0</div>
+                                <div class="form-group">0</div>
+                            </td>
+
+                            <td>
+                                <div class="form-group">&nbsp;</div>
+                                <div class="form-group">&nbsp;</div>
+                                <div class="form-group">&nbsp;</div>
+                                <div class="form-group">0</div>
+                            </td>
                         </tr>
                     </tbody>
                </table>
@@ -216,7 +290,7 @@
     </div>
 
     <div class="col-sm-12 text-right">
-        <button type="submit" class="btn btn-add" ng-show=" ! customer_id" ng-click="save(check)">{{ __('Zapisc') }}</button>
+        <button type="submit" class="btn btn-add" ng-click="save()">Zapisc</button>
     </div>
 </div>
 

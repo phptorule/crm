@@ -5309,3 +5309,39 @@ button.toast-close-button {
     right: 20px;
 }
 
+#finances_product_table .form-group {
+    line-height: 35px;
+}
+
+#content .discount {
+    position: relative;
+    overflow: visible;
+}
+
+.discount_window {
+    position: absolute;
+    z-index: 1;
+    width: 400px;
+    height: 200px;
+    background-color: #fff;
+    border: 2px solid #d1d1d1;
+    border-radius: 2px;
+    text-align: left;
+    padding: 5px 5px 5px 20px;
+}
+
+.discount_block .i-check,
+#finances_product_table .discount_block .form-control,
+.discount_header h4,
+.discount_header button {
+    display: inline-block;
+}
+
+.discount_block .discount_input {
+    width: 20%;
+    margin: 5px 10px;
+}
+
+.discount_header h4 {
+    width: 70%;
+}
