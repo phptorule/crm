@@ -15,7 +15,7 @@
                                 <label>Klient</label><span class="req_field"> *</span>
                                 <div class="row">
                                     <div class="col-sm-6">
-                                        <input type="text" class="form-control" name="customer" disabled="disabled" ng-model="finances.company_name" />
+                                        <input type="text" class="form-control" name="customer" disabled="disabled" ng-model="finances.company_name" required />
                                     </div>
 
                                     <div class="col-sm-6">
@@ -66,7 +66,7 @@
                                 <div class="row">
                                     <div class="col-sm-6">
                                         <div class="input-group custom-datapicker-input">
-                                            <input type="text" class="form-control" name="payment_date" uib-datepicker-popup="dd/MM/yyyy" ng-model="payment_date" is-open="date[1].opened" show-button-bar="false" datepicker-options="dateOptions" required="required" />
+                                            <input type="text" class="form-control" name="payment_date" uib-datepicker-popup="dd/MM/yyyy" ng-model="payment_date" is-open="date[1].opened" show-button-bar="false" datepicker-options="dateOptions" required />
                                             <span class="input-group-btn">
                                                 <button type="button" class="btn btn-default" ng-click="calendarOpen(1)"><i class="glyphicon glyphicon-calendar"></i></button>
                                             </span>
@@ -79,7 +79,7 @@
                                 <label>Przypisany do</label><span class="req_field"> *</span>
                                 <div class="row">
                                     <div class="col-sm-6">
-                                        <select class="form-control" name="assign_to" ng-model="finances.assign_to">
+                                        <select class="form-control" name="assign_to" ng-model="finances.assign_to" required>
                                             <option ng-repeat="user in getUsersList()" value="@{{ user.users_id }}">@{{ user.users_first_name + ' ' + user.users_last_name }}</option>
                                         </select>
                                     </div>
@@ -113,7 +113,7 @@
                             <h4>Adres do faktury</h4>
                             <div class="form-group">
                                 <label>Ulica</label><span class="req_field"> *</span>
-                                <input type="text" class="form-control" name="invoice_street" ng-model="finances.invoice_street" />
+                                <input type="text" class="form-control" name="invoice_street" ng-model="finances.invoice_street" required />
                             </div>
 
                             <div class="form-group">
@@ -146,7 +146,7 @@
                             <h4>Adres do wysylki</h4>
                             <div class="form-group">
                                 <label>Ulica</label><span class="req_field"> *</span>
-                                <input type="text" class="form-control" name="send_street" ng-model="finances.send_street" />
+                                <input type="text" class="form-control" name="send_street" ng-model="finances.send_street" required />
                             </div>
 
                             <div class="form-group">
@@ -190,101 +190,107 @@
             </div>
 
             <div class="panel-body">
-                <table id="finances_product_table" class="table table-bordered table-striped table-hover">
-                    <thead>
-                        <tr class="info">
-                            <th>Nazwa pozycji</th>
-                            <th>Ilosc</th>
-                            <th>Waluta</th>
-                            <th>Cena</th>
-                            <th>Suma netto</th>
-                            <th>Suma brutto</th>
-                        </tr>
-                    </thead>
+                <form name="form_products" method="post" novalidate="novalidate">
+                    <table id="finances_product_table" class="table table-bordered table-striped table-hover">
+                        <thead>
+                            <tr class="info">
+                                <th>Nazwa pozycji<span class="req_field"> *</span></th>
+                                <th>Ilosc<span class="req_field"> *</span></th>
+                                <th>Waluta</th>
+                                <th>Cena<span class="req_field"> *</span></th>
+                                <th>Suma netto</th>
+                                <th>Suma brutto</th>
+                            </tr>
+                        </thead>
 
-                    <tbody>
-                        <tr>
-                            <td>
-                                <div class="form-group">
-                                    <input type="text" class="form-control" name="invoice_street" ng-model="finances.product_name" />
-                                </div>
-                            </td>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" name="product_name" ng-model="finances.product_name" required />
+                                    </div>
+                                </td>
 
-                            <td>
-                                <div class="form-group">
-                                    <input type="text" class="form-control" name="invoice_street" ng-model="finances.product_count" />
-                                </div>
-                            </td>
+                                <td>
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" name="product_count" ng-model="finances.product_count" required />
+                                    </div>
+                                </td>
 
-                            <td>
-                                <select class="form-control" ng-model="finances.currency">
-                                    <option selected="selected" value="0">PLN</option>
-                                    <option value="1">EUR</option>
-                                    <option value="2">USD</option>
-                                </select>
-                            </td>
+                                <td>
+                                    <select class="form-control" name="currency" ng-model="finances.currency" required>
+                                        <option selected="selected" value="0">PLN</option>
+                                        <option value="1">EUR</option>
+                                        <option value="2">USD</option>
+                                    </select>
+                                </td>
 
-                            <td class="text-right discount">
-                                <div class="form-group">
-                                    <input type="text" class="form-control" name="invoice_street" ng-model="finances.product_cost" />
-                                </div>
+                                <td class="text-right discount">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" name="product_cost" ng-model="finances.product_cost" required />
+                                    </div>
 
-                                <div class="form-group">
-                                    <button type="submit" class="btn btn-add" ng-click="discount_window = ! discount_window">Rabat</button>
-                                    <div class="discount_window" ng-show="discount_window">
-                                        <div class="discount_header">
-                                            <h4>Kwota całkowita netto: </h4>
-                                            <button type="button" class="close" ng-click="discount_window = ! discount_window" aria-hidden="true">×</button>
-                                        </div>
+                                    <div class="form-group">
+                                        <button type="submit" class="btn btn-add" ng-click="discount_window = ! discount_window">Rabat</button>
+                                        <div class="discount_window" ng-show="discount_window">
+                                            <div class="discount_header">
+                                                <h4>Kwota całkowita netto: </h4>
+                                                <button type="button" class="close" ng-click="discount_window = ! discount_window" aria-hidden="true">×</button>
+                                            </div>
 
-                                        <div class="i-check">
-                                            <input type="radio" id="square-radio-1" value="without" name="square-radio" checked />
-                                            <label for="square-radio-1" ng-click="setDiscount('without')">Bez rabatu</label>
-                                        </div>
-
-                                        <div class="discount_block">
                                             <div class="i-check">
-                                                <input type="radio" id="square-radio-2" value="percent" name="square-radio" />
-                                                <label for="square-radio-2" ng-click="setDiscount('percent')">% Procentowy</label>
+                                                <input type="radio" id="square-radio-1" value="without" name="square-radio" checked />
+                                                <label for="square-radio-1" ng-click="setDiscount('without')">Bez rabatu</label>
                                             </div>
 
-                                            <div class="discount_input pull-right" ng-show="discount_radio == 'percent'">
-                                                <input type="text" class="form-control" name="percent_discount" /> %
-                                            </div>
-                                        </div>
+                                            <div class="discount_block">
+                                                <div class="i-check">
+                                                    <input type="radio" id="square-radio-2" value="percent" name="square-radio" />
+                                                    <label for="square-radio-2" ng-click="setDiscount('percent')">% Procentowy</label>
+                                                </div>
 
-                                        <div class="i-check">
-                                            <input type="radio" id="square-radio-3" value="regular" name="square-radio" />
-                                            <label for="square-radio-3" ng-click="setDiscount('regular')">Wartosciowy</label>
+                                                <div class="discount_input pull-right" ng-show="discount_radio == 'percent'">
+                                                    <input type="text" class="form-control" name="percent_discount" /> %
+                                                </div>
+                                            </div>
+
+                                            <div class="i-check">
+                                                <input type="radio" id="square-radio-3" value="regular" name="square-radio" />
+                                                <label for="square-radio-3" ng-click="setDiscount('regular')">Wartosciowy</label>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
 
-                                <div class="form-group">
-                                    <span>Po rabacie:</span>
-                                </div>
+                                    <div class="form-group">
+                                        <span>Po rabacie:</span>
+                                    </div>
 
-                                <div class="form-group">
-                                    <button type="submit" class="btn btn-add" ng-click="">Podatek VAT</button>
-                                </div>
-                            </td>
+                                    <div class="form-group">
+                                        <button type="submit" class="btn btn-add" ng-click="">Podatek VAT</button>
+                                    </div>
+                                </td>
 
-                            <td>
-                                <div class="form-group">0</div>
-                                <div class="form-group">0</div>
-                                <div class="form-group">0</div>
-                                <div class="form-group">0</div>
-                            </td>
+                                <td>
+                                    <div class="form-group">0</div>
+                                    <div class="form-group">0</div>
+                                    <div class="form-group">0</div>
+                                    <div class="form-group">0</div>
+                                </td>
 
-                            <td>
-                                <div class="form-group">&nbsp;</div>
-                                <div class="form-group">&nbsp;</div>
-                                <div class="form-group">&nbsp;</div>
-                                <div class="form-group">0</div>
-                            </td>
-                        </tr>
-                    </tbody>
-               </table>
+                                <td>
+                                    <div class="form-group">&nbsp;</div>
+                                    <div class="form-group">&nbsp;</div>
+                                    <div class="form-group">&nbsp;</div>
+                                    <div class="form-group">0</div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <footer class="table-footer">
+                        <p>(<span class="req_field">*</span>) - required fields</p>
+                    </footer>
+               </form>
             </div>
         </div>
     </div>
@@ -338,7 +344,7 @@
                         </tbody>
                    </table>
 
-                   <footer class="table-footer" >
+                   <footer class="table-footer">
                         <div class="row">
                             <div class="col-md-offset-6 col-md-6 text-right pagination-container">
                                 <div data-pagination="" data-num-pages="numPages()" data-current-page="currentPage" data-max-size="maxSize" data-boundary-links="true"></div>

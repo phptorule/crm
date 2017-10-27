@@ -98,8 +98,11 @@
 			error *= validate.check($scope.form.customer, 'Klient');
 			error *= validate.check($scope.form.payment_date, 'Termin platności');
 			error *= validate.check($scope.form.assign_to, 'Przypisany do');
-			error *= validate.check($scope.form.invoice_street, 'Ulica');
-			error *= validate.check($scope.form.send_street, 'Ulica');
+			error *= validate.check($scope.form_address.invoice_street, 'Ulica (do faktury)');
+			error *= validate.check($scope.form_address.send_street, 'Ulica (do wysylki)');
+			error *= validate.check($scope.form_products.product_name, 'Nazwa pozycji');
+			error *= validate.check($scope.form_products.product_count, 'Ilosc');
+			error *= validate.check($scope.form_products.product_cost, 'Cena');
 			if (error)
 			{
 				console.log($scope.form.assign_to);
