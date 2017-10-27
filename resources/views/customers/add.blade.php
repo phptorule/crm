@@ -166,6 +166,7 @@
                 <form class="no-transition" name="form_address" method="post" novalidate="novalidate">
                     <div class="row">
                         <div class="col-sm-6">
+                            <h4>Adres do faktury</h4>
                             <div class="form-group">
                                 <label>Ulica</label>
                                 <span class="form-span" ng-model="customers.invoice_street" ng-show=" ! edit_address && customer_id">@{{ customers.invoice_street }}</span>
@@ -173,7 +174,7 @@
                             </div>
 
                             <div class="form-group">
-                                <label>Skrytka Pocztowa do faktury</label>
+                                <label>Skrytka Pocztowa</label>
                                 <span class="form-span" ng-model="customers.invoice_mailbox" ng-show=" ! edit_address && customer_id">@{{ customers.invoice_mailbox }}</span>
                                 <input type="text" class="form-control" name="invoice_mailbox" ng-show="edit_address || ! customer_id" ng-model="customers.invoice_mailbox" />
                             </div>
@@ -204,38 +205,39 @@
                         </div>
 
                         <div class="col-sm-6">
+                            <h4>Adres do wysylki</h4>
                             <div class="form-group">
-                                <label>Ulica - Adres wysylki</label>
+                                <label>Ulica</label>
                                 <span class="form-span" ng-model="customers.send_street" ng-show=" ! edit_address && customer_id">@{{ customers.send_street }}</span>
                                 <input type="text" class="form-control" name="send_street" ng-show="edit_address || ! customer_id" ng-model="customers.send_street" />
                             </div>
 
                             <div class="form-group">
-                                <label>Skrytka Pocztowa do wysylki</label>
+                                <label>Skrytka Pocztowa</label>
                                 <span class="form-span" ng-model="customers.send_mailbox" ng-show=" ! edit_address && customer_id">@{{ customers.send_mailbox }}</span>
                                 <input type="text" class="form-control" name="send_mailbox" ng-show="edit_address || ! customer_id" ng-model="customers.send_mailbox" />
                             </div>
 
                             <div class="form-group">
-                                <label>Miejscowosc - Adres wysylki</label>
+                                <label>Miejscowosc</label>
                                 <span class="form-span" ng-model="customers.send_town" ng-show=" ! edit_address && customer_id">@{{ customers.send_town }}</span>
                                 <input type="text" class="form-control" name="send_town" ng-show="edit_address || ! customer_id" ng-model="customers.send_town" />
                             </div>
 
                             <div class="form-group">
-                                <label>Wojewodztwo - Adres wysylki</label>
+                                <label>Wojewodztwo</label>
                                 <span class="form-span" ng-model="customers.send_province" ng-show=" ! edit_address && customer_id">@{{ customers.send_province }}</span>
                                 <input type="text" class="form-control" name="send_province" ng-show="edit_address || ! customer_id" ng-model="customers.send_province" />
                             </div>
 
                             <div class="form-group">
-                                <label>Kod - Adres wysylki</label>
+                                <label>Kod</label>
                                 <span class="form-span" ng-model="customers.send_post_code" ng-show=" ! edit_address && customer_id">@{{ customers.send_post_code }}</span>
                                 <input type="text" class="form-control" name="send_post_code" ng-show="edit_address || ! customer_id" ng-model="customers.send_post_code" />
                             </div>
 
                             <div class="form-group">
-                                <label>Kraj - Adres wysylki</label>
+                                <label>Kraj</label>
                                 <span class="form-span" ng-model="customers.send_region" ng-show=" ! edit_address && customer_id">@{{ customers.send_region }}</span>
                                 <input type="text" class="form-control" name="send_region" ng-show="edit_address || ! customer_id" ng-model="customers.send_region" />
                             </div>

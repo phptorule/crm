@@ -11,6 +11,7 @@
         <link href="/theme/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
         <link href="/theme/plugins/lobipanel/lobipanel.min.css" rel="stylesheet" type="text/css"/>
         <link href="/theme/plugins/pace/flash.css" rel="stylesheet" type="text/css"/>
+        <link href="/theme/plugins/icheck/skins/all.css" rel="stylesheet">
         <link href="/theme/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
         <link href="/theme/pe-icon-7-stroke/css/pe-icon-7-stroke.css" rel="stylesheet" type="text/css"/>
         <link href="/theme/themify-icons/themify-icons.css" rel="stylesheet" type="text/css"/>
@@ -179,6 +180,7 @@
         <script src="/theme/plugins/counterup/waypoints.js" type="text/javascript"></script>
         <script src="/theme/plugins/counterup/jquery.counterup.min.js" type="text/javascript"></script>
         <script src="/theme/plugins/monthly/monthly.js" type="text/javascript"></script>
+        <script src="/theme/plugins/icheck/icheck.min.js" type="text/javascript"></script>
         <script src="/js/custom.js" type="text/javascript"></script>
         <script src="/js/dashboard.js" type="text/javascript"></script>
     </body>

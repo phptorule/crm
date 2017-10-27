@@ -173,6 +173,12 @@
             });
         };
 
+        $scope.initIcheck = function() {
+            $('.i-check input').iCheck({
+                 radioClass: 'iradio_square-blue'
+            });
+        };
+
         $scope.getClass = function (path) {
             if ( ! $location.path().split('/')[3])
             {
@@ -185,6 +191,7 @@
 
         $scope.$on('$viewContentLoaded', function(){
             $scope.initLobipanel();
+            $scope.initIcheck();
         });
     };
 })();

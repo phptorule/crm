@@ -1,9 +1,9 @@
 (function () {
     'use strict';
 
-    angular.module('app').controller('FinancesCtrl', ['$rootScope', '$scope', '$uibModal', '$filter', '$location', 'request', 'langs', 'Page', FinancesCtrl]);
+    angular.module('app').controller('FinancesCtrl', ['$rootScope', '$scope', '$uibModal', '$filter', '$location', '$timeout', '$window', 'request', 'validate', 'logger', 'langs', 'plugins', 'Page', FinancesCtrl]);
 
-    function FinancesCtrl($rootScope, $scope, $uibModal, $filter, $location, request, langs, Page) {
+    function FinancesCtrl($rootScope, $scope, $uibModal, $filter, $location, $timeout, $window, request, validate, logger, langs, plugins, Page) {
     	$scope.types_list = ['By Month', 'By Year', 'Custom Period'];
 		$scope.months_list = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
@@ -15,6 +15,8 @@
 		$scope.team_users = [];
 		$scope.invoice_paid = '0';
 		$scope.finances = {};
+		$scope.finances.currency = '0';
+		$scope.discount_window = false;
 
 		$scope.defaultUser = function() {
 			$scope.finances.assign_to = $rootScope.user.user_id;
@@ -91,6 +93,19 @@
             });
         };
 
+        $scope.save = function(check) {
+	    	var error = 1;
+			error *= validate.check($scope.form.customer, 'Klient');
+			error *= validate.check($scope.form.payment_date, 'Termin platności');
+			error *= validate.check($scope.form.assign_to, 'Przypisany do');
+			error *= validate.check($scope.form.invoice_street, 'Ulica');
+			error *= validate.check($scope.form.send_street, 'Ulica');
+			if (error)
+			{
+				console.log($scope.form.assign_to);
+			}
+		};
+
         $scope.dateOptions = {
 			startingDay: 1,
 			showWeeks: false
@@ -124,6 +139,26 @@
             }
 
             return result;
+        };
+
+        $scope.setDiscount = function(discount) {
+        	if (discount == 'percent')
+    		{
+    			$scope.discount_radio = 'percent';
+    		}
+
+    		if (discount == 'without')
+    		{
+    			$scope.discount_radio = 'without';
+    		}
+
+    		if (discount == 'regular')
+    		{
+    			$scope.discount_radio = 'regular';
+    		}
+
+
+    		console.log($scope.discount_radio);
         };
 
 	    /* Setting page titles */
