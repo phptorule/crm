@@ -28,25 +28,12 @@
         $scope.finances.pay_type = '0';
         $scope.products.product_type = '0';
 
-		$scope.defaultUser = function() {
-			$scope.finances.assign_to = $rootScope.user.users_id.toString();
-		};
-
-		$scope.getUsersList = function() {
-			var list = [];
-			list.push($rootScope.user);
-
-			return list;
-		};
-
 		$scope.init = function(data) {
-			$scope.getTeamUsers();
-			$scope.getUsersList();
 
 			if ( ! $rootScope.user.users_id) {
 				$rootScope.queue.push($scope.defaultUser);
 			} else {
-				$scope.defaultUser();
+				$scope.getTeamUsers();
 			}
 		};
 
@@ -57,9 +44,9 @@
 
                 for (var k in $scope.team_users)
                 {
-                    if ($scope.inArray($scope.finances.users_ids, $scope.team_users[k].users_id))
+                    if ($scope.team_users[k].users_id == $rootScope.user.users_id)
                     {
-                        $scope.users.push($scope.team_users[k]);
+                        $scope.finances.assign_to = $rootScope.user.users_id.toString();
                     }
                 }
             });
