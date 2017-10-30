@@ -5320,7 +5320,8 @@ button.toast-close-button {
     overflow: visible;
 }
 
-.discount_window {
+.discount_window,
+.vat_window {
     position: absolute;
     z-index: 1;
     width: 400px;
@@ -5330,18 +5331,11 @@ button.toast-close-button {
     border-radius: 2px;
     text-align: left;
     padding: 5px 5px 5px 20px;
+    right: 0;
 }
 
 .vat_window {
-    position: absolute;
-    z-index: 1;
-    width: 400px;
     height: 100px;
-    background-color: #fff;
-    border: 2px solid #d1d1d1;
-    border-radius: 2px;
-    text-align: left;
-    padding: 5px 5px 5px 20px;
 }
 
 .product_block .discount_block .form-control,
@@ -5429,7 +5423,7 @@ button.toast-close-button {
     width: 520px;
 }
 
-#finances_product_table .product_amount_column,
+#finances_product_table .product_small_column,
 #content .config_team,
 #finances_product_sum_table th.product_total_sum {
     width: 80px;
