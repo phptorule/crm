@@ -1,23 +1,33 @@
 (function () {
     'use strict';
 
-    angular.module('app').controller('TeamsCtrl', ['$rootScope', '$scope', '$uibModal', '$filter', '$location', 'request', 'langs', 'plugins', 'Page', TeamsCtrl]);
+    angular.module('app').controller('TeamsCtrl', ['$rootScope', '$scope', '$uibModal', '$filter', '$location', '$timeout', '$window', 'request', 'validate', 'langs', 'plugins', 'Page', TeamsCtrl]);
 
-    function TeamsCtrl($rootScope, $scope, $uibModal, $filter, $location, request, langs, plugins, Page) {
+    function TeamsCtrl($rootScope, $scope, $uibModal, $filter, $location, $timeout, $window, request, validate, langs, plugins, Page) {
     	$scope.list = [];
     	$scope.listFiltered = [];
 		$scope.pagesList = [];
     	$scope.numPerPage = 20;
-		$scope.currentPage = 1;
+        $scope.currentPage = 1;
+        $scope.edit_general = false;
+		$scope.edit_address = false;
 
-    	$scope.get = function() {
-			request.send('/teams/get', {}, function(data) {
+        $scope.teams_id = $location.path().split('/')[3];
+
+    	$scope.getList = function() {
+			request.send('/teams/getList', {}, function(data) {
 				if (data)
 				{
 					$scope.print(data);
 				}
 			}, 'GET');
 		};
+
+        $scope.getTeam = function() {
+            request.send('/teams/getTeam', {'teams_id': ($scope.teams_id || 0)}, function(data) {
+                $scope.team = data;
+            });
+        };
 
         $scope.remove = function(teams_id) {
             if (confirm(langs.get('Do you really want to remove this team?')))
@@ -86,7 +96,10 @@
 		    });
 
 		    modalInstance.result.then(function(response) {
-				$scope.print(response);
+                $timeout(function() {
+                    $window.location.href = "/teams/info/" + response;
+                }, 1000);
+				//$scope.print(response);
 		    }, function () {
 
 		    });
@@ -162,6 +175,61 @@
             });
         };
 
+        $scope.editTeam = function(block) {
+            if (block == 'general')
+            {
+                $scope.edit_general = true;
+            }
+
+            if (block == 'address')
+            {
+                $scope.edit_address = true;
+            }
+
+            $scope.old_team = angular.copy($scope.team);
+        };
+
+        $scope.cancelEdit = function(block) {
+            if (block == 'general')
+            {
+                $scope.edit_general = false;
+
+            }
+
+            if (block == 'address')
+            {
+                $scope.edit_address = false;
+            }
+
+            $scope.team = angular.copy($scope.old_team);
+            delete $scope.old_team;
+        };
+
+        $scope.save = function() {
+            var error = 1;
+            error *= validate.check($scope.form.teams_name, 'Name');
+            if (error)
+            {
+                $rootScope.request_sent = true;
+                delete $scope.team.pivot;
+                delete $scope.team.users;
+                delete $scope.team.plugins;
+                request.send('/teams/save', {'team': $scope.team}, function(data) {
+                    if (data)
+                    {
+                        $scope.edit_general = false;
+                        $scope.edit_address = false;
+                        $scope.edit_rest = false;
+                        $scope.getTeam();
+                    }
+                    else
+                    {
+                        $rootScope.request_sent = false;
+                    }
+                });
+            }
+        };
+
         /*Setting page title*/
         if ($location.path() == '/customers/list/')
         {
@@ -169,7 +237,7 @@
             Page.setIcon('fa fa-users');
         }
 
-        if ($location.path() == '/customers/info/')
+        if ($scope.teams_id)
         {
             Page.setTitle('Moja Firma');
             Page.setIcon('fa fa-users');
