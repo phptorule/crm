@@ -64,7 +64,7 @@ class TeamsController extends Controller
 
     		$team->$key = $value;
     	}
-        //dd($post);
+
         $team->save();
 
         $exists = [];

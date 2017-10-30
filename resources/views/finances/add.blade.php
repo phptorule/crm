@@ -208,7 +208,8 @@
                             <tr class="info">
                                 <th>Typ pozycji</th>
                                 <th class="product_name_column">Nazwa pozycji<span class="req_field"> *</span></th>
-                                <th class="product_amount_column">Ilosc<span class="req_field"> *</span></th>
+                                <th class="product_small_column">Ilosc<span class="req_field"> *</span></th>
+                                <th class="product_small_column">Jm</th>
                                 <th>Waluta</th>
                                 <th>Cena<span class="req_field"> *</span></th>
                                 <th>Suma netto</th>
@@ -233,7 +234,13 @@
 
                                 <td>
                                     <div class="form-group">
-                                        <input type="text" class="form-control" name="product_count" ng-model="products.product_count" required />
+                                        <input type="text" class="form-control" name="product_count" ng-model="products.product_count" />
+                                    </div>
+                                </td>
+
+                                <td>
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" name="product_dimension" ng-model="products.product_dimension" maxlength="4" />
                                     </div>
                                 </td>
 
