@@ -52,18 +52,27 @@
 						</div>
 					</th>
 
-					<th>
+					<th class="config_team">
 						<div class="th">
+							Info
 						</div>
 					</th>
 
-                    <th>
+					<th class="config_team">
 						<div class="th">
+							Plugins
 						</div>
 					</th>
 
-					<th>
+                    <th class="config_team">
 						<div class="th">
+							Edit
+						</div>
+					</th>
+
+					<th class="config_team">
+						<div class="th">
+							Delete
 						</div>
 					</th>
                 </tr>
@@ -82,6 +91,12 @@
                     <td>@{{team.teams_name}}</td>
 
                     <td>@{{team.users.length}}</td>
+
+                    <td class="td-button">
+						<a href="/teams/info/@{{team.teams_id}}" ng-if="team.pivot.teams_leader == '1' && team.pivot.teams_approved == '1'" class="a-icon text-warning">
+							<i class="fa fa-info-circle"></i>
+						</a>
+					</td>
 
                     <td class="td-button">
 						<a href="javascript:void(0);" ng-if="team.pivot.teams_leader == '1' && team.pivot.teams_approved == '1'" class="a-icon text-success" ng-click="plugins(team.teams_id)">

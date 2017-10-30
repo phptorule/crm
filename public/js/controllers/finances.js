@@ -7,24 +7,26 @@
     	$scope.types_list = ['By Month', 'By Year', 'Custom Period'];
 		$scope.months_list = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
-		$scope.filter = {};
-		$scope.filter.type = '0';
-		$scope.filter.month = (new Date()).getMonth().toString();
-		$scope.filter.year = (new Date()).getFullYear().toString();
-		$scope.filter.payer = '';
 		$scope.team_users = [];
 		$scope.invoice_paid = '0';
 		$scope.finances = {};
-		$scope.finances.currency = '0';
+		$scope.products = {};
+		$scope.products.currency = '0';
 		$scope.discount_window = false;
+		$scope.discount_sum_window = false;
         $scope.vat_window = false;
+        $scope.vat_sum_window = false;
     	$scope.discount_percent = 0;
     	$scope.discount_regular = 0;
-    	$scope.finances.product_count = 0;
-        $scope.finances.product_cost = 0;
+    	$scope.discount_sum_percent = 0;
+    	$scope.discount_sum_regular = 0;
+    	$scope.products.product_count = 0;
+        $scope.products.product_cost = 0;
         $scope.product_vat = 0;
         $scope.discount_radio = 'without';
+        $scope.discount_sum_radio = 'sum_without';
         $scope.finances.pay_type = '0';
+        $scope.products.product_type = '0';
 
 		$scope.defaultUser = function() {
 			$scope.finances.assign_to = $rootScope.user.users_id.toString();
@@ -170,6 +172,24 @@
     		}
         };
 
+        $scope.setSumDiscount = function(discount) {
+        	if (discount == 'without')
+    		{
+    			$scope.discount_sum_percent = 0;
+    			$scope.discount_sum_regular = 0;
+    		}
+
+    		if (discount == 'percent')
+    		{
+    			$scope.discount_sum_regular = 0;
+    		}
+
+    		if (discount == 'regular')
+    		{
+    			$scope.discount_sum_percent = 0;
+    		}
+        };
+
         $scope.getDiscount = function() {
         	var sumOfPercent = 0;
 
@@ -209,13 +229,13 @@
         };
 
         $scope.getSumNetto = function() {
-        	if ($scope.finances.product_count == 0 || $scope.finances.product_cost == 0)
+        	if ($scope.products.product_count == 0 || $scope.products.product_cost == 0)
     		{
     			return '0.00';
     		}
     		else
     		{
-    			return ($scope.finances.product_count * $scope.finances.product_cost).toFixed(2);
+    			return ($scope.products.product_count * $scope.products.product_cost).toFixed(2);
     		}
         };
 
