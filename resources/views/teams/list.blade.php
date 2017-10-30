@@ -1,4 +1,4 @@
-<div class="page page-table" data-ng-controller="TeamsCtrl" data-ng-init="get()">
+<div class="page page-table" data-ng-controller="TeamsCtrl" data-ng-init="getList()">
 	<h2>
 		<div class="pull-right">
 			<button type="button" class="btn btn-default" ng-click="switchTeam()">Switch team</button>

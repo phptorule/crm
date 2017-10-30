@@ -14,7 +14,7 @@ use \Validator;
 
 class TeamsController extends Controller
 {
-    public function get()
+    public function getList()
     {
     	$teams = Auth::user()->teams()->with('users')->with('plugins')->get();
         foreach ($teams as $team)
@@ -25,6 +25,13 @@ class TeamsController extends Controller
             }
         }
         return $teams;
+    }
+
+    public function getTeam($post = [])
+    {
+        $team = Teams::where('teams_id', $post['teams_id'])->first();
+
+        return $team;
     }
 
     public function getLeaderTeams($post = [])
@@ -50,9 +57,14 @@ class TeamsController extends Controller
     	$team = Teams::firstOrNew(['teams_id' => empty($post['team']['teams_id']) ? 0 : $post['team']['teams_id']]);
     	foreach ($post['team'] as $key => $value)
     	{
+            if (empty($value))
+            {
+                $value = '';
+            }
+
     		$team->$key = $value;
     	}
-
+        //dd($post);
         $team->save();
 
         $exists = [];
@@ -61,49 +73,53 @@ class TeamsController extends Controller
             $exists[] = $user->users_id;
         }
 
-        $users_ids = [];
-        $need_to_notify = [];
-        foreach ($post['members'] as $member)
+
+        if ( ! empty($post['members']))
         {
-            if ( ! empty($member['new']))
+            $users_ids = [];
+            $need_to_notify = [];
+            foreach ($post['members'] as $member)
             {
-                if (empty($member['removed']))
+                if ( ! empty($member['new']))
                 {
-                    $user = new Users;
-                    $user->users_name = '';
-                    $user->users_password = '';
-                    $user->users_avatar = '';
-                    $user->users_email = $member['users_email'];
-                    $user->save();
-
-                    $users_ids[$user->users_id] = [
-                        'teams_leader' => ! empty($member['pivot']['teams_leader']),
-                        'teams_invite' => 1,
-                        'teams_approved' => ! empty($member['pivot']['teams_approved'])
-                    ];
-
-                    $need_to_notify[] = [
-                        'users_id' => $user->users_id,
-                        'type' => 'new'
-                    ];
-                }
-            }
-            else
-            {
-                if (empty($member['removed']))
-                {
-                    $users_ids[$member['users_id']] = [
-                        'teams_leader' => ! empty($member['pivot']['teams_leader']),
-                        'teams_invite' => 1,
-                        'teams_approved' => ! empty($member['pivot']['teams_approved'])
-                    ];
-
-                    if ( ! in_array($member['users_id'], $exists) && $member['users_id'] != Auth::id())
+                    if (empty($member['removed']))
                     {
-                        $need_to_notify[] = [
-                            'users_id' => $member['users_id'],
-                            'type' => 'exist'
+                        $user = new Users;
+                        $user->users_name = '';
+                        $user->users_password = '';
+                        $user->users_avatar = '';
+                        $user->users_email = $member['users_email'];
+                        $user->save();
+
+                        $users_ids[$user->users_id] = [
+                            'teams_leader' => ! empty($member['pivot']['teams_leader']),
+                            'teams_invite' => 1,
+                            'teams_approved' => ! empty($member['pivot']['teams_approved'])
                         ];
+
+                        $need_to_notify[] = [
+                            'users_id' => $user->users_id,
+                            'type' => 'new'
+                        ];
+                    }
+                }
+                else
+                {
+                    if (empty($member['removed']))
+                    {
+                        $users_ids[$member['users_id']] = [
+                            'teams_leader' => ! empty($member['pivot']['teams_leader']),
+                            'teams_invite' => 1,
+                            'teams_approved' => ! empty($member['pivot']['teams_approved'])
+                        ];
+
+                        if ( ! in_array($member['users_id'], $exists) && $member['users_id'] != Auth::id())
+                        {
+                            $need_to_notify[] = [
+                                'users_id' => $member['users_id'],
+                                'type' => 'exist'
+                            ];
+                        }
                     }
                 }
             }
@@ -126,7 +142,8 @@ class TeamsController extends Controller
         }
 
 		$this->message(__('Team was successfully saved'), 'success');
-		return $this->get();
+        //return $this->get();
+		return $team->teams_id;
     }
 
     public function remove($post = [])
