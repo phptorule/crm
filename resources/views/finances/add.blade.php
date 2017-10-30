@@ -348,47 +348,6 @@
                         <tr>
                             <td class="text-right discount_sum">
                                 <div class="form-group">
-                                    <button type="submit" class="btn btn-add" ng-click="discount_sum_window = ! discount_sum_window">Rabat</button>
-                                    <div class="discount_sum_window" ng-show="discount_sum_window">
-                                        <div class="discount_header">
-                                            <h4>Kwota całkowita netto:</h4>
-                                            <button type="button" class="close" ng-click="discount_sum_window = ! discount_sum_window" aria-hidden="true">×</button>
-                                        </div>
-
-                                        <div class="form-group">
-                                            <input type="radio" id="square-radio-1" ng-model="discount_sum_radio" ng-click="setSumDiscount('without')" value="sum_without" />
-                                            <label for="square-radio-1">Bez rabatu</label>
-                                        </div>
-
-                                        <div class="discount_block">
-                                            <div class="form-group">
-                                                <input type="radio" id="square-radio-2" ng-model="discount_sum_radio" ng-click="setSumDiscount('percent')" value="sum_percent" />
-                                                <label for="square-radio-2">% Procentowy</label>
-
-                                                <div class="discount_input pull-right" ng-show="discount_sum_radio == 'sum_percent'">
-                                                    <input type="text" class="form-control" ng-model="discount_sum_percent" /> %
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="discount_block">
-                                            <div class="form-group">
-                                                <input type="radio" id="square-radio-3" ng-model="discount_sum_radio" ng-click="setSumDiscount('regular')" value="sum_regular" />
-                                                <label for="square-radio-3">Wartosciowy</label>
-
-                                                <div class="discount_input pull-right" ng-show="discount_sum_radio == 'sum_regular'">
-                                                    <input type="text" class="form-control" ng-model="discount_sum_regular" />
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <span>Po rabacie:</span>
-                                </div>
-
-                                <div class="form-group">
                                     <button type="submit" class="btn btn-add" ng-click="vat_sum_window = ! vat_sum_window">Podatek od kosztow przesyłki</button>
                                     <div class="vat_sum_window" ng-show="vat_sum_window">
                                         <div class="discount_header">
@@ -412,8 +371,6 @@
                             </td>
 
                             <td>
-                                <div class="form-group">0</div>
-                                <div class="form-group">0</div>
                                 <div class="form-group">0</div>
                             </td>
                         </tr>
