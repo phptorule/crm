@@ -5309,11 +5309,13 @@ button.toast-close-button {
     right: 20px;
 }
 
-#finances_product_table .form-group {
+#finances_product_table .form-group,
+#finances_product_sum_table .form-group {
     line-height: 35px;
 }
 
-#content .discount {
+#content .discount,
+#content .discount_sum {
     position: relative;
     overflow: visible;
 }
@@ -5342,7 +5344,7 @@ button.toast-close-button {
     padding: 5px 5px 5px 20px;
 }
 
-#finances_product_table .discount_block .form-control,
+.product_block .discount_block .form-control,
 .discount_header h4,
 .discount_header button {
     display: inline-block;
@@ -5421,4 +5423,32 @@ button.toast-close-button {
     opacity: 1;
     -webkit-transform: scale(1);
     transform: scale(1);
+}
+
+#finances_product_table .product_name_column {
+    width: 520px;
+}
+
+#finances_product_table .product_amount_column,
+#content .config_team,
+#finances_product_sum_table th.product_total_sum {
+    width: 80px;
+}
+
+.discount_sum_window,
+.vat_sum_window {
+    position: absolute;
+    z-index: 1;
+    right: 0;
+    width: 400px;
+    height: 200px;
+    background-color: #fff;
+    border: 2px solid #d1d1d1;
+    border-radius: 2px;
+    text-align: left;
+    padding: 5px 5px 5px 20px;
+}
+
+.vat_sum_window {
+    height: 100px;
 }

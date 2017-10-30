@@ -1,9 +1,9 @@
 (function () {
     'use strict';
 
-    angular.module('app').controller('TeamsCtrl', ['$rootScope', '$scope', '$uibModal', '$filter', 'request', 'langs', 'plugins', 'Page', TeamsCtrl]);
+    angular.module('app').controller('TeamsCtrl', ['$rootScope', '$scope', '$uibModal', '$filter', '$location', 'request', 'langs', 'plugins', 'Page', TeamsCtrl]);
 
-    function TeamsCtrl($rootScope, $scope, $uibModal, $filter, request, langs, plugins, Page) {
+    function TeamsCtrl($rootScope, $scope, $uibModal, $filter, $location, request, langs, plugins, Page) {
     	$scope.list = [];
     	$scope.listFiltered = [];
 		$scope.pagesList = [];
@@ -163,8 +163,18 @@
         };
 
         /*Setting page title*/
-        Page.setTitle('Zespoły');
-        Page.setIcon('fa fa-users');
+        if ($location.path() == '/customers/list/')
+        {
+            Page.setTitle('Zespoły');
+            Page.setIcon('fa fa-users');
+        }
+
+        if ($location.path() == '/customers/info/')
+        {
+            Page.setTitle('Moja Firma');
+            Page.setIcon('fa fa-users');
+        }
+
     };
 })();
 
@@ -173,9 +183,9 @@
 (function () {
     'use strict';
 
-    angular.module('app').controller('ModalTeamsCreateCtrl', ['$rootScope', '$scope', '$uibModalInstance', 'request', 'validate', 'logger', 'langs', 'items', ModalTeamsCreateCtrl]);
+    angular.module('app').controller('ModalTeamsCreateCtrl', ['$rootScope', '$scope', '$uibModalInstance', '$location', 'request', 'validate', 'logger', 'langs', 'items', ModalTeamsCreateCtrl]);
 
-    function ModalTeamsCreateCtrl($rootScope, $scope, $uibModalInstance, request, validate, logger, langs, items) {
+    function ModalTeamsCreateCtrl($rootScope, $scope, $uibModalInstance, $location, request, validate, logger, langs, items) {
         $scope.team = angular.copy(items.team);
     	$scope.view = items.view;
         $rootScope.request_sent = false;

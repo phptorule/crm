@@ -34,15 +34,13 @@
                             </div>
 
                             <div class="form-group">
-                                <label>Data wystawlenia</label>
+                                <label>Sposób płatności</label>
                                 <div class="row">
                                     <div class="col-sm-6">
-                                        <div class="input-group custom-datapicker-input">
-                                            <input type="text" class="form-control" name="invoice_date" uib-datepicker-popup="dd/MM/yyyy" ng-model="invoice_date" is-open="date[0].opened" show-button-bar="false" datepicker-options="dateOptions" required="required" />
-                                            <span class="input-group-btn">
-                                                <button type="button" class="btn btn-default" ng-click="calendarOpen(0)"><i class="glyphicon glyphicon-calendar"></i></button>
-                                            </span>
-                                        </div>
+                                        <select class="form-control" name="assign_to" ng-model="finances.pay_type" required>
+                                            <option value="0">Gotówką</option>
+                                            <option value="1">Przelew </option>
+                                        </select>
                                     </div>
                                 </div>
                             </div>
@@ -61,6 +59,20 @@
                         </div>
 
                         <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>Data wystawlenia</label>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="input-group custom-datapicker-input">
+                                            <input type="text" class="form-control" name="invoice_date" uib-datepicker-popup="dd/MM/yyyy" ng-model="invoice_date" is-open="date[0].opened" show-button-bar="false" datepicker-options="dateOptions" required="required" />
+                                            <span class="input-group-btn">
+                                                <button type="button" class="btn btn-default" ng-click="calendarOpen(0)"><i class="glyphicon glyphicon-calendar"></i></button>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                             <div class="form-group">
                                 <label>Termin platności</label><span class="req_field"> *</span>
                                 <div class="row">
@@ -81,18 +93,6 @@
                                     <div class="col-sm-6">
                                         <select class="form-control" name="assign_to" ng-model="finances.assign_to" required>
                                             <option ng-repeat="user in getUsersList()" value="@{{ user.users_id }}">@{{ user.users_first_name + ' ' + user.users_last_name }}</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label>Sposób płatności</label>
-                                <div class="row">
-                                    <div class="col-sm-6">
-                                        <select class="form-control" name="assign_to" ng-model="finances.pay_type" required>
-                                            <option value="0">Gotówką</option>
-                                            <option value="1">Przelew </option>
                                         </select>
                                     </div>
                                 </div>
@@ -201,13 +201,14 @@
                 </div>
             </div>
 
-            <div class="panel-body">
+            <div class="panel-body product_block">
                 <form name="form_products" method="post" novalidate="novalidate">
                     <table id="finances_product_table" class="table table-bordered table-striped table-hover">
                         <thead>
                             <tr class="info">
-                                <th>Nazwa pozycji<span class="req_field"> *</span></th>
-                                <th>Ilosc<span class="req_field"> *</span></th>
+                                <th>Typ pozycji</th>
+                                <th class="product_name_column">Nazwa pozycji<span class="req_field"> *</span></th>
+                                <th class="product_amount_column">Ilosc<span class="req_field"> *</span></th>
                                 <th>Waluta</th>
                                 <th>Cena<span class="req_field"> *</span></th>
                                 <th>Suma netto</th>
@@ -218,20 +219,27 @@
                         <tbody>
                             <tr>
                                 <td>
+                                    <select class="form-control" name="invoice_type" ng-model="products.product_type">
+                                        <option value="0">Product</option>
+                                        <option value="1">Usługa</option>
+                                    </select>
+                                </td>
+
+                                <td class="product_name_column">
                                     <div class="form-group">
-                                        <input type="text" class="form-control" name="product_name" ng-model="finances.product_name" required />
+                                        <input type="text" class="form-control" name="product_name" ng-model="products.product_name" required />
                                     </div>
                                 </td>
 
                                 <td>
                                     <div class="form-group">
-                                        <input type="text" class="form-control" name="product_count" ng-model="finances.product_count" required />
+                                        <input type="text" class="form-control" name="product_count" ng-model="products.product_count" required />
                                     </div>
                                 </td>
 
                                 <td>
-                                    <select class="form-control" name="currency" ng-model="finances.currency" required>
-                                        <option selected="selected" value="0">PLN</option>
+                                    <select class="form-control" name="currency" ng-model="products.currency" required>
+                                        <option value="0">PLN</option>
                                         <option value="1">EUR</option>
                                         <option value="2">USD</option>
                                     </select>
@@ -239,7 +247,7 @@
 
                                 <td class="text-right discount">
                                     <div class="form-group">
-                                        <input type="text" class="form-control" name="product_cost" ng-model="finances.product_cost" required />
+                                        <input type="text" class="form-control" name="product_cost" ng-model="products.product_cost" required />
                                     </div>
 
                                     <div class="form-group">
@@ -294,7 +302,7 @@
                                             <div class="discount_block">
                                                 <div class="form-group">
                                                     <div class="discount_input">
-                                                        <input type="text" class="form-control" ng-model="product_vat" name="product_vat" /> %
+                                                        <input type="text" class="form-control" ng-model="product_vat" /> %
                                                     </div>
 
                                                     <div class="discount_input pull-right">
@@ -327,6 +335,97 @@
                         <p>(<span class="req_field">*</span>) - required fields</p>
                     </footer>
                </form>
+
+               <table id="finances_product_sum_table" class="table table-bordered table-striped table-hover">
+                    <thead>
+                        <tr class="info">
+                            <th class="text-right">Wartosc brutto:</th>
+                            <th class="product_total_sum">0</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr>
+                            <td class="text-right discount_sum">
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-add" ng-click="discount_sum_window = ! discount_sum_window">Rabat</button>
+                                    <div class="discount_sum_window" ng-show="discount_sum_window">
+                                        <div class="discount_header">
+                                            <h4>Kwota całkowita netto:</h4>
+                                            <button type="button" class="close" ng-click="discount_sum_window = ! discount_sum_window" aria-hidden="true">×</button>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <input type="radio" id="square-radio-1" ng-model="discount_sum_radio" ng-click="setSumDiscount('without')" value="sum_without" />
+                                            <label for="square-radio-1">Bez rabatu</label>
+                                        </div>
+
+                                        <div class="discount_block">
+                                            <div class="form-group">
+                                                <input type="radio" id="square-radio-2" ng-model="discount_sum_radio" ng-click="setSumDiscount('percent')" value="sum_percent" />
+                                                <label for="square-radio-2">% Procentowy</label>
+
+                                                <div class="discount_input pull-right" ng-show="discount_sum_radio == 'sum_percent'">
+                                                    <input type="text" class="form-control" ng-model="discount_sum_percent" /> %
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="discount_block">
+                                            <div class="form-group">
+                                                <input type="radio" id="square-radio-3" ng-model="discount_sum_radio" ng-click="setSumDiscount('regular')" value="sum_regular" />
+                                                <label for="square-radio-3">Wartosciowy</label>
+
+                                                <div class="discount_input pull-right" ng-show="discount_sum_radio == 'sum_regular'">
+                                                    <input type="text" class="form-control" ng-model="discount_sum_regular" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <span>Po rabacie:</span>
+                                </div>
+
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-add" ng-click="vat_sum_window = ! vat_sum_window">Podatek od kosztow przesyłki</button>
+                                    <div class="vat_sum_window" ng-show="vat_sum_window">
+                                        <div class="discount_header">
+                                            <h4>Koszt przesyłki/dojazdu: </h4>
+                                            <button type="button" class="close" ng-click="vat_sum_window = ! vat_sum_window" aria-hidden="true">×</button>
+                                        </div>
+
+                                        <div class="discount_block">
+                                            <div class="form-group">
+                                                <div class="discount_input">
+                                                    <input type="text" class="form-control" ng-model="product_sum_vat" name="product_sum_vat" /> %
+                                                </div>
+
+                                                <div class="discount_input pull-right">
+                                                    VAT <input type="text" class="form-control" ng-model="product_sum_vat_result" name="product_sum_vat_result" disabled="disabled" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+
+                            <td>
+                                <div class="form-group">0</div>
+                                <div class="form-group">0</div>
+                                <div class="form-group">0</div>
+                            </td>
+                        </tr>
+                    </tbody>
+
+                    <tfoot>
+                        <tr>
+                            <td class="text-right">Calkowita wartosc brutto:</td>
+                            <td>0</td>
+                        </tr>
+                    </tfoot>
+                </table>
             </div>
         </div>
     </div>
@@ -383,7 +482,12 @@
                    <footer class="table-footer">
                         <div class="row">
                             <div class="col-md-offset-6 col-md-6 text-right pagination-container">
-                                <div data-pagination="" data-num-pages="numPages()" data-current-page="currentPage" data-max-size="maxSize" data-boundary-links="true"></div>
+                                <pagination
+                                    ng-model="currentPage"
+                                    total-items="todos.length"
+                                    max-size="maxSize"
+                                    boundary-links="true">
+                                </pagination>
                             </div>
                         </div>
                     </footer>
