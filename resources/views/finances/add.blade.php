@@ -92,7 +92,7 @@
                                 <div class="row">
                                     <div class="col-sm-6">
                                         <select class="form-control" name="assign_to" ng-model="finances.assign_to" required>
-                                            <option ng-repeat="user in getUsersList()" value="@{{ user.users_id }}">@{{ user.users_first_name + ' ' + user.users_last_name }}</option>
+                                            <option ng-repeat="user in team_users" value="@{{ user.users_id }}">@{{ user.users_first_name + ' ' + user.users_last_name }}</option>
                                         </select>
                                     </div>
                                 </div>
@@ -479,7 +479,7 @@
                         </tbody>
                    </table>
 
-                   <footer class="table-footer">
+                   <!--footer class="table-footer">
                         <div class="row">
                             <div class="col-md-offset-6 col-md-6 text-right pagination-container">
                                 <pagination
@@ -490,7 +490,7 @@
                                 </pagination>
                             </div>
                         </div>
-                    </footer>
+                    </footer-->
                 </div>
             </div>
         </div>
