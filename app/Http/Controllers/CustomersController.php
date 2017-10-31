@@ -39,15 +39,6 @@ class CustomersController extends Controller
 
 	public function save($post = [])
 	{
-        /*if (! empty($post['users_ids']))
-        {
-            $users = Users::whereIn('users_id', $post['users_ids'])->get();
-            $ids = [];
-
-            foreach ($users as $user) {
-                $ids[] = $user->customers()->get()->pluck('customer_id')->toArray();
-            }
-        }*/
         $duplicates =
         Customers::where('company_name', 'like', ! empty($post['company_name']) ? '%' . $post['company_name'] . '%' : false)
             ->orWhere('contact_person', 'like', ! empty($post['contact_person']) ? '%' . $post['contact_person'] . '%' : false)
