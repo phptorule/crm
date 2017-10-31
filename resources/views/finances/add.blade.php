@@ -37,7 +37,7 @@
                                 <label>Sposób płatności</label>
                                 <div class="row">
                                     <div class="col-sm-6">
-                                        <select class="form-control" name="assign_to" ng-model="finances.pay_type" required>
+                                        <select class="form-control" ng-model="pay_type" required>
                                             <option value="0">Gotówką</option>
                                             <option value="1">Przelew </option>
                                         </select>
@@ -60,11 +60,11 @@
 
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <label>Data wystawlenia</label>
+                                <label>Data wystawienia</label>
                                 <div class="row">
                                     <div class="col-sm-6">
                                         <div class="input-group custom-datapicker-input">
-                                            <input type="text" class="form-control" name="invoice_date" uib-datepicker-popup="dd/MM/yyyy" ng-model="invoice_date" is-open="date[0].opened" show-button-bar="false" datepicker-options="dateOptions" required="required" />
+                                            <input type="text" class="form-control" name="issue_date" uib-datepicker-popup="dd/MM/yyyy" ng-model="issue_date" is-open="date[0].opened" show-button-bar="false" datepicker-options="dateOptions" required="required" />
                                             <span class="input-group-btn">
                                                 <button type="button" class="btn btn-default" ng-click="calendarOpen(0)"><i class="glyphicon glyphicon-calendar"></i></button>
                                             </span>
@@ -197,18 +197,19 @@
         <div class="panel panel-bd lobidrag">
             <div class="panel-heading">
                 <div class="btn-group" id="buttonlist">
-                    <h3>Producty i usługi</h3>
+                    <h3>Produkty i usługi</h3>
                 </div>
             </div>
 
             <div class="panel-body product_block">
-                <form name="form_products" method="post" novalidate="novalidate">
+                <form name="form_products" class="no-transition" method="post" novalidate="novalidate">
+                    <input type="hidden" name="products_ids" ng-model="finances.products_ids" required="" />
                     <table id="finances_product_table" class="table table-bordered table-striped table-hover">
                         <thead>
                             <tr class="info">
                                 <th>Typ pozycji</th>
                                 <th class="product_name_column">Nazwa pozycji<span class="req_field"> *</span></th>
-                                <th class="product_small_column">Ilosc<span class="req_field"> *</span></th>
+                                <th class="product_small_column">Ilosc<span class="req_field" ng-show="products.products_type == 0"> *</span></th>
                                 <th class="product_small_column">Jm</th>
                                 <th>Waluta</th>
                                 <th>Cena<span class="req_field"> *</span></th>
@@ -220,32 +221,33 @@
                         <tbody>
                             <tr>
                                 <td>
-                                    <select class="form-control" name="invoice_type" ng-model="products.product_type">
-                                        <option value="0">Product</option>
+                                    <select class="form-control" name="invoice_type" ng-model="products.products_type">
+                                        <option value="0">Produkt</option>
                                         <option value="1">Usługa</option>
                                     </select>
                                 </td>
 
                                 <td class="product_name_column">
                                     <div class="form-group">
-                                        <input type="text" class="form-control" name="product_name" ng-model="products.product_name" required />
+                                        <input type="text" class="form-control" name="product_name" ng-model="products.products_name" required />
                                     </div>
                                 </td>
 
                                 <td>
                                     <div class="form-group">
-                                        <input type="text" class="form-control" name="product_count" ng-model="products.product_count" />
+                                        <input type="text" class="form-control" name="product_amount" ng-show="products.products_type == 0" ng-model="products.products_amount" required />
+                                        <input type="text" class="form-control" ng-show="products.products_type == 1" placeholder="1" disabled="disabled" />
                                     </div>
                                 </td>
 
                                 <td>
                                     <div class="form-group">
-                                        <input type="text" class="form-control" name="product_dimension" ng-model="products.product_dimension" maxlength="4" />
+                                        <input type="text" class="form-control" name="product_dimension" ng-model="products.products_dimension" maxlength="4" />
                                     </div>
                                 </td>
 
                                 <td>
-                                    <select class="form-control" name="currency" ng-model="products.currency" required>
+                                    <select class="form-control" name="currency" ng-model="products.products_currency" required>
                                         <option value="0">PLN</option>
                                         <option value="1">EUR</option>
                                         <option value="2">USD</option>
@@ -254,7 +256,7 @@
 
                                 <td class="text-right discount">
                                     <div class="form-group">
-                                        <input type="text" class="form-control" name="product_cost" ng-model="products.product_cost" required />
+                                        <input type="text" class="form-control" name="product_cost" ng-model="products.products_cost" required />
                                     </div>
 
                                     <div class="form-group">
@@ -309,11 +311,11 @@
                                             <div class="discount_block">
                                                 <div class="form-group">
                                                     <div class="discount_input">
-                                                        <input type="text" class="form-control" ng-model="product_vat" /> %
+                                                        <input type="text" class="form-control" ng-model="products.products_vat_percent" /> %
                                                     </div>
 
                                                     <div class="discount_input pull-right">
-                                                        VAT <input type="text" class="form-control" ng-model="product_vat_sum" name="product_vat_sum" disabled="disabled" />
+                                                        VAT <input type="text" class="form-control" ng-model="products.products_vat_amount" name="vat_amount" disabled="disabled" />
                                                     </div>
                                                 </div>
                                             </div>
@@ -325,21 +327,24 @@
                                     <div class="form-group">@{{ getSumNetto() }}</div>
                                     <div class="form-group">@{{ getDiscount() }}</div>
                                     <div class="form-group">@{{ getSumWithDiscount() }}</div>
-                                    <div class="form-group">@{{ getVat() }}</div>
+                                    <div class="form-group">@{{ getTax() }}</div>
                                 </td>
 
                                 <td>
                                     <div class="form-group">&nbsp;</div>
                                     <div class="form-group">&nbsp;</div>
                                     <div class="form-group">&nbsp;</div>
-                                    <div class="form-group">@{{ getSumBrutto() }}</div>
+                                    <div class="form-group" ng-model="products.products_total_cost">@{{ getSumBrutto() }}</div>
                                 </td>
                             </tr>
                         </tbody>
                     </table>
 
                     <footer class="table-footer">
-                        <p>(<span class="req_field">*</span>) - required fields</p>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-add" ng-show="products.products_type == 0" ng-click="saveProduct()">Dodaj produkt</button>
+                            <button type="submit" class="btn btn-add" ng-show="products.products_type == 1" ng-click="saveProduct()">Dodaj usluge</button>
+                        </div>
                     </footer>
                </form>
 
@@ -347,13 +352,17 @@
                     <thead>
                         <tr class="info">
                             <th class="text-right">Wartosc brutto:</th>
-                            <th class="product_total_sum">0</th>
+                            <th class="product_total_sum">@{{ getSumBrutto() }}</th>
                         </tr>
                     </thead>
 
                     <tbody>
                         <tr>
                             <td class="text-right discount_sum">
+                                <div class="form-group">
+                                    <span>Koszt przesyłki/dojazdu:</span>
+                                </div>
+
                                 <div class="form-group">
                                     <button type="submit" class="btn btn-add" ng-click="vat_sum_window = ! vat_sum_window">Podatek od kosztow przesyłki</button>
                                     <div class="vat_sum_window" ng-show="vat_sum_window">
@@ -365,11 +374,11 @@
                                         <div class="discount_block">
                                             <div class="form-group">
                                                 <div class="discount_input">
-                                                    <input type="text" class="form-control" ng-model="product_sum_vat" name="product_sum_vat" /> %
+                                                    <input type="text" class="form-control" ng-model="products.vat_shipping_percent" name="vat_percent" /> %
                                                 </div>
 
                                                 <div class="discount_input pull-right">
-                                                    VAT <input type="text" class="form-control" ng-model="product_sum_vat_result" name="product_sum_vat_result" disabled="disabled" />
+                                                    VAT <input type="text" class="form-control" ng-model="products.vat_shipping_amount" name="vat_shipping_amount" disabled="disabled" />
                                                 </div>
                                             </div>
                                         </div>
@@ -378,7 +387,13 @@
                             </td>
 
                             <td>
-                                <div class="form-group">0</div>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" ng-model="products.shipping_price" name="shipping_price" />
+                                </div>
+
+                                <div class="form-group">
+                                    @{{ getShippingTax() }}
+                                </div>
                             </td>
                         </tr>
                     </tbody>
@@ -386,10 +401,12 @@
                     <tfoot>
                         <tr>
                             <td class="text-right">Calkowita wartosc brutto:</td>
-                            <td>0</td>
+                            <td ng-model="finances.total_cost">@{{ getTotalCost() }}</td>
                         </tr>
                     </tfoot>
                 </table>
+
+                <p>(<span class="req_field">*</span>) - required fields</p>
             </div>
         </div>
     </div>

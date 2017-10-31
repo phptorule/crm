@@ -8,28 +8,26 @@
 		$scope.months_list = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
 		$scope.team_users = [];
-		$scope.invoice_paid = '0';
 		$scope.finances = {};
 		$scope.products = {};
-		$scope.products.currency = '0';
+		$scope.products.products_currency = '0';
 		$scope.discount_window = false;
 		$scope.discount_sum_window = false;
         $scope.vat_window = false;
         $scope.vat_sum_window = false;
     	$scope.discount_percent = 0;
     	$scope.discount_regular = 0;
-    	$scope.discount_sum_percent = 0;
-    	$scope.discount_sum_regular = 0;
-    	$scope.products.product_count = 0;
-        $scope.products.product_cost = 0;
-        $scope.product_vat = 0;
+    	$scope.products.products_amount = 1;
+        $scope.products.products_cost = 0;
+        $scope.products.products_vat_percent = 0;
         $scope.discount_radio = 'without';
-        $scope.discount_sum_radio = 'sum_without';
-        $scope.finances.pay_type = '0';
-        $scope.products.product_type = '0';
+        $scope.pay_type = '0';
+        $scope.invoice_paid = '0';
+        $scope.products.products_type = '0';
+        $scope.products.vat_shipping_percent = 4.5;
+        $scope.products.products_ids = '';
 
 		$scope.init = function(data) {
-
 			if ( ! $rootScope.user.users_id) {
 				$rootScope.queue.push($scope.defaultUser);
 			} else {
@@ -97,12 +95,16 @@
 			error *= validate.check($scope.form.assign_to, 'Przypisany do');
 			error *= validate.check($scope.form_address.invoice_street, 'Ulica (do faktury)');
 			error *= validate.check($scope.form_address.send_street, 'Ulica (do wysylki)');
-			error *= validate.check($scope.form_products.product_name, 'Nazwa pozycji');
-			error *= validate.check($scope.form_products.product_count, 'Ilosc');
-			error *= validate.check($scope.form_products.product_cost, 'Cena');
+			error *= validate.check($scope.form_products.products_ids, 'At least one product');
 			if (error)
 			{
-				console.log($scope.form.assign_to);
+                $scope.finances.pay_type = $scope.pay_type;
+                $scope.finances.invoice_paid = $scope.invoice_paid;
+                $scope.finances.issue_date = $scope.issue_date;
+                $scope.finances.payment_date = $scope.payment_date;
+                request.send('/finances/save', $scope.finances, function(data) {
+                    console.log(data);
+                });
 			}
 		};
 
@@ -122,7 +124,7 @@
 		};
 
 		$scope.setDate = function() {
-			$scope.invoice_date = new Date();
+			$scope.issue_date = new Date();
 			$scope.payment_date = new Date();
 		};
 		$scope.setDate();
@@ -182,13 +184,13 @@
 
         	if ($scope.discount_percent == 0 && $scope.discount_regular == 0)
         	{
-        		return '0.00';
+        		return 0;
         	}
 
         	if ($scope.discount_percent != 0)
         	{
-        		sumOfPercent = ($scope.getSumNetto() - $scope.getSumWithDiscount()).toFixed(2);
-        		return sumOfPercent;
+        		sumOfPercent = $scope.getSumNetto() - $scope.getSumWithDiscount();
+        		return (sumOfPercent).toFixed(2);
         	}
 
         	if ($scope.discount_regular != 0)
@@ -205,61 +207,106 @@
 	    	{
 	    		nettoSum = $scope.getSumNetto();
 				discountNettoSum = nettoSum * ((100 - $scope.discount_percent) / 100);
-				return discountNettoSum.toFixed(2);
 	    	}
 	    	else
 	    	{
 	    		nettoSum = $scope.getSumNetto();
 				discountNettoSum = nettoSum - $scope.discount_regular;
-				return discountNettoSum.toFixed(2);
-	    	}
+            }
+			return discountNettoSum.toFixed(2);
         };
 
         $scope.getSumNetto = function() {
-        	if ($scope.products.product_count == 0 || $scope.products.product_cost == 0)
+        	if ( ! $scope.products.products_amount || ! $scope.products.products_cost)
     		{
-    			return '0.00';
+    			return 0;
     		}
     		else
     		{
-    			return ($scope.products.product_count * $scope.products.product_cost).toFixed(2);
+    			return ($scope.products.products_amount * $scope.products.products_cost).toFixed(2);
     		}
         };
 
-        $scope.getVat = function() {
-        	var sumWithDiscount = parseInt($scope.getSumWithDiscount());
-        	var vat_sum = 0;
+        $scope.getTax = function() {
+        	var sumWithDiscount = $scope.getSumWithDiscount();
 
-        	if ($scope.product_vat == 0)
+        	if ($scope.products.products_vat_percent == 0)
         	{
-        		$scope.product_vat_sum = '0.00';
-        		return '0.00';
+        		$scope.products.products_vat_amount = 0;
         	}
 
         	if (sumWithDiscount)
         	{
-        		$scope.product_vat_sum = ((sumWithDiscount * $scope.product_vat) / 100).toFixed(2);
-        		vat_sum = ((sumWithDiscount * $scope.product_vat) / 100 + sumWithDiscount).toFixed(2);
+        		$scope.products.products_vat_amount = ((sumWithDiscount * $scope.products.products_vat_percent) / 100).toFixed(2);
 
-        		return $scope.product_vat_sum;
-        	}
+            }
+        		return $scope.products.products_vat_amount;
         };
 
         $scope.getSumBrutto = function() {
-        	if ($scope.getSumWithDiscount() == 0 && $scope.getVat() == 0)
+        	if ($scope.getSumWithDiscount() == 0 && $scope.getTax() == 0)
         	{
-        		return '0.00';
+        		return 0;
         	}
 
-        	if ($scope.getSumWithDiscount() && $scope.getVat() == 0)
+        	if ($scope.getSumWithDiscount() && $scope.getTax() == 0)
         	{
-        		return $scope.getSumWithDiscount()
+                $scope.products.products_total_cost = $scope.getSumWithDiscount();
+
+                return $scope.products.products_total_cost;
         	}
 
-        	if ($scope.getVat())
+        	if ($scope.getTax())
         	{
-        		return (parseInt($scope.getVat()) + parseInt($scope.getSumWithDiscount())).toFixed(2);
+                $scope.products.products_total_cost = ($scope.getTax()*1 + $scope.getSumWithDiscount()*1).toFixed(2);
+
+                return $scope.products.products_total_cost;
         	}
+        };
+
+        $scope.getShippingTax = function() {
+            if ( ! $scope.products.shipping_price)
+            {
+                return 0;
+            }
+            else
+            {
+                $scope.products.vat_shipping_amount = (($scope.products.shipping_price * $scope.products.vat_shipping_percent) / 100).toFixed(2);
+
+                return $scope.products.vat_shipping_amount;
+            }
+        };
+
+        $scope.getTotalCost = function() {
+            if ( ! $scope.products.shipping_price)
+            {
+                return $scope.getSumBrutto();
+            }
+            else
+            {
+                return ($scope.getSumBrutto()*1 + $scope.getShippingTax()*1 + $scope.products.shipping_price*1).toFixed(2);
+            }
+        };
+
+        $scope.saveProduct = function() {
+            var error = 1;
+
+            error *= validate.check($scope.form_products.product_name, 'Nazwa pozycji');
+
+            if ($scope.products.products_type == 0)
+            {
+                error *= validate.check($scope.form_products.product_amount, 'Ilosc');
+            }
+
+            error *= validate.check($scope.form_products.product_cost, 'Cena');
+
+            if (error)
+            {
+                request.send('/finances/saveProduct', $scope.products, function(data) {
+                    $scope.finances.products_ids = data;
+                });
+            }
+
         };
 
 	    /* Setting page titles */
