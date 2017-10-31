@@ -137,7 +137,6 @@
                         </div>
                     </div>
                 </form>
-                <p>(<span class="req_field">*</span>) - required fields</p>
             </div>
         </div>
     </div>
@@ -244,7 +243,6 @@
                         </div>
                     </div>
                 </form>
-                <p>(<span class="req_field">*</span>) - required fields</p>
             </div>
         </div>
     </div>
@@ -295,7 +293,7 @@
                         </div>
                     </div>
                 </form>
-                <p>(<span class="req_field">*</span>) - required fields</p>
+                <p ng-show=" ! customer_id">(<span class="req_field">*</span>) - Wymagane pola</p>
             </div>
         </div>
     </div>
@@ -328,10 +326,11 @@
                         </div>
 
                         <div class="col-sm-12 text-left">
-                            <button type="submit" class="btn btn-add" ng-click="addComment()">{{ __('Zapisz') }}</button>
+                            <button type="submit" class="btn btn-add mb-30" ng-click="addComment()">{{ __('Zapisz') }}</button>
                         </div>
                     </div>
                 </form>
+                <p ng-show="customer_id">(<span class="req_field">*</span>) - Wymagane pola</p>
             </div>
         </div>
     </div>
