@@ -12,13 +12,18 @@ use App\Teams;
 
 class FinancesController extends Controller
 {
+    public function getList()
+    {
+        $team = Teams::find(session('current_team'));
+        $finances = $team->finances()->get();
+
+        return $finances;
+    }
+
     public function save($post = [])
     {
         $issue_date = date('Y-m-d', strtotime($post['issue_date']));
         $payment_date = date('Y-m-d', strtotime($post['payment_date']));
-
-       // print_r($issue_date);
-
 
         $finances = Finances::firstOrNew(['finances_id' => empty($post['finances_id']) ? 0 : $post['finances_id']]);
 
@@ -42,7 +47,8 @@ class FinancesController extends Controller
         $finances->finances_send_region = empty($post['send_region']) ? '' : $post['send_region'];
 
         $finances->save();
-        $finances->products()->syncWithoutDetaching($post['products_ids']);
+        $finances->products()->sync($post['products_ids']);
+        $finances->teams()->syncWithoutDetaching(session('current_team'));
         $this->message(__('Faktura was successfully saved'), 'success');
 
         return $finances->finances_id;

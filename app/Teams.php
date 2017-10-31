@@ -23,4 +23,9 @@ class Teams extends Model
     {
         return $this->belongsToMany('App\Customers', 'customers_teams', 'teams_id', 'customer_id');
     }
+
+    public function finances()
+    {
+        return $this->belongsToMany('App\Finances', 'finances_teams', 'teams_id', 'finances_id');
+    }
 }

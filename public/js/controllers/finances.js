@@ -7,6 +7,11 @@
     	$scope.types_list = ['By Month', 'By Year', 'Custom Period'];
 		$scope.months_list = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
+        $scope.list = [];
+        $scope.listFiltered = [];
+        $scope.pagesList = [];
+        $scope.numPerPage = 20;
+        $scope.currentPage = 1;
 		$scope.team_users = [];
 		$scope.finances = {};
 		$scope.products = {};
@@ -34,6 +39,34 @@
 				$scope.getTeamUsers();
 			}
 		};
+
+        $scope.initList = function(data) {
+            request.send('/finances/getList', {}, function(data) {
+                $scope.print(data);
+            });
+        };
+
+        $scope.print = function(data) {
+            $scope.list = data;
+            $scope.listFiltered = $scope.list;
+            $scope.order('-created_at');
+        };
+
+        $scope.order = function(rowName) {
+            $scope.row = rowName;
+            $scope.listFiltered = $filter('orderBy')($scope.list, rowName);
+
+            $scope.changePage(1);
+            return $scope.currentPage = 1;
+        };
+
+        $scope.changePage = function(page) {
+            var end, start;
+            start = (page - 1) * $scope.numPerPage;
+            end = start + $scope.numPerPage;
+            //return $scope.pagesList = $scope.listFiltered.slice(start, end);
+            return $scope.pagesList = $scope.listFiltered;
+        };
 
 		$scope.getTeamUsers = function() {
             request.send('/users/getTeamUsers', {}, function(data) {

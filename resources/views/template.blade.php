@@ -121,6 +121,7 @@
                             </a>
                             <ul class="treeview-menu">
                                 <li><a href="/finances/add" ng-class="getClass('/finances/add')">Wystaw fakturę</a></li>
+                                <li><a href="/finances/list" ng-class="getClass('/finances/list')">Faktury</a></li>
                             </ul>
                         </li>
                     </ul>
