@@ -87,7 +87,6 @@
                         </div>
                     </div>
                 </form>
-                <p>(<span class="req_field">*</span>) - required fields</p>
             </div>
         </div>
     </div>
@@ -194,7 +193,7 @@
                         </div>
                     </div>
                 </form>
-                <p>(<span class="req_field">*</span>) - required fields</p>
+                <p>(<span class="req_field">*</span>) - Wymagane pola</p>
             </div>
         </div>
     </div>
