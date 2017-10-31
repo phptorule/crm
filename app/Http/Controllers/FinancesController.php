@@ -22,6 +22,7 @@ class FinancesController extends Controller
 
     public function save($post = [])
     {
+        //dd($post);
         $issue_date = date('Y-m-d', strtotime($post['issue_date']));
         $payment_date = date('Y-m-d', strtotime($post['payment_date']));
 
@@ -32,7 +33,7 @@ class FinancesController extends Controller
         $finances->finances_paid = $post['invoice_paid'];
         $finances->finances_issue_date = $issue_date;
         $finances->finances_payment_date = $payment_date;
-        $finances->finances_assign_to = $post['contact_person'];
+        $finances->finances_assign_to = $post['assign_to'];
         $finances->finances_invoice_street = empty($post['invoice_street']) ? '' : $post['invoice_street'];
         $finances->finances_invoice_mailbox = empty($post['invoice_mailbox']) ? '' : $post['invoice_mailbox'];
         $finances->finances_invoice_town = empty($post['invoice_town']) ? '' : $post['invoice_town'];

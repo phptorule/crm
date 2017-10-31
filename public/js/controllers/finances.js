@@ -135,8 +135,11 @@
                 $scope.finances.invoice_paid = $scope.invoice_paid;
                 $scope.finances.issue_date = $scope.issue_date;
                 $scope.finances.payment_date = $scope.payment_date;
+                console.log($scope.finances);
                 request.send('/finances/save', $scope.finances, function(data) {
-                    console.log(data);
+                    $timeout(function() {
+                        $window.location.href = "/finances/list/";
+                    }, 1000);
                 });
 			}
 		};
