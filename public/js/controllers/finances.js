@@ -31,6 +31,7 @@
         $scope.products.products_type = '0';
         $scope.products.vat_shipping_percent = 4.5;
         $scope.products.products_ids = '';
+        $scope.finances_id = $location.path().split('/')[3];
 
 		$scope.init = function(data) {
 			if ( ! $rootScope.user.users_id) {

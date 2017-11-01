@@ -403,10 +403,9 @@
                         </tr>
                     </tfoot>
                 </table>
-
-                <p>(<span class="req_field">*</span>) - Wymagane pola</p>
             </div>
         </div>
+        <p>(<span class="req_field">*</span>) - Wymagane pola</p>
     </div>
 
     <div class="col-sm-12 text-right">
