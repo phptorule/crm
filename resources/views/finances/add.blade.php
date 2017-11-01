@@ -258,7 +258,7 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <button type="submit" class="btn btn-add" ng-click="discount_window = ! discount_window">Rabat</button>
+                                        <button type="submit" class="btn btn-add" ng-click="openDiscount()">Rabat</button>
                                         <div class="discount_window" ng-show="discount_window">
                                             <div class="discount_header">
                                                 <h4>Kwota całkowita netto: @{{ getSumWithDiscount() }}</h4>
@@ -299,7 +299,7 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <button type="submit" class="btn btn-add" ng-click="vat_window = ! vat_window">Podatek VAT</button>
+                                        <button type="submit" class="btn btn-add" ng-click="openTax()">Podatek VAT</button>
                                         <div class="vat_window" ng-show="vat_window">
                                             <div class="discount_header">
                                                 <h4>Kwota netto: @{{ getSumWithDiscount() }}</h4>

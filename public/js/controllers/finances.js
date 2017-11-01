@@ -180,6 +180,16 @@
             return result;
         };
 
+        $scope.openDiscount = function() {
+            $scope.discount_window = ! $scope.discount_window;
+            $scope.vat_window = false;
+        };
+
+        $scope.openTax = function() {
+            $scope.vat_window = ! $scope.vat_window;
+            $scope.discount_window = false;
+        };
+
         $scope.setDiscount = function(discount) {
         	if (discount == 'without')
     		{
