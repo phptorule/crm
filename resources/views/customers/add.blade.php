@@ -293,9 +293,9 @@
                         </div>
                     </div>
                 </form>
-                <p ng-show=" ! customer_id">(<span class="req_field">*</span>) - Wymagane pola</p>
             </div>
         </div>
+        <p ng-show=" ! customer_id">(<span class="req_field">*</span>) - Wymagane pola</p>
     </div>
 
     <div class="col-sm-12" ng-show="customer_id">
@@ -330,9 +330,9 @@
                         </div>
                     </div>
                 </form>
-                <p ng-show="customer_id">(<span class="req_field">*</span>) - Wymagane pola</p>
             </div>
         </div>
+        <p ng-show="customer_id">(<span class="req_field">*</span>) - Wymagane pola</p>
     </div>
 
     <div class="col-sm-6 pull-right" ng-show="duplicate_customers">
