@@ -3,7 +3,7 @@
       <div class="panel panel-bd">
          <div class="panel-heading">
             <div class="btn-group" id="buttonexport">
-                  <h4>Faktury</h4>
+                  <h4>Wystawione faktury</h4>
             </div>
          </div>
          <div class="panel-body">

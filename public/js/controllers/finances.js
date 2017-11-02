@@ -393,10 +393,10 @@
         };
 
 	    /* Setting page titles */
-	    if ($scope.customer_id)
+	    if ($location.path() == '/finances/list/')
 	    {
-	        Page.setTitle('Kontrahent');
-	        Page.setIcon('fa fa-user');
+	        Page.setTitle('Wystawione faktury');
+	        Page.setIcon('fa fa-th-list');
 	    }
 
 	    if ($location.path() == '/finances/add/')
