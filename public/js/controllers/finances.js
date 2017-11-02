@@ -25,7 +25,7 @@
     	$scope.products.discount_percent = 0;
     	$scope.products.discount_regular = 0;
     	$scope.products.products_amount = 1;
-        $scope.products.products_cost = 0;
+        $scope.products.products_cost = '';
         $scope.products.products_vat_percent = 0;
         $scope.discount_radio = [];
         $scope.discount_radio[0] = 'without';
@@ -136,7 +136,6 @@
         };
 
         $scope.save = function() {
-            console.log($scope.finances);
 	    	var error = 1;
 			error *= validate.check($scope.form.customer, 'Klient');
 			error *= validate.check($scope.form.payment_date, 'Termin platności');
@@ -212,7 +211,7 @@
         $scope.addProduct = function() {
             $scope.object = angular.copy($scope.products);
             $scope.object.products_name = '';
-            $scope.object.products_cost = 0;
+            $scope.object.products_cost = '';
             $scope.object.discount_percent = 0;
             $scope.object.discount_regular = 0;
             $scope.object.products_vat_percent = 0;
@@ -221,7 +220,7 @@
             $scope.object.cost_with_discount = 0;
             $scope.object.products_vat_amount = 0;
             $scope.object.products_total_cost = 0;
-            $scope.object.dimension = '';
+            $scope.object.products_dimension = '';
 
             $scope.productsList.push($scope.object);
         };
@@ -297,8 +296,6 @@
                 var total_cost = $scope.productsList[index].cost_netto;
             }
 
-            //$scope.productsList[index].products_total_cost = $scope.productsList[index].cost_netto;
-
             if ($scope.productsList[index].products_vat_percent)
             {
                 $scope.productsList[index].products_vat_percent = $scope.productsList[index].products_vat_percent.replace(/,/g,'.');
@@ -326,9 +323,6 @@
                 $scope.productsList[index].cost_with_discount = $scope.productsList[index].cost_netto - $scope.productsList[index].discount_amount;
                 var total_cost = $scope.productsList[index].cost_with_discount;
             }
-
-            //$scope.productsList[index].cost_with_discount = $scope.productsList[index].cost_netto - $scope.productsList[index].discount_amount;
-            //$scope.productsList[index].products_total_cost = $scope.productsList[index].cost_with_discount;
 
             if ($scope.productsList[index].products_vat_percent)
             {
