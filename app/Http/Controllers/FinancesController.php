@@ -31,6 +31,7 @@ class FinancesController extends Controller
         $finances->finances_customer_name = $post['company_name'];
         $finances->finances_payment_method = $post['pay_type'];
         $finances->finances_paid = $post['invoice_paid'];
+        $finances->finances_total_amount = $post['total_amount'];
         $finances->finances_issue_date = $issue_date;
         $finances->finances_payment_date = $payment_date;
         $finances->finances_assign_to = $post['assign_to'];
@@ -57,21 +58,24 @@ class FinancesController extends Controller
 
     public function saveProduct($post = [])
     {
-        //dd($post);
-        $product = Products::firstOrNew(['products_id' => empty($post['products_id']) ? 0 : $post['products_id']]);
+        foreach ($post as $item)
+        {
+            $product_dimension = empty($item['products_dimension']) ? '' : $item['products_dimension'];
 
-        $product->products_type = $post['products_type'];
-        $product->products_name = $post['products_name'];
-        $product->products_amount = $post['products_amount'];
-        $product->products_dimension = $post['products_dimension'];
-        $product->products_cost = $post['products_cost'];
-        $product->products_vat_percent = $post['products_vat_percent'];
-        $product->products_vat_amount = $post['products_vat_amount'];
-        $product->products_total_cost = $post['products_total_cost'];
+            $product = Products::firstOrNew(['products_id' => empty($item['products_id']) ? 0 : $item['products_id']]);
+            $product->products_type = $item['products_type'];
+            $product->products_name = $item['products_name'];
+            $product->products_amount = $item['products_amount'];
+            $product->products_dimension = $product_dimension;
+            $product->products_cost = $item['products_cost'];
+            $product->products_vat_percent = $item['products_vat_percent'];
+            $product->products_vat_amount = $item['products_vat_amount'];
+            $product->products_total_cost = $item['products_total_cost'];
+            $product->save();
 
-        $product->save();
-        $this->message(__('Product was successfully saved'), 'success');
+            $products_ids[] = $product->products_id;
+        }
 
-        return $product->products_id;
+        return $products_ids;
     }
 }

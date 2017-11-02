@@ -16,22 +16,35 @@
 		$scope.finances = {};
 		$scope.products = {};
 		$scope.products.products_currency = '0';
-		$scope.discount_window = false;
+        $scope.discount_window = [];
+		$scope.discount_window[0] = false;
 		$scope.discount_sum_window = false;
-        $scope.vat_window = false;
+        $scope.vat_window = [];
+        $scope.vat_window[0] = false;
         $scope.vat_sum_window = false;
-    	$scope.discount_percent = 0;
-    	$scope.discount_regular = 0;
+    	$scope.products.discount_percent = 0;
+    	$scope.products.discount_regular = 0;
     	$scope.products.products_amount = 1;
-        $scope.products.products_cost = 0;
+        $scope.products.products_cost = '';
         $scope.products.products_vat_percent = 0;
-        $scope.discount_radio = 'without';
+        $scope.discount_radio = [];
+        $scope.discount_radio[0] = 'without';
         $scope.pay_type = '0';
         $scope.invoice_paid = '0';
         $scope.products.products_type = '0';
         $scope.products.vat_shipping_percent = 4.5;
-        $scope.products.products_ids = '';
+        $scope.finances.products_ids = [];
         $scope.finances_id = $location.path().split('/')[3];
+        $scope.products.cost_netto = 0;
+        $scope.products.discount_amount = 0;
+        $scope.products.cost_with_discount = 0;
+        $scope.products.products_total_cost = 0;
+        $scope.products.products_vat_amount = 0;
+        $scope.products.tax_amount = 0;
+        $scope.products.vat_shipping_amount = 0;
+        $scope.products.shipping_price = 0;
+        $scope.productsList = [];
+        $scope.productsList.push($scope.products);
 
 		$scope.init = function(data) {
 			if ( ! $rootScope.user.users_id) {
@@ -122,28 +135,43 @@
             });
         };
 
-        $scope.save = function(check) {
+        $scope.save = function() {
 	    	var error = 1;
 			error *= validate.check($scope.form.customer, 'Klient');
 			error *= validate.check($scope.form.payment_date, 'Termin platności');
 			error *= validate.check($scope.form.assign_to, 'Przypisany do');
 			error *= validate.check($scope.form_address.invoice_street, 'Ulica (do faktury)');
 			error *= validate.check($scope.form_address.send_street, 'Ulica (do wysylki)');
-			error *= validate.check($scope.form_products.products_ids, 'At least one product');
+
+            for (var k in $scope.productsList)
+            {
+                error *= validate.check($scope.form_products['product_name_' + k], 'Nazwa pozycji');
+                error *= validate.check($scope.form_products['product_cost_' + k], 'Cena');
+            }
+
 			if (error)
 			{
-                $scope.finances.pay_type = $scope.pay_type;
-                $scope.finances.invoice_paid = $scope.invoice_paid;
-                $scope.finances.issue_date = $scope.issue_date;
-                $scope.finances.payment_date = $scope.payment_date;
-                console.log($scope.finances);
-                request.send('/finances/save', $scope.finances, function(data) {
-                    $timeout(function() {
-                        $window.location.href = "/finances/list/";
-                    }, 1000);
+                request.send('/finances/saveProduct', $scope.productsList, function(data) {
+                    $scope.saveInvoice(data);
                 });
 			}
 		};
+
+        $scope.saveInvoice = function(products_ids) {
+            $scope.finances.products_ids = products_ids;
+            $scope.finances.pay_type = $scope.pay_type;
+            $scope.finances.invoice_paid = $scope.invoice_paid;
+            $scope.finances.issue_date = $scope.issue_date;
+            $scope.finances.payment_date = $scope.payment_date;
+            request.send('/finances/save', $scope.finances, function(data) {
+                if (data)
+                {
+                    $timeout(function() {
+                        $window.location.href = "/finances/list/";
+                    }, 1000);
+                }
+            });
+        };
 
         $scope.dateOptions = {
 			startingDay: 1,
@@ -180,21 +208,60 @@
             return result;
         };
 
-        $scope.setDiscount = function(discount) {
+        $scope.addProduct = function() {
+            $scope.object = angular.copy($scope.products);
+            $scope.object.products_name = '';
+            $scope.object.products_cost = '';
+            $scope.object.discount_percent = 0;
+            $scope.object.discount_regular = 0;
+            $scope.object.products_vat_percent = 0;
+            $scope.object.cost_netto = 0;
+            $scope.object.discount_amount = 0;
+            $scope.object.cost_with_discount = 0;
+            $scope.object.products_vat_amount = 0;
+            $scope.object.products_total_cost = 0;
+            $scope.object.products_dimension = '';
+
+            $scope.productsList.push($scope.object);
+        };
+
+        $scope.openDiscount = function(index) {
+            $scope.discount_window[index] = ! $scope.discount_window[index];
+            $scope.vat_window[index] = false;
+        };
+
+        $scope.openTax = function(index) {
+            $scope.vat_window[index] = ! $scope.vat_window[index];
+            $scope.discount_window[index] = false;
+        };
+
+        $scope.setDiscount = function(index, discount) {
         	if (discount == 'without')
     		{
-    			$scope.discount_percent = 0;
-    			$scope.discount_regular = 0;
+    			$scope.productsList[index].discount_percent = 0;
+    			$scope.productsList[index].discount_regular = 0;
+                $scope.productsList[index].discount_amount = 0;
+                $scope.productsList[index].cost_with_discount = 0;
+                $scope.productsList[index].products_vat_amount = ($scope.productsList[index].cost_netto * $scope.productsList[index].products_vat_percent) / 100;
+                $scope.productsList[index].products_total_cost = $scope.productsList[index].cost_netto + $scope.productsList[index].products_vat_amount;
     		}
 
     		if (discount == 'percent')
     		{
-    			$scope.discount_regular = 0;
+    			$scope.productsList[index].discount_regular = 0;
+                $scope.productsList[index].discount_amount = 0;
+                $scope.productsList[index].cost_with_discount = 0;
+                $scope.productsList[index].products_vat_amount = ($scope.productsList[index].cost_netto * $scope.productsList[index].products_vat_percent) / 100;
+                $scope.productsList[index].products_total_cost = $scope.productsList[index].cost_netto + $scope.productsList[index].products_vat_amount;
     		}
 
     		if (discount == 'regular')
     		{
-    			$scope.discount_percent = 0;
+    			$scope.productsList[index].discount_percent = 0;
+                $scope.productsList[index].discount_amount = 0;
+                $scope.productsList[index].cost_with_discount = 0;
+                $scope.productsList[index].products_vat_amount = ($scope.productsList[index].cost_netto * $scope.productsList[index].products_vat_percent) / 100;
+                $scope.productsList[index].products_total_cost = $scope.productsList[index].cost_netto + $scope.productsList[index].products_vat_amount;
     		}
         };
 
@@ -216,134 +283,113 @@
     		}
         };
 
-        $scope.getDiscount = function() {
-        	var sumOfPercent = 0;
-
-        	if ($scope.discount_percent == 0 && $scope.discount_regular == 0)
-        	{
-        		return 0;
-        	}
-
-        	if ($scope.discount_percent != 0)
-        	{
-        		sumOfPercent = $scope.getSumNetto() - $scope.getSumWithDiscount();
-        		return (sumOfPercent).toFixed(2);
-        	}
-
-        	if ($scope.discount_regular != 0)
-        	{
-        		return $scope.discount_regular;
-        	}
-        };
-
-        $scope.getSumWithDiscount = function() {
-        	var nettoSum = 0;
-	    	var discountNettoSum = 0;
-
-	    	if ($scope.discount_percent != 0)
-	    	{
-	    		nettoSum = $scope.getSumNetto();
-				discountNettoSum = nettoSum * ((100 - $scope.discount_percent) / 100);
-	    	}
-	    	else
-	    	{
-	    		nettoSum = $scope.getSumNetto();
-				discountNettoSum = nettoSum - $scope.discount_regular;
+        $scope.getProductCost = function(index) {
+            if ( ! $scope.productsList[index].products_amount || ! $scope.productsList[index].products_cost)
+            {
+                $scope.productsList[index].cost_netto = 0;
+                var total_cost = $scope.productsList[index].cost_netto;
             }
-			return discountNettoSum.toFixed(2);
-        };
-
-        $scope.getSumNetto = function() {
-        	if ( ! $scope.products.products_amount || ! $scope.products.products_cost)
-    		{
-    			return 0;
-    		}
-    		else
-    		{
-    			return ($scope.products.products_amount * $scope.products.products_cost).toFixed(2);
-    		}
-        };
-
-        $scope.getTax = function() {
-        	var sumWithDiscount = $scope.getSumWithDiscount();
-
-        	if ($scope.products.products_vat_percent == 0)
-        	{
-        		$scope.products.products_vat_amount = 0;
-        	}
-
-        	if (sumWithDiscount)
-        	{
-        		$scope.products.products_vat_amount = ((sumWithDiscount * $scope.products.products_vat_percent) / 100).toFixed(2);
-
+            else
+            {
+                $scope.productsList[index].products_cost = $scope.productsList[index].products_cost.replace(/,/g,'.');
+                $scope.productsList[index].cost_netto = $scope.productsList[index].products_amount * $scope.productsList[index].products_cost;
+                var total_cost = $scope.productsList[index].cost_netto;
             }
-        		return $scope.products.products_vat_amount;
+
+            if ($scope.productsList[index].products_vat_percent)
+            {
+                $scope.productsList[index].products_vat_percent = $scope.productsList[index].products_vat_percent.replace(/,/g,'.');
+                $scope.productsList[index].products_vat_amount = ($scope.productsList[index].cost_netto * $scope.productsList[index].products_vat_percent) / 100;
+                var total_cost = $scope.productsList[index].cost_netto + $scope.productsList[index].products_vat_amount;
+            }
+
+            if ($scope.productsList[index].discount_percent == 0 && $scope.productsList[index].discount_regular == 0)
+            {
+                $scope.productsList[index].discount_amount = 0;
+            }
+
+            if ($scope.productsList[index].discount_percent != 0)
+            {
+                $scope.productsList[index].discount_percent = $scope.productsList[index].discount_percent.replace(/,/g,'.');
+                $scope.productsList[index].discount_amount = ($scope.productsList[index].cost_netto * $scope.productsList[index].discount_percent / 100)*1;
+                $scope.productsList[index].cost_with_discount = $scope.productsList[index].cost_netto - $scope.productsList[index].discount_amount;
+                var total_cost = $scope.productsList[index].cost_with_discount;
+            }
+
+            if ($scope.productsList[index].discount_regular != 0)
+            {
+                $scope.productsList[index].discount_regular = $scope.productsList[index].discount_regular.replace(/,/g,'.');
+                $scope.productsList[index].discount_amount = $scope.productsList[index].discount_regular*1;
+                $scope.productsList[index].cost_with_discount = $scope.productsList[index].cost_netto - $scope.productsList[index].discount_amount;
+                var total_cost = $scope.productsList[index].cost_with_discount;
+            }
+
+            if ($scope.productsList[index].products_vat_percent)
+            {
+                $scope.productsList[index].products_vat_percent = $scope.productsList[index].products_vat_percent.replace(/,/g,'.');
+                $scope.productsList[index].products_vat_amount = ($scope.productsList[index].cost_with_discount * $scope.productsList[index].products_vat_percent) / 100;
+                var total_cost = $scope.productsList[index].cost_with_discount + $scope.productsList[index].products_vat_amount;
+            }
+
+            if ($scope.productsList[index].cost_with_discount)
+            {
+                var product_price = $scope.productsList[index].cost_with_discount;
+            }
+            else
+            {
+                var product_price = $scope.productsList[index].cost_netto;
+            }
+
+            if ($scope.productsList[index].products_vat_percent == 0)
+            {
+                $scope.productsList[index].products_vat_amount = 0;
+                var total_cost = product_price + $scope.productsList[index].products_vat_amount;
+            }
+            else
+            {
+                $scope.productsList[index].products_vat_percent = $scope.productsList[index].products_vat_percent.replace(/,/g,'.');
+                $scope.productsList[index].products_vat_amount = (product_price * $scope.productsList[index].products_vat_percent) / 100;
+                var total_cost = product_price + $scope.productsList[index].products_vat_amount;
+            }
+
+            $scope.productsList[index].products_total_cost = total_cost;
         };
 
-        $scope.getSumBrutto = function() {
-        	if ($scope.getSumWithDiscount() == 0 && $scope.getTax() == 0)
-        	{
-        		return 0;
-        	}
+        $scope.getTotalAmount = function(product_cost) {
+            $scope.products.products_total_amount = 0;
+            for (var k in $scope.productsList)
+            {
+                if ($scope.productsList[k].products_total_cost != undefined)
+                {
+                    $scope.products.products_total_amount += $scope.productsList[k].products_total_cost;
+                }
+            }
 
-        	if ($scope.getSumWithDiscount() && $scope.getTax() == 0)
-        	{
-                $scope.products.products_total_cost = $scope.getSumWithDiscount();
-
-                return $scope.products.products_total_cost;
-        	}
-
-        	if ($scope.getTax())
-        	{
-                $scope.products.products_total_cost = ($scope.getTax()*1 + $scope.getSumWithDiscount()*1).toFixed(2);
-
-                return $scope.products.products_total_cost;
-        	}
+            return $scope.products.products_total_amount;
         };
 
         $scope.getShippingTax = function() {
-            if ( ! $scope.products.shipping_price)
+            if ($scope.products.products_total_amount)
             {
-                return 0;
+                var products_total_amount = $scope.products.products_total_amount;
             }
             else
             {
-                $scope.products.vat_shipping_amount = (($scope.products.shipping_price * $scope.products.vat_shipping_percent) / 100).toFixed(2);
-
-                return $scope.products.vat_shipping_amount;
+                var products_total_amount = 0;
             }
-        };
 
-        $scope.getTotalCost = function() {
             if ( ! $scope.products.shipping_price)
             {
-                return $scope.getSumBrutto();
+                $scope.finances.total_amount = products_total_amount;
             }
             else
             {
-                return ($scope.getSumBrutto()*1 + $scope.getShippingTax()*1 + $scope.products.shipping_price*1).toFixed(2);
-            }
-        };
-
-        $scope.saveProduct = function() {
-            var error = 1;
-
-            error *= validate.check($scope.form_products.product_name, 'Nazwa pozycji');
-
-            if ($scope.products.products_type == 0)
-            {
-                error *= validate.check($scope.form_products.product_amount, 'Ilosc');
+                $scope.products.shipping_price = $scope.products.shipping_price.replace(/,/g,'.');
+                $scope.products.vat_shipping_amount = ($scope.products.shipping_price * $scope.products.vat_shipping_percent) / 100;
+                $scope.finances.total_amount = $scope.products.vat_shipping_amount + products_total_amount;
             }
 
-            error *= validate.check($scope.form_products.product_cost, 'Cena');
-
-            if (error)
-            {
-                request.send('/finances/saveProduct', $scope.products, function(data) {
-                    $scope.finances.products_ids = data;
-                });
-            }
-
+            return $scope.finances.total_amount;
         };
 
 	    /* Setting page titles */
