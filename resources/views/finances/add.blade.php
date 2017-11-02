@@ -217,9 +217,9 @@
                         </thead>
 
                         <tbody>
-                            <tr>
+                            <tr ng-repeat="(k, products) in productsList">
                                 <td>
-                                    <select class="form-control" name="invoice_type" ng-model="products.products_type">
+                                    <select class="form-control" name="invoice_type" ng-model="productsList[k].products_type">
                                         <option value="0">Produkt</option>
                                         <option value="1">Usługa</option>
                                     </select>
@@ -227,25 +227,25 @@
 
                                 <td class="product_name_column">
                                     <div class="form-group">
-                                        <input type="text" class="form-control" name="product_name" ng-model="products.products_name" required />
+                                        <input type="text" class="form-control" name="product_name_@{{ k }}" ng-model="productsList[k].products_name" required />
                                     </div>
                                 </td>
 
                                 <td>
                                     <div class="form-group">
-                                        <input type="text" class="form-control" name="product_amount" ng-show="products.products_type == 0" ng-model="products.products_amount" required />
-                                        <input type="text" class="form-control" ng-show="products.products_type == 1" placeholder="1" disabled="disabled" />
+                                        <input type="text" class="form-control" name="product_amount" ng-change="getProductCost(k)" ng-show="productsList[k].products_type == 0" ng-model="productsList[k].products_amount" required />
+                                        <input type="text" class="form-control" ng-change="getProductCost(k)" ng-show="productsList[k].products_type == 1" ng-model="productsList[k].products_amount" />
                                     </div>
                                 </td>
 
                                 <td>
                                     <div class="form-group">
-                                        <input type="text" class="form-control" name="product_dimension" ng-model="products.products_dimension" maxlength="4" />
+                                        <input type="text" class="form-control" name="product_dimension" ng-model="productsList[k].products_dimension" maxlength="4" />
                                     </div>
                                 </td>
 
                                 <td>
-                                    <select class="form-control" name="currency" ng-model="products.products_currency" required>
+                                    <select class="form-control" name="currency" ng-model="productsList[k].products_currency">
                                         <option value="0">PLN</option>
                                         <option value="1">EUR</option>
                                         <option value="2">USD</option>
@@ -254,40 +254,40 @@
 
                                 <td class="text-right discount">
                                     <div class="form-group">
-                                        <input type="text" class="form-control" name="product_cost" ng-model="products.products_cost" required />
+                                        <input type="text" class="form-control" name="product_cost_@{{ k }}" ng-change="getProductCost(k)" ng-model="productsList[k].products_cost" required />
                                     </div>
 
                                     <div class="form-group">
-                                        <button type="submit" class="btn btn-add" ng-click="openDiscount()">Rabat</button>
-                                        <div class="discount_window" ng-show="discount_window">
+                                        <button type="submit" class="btn btn-add" ng-click="openDiscount(k)">Rabat</button>
+                                        <div class="discount_window" ng-show="discount_window[k]">
                                             <div class="discount_header">
-                                                <h4>Kwota całkowita netto: @{{ getSumWithDiscount() }}</h4>
-                                                <button type="button" class="close" ng-click="discount_window = ! discount_window" aria-hidden="true">×</button>
+                                                <h4>Kwota całkowita netto: @{{ productsList[k].cost_with_discount.toFixed(2) }}</h4>
+                                                <button type="button" class="close" ng-click="discount_window[k] = ! discount_window[k]" aria-hidden="true">×</button>
                                             </div>
 
                                             <div class="form-group">
-                                                <input type="radio" id="square-radio-1" ng-model="discount_radio" ng-click="setDiscount('without')" value="without" />
-                                                <label for="square-radio-1">Bez rabatu</label>
+                                                <input type="radio" id="radio-1-@{{ k }}" ng-model="discount_radio[k]" ng-click="setDiscount(k, 'without')" value="without" />
+                                                <label for="radio-1-@{{ k }}">Bez rabatu</label>
                                             </div>
 
                                             <div class="discount_block">
                                                 <div class="form-group">
-                                                    <input type="radio" id="square-radio-2" ng-model="discount_radio" ng-click="setDiscount('percent')" value="percent"  />
-                                                    <label for="square-radio-2">% Procentowy</label>
+                                                    <input type="radio" id="radio-2-@{{ k }}" ng-model="discount_radio[k]" ng-click="setDiscount(k, 'percent')" value="percent" />
+                                                    <label for="radio-2-@{{ k }}">% Procentowy</label>
 
-                                                    <div class="discount_input pull-right" ng-show="discount_radio == 'percent'">
-                                                        <input type="text" class="form-control" ng-model="discount_percent" name="discount_percent" /> %
+                                                    <div class="discount_input pull-right" ng-show="discount_radio[k] == 'percent'">
+                                                        <input type="text" class="form-control" ng-change="getProductCost(k)" ng-model="productsList[k].discount_percent" name="discount_percent" /> %
                                                     </div>
                                                 </div>
                                             </div>
 
                                             <div class="discount_block">
                                                 <div class="form-group">
-                                                    <input type="radio" id="square-radio-3" ng-model="discount_radio" ng-click="setDiscount('regular')" value="regular" />
-                                                    <label for="square-radio-3">Wartosciowy</label>
+                                                    <input type="radio" id="radio-3-@{{ k }}" ng-model="discount_radio[k]" ng-click="setDiscount(k, 'regular')" value="regular" />
+                                                    <label for="radio-3-@{{ k }}">Wartosciowy</label>
 
-                                                    <div class="discount_input pull-right" ng-show="discount_radio == 'regular'">
-                                                        <input type="text" class="form-control" ng-model="discount_regular" name="discount_regular" />
+                                                    <div class="discount_input pull-right" ng-show="discount_radio[k] == 'regular'">
+                                                        <input type="text" class="form-control" ng-change="getProductCost(k)" ng-model="productsList[k].discount_regular" name="discount_regular" />
                                                     </div>
                                                 </div>
                                             </div>
@@ -299,21 +299,21 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <button type="submit" class="btn btn-add" ng-click="openTax()">Podatek VAT</button>
-                                        <div class="vat_window" ng-show="vat_window">
+                                        <button type="submit" class="btn btn-add" ng-click="openTax(k)">Podatek VAT</button>
+                                        <div class="vat_window" ng-show="vat_window[k]">
                                             <div class="discount_header">
-                                                <h4>Kwota netto: @{{ getSumWithDiscount() }}</h4>
-                                                <button type="button" class="close" ng-click="vat_window = ! vat_window" aria-hidden="true">×</button>
+                                                <h4>Kwota netto: @{{ (productsList[k].cost_with_discount ? productsList[k].cost_with_discount : productsList[k].cost_netto).toFixed(2) }}</h4>
+                                                <button type="button" class="close" ng-click="vat_window[k] = ! vat_window[k]" aria-hidden="true">×</button>
                                             </div>
 
                                             <div class="discount_block">
                                                 <div class="form-group">
                                                     <div class="discount_input">
-                                                        <input type="text" class="form-control" ng-model="products.products_vat_percent" /> %
+                                                        <input type="text" class="form-control" ng-change="getProductCost(k)" ng-model="productsList[k].products_vat_percent" /> %
                                                     </div>
 
                                                     <div class="discount_input pull-right">
-                                                        VAT <input type="text" class="form-control" ng-model="products.products_vat_amount" name="vat_amount" disabled="disabled" />
+                                                        VAT <input type="text" class="form-control" ng-model="productsList[k].products_vat_amount" name="vat_amount" disabled="disabled" />
                                                     </div>
                                                 </div>
                                             </div>
@@ -322,17 +322,17 @@
                                 </td>
 
                                 <td>
-                                    <div class="form-group">@{{ getSumNetto() }}</div>
-                                    <div class="form-group">@{{ getDiscount() }}</div>
-                                    <div class="form-group">@{{ getSumWithDiscount() }}</div>
-                                    <div class="form-group">@{{ getTax() }}</div>
+                                    <div class="form-group">@{{ productsList[k].cost_netto.toFixed(2) }}</div>
+                                    <div class="form-group">@{{ productsList[k].discount_amount.toFixed(2) }}</div>
+                                    <div class="form-group">@{{ productsList[k].cost_with_discount.toFixed(2) }}</div>
+                                    <div class="form-group">@{{ productsList[k].products_vat_amount.toFixed(2) }}</div>
                                 </td>
 
                                 <td>
                                     <div class="form-group">&nbsp;</div>
                                     <div class="form-group">&nbsp;</div>
                                     <div class="form-group">&nbsp;</div>
-                                    <div class="form-group" ng-model="products.products_total_cost">@{{ getSumBrutto() }}</div>
+                                    <div class="form-group">@{{ productsList[k].products_total_cost.toFixed(2) }}</div>
                                 </td>
                             </tr>
                         </tbody>
@@ -340,8 +340,7 @@
 
                     <footer class="table-footer">
                         <div class="form-group">
-                            <button type="submit" class="btn btn-add" ng-show="products.products_type == 0" ng-click="saveProduct()">Dodaj produkt</button>
-                            <button type="submit" class="btn btn-add" ng-show="products.products_type == 1" ng-click="saveProduct()">Dodaj usluge</button>
+                            <button type="submit" class="btn btn-add" ng-click="addProduct()">Dodaj pozycję</button>
                         </div>
                     </footer>
                </form>
@@ -350,7 +349,7 @@
                     <thead>
                         <tr class="info">
                             <th class="text-right">Wartosc brutto:</th>
-                            <th class="product_total_sum">@{{ getSumBrutto() }}</th>
+                            <th class="product_total_sum">@{{ getTotalAmount().toFixed(2) }}</th>
                         </tr>
                     </thead>
 
@@ -390,7 +389,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    @{{ getShippingTax() }}
+                                    @{{ products.vat_shipping_amount.toFixed(2) }}
                                 </div>
                             </td>
                         </tr>
@@ -399,7 +398,7 @@
                     <tfoot>
                         <tr>
                             <td class="text-right">Calkowita wartosc brutto:</td>
-                            <td ng-model="finances.total_cost">@{{ getTotalCost() }}</td>
+                            <td>@{{ getShippingTax().toFixed(2) }}</td>
                         </tr>
                     </tfoot>
                 </table>
