@@ -60,7 +60,14 @@
 
         $scope.initList = function(data) {
             request.send('/finances/getList', {}, function(data) {
-                console.log(data);
+                for (var k in data)
+                {
+                    $scope.getUserName(data[k].finances_assign_to);
+
+
+                    console.log($scope.getUserName(data[k].finances_assign_to));
+                }
+
                 $scope.print(data);
             });
         };
@@ -140,6 +147,20 @@
                     if ($scope.team_users[k].users_id == $rootScope.user.users_id)
                     {
                         $scope.finances.assign_to = $rootScope.user.users_id.toString();
+                    }
+                }
+            });
+        };
+
+        $scope.getUserName = function(users_id) {
+            $scope.users_name = '';
+            request.send('/users/getTeamUsers', {}, function(data) {
+                for (var k in data)
+                {
+                    if (data[k].users_id == users_id)
+                    {
+                        $scope.users_name = data[k].users_first_name + ' ' + data[k].users_last_name;
+                        return $scope.users_name;
                     }
                 }
             });
