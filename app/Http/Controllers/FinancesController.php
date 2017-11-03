@@ -42,7 +42,7 @@ class FinancesController extends Controller
             $finance->users_names = $users_first_name . ' ' . $users_last_name;
         }
 
-        dd($finances->users_names);
+        //dd($finances->users_names);
 
         return $finances;
     }
