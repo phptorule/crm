@@ -9,13 +9,40 @@ use App\Services\CoursesService;
 use Illuminate\Http\Request;
 use App\Products;
 use App\Teams;
+use App\Users;
 
 class FinancesController extends Controller
 {
+    public function getFinancesNumber()
+    {
+        $finances_last = Finances::orderBy('updated_at', 'desc')->first();
+        $current_year = date('Y', time());
+        if ( ! empty($finances_last))
+        {
+            $finances_number = ($finances_last->finances_id + 1) . '/' . $current_year;
+        }
+        else
+        {
+            $finances_number = '1/' . $current_year;
+        }
+
+        return $finances_number;
+    }
+
     public function getList()
     {
         $team = Teams::find(session('current_team'));
         $finances = $team->finances()->get();
+
+        foreach ($finances as $finance)
+        {
+            $finance->products_names = $finance->products()->pluck('products_name')->toArray();
+            $users_first_name = Users::where('users_id', $finance['finances_assign_to'])->select('users_first_name')->get();
+            $users_last_name = Users::where('users_id', $finance['finances_assign_to'])->select('users_last_name')->get();
+            $finance->users_names = $users_first_name . ' ' . $users_last_name;
+        }
+
+        dd($finances->users_names);
 
         return $finances;
     }
@@ -29,6 +56,7 @@ class FinancesController extends Controller
         $finances = Finances::firstOrNew(['finances_id' => empty($post['finances_id']) ? 0 : $post['finances_id']]);
 
         $finances->finances_customer_name = $post['company_name'];
+        $finances->finances_number = $post['finances_number'];
         $finances->finances_payment_method = $post['pay_type'];
         $finances->finances_paid = $post['invoice_paid'];
         $finances->finances_total_amount = $post['total_amount'];

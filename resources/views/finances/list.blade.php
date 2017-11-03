@@ -81,29 +81,34 @@
             </div>
             <!-- Plugin content:powerpoint,txt,pdf,png,word,xl -->
             <div class="table-responsive">
-               <table id="customers_table" class="table table-bordered table-striped table-hover">
+               <table id="finances_table" class="table table-bordered table-striped table-hover">
                   <thead>
                      <tr class="info">
-                        <th>Numer faktury</th>
+                        <th class="finances_number">Numer faktury</th>
                         <th>Produkt</th>
-                        <th>Klient</th>
-                        <th>Status</th>
-                        <th>Wartość brutto</th>
-                        <th>Przypisany do</th>
-                        <th>Przegląd</th>
+                        <th class="finances_customer">Klient</th>
+                        <th class="finances_status">Status</th>
+                        <th class="finances_amount">Wartość brutto</th>
+                        <th class="finances_assign_to">Przypisany do</th>
+                        <th class="finances_view">Przegląd</th>
                      </tr>
                   </thead>
                   <tbody>
                      <tr ng-repeat="finances in pagesList | filter:searchInput">
-                        <td>@{{ finances.finances_id }}</td>
-                        <td>@{{ finances.phone_number }}</td>
+                        <td>@{{ finances.finances_number }}</td>
+                        <td>@{{ finances.products_names[0] }}</td>
                         <td>@{{ finances.finances_customer_name }}</td>
                         <td>
                            <span ng-show="finances.finances_paid == '0'">Nie</span>
                            <span ng-show="finances.finances_paid == '1'">Tak</span>
                         </td>
-                        <td>@{{ customer.created_at }}</td>
-                        <td>@{{ customer.website }}</td>
+                        <td>
+                           @{{ finances.finances_total_amount }}
+                           <span ng-show="finances.products_currency == '0'">(PLN)</span>
+                           <span ng-show="finances.products_currency == '1'">(EUR)</span>
+                           <span ng-show="finances.products_currency == '2'">(USD)</span>
+                        </td>
+                        <td>@{{ finances.finances_assign_to }}</td>
                         <td class="view_customer">
                            <a href="/finances/add/@{{ finances.finances_id }}" class="btn btn-success btn-labeled m-b-5">
                               <span class="btn-label"><i class="glyphicon glyphicon-info-sign"></i></span>Otwórz
