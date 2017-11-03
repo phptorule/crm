@@ -5,6 +5,18 @@
                 <div class="btn-group" id="buttonlist">
                     <h3>Informacje podstawowe</h3>
                 </div>
+
+                <div class="custom_panel_item pull-right" ng-show="finances_id">
+                    <a href="javascript:void(0);" ng-show=" ! edit_general" ng-click="editFinances('general')">Edytuj dane <i class="panel-control-icon ti-pencil"></i></a>
+                </div>
+
+                <div class="custom_panel_item pull-right" ng-show="edit_general">
+                    <a href="javascript:void(0);" ng-click="save()">Zapisz <i class="fa fa-floppy-o"></i></a>
+                </div>
+
+                <div class="custom_panel_item pull-right" ng-show="edit_general">
+                    <a href="javascript:void(0);" ng-click="cancelEdit('general')">Anuluj</a>
+                </div>
             </div>
 
             <div class="panel-body">
@@ -28,7 +40,7 @@
                                 <label>Numer faktury</label>
                                 <div class="row">
                                     <div class="col-sm-6">
-                                        <input type="text" class="form-control" name="finance_number" required />
+                                        <input type="text" class="form-control" name="finance_number" ng-model="finances_number" disabled="disabled" />
                                     </div>
                                 </div>
                             </div>
@@ -111,9 +123,16 @@
                     <h3>Informacje adresowe</h3>
                 </div>
 
-                <div class="custom_panel_item pull-right">
-                    <a href="javascript:void(0);" ng-click="copySendAddress()">Kopiuj adres wysylki <i class="fa fa-clone"></i></a>
-                    <a href="javascript:void(0);" ng-click="copyInvoiceAddress()">Kopiuj adres do faktury <i class="fa fa-clone"></i></a>
+                <div class="custom_panel_item pull-right" ng-show="finances_id">
+                    <a href="javascript:void(0);" ng-show=" ! edit_address" ng-click="editFinances('address')">Edytuj dane <i class="panel-control-icon ti-pencil"></i></a>
+                </div>
+
+                <div class="custom_panel_item pull-right" ng-show="edit_address">
+                    <a href="javascript:void(0);" ng-click="save()">Zapisz <i class="fa fa-floppy-o"></i></a>
+                </div>
+
+                <div class="custom_panel_item pull-right" ng-show="edit_address">
+                    <a href="javascript:void(0);" ng-click="cancelEdit('address')">Anuluj</a>
                 </div>
             </div>
 
@@ -196,6 +215,18 @@
             <div class="panel-heading">
                 <div class="btn-group" id="buttonlist">
                     <h3>Produkty i usługi</h3>
+                </div>
+
+                <div class="custom_panel_item pull-right" ng-show="finances_id">
+                    <a href="javascript:void(0);" ng-show=" ! edit_products" ng-click="editFinances('products')">Edytuj dane <i class="panel-control-icon ti-pencil"></i></a>
+                </div>
+
+                <div class="custom_panel_item pull-right" ng-show="edit_products">
+                    <a href="javascript:void(0);" ng-click="save()">Zapisz <i class="fa fa-floppy-o"></i></a>
+                </div>
+
+                <div class="custom_panel_item pull-right" ng-show="edit_products">
+                    <a href="javascript:void(0);" ng-click="cancelEdit('products')">Anuluj</a>
                 </div>
             </div>
 
@@ -408,7 +439,7 @@
     </div>
 
     <div class="col-sm-12 text-right">
-        <button type="submit" class="btn btn-add" ng-click="save()">Zapisc</button>
+        <button type="submit" class="btn btn-add" ng-click="saveProduct()">Zapisc</button>
     </div>
 </div>
 

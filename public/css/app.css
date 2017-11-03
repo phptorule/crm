@@ -5446,3 +5446,27 @@ button.toast-close-button {
 .vat_sum_window {
     height: 100px;
 }
+
+#finances_table .finances_number {
+    width: 130px;
+}
+
+#finances_table .finances_customer {
+    width: 325px;
+}
+
+#finances_table .finances_status {
+    width: 50px;
+}
+
+#finances_table .finances_amount {
+    width: 120px;
+}
+
+#finances_table .finances_assign_to {
+    width: 250px;
+}
+
+#finances_table .finances_view {
+    width: 120px;
+}

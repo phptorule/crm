@@ -46,16 +46,21 @@
         $scope.productsList = [];
         $scope.productsList.push($scope.products);
 
-		$scope.init = function(data) {
+		$scope.init = function() {
 			if ( ! $rootScope.user.users_id) {
 				$rootScope.queue.push($scope.defaultUser);
 			} else {
 				$scope.getTeamUsers();
 			}
+
+            request.send('/finances/getFinancesNumber', {}, function(data) {
+                $scope.finances_number = data;
+            });
 		};
 
         $scope.initList = function(data) {
             request.send('/finances/getList', {}, function(data) {
+                console.log(data);
                 $scope.print(data);
             });
         };
@@ -80,6 +85,49 @@
             end = start + $scope.numPerPage;
             //return $scope.pagesList = $scope.listFiltered.slice(start, end);
             return $scope.pagesList = $scope.listFiltered;
+        };
+
+        $scope.editFinances = function(block) {
+            if (block == 'general')
+            {
+                $scope.edit_general = true;
+            }
+
+            if (block == 'address')
+            {
+                $scope.edit_address = true;
+            }
+
+            if (block == 'products')
+            {
+                $scope.edit_products = true;
+            }
+
+            $scope.old_finances = angular.copy($scope.finances);
+            $scope.old_products = angular.copy($scope.products);
+        };
+
+        $scope.cancelEdit = function(block) {
+            if (block == 'general')
+            {
+                $scope.edit_general = false;
+
+            }
+
+            if (block == 'address')
+            {
+                $scope.edit_address = false;
+            }
+
+            if (block == 'products')
+            {
+                $scope.edit_products = false;
+            }
+
+            $scope.finances = angular.copy($scope.old_finances);
+            $scope.products = angular.copy($scope.old_products);
+            delete $scope.old_finances;
+            delete $scope.old_products;
         };
 
 		$scope.getTeamUsers = function() {
@@ -135,7 +183,7 @@
             });
         };
 
-        $scope.save = function() {
+        $scope.saveProduct = function() {
 	    	var error = 1;
 			error *= validate.check($scope.form.customer, 'Klient');
 			error *= validate.check($scope.form.payment_date, 'Termin platności');
@@ -152,17 +200,18 @@
 			if (error)
 			{
                 request.send('/finances/saveProduct', $scope.productsList, function(data) {
-                    $scope.saveInvoice(data);
+                    $scope.save(data);
                 });
 			}
 		};
 
-        $scope.saveInvoice = function(products_ids) {
+        $scope.save = function(products_ids) {
             $scope.finances.products_ids = products_ids;
             $scope.finances.pay_type = $scope.pay_type;
             $scope.finances.invoice_paid = $scope.invoice_paid;
             $scope.finances.issue_date = $scope.issue_date;
             $scope.finances.payment_date = $scope.payment_date;
+            $scope.finances.finances_number = $scope.finances_number;
             request.send('/finances/save', $scope.finances, function(data) {
                 if (data)
                 {
