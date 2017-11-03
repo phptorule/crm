@@ -87,7 +87,7 @@
                         <th class="finances_number">Numer faktury</th>
                         <th>Produkt</th>
                         <th class="finances_customer">Klient</th>
-                        <th class="finances_status">Status</th>
+                        <th class="finances_status">Zapłacona</th>
                         <th class="finances_amount">Wartość brutto</th>
                         <th class="finances_assign_to">Przypisany do</th>
                         <th class="finances_view">Przegląd</th>
@@ -108,7 +108,7 @@
                            <span ng-show="finances.products_currency == '1'">(EUR)</span>
                            <span ng-show="finances.products_currency == '2'">(USD)</span>
                         </td>
-                        <td>@{{ finances.finances_assign_to }}</td>
+                        <td>@{{  }}</td>
                         <td class="view_customer">
                            <a href="/finances/add/@{{ finances.finances_id }}" class="btn btn-success btn-labeled m-b-5">
                               <span class="btn-label"><i class="glyphicon glyphicon-info-sign"></i></span>Otwórz
