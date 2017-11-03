@@ -50,4 +50,9 @@ class Users extends Authenticatable
     {
         return $this->belongsToMany('App\Customers', 'customers_users', 'users_id', 'customer_id');
     }
+
+    public function finances()
+    {
+        return $this->hasMany('App\Finances');
+    }
 }

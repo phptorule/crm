@@ -96,7 +96,7 @@
                   <tbody>
                      <tr ng-repeat="finances in pagesList | filter:searchInput">
                         <td>@{{ finances.finances_number }}</td>
-                        <td>@{{ finances.products_names[0] }}</td>
+                        <td>@{{ finances.products[0].products_name }}</td>
                         <td>@{{ finances.finances_customer_name }}</td>
                         <td>
                            <span ng-show="finances.finances_paid == '0'">Nie</span>
@@ -108,7 +108,7 @@
                            <span ng-show="finances.products_currency == '1'">(EUR)</span>
                            <span ng-show="finances.products_currency == '2'">(USD)</span>
                         </td>
-                        <td>@{{  }}</td>
+                        <td>@{{ finances.users.users_first_name + ' ' + finances.users.users_last_name }}</td>
                         <td class="view_customer">
                            <a href="/finances/add/@{{ finances.finances_id }}" class="btn btn-success btn-labeled m-b-5">
                               <span class="btn-label"><i class="glyphicon glyphicon-info-sign"></i></span>Otwórz

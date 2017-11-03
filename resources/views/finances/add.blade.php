@@ -27,10 +27,11 @@
                                 <label>Klient</label><span class="req_field"> *</span>
                                 <div class="row">
                                     <div class="col-sm-6">
-                                        <input type="text" class="form-control" name="customer" disabled="disabled" ng-model="finances.company_name" required />
+                                        <span class="form-span" ng-show=" ! edit_general && finances_id">@{{ finances.finances_customer_name }}</span>
+                                        <input type="text" class="form-control" name="finances_customer_name" ng-show="edit_general || ! finances_id" disabled="disabled" ng-model="finances.finances_customer_name" required />
                                     </div>
 
-                                    <div class="col-sm-6">
+                                    <div class="col-sm-6" ng-show=" ! finances_id">
                                         <button class="btn btn-exp btn-sm dropdown-toggle" ng-click="selectCustomer()"><i class="fa fa-bars"></i> Wybierz Kontrahenta</button>
                                     </div>
                                 </div>
@@ -40,7 +41,8 @@
                                 <label>Numer faktury</label>
                                 <div class="row">
                                     <div class="col-sm-6">
-                                        <input type="text" class="form-control" name="finance_number" ng-model="finances_number" disabled="disabled" />
+                                        <span class="form-span" ng-show=" ! edit_general && finances_id">@{{ finances_number }}</span>
+                                        <input type="text" class="form-control" ng-show="edit_general || ! finances_id" ng-model="finances_number" disabled="disabled" />
                                     </div>
                                 </div>
                             </div>
@@ -49,7 +51,9 @@
                                 <label>Sposób płatności</label>
                                 <div class="row">
                                     <div class="col-sm-6">
-                                        <select class="form-control" ng-model="pay_type" required>
+                                        <span class="form-span" ng-show=" ! edit_general && finances_id && finances_payment_method == '0'">Gotówką</span>
+                                        <span class="form-span" ng-show=" ! edit_general && finances_id && finances_payment_method == '1'">Przelew</span>
+                                        <select class="form-control" ng-show="edit_general || ! finances_id" ng-model="finances_payment_method" required>
                                             <option value="0">Gotówką</option>
                                             <option value="1">Przelew </option>
                                         </select>
@@ -61,7 +65,9 @@
                                 <label>Zaplacona</label>
                                 <div class="row">
                                     <div class="col-sm-6">
-                                        <select class="form-control" name="invoice_paid" ng-model="invoice_paid">
+                                        <span class="form-span" ng-show=" ! edit_general && finances_id && finances_paid == '0'">Nie</span>
+                                        <span class="form-span" ng-show=" ! edit_general && finances_id && finances_paid == '1'">Tak</span>
+                                        <select class="form-control" ng-show="edit_general || ! finances_id" ng-model="finances_paid">
                                             <option value="0">Nie</option>
                                             <option value="1">Tak</option>
                                         </select>
@@ -75,8 +81,9 @@
                                 <label>Data wystawienia</label>
                                 <div class="row">
                                     <div class="col-sm-6">
-                                        <div class="input-group custom-datapicker-input">
-                                            <input type="text" class="form-control" name="issue_date" uib-datepicker-popup="dd/MM/yyyy" ng-model="issue_date" is-open="date[0].opened" show-button-bar="false" datepicker-options="dateOptions" required="required" />
+                                        <span class="form-span" ng-show=" ! edit_general && finances_id">@{{ finances.finances_issue_date }}</span>
+                                        <div class="input-group custom-datapicker-input" ng-show="edit_general || ! finances_id">
+                                            <input type="text" class="form-control" name="issue_date" uib-datepicker-popup="dd/MM/yyyy" ng-model="finances_issue_date" is-open="date[0].opened" show-button-bar="false" datepicker-options="dateOptions" />
                                             <span class="input-group-btn">
                                                 <button type="button" class="btn btn-default" ng-click="calendarOpen(0)"><i class="glyphicon glyphicon-calendar"></i></button>
                                             </span>
@@ -89,8 +96,9 @@
                                 <label>Termin platności</label><span class="req_field"> *</span>
                                 <div class="row">
                                     <div class="col-sm-6">
-                                        <div class="input-group custom-datapicker-input">
-                                            <input type="text" class="form-control" name="payment_date" uib-datepicker-popup="dd/MM/yyyy" ng-model="payment_date" is-open="date[1].opened" show-button-bar="false" datepicker-options="dateOptions" required />
+                                        <span class="form-span" ng-show=" ! edit_general && finances_id">@{{ finances.finances_payment_date }}</span>
+                                        <div class="input-group custom-datapicker-input" ng-show="edit_general || ! finances_id">
+                                            <input type="text" class="form-control" uib-datepicker-popup="dd/MM/yyyy" ng-model="finances_payment_date" is-open="date[1].opened" show-button-bar="false" datepicker-options="dateOptions" required />
                                             <span class="input-group-btn">
                                                 <button type="button" class="btn btn-default" ng-click="calendarOpen(1)"><i class="glyphicon glyphicon-calendar"></i></button>
                                             </span>
@@ -103,7 +111,8 @@
                                 <label>Przypisany do</label><span class="req_field"> *</span>
                                 <div class="row">
                                     <div class="col-sm-6">
-                                        <select class="form-control" name="assign_to" ng-model="finances.assign_to" required>
+                                        <span class="form-span" ng-show=" ! edit_general && finances_id">@{{ user.users_first_name + ' ' + user.users_last_name }}</span>
+                                        <select class="form-control" ng-show="edit_general || ! finances_id" ng-model="finances.finances_assign_to">
                                             <option ng-repeat="user in team_users" value="@{{ user.users_id }}">@{{ user.users_first_name + ' ' + user.users_last_name }}</option>
                                         </select>
                                     </div>
@@ -143,32 +152,38 @@
                             <h4>Adres do faktury</h4>
                             <div class="form-group">
                                 <label>Ulica</label><span class="req_field"> *</span>
-                                <input type="text" class="form-control" name="invoice_street" ng-model="finances.invoice_street" required />
+                                <span class="form-span" ng-show=" ! edit_address && finances_id">@{{ finances.finances_invoice_street }}</span>
+                                <input type="text" class="form-control" ng-show="edit_address || ! finances_id" name="finances_invoice_street" ng-model="finances.finances_invoice_street" required />
                             </div>
 
                             <div class="form-group">
                                 <label>Skrytka Pocztowa</label>
-                                <input type="text" class="form-control" name="invoice_mailbox" ng-model="finances.invoice_mailbox" />
+                                <span class="form-span" ng-show=" ! edit_address && finances_id">@{{ finances.finances_invoice_mailbox }}</span>
+                                <input type="text" class="form-control" ng-show="edit_address || ! finances_id" ng-model="finances.finances_invoice_mailbox" />
                             </div>
 
                             <div class="form-group">
                                 <label>Miejscowosc</label>
-                                <input type="text" class="form-control" name="invoice_town" ng-model="finances.invoice_town" />
+                                <span class="form-span" ng-show=" ! edit_address && finances_id">@{{ finances.finances_invoice_town }}</span>
+                                <input type="text" class="form-control" ng-show="edit_address || ! finances_id" ng-model="finances.finances_invoice_town" />
                             </div>
 
                             <div class="form-group">
                                 <label>Wojewodztwo</label>
-                                <input type="text" class="form-control" name="invoice_province" ng-model="finances.invoice_province"  />
+                                <span class="form-span" ng-show=" ! edit_address && finances_id">@{{ finances.finances_invoice_province }}</span>
+                                <input type="text" class="form-control" ng-show="edit_address || ! finances_id" ng-model="finances.finances_invoice_province"  />
                             </div>
 
                             <div class="form-group">
                                 <label>Kod</label>
-                                <input type="text" class="form-control" name="invoice_post_code" ng-model="finances.invoice_post_code" />
+                                <span class="form-span" ng-show=" ! edit_address && finances_id">@{{ finances.finances_invoice_post_code }}</span>
+                                <input type="text" class="form-control" ng-show="edit_address || ! finances_id" ng-model="finances.finances_invoice_post_code" />
                             </div>
 
                             <div class="form-group">
                                 <label>Kraj</label>
-                                <input type="text" class="form-control" name="invoice_region" ng-model="finances.invoice_region" />
+                                <span class="form-span" ng-show=" ! edit_address && finances_id">@{{ finances.finances_invoice_region }}</span>
+                                <input type="text" class="form-control" ng-show="edit_address || ! finances_id" ng-model="finances.finances_invoice_region" />
                             </div>
                         </div>
 
@@ -176,32 +191,38 @@
                             <h4>Adres do wysylki</h4>
                             <div class="form-group">
                                 <label>Ulica</label><span class="req_field"> *</span>
-                                <input type="text" class="form-control" name="send_street" ng-model="finances.send_street" required />
+                                <span class="form-span" ng-show=" ! edit_address && finances_id">@{{ finances.finances_send_street }}</span>
+                                <input type="text" class="form-control" ng-show="edit_address || ! finances_id" name="finances_send_street" ng-model="finances.finances_send_street" required />
                             </div>
 
                             <div class="form-group">
                                 <label>Skrytka Pocztowa</label>
-                                <input type="text" class="form-control" name="send_mailbox" ng-model="finances.send_mailbox" />
+                                <span class="form-span" ng-show=" ! edit_address && finances_id">@{{ finances.finances_send_mailbox }}</span>
+                                <input type="text" class="form-control" ng-show="edit_address || ! finances_id" ng-model="finances.finances_send_mailbox" />
                             </div>
 
                             <div class="form-group">
                                 <label>Miejscowosc</label>
-                                <input type="text" class="form-control" name="send_town" ng-model="finances.send_town" />
+                                <span class="form-span" ng-show=" ! edit_address && finances_id">@{{ finances.finances_send_town }}</span>
+                                <input type="text" class="form-control" ng-show="edit_address || ! finances_id" ng-model="finances.finances_send_town" />
                             </div>
 
                             <div class="form-group">
                                 <label>Wojewodztwo</label>
-                                <input type="text" class="form-control" name="send_province" ng-model="finances.send_province" />
+                                <span class="form-span" ng-show=" ! edit_address && finances_id">@{{ finances.finances_send_province }}</span>
+                                <input type="text" class="form-control" ng-show="edit_address || ! finances_id" ng-model="finances.finances_send_province" />
                             </div>
 
                             <div class="form-group">
                                 <label>Kod</label>
-                                <input type="text" class="form-control" name="send_post_code" ng-model="finances.send_post_code" />
+                                <span class="form-span" ng-show=" ! edit_address && finances_id">@{{ finances.finances_send_post_code }}</span>
+                                <input type="text" class="form-control" ng-show="edit_address || ! finances_id" ng-model="finances.finances_send_post_code" />
                             </div>
 
                             <div class="form-group">
                                 <label>Kraj</label>
-                                <input type="text" class="form-control" name="send_region" ng-model="finances.send_region" />
+                                <span class="form-span" ng-show=" ! edit_address && finances_id">@{{ finances.finances_send_region }}</span>
+                                <input type="text" class="form-control" ng-show="edit_address || ! finances_id" ng-model="finances.finances_send_region" />
                             </div>
                         </div>
                     </div>
@@ -250,7 +271,9 @@
                         <tbody>
                             <tr ng-repeat="(k, products) in productsList">
                                 <td>
-                                    <select class="form-control" name="invoice_type" ng-model="productsList[k].products_type">
+                                    <span class="form-span table-span" ng-show=" ! edit_products && finances_id && productsList[k].products_type == 0">Produkt</span>
+                                    <span class="form-span table-span" ng-show=" ! edit_products && finances_id && productsList[k].products_type == 1">Usługa</span>
+                                    <select class="form-control" ng-show="edit_products || ! finances_id" ng-model="productsList[k].products_type">
                                         <option value="0">Produkt</option>
                                         <option value="1">Usługa</option>
                                     </select>
@@ -258,25 +281,30 @@
 
                                 <td class="product_name_column">
                                     <div class="form-group">
-                                        <input type="text" class="form-control" name="product_name_@{{ k }}" ng-model="productsList[k].products_name" required />
+                                        <span class="form-span table-span" ng-show=" ! edit_products && finances_id">@{{ productsList[k].products_name }}</span>
+                                        <input type="text" class="form-control" ng-show="edit_products || ! finances_id" name="product_name_@{{ k }}" ng-model="productsList[k].products_name" required />
                                     </div>
                                 </td>
 
                                 <td>
                                     <div class="form-group">
-                                        <input type="text" class="form-control" name="product_amount" ng-change="getProductCost(k)" ng-show="productsList[k].products_type == 0" ng-model="productsList[k].products_amount" required />
-                                        <input type="text" class="form-control" ng-change="getProductCost(k)" ng-show="productsList[k].products_type == 1" ng-model="productsList[k].products_amount" />
+                                        <span class="form-span table-span" ng-show=" ! edit_products && finances_id">@{{ productsList[k].products_amount }}</span>
+                                        <input type="text" class="form-control" name="product_amount" ng-change="getProductCost(k)" ng-show="edit_products || ! finances_id" ng-model="productsList[k].products_amount" required />
                                     </div>
                                 </td>
 
                                 <td>
                                     <div class="form-group">
-                                        <input type="text" class="form-control" name="product_dimension" ng-model="productsList[k].products_dimension" maxlength="4" />
+                                        <span class="form-span table-span" ng-show=" ! edit_products && finances_id">@{{ productsList[k].products_dimension }}</span>
+                                        <input type="text" class="form-control" name="product_dimension" ng-show="edit_products || ! finances_id" ng-model="productsList[k].products_dimension" maxlength="4" />
                                     </div>
                                 </td>
 
                                 <td>
-                                    <select class="form-control" name="currency" ng-model="productsList[k].products_currency">
+                                    <span class="form-span table-span" ng-show=" ! edit_products && finances_id && productsList.products_currency == 0">PLN</span>
+                                    <span class="form-span table-span" ng-show=" ! edit_products && finances_id && productsList.products_currency == 1">EUR</span>
+                                    <span class="form-span table-span" ng-show=" ! edit_products && finances_id && productsList.products_currency == 2">USD</span>
+                                    <select class="form-control" name="currency" ng-show="edit_products || ! finances_id" ng-model="productsList.products_currency">
                                         <option value="0">PLN</option>
                                         <option value="1">EUR</option>
                                         <option value="2">USD</option>
@@ -285,7 +313,8 @@
 
                                 <td class="text-right discount">
                                     <div class="form-group">
-                                        <input type="text" class="form-control" name="product_cost_@{{ k }}" ng-change="getProductCost(k)" ng-model="productsList[k].products_cost" required />
+                                        <span class="form-span table-span" ng-show=" ! edit_products && finances_id">@{{ productsList[k].products_cost }}</span>
+                                        <input type="text" class="form-control" ng-show="edit_products || ! finances_id" name="product_cost_@{{ k }}" ng-change="getProductCost(k)" ng-model="productsList[k].products_cost" required />
                                     </div>
 
                                     <div class="form-group">
@@ -307,7 +336,7 @@
                                                     <label for="radio-2-@{{ k }}">% Procentowy</label>
 
                                                     <div class="discount_input pull-right" ng-show="discount_radio[k] == 'percent'">
-                                                        <input type="text" class="form-control" ng-change="getProductCost(k)" ng-model="productsList[k].discount_percent" name="discount_percent" /> %
+                                                        <input type="text" class="form-control" ng-change="getProductCost(k)" ng-model="productsList[k].products_discount_percent" /> %
                                                     </div>
                                                 </div>
                                             </div>
@@ -318,7 +347,7 @@
                                                     <label for="radio-3-@{{ k }}">Wartosciowy</label>
 
                                                     <div class="discount_input pull-right" ng-show="discount_radio[k] == 'regular'">
-                                                        <input type="text" class="form-control" ng-change="getProductCost(k)" ng-model="productsList[k].discount_regular" name="discount_regular" />
+                                                        <input type="text" class="form-control" ng-change="getProductCost(k)" ng-model="productsList[k].products_discount_regular" />
                                                     </div>
                                                 </div>
                                             </div>
@@ -402,7 +431,7 @@
                                         <div class="discount_block">
                                             <div class="form-group">
                                                 <div class="discount_input">
-                                                    <input type="text" class="form-control" ng-model="products.vat_shipping_percent" name="vat_percent" /> %
+                                                    <input type="text" class="form-control" ng-model="products.products_vat_shipping_percent" name="vat_percent" /> %
                                                 </div>
 
                                                 <div class="discount_input pull-right">
@@ -416,7 +445,7 @@
 
                             <td>
                                 <div class="form-group">
-                                    <input type="text" class="form-control" ng-model="products.shipping_price" name="shipping_price" />
+                                    <input type="text" class="form-control" ng-model="products.products_shipping_price" name="products_shipping_price" />
                                 </div>
 
                                 <div class="form-group">
@@ -479,7 +508,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="customer in filteredCustomers | filter:searchInput">
+                            <tr ng-repeat="customer in customers | filter:searchInput">
                                 <td><a href="javascript:void(0);" ng-click="getCustomer(customer)">@{{ customer.company_name }}</a></td>
                                 <td>@{{ customer.nip }}</td>
                                 <td>@{{ customer.invoice_town }}</td>

@@ -2,8 +2,8 @@
     'use strict';
 
     angular.module('app').factory('validate', ['logger', validate])
-	
-	function validate(logger) {		
+
+	function validate(logger) {
 		return {
 			check: function(field, name, object_field) {
 				object_field = object_field || false;
@@ -16,7 +16,6 @@
 					}
 				}
 
-				
 				if (field.$valid )
 				{
 					return true;
