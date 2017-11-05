@@ -41,6 +41,13 @@ class FinancesController extends Controller
         return $finances;
     }
 
+    public function getRegisteredFinance($post = [])
+    {
+        $registered_finance = FinancesRegistered::where([['teams_id', '=', session('current_team')], ['registered_id', '=', $post['registered_id']]])->first();
+
+        return $registered_finance;
+    }
+
     public function getList()
     {
         $team = Teams::find(session('current_team'));

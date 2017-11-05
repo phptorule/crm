@@ -35,6 +35,7 @@
         $scope.products.products_vat_shipping_percent = 4.5;
         $scope.finances.products_ids = [];
         $scope.finances_id = $location.path().split('/')[3];
+        $scope.registered_id = $location.path().split('/')[3];
         $scope.products.cost_netto = 0;
         $scope.products.discount_amount = 0;
         $scope.products.cost_with_discount = 0;
@@ -45,6 +46,7 @@
         $scope.products.products_shipping_price = 0;
         $scope.productsList = [];
         $scope.productsList.push($scope.products);
+        $scope.class = "closed";
 
 		$scope.init = function() {
 			if ( ! $rootScope.user.users_id) {
@@ -56,9 +58,13 @@
             if ($scope.finances_id)
             {
                 request.send('/finances/get', {'finances_id': $scope.finances_id}, function(data) {
-                    console.log(data);
                     $scope.finances = data;
                     $scope.productsList = data.products;
+                    for (var k in $scope.productsList)
+                    {
+                        $scope.productsList[k].products_type = $scope.productsList[k].products_type.toString();
+                    }
+                    $scope.setDate($scope.finances.finances_issue_date, $scope.finances.finances_payment_date);
                 });
 
                 for (var k in $scope.productsList)
@@ -70,9 +76,32 @@
             $scope.getFinancesNumber();
 		};
 
+        $scope.initRegister = function() {
+            if ( ! $rootScope.user.users_id) {
+                $rootScope.queue.push($scope.defaultUser);
+            } else {
+                $scope.getTeamUsers();
+            }
+
+            if ($scope.registered_id)
+            {
+                request.send('/finances/getRegisteredFinance', {'registered_id': $scope.registered_id}, function(data) {
+                    $scope.finances = data;
+                    $scope.finances.finances_customer_name = data.registered_customer_name;
+                    $scope.finances.finances_issue_date = data.registered_issue_date;
+                    $scope.finances.finances_payment_date = data.registered_payment_date;
+                    $scope.finances.finances_assign_to = data.registered_assign_to.toString();
+                    $scope.setDate($scope.finances.finances_issue_date, $scope.finances.finances_payment_date);
+                });
+
+
+            }
+
+            $scope.getFinancesNumber();
+        };
+
         $scope.initList = function(data) {
             request.send('/finances/getList', {}, function(data) {
-                console.log(data);
                 $scope.pagesList = data;
             });
         };
@@ -81,6 +110,83 @@
             request.send('/finances/getRegisteredList', {}, function(data) {
                 $scope.pagesList = data;
             });
+        };
+
+        $scope.saveProduct = function() {
+            var error = 1;
+            error *= validate.check($scope.form.finances_customer_name, 'Klient');
+            error *= validate.check($scope.form.finances_invoice_street, 'Ulica (do faktury)');
+            error *= validate.check($scope.form.finances_send_street, 'Ulica (do wysylki)');
+            for (var k in $scope.productsList)
+            {
+                console.log(k);
+                error *= validate.check($scope.form_products['product_name_' + k], 'Nazwa pozycji');
+                error *= validate.check($scope.form_products['product_cost_' + k], 'Cena');
+            }
+
+            if (error)
+            {
+                for (var k in $scope.productsList)
+                {
+                    $scope.productsList[k].products_currency = $scope.products_currency;
+                }
+                request.send('/finances/saveProduct', $scope.productsList, function(data) {
+                    $scope.save(data);
+                });
+            }
+        };
+
+        $scope.save = function(products_ids) {
+            $scope.finances.products_ids = products_ids;
+            $scope.finances.finances_payment_method = $scope.finances_payment_method;
+            $scope.finances.finances_paid = $scope.finances_paid;
+            $scope.finances.finances_issue_date = $scope.finances_issue_date;
+            $scope.finances.finances_payment_date = $scope.finances_payment_date;
+            $scope.finances.finances_number = $scope.finances_number;
+            request.send('/finances/save', $scope.finances, function(data) {
+                if (data)
+                {
+                    $timeout(function() {
+                        $window.location.href = "/finances/list/";
+                    }, 1000);
+                }
+            });
+        };
+
+        $scope.registerFinance = function() {
+            var error = 1;
+            error *= validate.check($scope.form.finances_customer_name, 'Klient');
+            error *= validate.check($scope.form.registered_finances_number, 'Numer faktury');
+            error *= validate.check($scope.form.registered_subject, 'Temat');
+
+            if (error)
+            {
+                $scope.finances.registered_customer_name = $scope.finances.finances_customer_name;
+                $scope.finances.registered_payment_method = $scope.finances_payment_method;
+                $scope.finances.registered_paid = $scope.finances_paid;
+                $scope.finances.registered_issue_date = $scope.finances_issue_date;
+                $scope.finances.registered_payment_date = $scope.finances_payment_date;
+                $scope.finances.registered_assign_to = $scope.finances.finances_assign_to;
+
+                request.send('/finances/registerFinance', $scope.finances, function(data) {
+                    if (data)
+                    {
+                        if ($scope.registered_id)
+                        {
+                            $scope.edit_general = false;
+                            $scope.edit_bank = false;
+                            $scope.edit_rest = false;
+                            $scope.initRegister();
+                        }
+                        else
+                        {
+                            $timeout(function() {
+                                $window.location.href = "/finances/registered_list/";
+                            }, 1000);
+                        }
+                    }
+                });
+            }
         };
 
         $scope.getFinancesNumber = function() {
@@ -105,6 +211,16 @@
                 $scope.edit_products = true;
             }
 
+            if (block == 'bank')
+            {
+                $scope.edit_bank = true;
+            }
+
+            if (block == 'rest')
+            {
+                $scope.edit_rest = true;
+            }
+
             $scope.old_finances = angular.copy($scope.finances);
             $scope.old_products = angular.copy($scope.products);
         };
@@ -113,7 +229,6 @@
             if (block == 'general')
             {
                 $scope.edit_general = false;
-
             }
 
             if (block == 'address')
@@ -124,6 +239,16 @@
             if (block == 'products')
             {
                 $scope.edit_products = false;
+            }
+
+            if (block == 'bank')
+            {
+                $scope.edit_bank = false;
+            }
+
+            if (block == 'rest')
+            {
+                $scope.edit_rest = false;
             }
 
             $scope.finances = angular.copy($scope.old_finances);
@@ -198,74 +323,6 @@
             });
         };
 
-        $scope.saveProduct = function() {
-	    	var error = 1;
-			error *= validate.check($scope.form.finances_customer_name, 'Klient');
-			error *= validate.check($scope.form.finances_invoice_street, 'Ulica (do faktury)');
-			error *= validate.check($scope.form.finances_send_street, 'Ulica (do wysylki)');
-            for (var k in $scope.productsList)
-            {
-                console.log(k);
-                error *= validate.check($scope.form_products['product_name_' + k], 'Nazwa pozycji');
-                error *= validate.check($scope.form_products['product_cost_' + k], 'Cena');
-            }
-
-			if (error)
-			{
-                for (var k in $scope.productsList)
-                {
-                    $scope.productsList[k].products_currency = $scope.products_currency;
-                }
-                request.send('/finances/saveProduct', $scope.productsList, function(data) {
-                    $scope.save(data);
-                });
-			}
-		};
-
-        $scope.save = function(products_ids) {
-            $scope.finances.products_ids = products_ids;
-            $scope.finances.finances_payment_method = $scope.finances_payment_method;
-            $scope.finances.finances_paid = $scope.finances_paid;
-            $scope.finances.finances_issue_date = $scope.finances_issue_date;
-            $scope.finances.finances_payment_date = $scope.finances_payment_date;
-            $scope.finances.finances_number = $scope.finances_number;
-            request.send('/finances/save', $scope.finances, function(data) {
-                if (data)
-                {
-                    $timeout(function() {
-                        $window.location.href = "/finances/list/";
-                    }, 1000);
-                }
-            });
-        };
-
-        $scope.registerFinance = function() {
-            var error = 1;
-            error *= validate.check($scope.form.finances_customer_name, 'Klient');
-            error *= validate.check($scope.form.registered_finances_number, 'Numer faktury');
-            error *= validate.check($scope.form.registered_subject, 'Temat');
-
-            if (error)
-            {
-                $scope.finances.registered_customer_name = $scope.finances.finances_customer_name;
-                $scope.finances.registered_payment_method = $scope.finances_payment_method;
-                $scope.finances.registered_paid = $scope.finances_paid;
-                $scope.finances.registered_issue_date = $scope.finances_issue_date;
-                $scope.finances.registered_payment_date = $scope.finances_payment_date;
-                $scope.finances.registered_assign_to = $scope.finances.finances_assign_to;
-
-                request.send('/finances/registerFinance', $scope.finances, function(data) {
-                    if (data)
-                    {
-                        console.log(data);
-                        /*$timeout(function() {
-                            $window.location.href = "/finances/registered_list/";
-                        }, 1000);*/
-                    }
-                });
-            }
-        };
-
         $scope.dateOptions = {
 			startingDay: 1,
 			showWeeks: false
@@ -281,9 +338,17 @@
 			$scope.date[index].opened = true;
 		};
 
-		$scope.setDate = function() {
-			$scope.finances_issue_date = new Date();
-			$scope.finances_payment_date = new Date();
+		$scope.setDate = function(issue_date, payment_date) {
+            if (issue_date && payment_date)
+            {
+                $scope.finances_issue_date = new Date(issue_date);
+                $scope.finances_payment_date = new Date(payment_date);
+            }
+            else
+            {
+                $scope.finances_issue_date = new Date();
+                $scope.finances_payment_date = new Date();
+            }
 		};
 		$scope.setDate();
 

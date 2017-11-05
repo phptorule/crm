@@ -115,7 +115,7 @@
                            @{{ registered.registered_finances_brutto }}
                         </td>
                         <td class="view_customer">
-                           <a href="/finances/register/@{{ finances.finances_id }}" class="btn btn-success btn-labeled m-b-5">
+                           <a href="/finances/register/@{{ registered.registered_id }}" class="btn btn-success btn-labeled m-b-5">
                               <span class="btn-label"><i class="glyphicon glyphicon-info-sign"></i></span>Otwórz
                            </a>
                         </td>

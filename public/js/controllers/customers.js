@@ -107,7 +107,7 @@
                             $scope.edit_general = false;
                             $scope.edit_address = false;
                             $scope.edit_rest = false;
-                            $scope.reloadData();
+                            $scope.initAdd();
                         }
                     });
                 }
@@ -135,10 +135,6 @@
             }, function () {
 
             });
-        };
-
-        $scope.reloadData = function() {
-            $scope.initAdd();
         };
 
         $scope.addComment = function() {

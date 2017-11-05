@@ -5484,3 +5484,30 @@ button.toast-close-button {
 .sidebar-menu .treeview-menu > .menu_line::before {
     content: none;
 }
+
+.products_names {
+    position: relative;
+    z-index: 1;
+    -webkit-transition: transform 0.3s ease-in-out, width 0.3s ease-in-out, -webkit-transform 0.3s ease-in-out;
+    transition: transform 0.3s ease-in-out, width 0.3s ease-in-out, -webkit-transform 0.3s ease-in-out;
+}
+
+.products_names.closed {
+    height: 20px;
+    overflow: hidden;
+}
+
+.products_names.open {
+    height: 100%;
+    overflow: visible;
+}
+
+.btn.show_all {
+    position: absolute;
+    z-index: 1;
+    right: 0;
+    top: 0;
+    height: 20px;
+    line-height: 14px;
+    padding: 3px;
+}
