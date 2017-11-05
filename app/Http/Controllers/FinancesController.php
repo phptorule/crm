@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use App\Products;
 use App\Teams;
 use App\Users;
+use App\FinancesRegistered;
 
 class FinancesController extends Controller
 {
@@ -53,6 +54,13 @@ class FinancesController extends Controller
         return $finances;
     }
 
+    public function getRegisteredList()
+    {
+        $registered = FinancesRegistered::where('teams_id', session('current_team'))->get();
+
+        return $registered;
+    }
+
     public function save($post = [])
     {
         //dd($post);
@@ -75,12 +83,12 @@ class FinancesController extends Controller
         $finances->finances_invoice_province = empty($post['finances_invoice_province']) ? '' : $post['finances_invoice_province'];
         $finances->finances_invoice_post_code = empty($post['finances_invoice_post_code']) ? '' : $post['finances_invoice_post_code'];
         $finances->finances_invoice_region = empty($post['finances_invoice_region']) ? '' : $post['finances_invoice_region'];
-        $finances->finances_send_street = empty($post['send_street']) ? '' : $post['send_street'];
-        $finances->finances_send_mailbox = empty($post['send_mailbox']) ? '' : $post['send_mailbox'];
-        $finances->finances_send_town = empty($post['send_town']) ? '' : $post['send_town'];
-        $finances->finances_send_province = empty($post['send_province']) ? '' : $post['send_province'];
-        $finances->finances_send_post_code = empty($post['send_post_code']) ? '' : $post['send_post_code'];
-        $finances->finances_send_region = empty($post['send_region']) ? '' : $post['send_region'];
+        $finances->finances_send_street = empty($post['finances_send_street']) ? '' : $post['finances_send_street'];
+        $finances->finances_send_mailbox = empty($post['finances_send_mailbox']) ? '' : $post['finances_send_mailbox'];
+        $finances->finances_send_town = empty($post['finances_send_town']) ? '' : $post['finances_send_town'];
+        $finances->finances_send_province = empty($post['finances_send_province']) ? '' : $post['finances_send_province'];
+        $finances->finances_send_post_code = empty($post['finances_send_post_code']) ? '' : $post['finances_send_post_code'];
+        $finances->finances_send_region = empty($post['finances_send_region']) ? '' : $post['finances_send_region'];
 
         $finances->save();
         $finances->products()->sync($post['products_ids']);
@@ -120,5 +128,39 @@ class FinancesController extends Controller
         }
 
         return $products_ids;
+    }
+
+    public function registerFinance($post = [])
+    {
+        $issue_date = date('Y-m-d', strtotime($post['registered_issue_date']));
+        $payment_date = date('Y-m-d', strtotime($post['registered_payment_date']));
+
+        $register = FinancesRegistered::firstOrNew(['registered_id' => empty($post['registered_id']) ? 0 : $post['registered_id']]);
+
+        $register->teams_id = session('current_team');
+        $register->registered_finances_number = $post['registered_finances_number'];
+        $register->registered_customer_name = $post['registered_customer_name'];
+        $register->registered_subject = $post['registered_subject'];
+        $register->registered_finances_netto = $post['registered_finances_netto'];
+        $register->registered_finances_brutto = $post['registered_finances_brutto'];
+        $register->registered_payment_method = $post['registered_payment_method'];
+        $register->registered_paid = $post['registered_paid'];
+        $register->registered_issue_date = $issue_date;
+        $register->registered_payment_date = $payment_date;
+        $register->registered_assign_to = $post['registered_assign_to'];
+        $register->registered_bank_account = empty($post['registered_bank_account']) ? '' : $post['registered_bank_account'];
+        $register->registered_order_title = empty($post['registered_order_title']) ? '' : $post['registered_order_title'];
+        $register->registered_bank_nip = empty($post['registered_bank_nip']) ? '' : $post['registered_bank_nip'];
+        $register->registered_bank_name = empty($post['registered_bank_name']) ? '' : $post['registered_bank_name'];
+        $register->registered_bank_street = empty($post['registered_bank_street']) ? '' : $post['registered_bank_street'];
+        $register->registered_bank_town = empty($post['registered_bank_town']) ? '' : $post['registered_bank_town'];
+        $register->registered_bank_postcode = empty($post['registered_bank_postcode']) ? '' : $post['registered_bank_postcode'];
+        $register->registered_bank_region = empty($post['registered_bank_region']) ? '' : $post['registered_bank_region'];
+        $register->registered_description = empty($post['registered_description']) ? '' : $post['registered_description'];
+
+        $register->save();
+        $this->message(__('Faktura was successfully registered'), 'success');
+
+        return $register->registered_id;
     }
 }

@@ -5476,3 +5476,11 @@ button.toast-close-button {
 #finances_table .finances_view {
     width: 120px;
 }
+
+.menu_line {
+    border-bottom: 2px solid rgba(59, 70, 72, 0.5);
+}
+
+.sidebar-menu .treeview-menu > .menu_line::before {
+    content: none;
+}

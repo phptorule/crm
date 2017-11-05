@@ -1,26 +1,26 @@
 <div class="row" data-ng-controller="FinancesCtrl" ng-init="init()">
-    <div class="col-sm-12">
-        <div class="panel panel-bd lobidrag">
-            <div class="panel-heading">
-                <div class="btn-group" id="buttonlist">
-                    <h3>Informacje podstawowe</h3>
+    <form class="no-transition" name="form" method="post" novalidate="novalidate">
+        <div class="col-sm-12">
+            <div class="panel panel-bd lobidrag">
+                <div class="panel-heading">
+                    <div class="btn-group" id="buttonlist">
+                        <h3>Informacje podstawowe</h3>
+                    </div>
+
+                    <div class="custom_panel_item pull-right" ng-show="finances_id">
+                        <a href="javascript:void(0);" ng-show=" ! edit_general" ng-click="editFinances('general')">Edytuj dane <i class="panel-control-icon ti-pencil"></i></a>
+                    </div>
+
+                    <div class="custom_panel_item pull-right" ng-show="edit_general">
+                        <a href="javascript:void(0);" ng-click="save()">Zapisz <i class="fa fa-floppy-o"></i></a>
+                    </div>
+
+                    <div class="custom_panel_item pull-right" ng-show="edit_general">
+                        <a href="javascript:void(0);" ng-click="cancelEdit('general')">Anuluj</a>
+                    </div>
                 </div>
 
-                <div class="custom_panel_item pull-right" ng-show="finances_id">
-                    <a href="javascript:void(0);" ng-show=" ! edit_general" ng-click="editFinances('general')">Edytuj dane <i class="panel-control-icon ti-pencil"></i></a>
-                </div>
-
-                <div class="custom_panel_item pull-right" ng-show="edit_general">
-                    <a href="javascript:void(0);" ng-click="save()">Zapisz <i class="fa fa-floppy-o"></i></a>
-                </div>
-
-                <div class="custom_panel_item pull-right" ng-show="edit_general">
-                    <a href="javascript:void(0);" ng-click="cancelEdit('general')">Anuluj</a>
-                </div>
-            </div>
-
-            <div class="panel-body">
-                <form class="no-transition" name="form" method="post" novalidate="novalidate">
+                <div class="panel-body">
                     <div class="row">
                         <div class="col-sm-6">
                             <div class="form-group">
@@ -83,7 +83,7 @@
                                     <div class="col-sm-6">
                                         <span class="form-span" ng-show=" ! edit_general && finances_id">@{{ finances.finances_issue_date }}</span>
                                         <div class="input-group custom-datapicker-input" ng-show="edit_general || ! finances_id">
-                                            <input type="text" class="form-control" name="issue_date" uib-datepicker-popup="dd/MM/yyyy" ng-model="finances_issue_date" is-open="date[0].opened" show-button-bar="false" datepicker-options="dateOptions" />
+                                            <input type="text" class="form-control" uib-datepicker-popup="dd/MM/yyyy" ng-model="finances_issue_date" is-open="date[0].opened" show-button-bar="false" datepicker-options="dateOptions" />
                                             <span class="input-group-btn">
                                                 <button type="button" class="btn btn-default" ng-click="calendarOpen(0)"><i class="glyphicon glyphicon-calendar"></i></button>
                                             </span>
@@ -98,7 +98,7 @@
                                     <div class="col-sm-6">
                                         <span class="form-span" ng-show=" ! edit_general && finances_id">@{{ finances.finances_payment_date }}</span>
                                         <div class="input-group custom-datapicker-input" ng-show="edit_general || ! finances_id">
-                                            <input type="text" class="form-control" uib-datepicker-popup="dd/MM/yyyy" ng-model="finances_payment_date" is-open="date[1].opened" show-button-bar="false" datepicker-options="dateOptions" required />
+                                            <input type="text" class="form-control" uib-datepicker-popup="dd/MM/yyyy" ng-model="finances_payment_date" is-open="date[1].opened" show-button-bar="false" datepicker-options="dateOptions" />
                                             <span class="input-group-btn">
                                                 <button type="button" class="btn btn-default" ng-click="calendarOpen(1)"><i class="glyphicon glyphicon-calendar"></i></button>
                                             </span>
@@ -120,33 +120,31 @@
                             </div>
                         </div>
                     </div>
-                </form>
+                </div>
             </div>
         </div>
-    </div>
 
-    <div class="col-sm-12">
-        <div class="panel panel-bd lobidrag">
-            <div class="panel-heading">
-                <div class="btn-group" id="buttonlist">
-                    <h3>Informacje adresowe</h3>
+        <div class="col-sm-12">
+            <div class="panel panel-bd lobidrag">
+                <div class="panel-heading">
+                    <div class="btn-group" id="buttonlist">
+                        <h3>Informacje adresowe</h3>
+                    </div>
+
+                    <div class="custom_panel_item pull-right" ng-show="finances_id">
+                        <a href="javascript:void(0);" ng-show=" ! edit_address" ng-click="editFinances('address')">Edytuj dane <i class="panel-control-icon ti-pencil"></i></a>
+                    </div>
+
+                    <div class="custom_panel_item pull-right" ng-show="edit_address">
+                        <a href="javascript:void(0);" ng-click="save()">Zapisz <i class="fa fa-floppy-o"></i></a>
+                    </div>
+
+                    <div class="custom_panel_item pull-right" ng-show="edit_address">
+                        <a href="javascript:void(0);" ng-click="cancelEdit('address')">Anuluj</a>
+                    </div>
                 </div>
 
-                <div class="custom_panel_item pull-right" ng-show="finances_id">
-                    <a href="javascript:void(0);" ng-show=" ! edit_address" ng-click="editFinances('address')">Edytuj dane <i class="panel-control-icon ti-pencil"></i></a>
-                </div>
-
-                <div class="custom_panel_item pull-right" ng-show="edit_address">
-                    <a href="javascript:void(0);" ng-click="save()">Zapisz <i class="fa fa-floppy-o"></i></a>
-                </div>
-
-                <div class="custom_panel_item pull-right" ng-show="edit_address">
-                    <a href="javascript:void(0);" ng-click="cancelEdit('address')">Anuluj</a>
-                </div>
-            </div>
-
-            <div class="panel-body">
-                <form class="no-transition" name="form_address" method="post" novalidate="novalidate">
+                <div class="panel-body">
                     <div class="row">
                         <div class="col-sm-6">
                             <h4>Adres do faktury</h4>
@@ -226,10 +224,10 @@
                             </div>
                         </div>
                     </div>
-                </form>
+                </div>
             </div>
         </div>
-    </div>
+    </form>
 
     <div class="col-sm-12">
         <div class="panel panel-bd lobidrag">
@@ -289,22 +287,22 @@
                                 <td>
                                     <div class="form-group">
                                         <span class="form-span table-span" ng-show=" ! edit_products && finances_id">@{{ productsList[k].products_amount }}</span>
-                                        <input type="text" class="form-control" name="product_amount" ng-change="getProductCost(k)" ng-show="edit_products || ! finances_id" ng-model="productsList[k].products_amount" required />
+                                        <input type="text" class="form-control" ng-keypress="notFloat($event);" ng-change="getProductCost(k);" ng-show="edit_products || ! finances_id" ng-model="productsList[k].products_amount" />
                                     </div>
                                 </td>
 
                                 <td>
                                     <div class="form-group">
                                         <span class="form-span table-span" ng-show=" ! edit_products && finances_id">@{{ productsList[k].products_dimension }}</span>
-                                        <input type="text" class="form-control" name="product_dimension" ng-show="edit_products || ! finances_id" ng-model="productsList[k].products_dimension" maxlength="4" />
+                                        <input type="text" class="form-control" ng-show="edit_products || ! finances_id" ng-model="productsList[k].products_dimension" maxlength="4" />
                                     </div>
                                 </td>
 
                                 <td>
-                                    <span class="form-span table-span" ng-show=" ! edit_products && finances_id && productsList.products_currency == 0">PLN</span>
-                                    <span class="form-span table-span" ng-show=" ! edit_products && finances_id && productsList.products_currency == 1">EUR</span>
-                                    <span class="form-span table-span" ng-show=" ! edit_products && finances_id && productsList.products_currency == 2">USD</span>
-                                    <select class="form-control" name="currency" ng-show="edit_products || ! finances_id" ng-model="productsList.products_currency">
+                                    <span class="form-span table-span" ng-show=" ! edit_products && finances_id && products_currency == 0">PLN</span>
+                                    <span class="form-span table-span" ng-show=" ! edit_products && finances_id && products_currency == 1">EUR</span>
+                                    <span class="form-span table-span" ng-show=" ! edit_products && finances_id && products_currency == 2">USD</span>
+                                    <select class="form-control" name="products_currency" ng-show="edit_products || ! finances_id" ng-model="products_currency">
                                         <option value="0">PLN</option>
                                         <option value="1">EUR</option>
                                         <option value="2">USD</option>
@@ -382,10 +380,21 @@
                                 </td>
 
                                 <td>
-                                    <div class="form-group">@{{ productsList[k].cost_netto.toFixed(2) }}</div>
-                                    <div class="form-group">@{{ productsList[k].discount_amount.toFixed(2) }}</div>
-                                    <div class="form-group">@{{ productsList[k].cost_with_discount.toFixed(2) }}</div>
-                                    <div class="form-group">@{{ productsList[k].products_vat_amount.toFixed(2) }}</div>
+                                    <div class="form-group">
+                                        <span>@{{ productsList[k].cost_netto.toFixed(2) }}</span>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <span>@{{ productsList[k].discount_amount.toFixed(2) }}</span>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <span>@{{ productsList[k].cost_with_discount.toFixed(2) }}</span>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <span>@{{ productsList[k].products_vat_amount.toFixed(2) }}</span>
+                                    </div>
                                 </td>
 
                                 <td>

@@ -277,8 +277,8 @@
                                 <textarea class="form-control" rows="1" name="description" ng-show="edit_rest || ! customer_id" ng-model="customers.description"></textarea>
                             </div>
                         </div>
-                        <div class="col-sm-6">
 
+                        <div class="col-sm-6">
                             <div class="form-group">
                                 <label>Typ osoby</label>
                                 <span class="form-span" ng-show=" ! edit_rest && customer_id && customers.customer_type == '0'">Regular</span>

@@ -15,7 +15,7 @@
 		$scope.team_users = [];
 		$scope.finances = {};
 		$scope.products = {};
-		$scope.products.products_currency = '0';
+		$scope.products_currency = '0';
         $scope.discount_window = [];
 		$scope.discount_window[0] = false;
 		$scope.discount_sum_window = false;
@@ -60,6 +60,11 @@
                     $scope.finances = data;
                     $scope.productsList = data.products;
                 });
+
+                for (var k in $scope.productsList)
+                {
+                    $scope.getProductCost(k);
+                }
             }
 
             $scope.getFinancesNumber();
@@ -67,6 +72,13 @@
 
         $scope.initList = function(data) {
             request.send('/finances/getList', {}, function(data) {
+                console.log(data);
+                $scope.pagesList = data;
+            });
+        };
+
+        $scope.initRegisteredList = function() {
+            request.send('/finances/getRegisteredList', {}, function(data) {
                 $scope.pagesList = data;
             });
         };
@@ -166,7 +178,7 @@
             });
 
             modalInstance.result.then(function(response) {
-                $scope.finances = response;
+                //$scope.finances = response;
                 $scope.finances.finances_invoice_street = response.invoice_street;
                 $scope.finances.finances_invoice_mailbox = response.invoice_mailbox;
                 $scope.finances.finances_invoice_town = response.invoice_town;
@@ -189,17 +201,21 @@
         $scope.saveProduct = function() {
 	    	var error = 1;
 			error *= validate.check($scope.form.finances_customer_name, 'Klient');
-			error *= validate.check($scope.form_address.finances_invoice_street, 'Ulica (do faktury)');
-			error *= validate.check($scope.form_address.finances_send_street, 'Ulica (do wysylki)');
-
+			error *= validate.check($scope.form.finances_invoice_street, 'Ulica (do faktury)');
+			error *= validate.check($scope.form.finances_send_street, 'Ulica (do wysylki)');
             for (var k in $scope.productsList)
             {
+                console.log(k);
                 error *= validate.check($scope.form_products['product_name_' + k], 'Nazwa pozycji');
                 error *= validate.check($scope.form_products['product_cost_' + k], 'Cena');
             }
 
 			if (error)
 			{
+                for (var k in $scope.productsList)
+                {
+                    $scope.productsList[k].products_currency = $scope.products_currency;
+                }
                 request.send('/finances/saveProduct', $scope.productsList, function(data) {
                     $scope.save(data);
                 });
@@ -221,6 +237,33 @@
                     }, 1000);
                 }
             });
+        };
+
+        $scope.registerFinance = function() {
+            var error = 1;
+            error *= validate.check($scope.form.finances_customer_name, 'Klient');
+            error *= validate.check($scope.form.registered_finances_number, 'Numer faktury');
+            error *= validate.check($scope.form.registered_subject, 'Temat');
+
+            if (error)
+            {
+                $scope.finances.registered_customer_name = $scope.finances.finances_customer_name;
+                $scope.finances.registered_payment_method = $scope.finances_payment_method;
+                $scope.finances.registered_paid = $scope.finances_paid;
+                $scope.finances.registered_issue_date = $scope.finances_issue_date;
+                $scope.finances.registered_payment_date = $scope.finances_payment_date;
+                $scope.finances.registered_assign_to = $scope.finances.finances_assign_to;
+
+                request.send('/finances/registerFinance', $scope.finances, function(data) {
+                    if (data)
+                    {
+                        console.log(data);
+                        /*$timeout(function() {
+                            $window.location.href = "/finances/registered_list/";
+                        }, 1000);*/
+                    }
+                });
+            }
         };
 
         $scope.dateOptions = {
@@ -256,6 +299,12 @@
             }
 
             return result;
+        };
+
+        $scope.notFloat = function(e) {
+            if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+                e.preventDefault();
+            }
         };
 
         $scope.addProduct = function() {
@@ -444,16 +493,28 @@
 
 	    /* Setting page titles */
 	    if ($location.path() == '/finances/list/')
-	    {
-	        Page.setTitle('Wystawione faktury');
-	        Page.setIcon('fa fa-th-list');
-	    }
+        {
+            Page.setTitle('Wystawione faktury');
+            Page.setIcon('fa fa-th-list');
+        }
 
 	    if ($location.path() == '/finances/add/')
 	    {
 	        Page.setTitle('Wystaw fakturę');
 	        Page.setIcon('fa fa-plus');
 	    }
+
+        if ($location.path() == '/finances/register/')
+        {
+            Page.setTitle('Zarejestruj fakturę');
+            Page.setIcon('fa fa-plus');
+        }
+
+        if ($location.path() == '/finances/registered_list/')
+        {
+            Page.setTitle('Zarejestrowane faktury');
+            Page.setIcon('fa fa-th-list');
+        }
 	};
 })();
 
