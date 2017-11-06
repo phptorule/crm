@@ -96,14 +96,15 @@
                   <tbody>
                      <tr ng-repeat="finances in pagesList | filter:searchInput">
                         <td>@{{ finances.finances_number }}</td>
-                        <td>
-                           <p ng-show="finances.products.length == 1">@{{ finances.products[0].products_name }}</p>
+                        <td class="td_products">
+                           <p ng-show="finances.products.length == 1 && finances.products[0].products_name.length <= 105">@{{ finances.products[0].products_name }}</p>
+                           <p ng-show="finances.products.length == 1 && finances.products[0].products_name.length >= 105" class="long_products_name">@{{ finances.products[0].products_name }}</p>
                            <div class="products_names" ng-class="{'closed': ! toggled, 'open': toggled}" ng-show="finances.products.length > 1" >
                               <p ng-repeat="product in finances.products">
                                  @{{ product.products_name }}
                               </p>
-                              <button class="btn btn-add show_all" ng-click="toggled = !toggled"><i class="fa fa-plus"></i></button>
                            </div>
+                           <button class="btn btn-add show_all" ng-show="finances.products.length > 1 || finances.products[0].products_name.length >= 105" ng-click="toggled = !toggled"><i class="fa fa-plus"></i></button>
                         </td>
                         <td>@{{ finances.finances_customer_name }}</td>
                         <td>
