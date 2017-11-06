@@ -106,8 +106,8 @@
                                 </span>
                             </a>
                             <ul class="treeview-menu">
-                                <li><a href="/customers/add" ng-class="getClass('/customers/add')">Utwórz Kontrahenta</a></li>
-                                <li><a href="/customers/list" ng-class="getClass('/customers/list')">Lista kontrahentów</a></li>
+                                <li><a href="/customers/add" ng-class="getClass('/customers/add/')">Utwórz Kontrahenta</a></li>
+                                <li><a href="/customers/list" ng-class="getClass('/customers/list/')">Lista kontrahentów</a></li>
                             </ul>
                         </li>
 
