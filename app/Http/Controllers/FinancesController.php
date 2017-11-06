@@ -85,13 +85,11 @@ class FinancesController extends Controller
         $finances->finances_payment_date = $payment_date;
         $finances->finances_assign_to = $post['finances_assign_to'];
         $finances->finances_invoice_street = empty($post['finances_invoice_street']) ? '' : $post['finances_invoice_street'];
-        $finances->finances_invoice_mailbox = empty($post['finances_invoice_mailbox']) ? '' : $post['finances_invoice_mailbox'];
         $finances->finances_invoice_town = empty($post['finances_invoice_town']) ? '' : $post['finances_invoice_town'];
         $finances->finances_invoice_province = empty($post['finances_invoice_province']) ? '' : $post['finances_invoice_province'];
         $finances->finances_invoice_post_code = empty($post['finances_invoice_post_code']) ? '' : $post['finances_invoice_post_code'];
         $finances->finances_invoice_region = empty($post['finances_invoice_region']) ? '' : $post['finances_invoice_region'];
         $finances->finances_send_street = empty($post['finances_send_street']) ? '' : $post['finances_send_street'];
-        $finances->finances_send_mailbox = empty($post['finances_send_mailbox']) ? '' : $post['finances_send_mailbox'];
         $finances->finances_send_town = empty($post['finances_send_town']) ? '' : $post['finances_send_town'];
         $finances->finances_send_province = empty($post['finances_send_province']) ? '' : $post['finances_send_province'];
         $finances->finances_send_post_code = empty($post['finances_send_post_code']) ? '' : $post['finances_send_post_code'];
@@ -145,14 +143,13 @@ class FinancesController extends Controller
         $register = FinancesRegistered::firstOrNew(['registered_id' => empty($post['registered_id']) ? 0 : $post['registered_id']]);
 
         $register->teams_id = session('current_team');
-        $register->registered_finances_number = $post['registered_finances_number'];
-        $register->registered_customer_name = $post['registered_customer_name'];
-        $register->registered_subject = $post['registered_subject'];
-        $register->registered_finances_netto = $post['registered_finances_netto'];
-        $register->registered_finances_brutto = $post['registered_finances_brutto'];
-        $register->registered_payment_method = $post['registered_payment_method'];
-        $register->registered_paid = $post['registered_paid'];
-        $register->registered_issue_date = $issue_date;
+        $register->registered_finances_number = empty($post['registered_finances_number']) ? '' : $post['registered_finances_number'];
+        $register->registered_customer_name = empty($post['registered_customer_name']) ? '' : $post['registered_customer_name'];
+        $register->registered_subject = empty($post['registered_subject']) ? '' : $post['registered_subject'];
+        $register->registered_finances_netto = empty($post['registered_finances_netto']) ? '' : $post['registered_finances_netto'];
+        $register->registered_finances_brutto = empty($post['registered_finances_brutto']) ? '' : $post['registered_finances_brutto'];
+        $register->registered_payment_method = empty($post['registered_payment_method']) ? '' : $post['registered_payment_method'];
+        $register->registered_paid = empty($post['registered_paid']) ? '' : $post['registered_paid'];
         $register->registered_payment_date = $payment_date;
         $register->registered_assign_to = $post['registered_assign_to'];
         $register->registered_bank_account = empty($post['registered_bank_account']) ? '' : $post['registered_bank_account'];

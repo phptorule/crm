@@ -123,12 +123,6 @@
                             </div>
 
                             <div class="form-group">
-                                <label>Skrytka Pocztowa</label>
-                                <span class="form-span" ng-show=" ! edit_address">@{{ team.teams_invoice_mailbox }}</span>
-                                <input type="text" class="form-control" name="teams_invoice_mailbox" ng-show="edit_address" ng-model="team.teams_invoice_mailbox" />
-                            </div>
-
-                            <div class="form-group">
                                 <label>Miejscowosc</label>
                                 <span class="form-span" ng-show=" ! edit_address">@{{ team.teams_invoice_town }}</span>
                                 <input type="text" class="form-control" name="teams_invoice_town" ng-show="edit_address" ng-model="team.teams_invoice_town" />
@@ -159,12 +153,6 @@
                                 <label>Ulica</label>
                                 <span class="form-span" ng-show=" ! edit_address">@{{ team.teams_send_street }}</span>
                                 <input type="text" class="form-control" name="teams_send_street" ng-show="edit_address" ng-model="team.teams_send_street" />
-                            </div>
-
-                            <div class="form-group">
-                                <label>Skrytka Pocztowa</label>
-                                <span class="form-span" ng-show=" ! edit_address">@{{ team.teams_send_mailbox }}</span>
-                                <input type="text" class="form-control" name="teams_send_mailbox" ng-show="edit_address" ng-model="team.teams_send_mailbox" />
                             </div>
 
                             <div class="form-group">
