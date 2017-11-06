@@ -1,4 +1,8 @@
 <div class="row" data-ng-controller="FinancesCtrl" ng-init="initRegister()">
+    <button type="button" class="btn btn-add m-b-5 delete_customer pull-right" ng-show="registered_id">
+        Dołącz PDF
+    </button>
+
     <form class="no-transition" name="form" method="post" novalidate="novalidate">
         <div class="col-sm-12">
             <div class="panel panel-bd lobidrag">
