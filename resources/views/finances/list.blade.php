@@ -105,7 +105,7 @@
                                  @{{ product.products_name }}
                               </p>
                            </div>
-                           <button class="btn btn-add show_all" ng-show="finances.products.length > 1 || finances.products[0].products_name.length >= 105" ng-click="toggled = ! toggled"><i class="fa fa-plus"></i></button>
+                           <button class="btn btn-add show_all" ng-show="finances.products.length > 1 || finances.products[0].products_name.length >= 105" ng-click="toggled = ! toggled"><i class="fa fa-plus" ng-show="! toggled"></i><i class="fa fa-minus" ng-show="toggled"></i></button>
                         </td>
 
                         <td>@{{ finances.finances_customer_name }}</td>
