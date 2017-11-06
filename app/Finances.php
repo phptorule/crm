@@ -19,4 +19,9 @@ class Finances extends Model
     {
         return $this->belongsToMany('App\Teams', 'finances_teams', 'finances_id', 'teams_id');
     }
+
+    public function users()
+    {
+        return $this->belongsTo('App\Users', 'finances_assign_to');
+    }
 }

@@ -1,4 +1,4 @@
-<div class="row" data-ng-controller="FinancesCtrl" data-ng-init="initList()">
+<div class="row" data-ng-controller="FinancesCtrl" data-ng-init="initRegisteredList()">
    <div class="col-sm-12">
       <div class="panel panel-bd">
          <div class="panel-heading">
@@ -85,40 +85,37 @@
                   <thead>
                      <tr class="info">
                         <th class="finances_number">Numer faktury</th>
-                        <th>Produkt</th>
+                        <th>Temat</th>
                         <th class="finances_customer">Klient</th>
                         <th class="finances_status">Zapłacona</th>
+                        <th>Termin płatności</th>
                         <th class="finances_amount">Wartość brutto</th>
-                        <th class="finances_assign_to">Przypisany do</th>
                         <th class="finances_view">Przegląd</th>
                      </tr>
                   </thead>
                   <tbody>
-                     <tr ng-repeat="finances in pagesList | filter:searchInput">
-                        <td>@{{ finances.finances_number }}</td>
+                     <tr ng-repeat="registered in pagesList | filter:searchInput">
                         <td>
-                           <p ng-show="finances.products.length == 1">@{{ finances.products[0].products_name }}</p>
-                           <div class="products_names" ng-class="{'closed': ! toggled, 'open': toggled}" ng-show="finances.products.length > 1" >
-                              <p ng-repeat="product in finances.products">
-                                 @{{ product.products_name }}
-                              </p>
-                              <button class="btn btn-add show_all" ng-click="toggled = !toggled"><i class="fa fa-plus"></i></button>
-                           </div>
-                        </td>
-                        <td>@{{ finances.finances_customer_name }}</td>
-                        <td>
-                           <span ng-show="finances.finances_paid == '0'">Nie</span>
-                           <span ng-show="finances.finances_paid == '1'">Tak</span>
+                           @{{ registered.registered_finances_number }}
                         </td>
                         <td>
-                           @{{ finances.finances_total_amount }}
-                           <span ng-show="finances.products_currency == '0'">(PLN)</span>
-                           <span ng-show="finances.products_currency == '1'">(EUR)</span>
-                           <span ng-show="finances.products_currency == '2'">(USD)</span>
+                           @{{ registered.registered_subject }}
                         </td>
-                        <td>@{{ finances.users.users_first_name + ' ' + finances.users.users_last_name }}</td>
+                        <td>
+                           @{{ registered.registered_customer_name }}
+                        </td>
+                        <td>
+                           <span ng-show="registered.registered_paid == '0'">Nie</span>
+                           <span ng-show="registered.registered_paid == '1'">Tak</span>
+                        </td>
+                        <td>
+                           @{{ registered.registered_payment_date }}
+                        </td>
+                        <td>
+                           @{{ registered.registered_finances_brutto }}
+                        </td>
                         <td class="view_customer">
-                           <a href="/finances/add/@{{ finances.finances_id }}" class="btn btn-success btn-labeled m-b-5">
+                           <a href="/finances/register/@{{ registered.registered_id }}" class="btn btn-success btn-labeled m-b-5">
                               <span class="btn-label"><i class="glyphicon glyphicon-info-sign"></i></span>Otwórz
                            </a>
                         </td>

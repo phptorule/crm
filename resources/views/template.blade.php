@@ -120,8 +120,11 @@
                                 </span>
                             </a>
                             <ul class="treeview-menu">
-                                <li><a href="/finances/add" ng-class="getClass('/finances/add')">Wystaw fakturę</a></li>
-                                <li><a href="/finances/list" ng-class="getClass('/finances/list')">Wystawione faktury</a></li>
+                                <li><a href="/finances/add" ng-class="getClass('/finances/add/')">Wystaw fakturę</a></li>
+                                <li><a href="/finances/list" ng-class="getClass('/finances/list/')">Wystawione faktury</a></li>
+                                <li class="menu_line"></li>
+                                <li><a href="/finances/register" ng-class="getClass('/finances/register/')">Zarejestruj fakturę</a></li>
+                                <li><a href="/finances/registered_list" ng-class="getClass('/finances/registered_list/')">Zarejestrowane faktury</a></li>
                             </ul>
                         </li>
                     </ul>

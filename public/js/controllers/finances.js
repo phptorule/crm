@@ -15,26 +15,27 @@
 		$scope.team_users = [];
 		$scope.finances = {};
 		$scope.products = {};
-		$scope.products.products_currency = '0';
+		$scope.products_currency = '0';
         $scope.discount_window = [];
 		$scope.discount_window[0] = false;
 		$scope.discount_sum_window = false;
         $scope.vat_window = [];
         $scope.vat_window[0] = false;
         $scope.vat_sum_window = false;
-    	$scope.products.discount_percent = 0;
-    	$scope.products.discount_regular = 0;
+    	$scope.products.products_discount_percent = 0;
+    	$scope.products.products_discount_regular = 0;
     	$scope.products.products_amount = 1;
         $scope.products.products_cost = '';
         $scope.products.products_vat_percent = 0;
         $scope.discount_radio = [];
         $scope.discount_radio[0] = 'without';
-        $scope.pay_type = '0';
-        $scope.invoice_paid = '0';
+        $scope.finances_payment_method = '0';
+        $scope.finances_paid = '0';
         $scope.products.products_type = '0';
-        $scope.products.vat_shipping_percent = 4.5;
+        $scope.products.products_vat_shipping_percent = 4.5;
         $scope.finances.products_ids = [];
         $scope.finances_id = $location.path().split('/')[3];
+        $scope.registered_id = $location.path().split('/')[3];
         $scope.products.cost_netto = 0;
         $scope.products.discount_amount = 0;
         $scope.products.cost_with_discount = 0;
@@ -42,9 +43,10 @@
         $scope.products.products_vat_amount = 0;
         $scope.products.tax_amount = 0;
         $scope.products.vat_shipping_amount = 0;
-        $scope.products.shipping_price = 0;
+        $scope.products.products_shipping_price = 0;
         $scope.productsList = [];
         $scope.productsList.push($scope.products);
+        $scope.class = "closed";
 
 		$scope.init = function() {
 			if ( ! $rootScope.user.users_id) {
@@ -53,45 +55,144 @@
 				$scope.getTeamUsers();
 			}
 
-            request.send('/finances/getFinancesNumber', {}, function(data) {
-                $scope.finances_number = data;
-            });
+            if ($scope.finances_id)
+            {
+                request.send('/finances/get', {'finances_id': $scope.finances_id}, function(data) {
+                    $scope.finances = data;
+                    $scope.productsList = data.products;
+                    for (var k in $scope.productsList)
+                    {
+                        $scope.productsList[k].products_type = $scope.productsList[k].products_type.toString();
+                    }
+                    $scope.setDate($scope.finances.finances_issue_date, $scope.finances.finances_payment_date);
+                });
+
+                for (var k in $scope.productsList)
+                {
+                    $scope.getProductCost(k);
+                }
+            }
+
+            $scope.getFinancesNumber();
 		};
+
+        $scope.initRegister = function() {
+            if ( ! $rootScope.user.users_id) {
+                $rootScope.queue.push($scope.defaultUser);
+            } else {
+                $scope.getTeamUsers();
+            }
+
+            if ($scope.registered_id)
+            {
+                request.send('/finances/getRegisteredFinance', {'registered_id': $scope.registered_id}, function(data) {
+                    $scope.finances = data;
+                    $scope.finances.finances_customer_name = data.registered_customer_name;
+                    $scope.finances.finances_issue_date = data.registered_issue_date;
+                    $scope.finances.finances_payment_date = data.registered_payment_date;
+                    $scope.finances.finances_assign_to = data.registered_assign_to.toString();
+                    $scope.setDate($scope.finances.finances_issue_date, $scope.finances.finances_payment_date);
+                });
+
+
+            }
+
+            $scope.getFinancesNumber();
+        };
 
         $scope.initList = function(data) {
             request.send('/finances/getList', {}, function(data) {
-                for (var k in data)
-                {
-                    $scope.getUserName(data[k].finances_assign_to);
-
-
-                    console.log($scope.getUserName(data[k].finances_assign_to));
-                }
-
-                $scope.print(data);
+                $scope.pagesList = data;
             });
         };
 
-        $scope.print = function(data) {
-            $scope.list = data;
-            $scope.listFiltered = $scope.list;
-            $scope.order('-created_at');
+        $scope.initRegisteredList = function() {
+            request.send('/finances/getRegisteredList', {}, function(data) {
+                $scope.pagesList = data;
+            });
         };
 
-        $scope.order = function(rowName) {
-            $scope.row = rowName;
-            $scope.listFiltered = $filter('orderBy')($scope.list, rowName);
+        $scope.saveProduct = function() {
+            var error = 1;
+            error *= validate.check($scope.form.finances_customer_name, 'Klient');
+            error *= validate.check($scope.form.finances_invoice_street, 'Ulica (do faktury)');
+            error *= validate.check($scope.form.finances_send_street, 'Ulica (do wysylki)');
+            for (var k in $scope.productsList)
+            {
+                console.log(k);
+                error *= validate.check($scope.form_products['product_name_' + k], 'Nazwa pozycji');
+                error *= validate.check($scope.form_products['product_cost_' + k], 'Cena');
+            }
 
-            $scope.changePage(1);
-            return $scope.currentPage = 1;
+            if (error)
+            {
+                for (var k in $scope.productsList)
+                {
+                    $scope.productsList[k].products_currency = $scope.products_currency;
+                }
+                request.send('/finances/saveProduct', $scope.productsList, function(data) {
+                    $scope.save(data);
+                });
+            }
         };
 
-        $scope.changePage = function(page) {
-            var end, start;
-            start = (page - 1) * $scope.numPerPage;
-            end = start + $scope.numPerPage;
-            //return $scope.pagesList = $scope.listFiltered.slice(start, end);
-            return $scope.pagesList = $scope.listFiltered;
+        $scope.save = function(products_ids) {
+            $scope.finances.products_ids = products_ids;
+            $scope.finances.finances_payment_method = $scope.finances_payment_method;
+            $scope.finances.finances_paid = $scope.finances_paid;
+            $scope.finances.finances_issue_date = $scope.finances_issue_date;
+            $scope.finances.finances_payment_date = $scope.finances_payment_date;
+            $scope.finances.finances_number = $scope.finances_number;
+            request.send('/finances/save', $scope.finances, function(data) {
+                if (data)
+                {
+                    $timeout(function() {
+                        $window.location.href = "/finances/list/";
+                    }, 1000);
+                }
+            });
+        };
+
+        $scope.registerFinance = function() {
+            var error = 1;
+            error *= validate.check($scope.form.finances_customer_name, 'Klient');
+            error *= validate.check($scope.form.registered_finances_number, 'Numer faktury');
+            error *= validate.check($scope.form.registered_subject, 'Temat');
+
+            if (error)
+            {
+                $scope.finances.registered_customer_name = $scope.finances.finances_customer_name;
+                $scope.finances.registered_payment_method = $scope.finances_payment_method;
+                $scope.finances.registered_paid = $scope.finances_paid;
+                $scope.finances.registered_issue_date = $scope.finances_issue_date;
+                $scope.finances.registered_payment_date = $scope.finances_payment_date;
+                $scope.finances.registered_assign_to = $scope.finances.finances_assign_to;
+
+                request.send('/finances/registerFinance', $scope.finances, function(data) {
+                    if (data)
+                    {
+                        if ($scope.registered_id)
+                        {
+                            $scope.edit_general = false;
+                            $scope.edit_bank = false;
+                            $scope.edit_rest = false;
+                            $scope.initRegister();
+                        }
+                        else
+                        {
+                            $timeout(function() {
+                                $window.location.href = "/finances/registered_list/";
+                            }, 1000);
+                        }
+                    }
+                });
+            }
+        };
+
+        $scope.getFinancesNumber = function() {
+            request.send('/finances/getFinancesNumber', {}, function(data) {
+                $scope.finances_number = data;
+            });
         };
 
         $scope.editFinances = function(block) {
@@ -110,6 +211,16 @@
                 $scope.edit_products = true;
             }
 
+            if (block == 'bank')
+            {
+                $scope.edit_bank = true;
+            }
+
+            if (block == 'rest')
+            {
+                $scope.edit_rest = true;
+            }
+
             $scope.old_finances = angular.copy($scope.finances);
             $scope.old_products = angular.copy($scope.products);
         };
@@ -118,7 +229,6 @@
             if (block == 'general')
             {
                 $scope.edit_general = false;
-
             }
 
             if (block == 'address')
@@ -129,6 +239,16 @@
             if (block == 'products')
             {
                 $scope.edit_products = false;
+            }
+
+            if (block == 'bank')
+            {
+                $scope.edit_bank = false;
+            }
+
+            if (block == 'rest')
+            {
+                $scope.edit_rest = false;
             }
 
             $scope.finances = angular.copy($scope.old_finances);
@@ -146,42 +266,28 @@
                 {
                     if ($scope.team_users[k].users_id == $rootScope.user.users_id)
                     {
-                        $scope.finances.assign_to = $rootScope.user.users_id.toString();
-                    }
-                }
-            });
-        };
-
-        $scope.getUserName = function(users_id) {
-            $scope.users_name = '';
-            request.send('/users/getTeamUsers', {}, function(data) {
-                for (var k in data)
-                {
-                    if (data[k].users_id == users_id)
-                    {
-                        $scope.users_name = data[k].users_first_name + ' ' + data[k].users_last_name;
-                        return $scope.users_name;
+                        $scope.finances.finances_assign_to = $rootScope.user.users_id.toString();
                     }
                 }
             });
         };
 
         $scope.copyInvoiceAddress = function() {
-        	$scope.finances.send_street = $scope.finances.invoice_street;
-        	$scope.finances.send_mailbox = $scope.finances.invoice_mailbox;
-        	$scope.finances.send_town = $scope.finances.invoice_town;
-        	$scope.finances.send_province = $scope.finances.invoice_province;
-        	$scope.finances.send_post_code = $scope.finances.invoice_post_code;
-        	$scope.finances.send_region = $scope.finances.invoice_region;
+        	$scope.finances.finances_send_street = $scope.finances.finances_invoice_street;
+        	$scope.finances.finances_send_mailbox = $scope.finances.finances_invoice_mailbox;
+        	$scope.finances.finances_send_town = $scope.finances.finances_invoice_town;
+        	$scope.finances.finances_send_province = $scope.finances.finances_invoice_province;
+        	$scope.finances.finances_send_post_code = $scope.finances.finances_invoice_post_code;
+        	$scope.finances.finances_send_region = $scope.finances.finances_invoice_region;
         };
 
         $scope.copySendAddress = function() {
-        	$scope.finances.invoice_street = $scope.finances.send_street;
-        	$scope.finances.invoice_mailbox = $scope.finances.send_mailbox;
-        	$scope.finances.invoice_town = $scope.finances.send_town;
-        	$scope.finances.invoice_province = $scope.finances.send_province;
-        	$scope.finances.invoice_post_code = $scope.finances.send_post_code;
-        	$scope.finances.invoice_region = $scope.finances.send_region;
+        	$scope.finances.finances_invoice_street = $scope.finances.finances_send_street;
+        	$scope.finances.finances_invoice_mailbox = $scope.finances.finances_send_mailbox;
+        	$scope.finances.finances_invoice_town = $scope.finances.finances_send_town;
+        	$scope.finances.finances_invoice_province = $scope.finances.finances_send_province;
+        	$scope.finances.finances_invoice_post_code = $scope.finances.finances_send_post_code;
+        	$scope.finances.finances_invoice_region = $scope.finances.finances_send_region;
         };
 
     	$scope.selectCustomer = function() {
@@ -197,49 +303,23 @@
             });
 
             modalInstance.result.then(function(response) {
-            	$scope.finances = response;
+                //$scope.finances = response;
+                $scope.finances.finances_invoice_street = response.invoice_street;
+                $scope.finances.finances_invoice_mailbox = response.invoice_mailbox;
+                $scope.finances.finances_invoice_town = response.invoice_town;
+                $scope.finances.finances_invoice_province = response.invoice_province;
+                $scope.finances.finances_invoice_post_code = response.invoice_post_code;
+                $scope.finances.finances_invoice_region = response.invoice_region;
+                $scope.finances.finances_send_street = response.send_street;
+                $scope.finances.finances_send_mailbox = response.send_mailbox;
+                $scope.finances.finances_send_town = response.send_town;
+                $scope.finances.finances_send_province = response.send_province;
+                $scope.finances.finances_send_post_code = response.send_post_code;
+                $scope.finances.finances_send_region = response.send_region;
+                $scope.finances.finances_customer_name = response.company_name;
             	$scope.getTeamUsers();
             }, function () {
 
-            });
-        };
-
-        $scope.saveProduct = function() {
-	    	var error = 1;
-			error *= validate.check($scope.form.customer, 'Klient');
-			error *= validate.check($scope.form.payment_date, 'Termin platności');
-			error *= validate.check($scope.form.assign_to, 'Przypisany do');
-			error *= validate.check($scope.form_address.invoice_street, 'Ulica (do faktury)');
-			error *= validate.check($scope.form_address.send_street, 'Ulica (do wysylki)');
-
-            for (var k in $scope.productsList)
-            {
-                error *= validate.check($scope.form_products['product_name_' + k], 'Nazwa pozycji');
-                error *= validate.check($scope.form_products['product_cost_' + k], 'Cena');
-            }
-
-			if (error)
-			{
-                request.send('/finances/saveProduct', $scope.productsList, function(data) {
-                    $scope.save(data);
-                });
-			}
-		};
-
-        $scope.save = function(products_ids) {
-            $scope.finances.products_ids = products_ids;
-            $scope.finances.pay_type = $scope.pay_type;
-            $scope.finances.invoice_paid = $scope.invoice_paid;
-            $scope.finances.issue_date = $scope.issue_date;
-            $scope.finances.payment_date = $scope.payment_date;
-            $scope.finances.finances_number = $scope.finances_number;
-            request.send('/finances/save', $scope.finances, function(data) {
-                if (data)
-                {
-                    $timeout(function() {
-                        $window.location.href = "/finances/list/";
-                    }, 1000);
-                }
             });
         };
 
@@ -258,9 +338,17 @@
 			$scope.date[index].opened = true;
 		};
 
-		$scope.setDate = function() {
-			$scope.issue_date = new Date();
-			$scope.payment_date = new Date();
+		$scope.setDate = function(issue_date, payment_date) {
+            if (issue_date && payment_date)
+            {
+                $scope.finances_issue_date = new Date(issue_date);
+                $scope.finances_payment_date = new Date(payment_date);
+            }
+            else
+            {
+                $scope.finances_issue_date = new Date();
+                $scope.finances_payment_date = new Date();
+            }
 		};
 		$scope.setDate();
 
@@ -278,12 +366,18 @@
             return result;
         };
 
+        $scope.notFloat = function(e) {
+            if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+                e.preventDefault();
+            }
+        };
+
         $scope.addProduct = function() {
             $scope.object = angular.copy($scope.products);
             $scope.object.products_name = '';
             $scope.object.products_cost = '';
-            $scope.object.discount_percent = 0;
-            $scope.object.discount_regular = 0;
+            $scope.object.products_discount_percent = 0;
+            $scope.object.products_discount_regular = 0;
             $scope.object.products_vat_percent = 0;
             $scope.object.cost_netto = 0;
             $scope.object.discount_amount = 0;
@@ -308,8 +402,8 @@
         $scope.setDiscount = function(index, discount) {
         	if (discount == 'without')
     		{
-    			$scope.productsList[index].discount_percent = 0;
-    			$scope.productsList[index].discount_regular = 0;
+    			$scope.productsList[index].products_discount_percent = 0;
+    			$scope.productsList[index].products_discount_regular = 0;
                 $scope.productsList[index].discount_amount = 0;
                 $scope.productsList[index].cost_with_discount = 0;
                 $scope.productsList[index].products_vat_amount = ($scope.productsList[index].cost_netto * $scope.productsList[index].products_vat_percent) / 100;
@@ -318,7 +412,7 @@
 
     		if (discount == 'percent')
     		{
-    			$scope.productsList[index].discount_regular = 0;
+    			$scope.productsList[index].products_discount_regular = 0;
                 $scope.productsList[index].discount_amount = 0;
                 $scope.productsList[index].cost_with_discount = 0;
                 $scope.productsList[index].products_vat_amount = ($scope.productsList[index].cost_netto * $scope.productsList[index].products_vat_percent) / 100;
@@ -327,7 +421,7 @@
 
     		if (discount == 'regular')
     		{
-    			$scope.productsList[index].discount_percent = 0;
+    			$scope.productsList[index].products_discount_percent = 0;
                 $scope.productsList[index].discount_amount = 0;
                 $scope.productsList[index].cost_with_discount = 0;
                 $scope.productsList[index].products_vat_amount = ($scope.productsList[index].cost_netto * $scope.productsList[index].products_vat_percent) / 100;
@@ -373,23 +467,23 @@
                 var total_cost = $scope.productsList[index].cost_netto + $scope.productsList[index].products_vat_amount;
             }
 
-            if ($scope.productsList[index].discount_percent == 0 && $scope.productsList[index].discount_regular == 0)
+            if ($scope.productsList[index].products_discount_percent == 0 && $scope.productsList[index].products_discount_regular == 0)
             {
                 $scope.productsList[index].discount_amount = 0;
             }
 
-            if ($scope.productsList[index].discount_percent != 0)
+            if ($scope.productsList[index].products_discount_percent != 0)
             {
-                $scope.productsList[index].discount_percent = $scope.productsList[index].discount_percent.replace(/,/g,'.');
-                $scope.productsList[index].discount_amount = ($scope.productsList[index].cost_netto * $scope.productsList[index].discount_percent / 100)*1;
+                $scope.productsList[index].products_discount_percent = $scope.productsList[index].products_discount_percent.replace(/,/g,'.');
+                $scope.productsList[index].discount_amount = ($scope.productsList[index].cost_netto * $scope.productsList[index].products_discount_percent / 100)*1;
                 $scope.productsList[index].cost_with_discount = $scope.productsList[index].cost_netto - $scope.productsList[index].discount_amount;
                 var total_cost = $scope.productsList[index].cost_with_discount;
             }
 
-            if ($scope.productsList[index].discount_regular != 0)
+            if ($scope.productsList[index].products_discount_regular != 0)
             {
-                $scope.productsList[index].discount_regular = $scope.productsList[index].discount_regular.replace(/,/g,'.');
-                $scope.productsList[index].discount_amount = $scope.productsList[index].discount_regular*1;
+                $scope.productsList[index].products_discount_regular = $scope.productsList[index].products_discount_regular.replace(/,/g,'.');
+                $scope.productsList[index].discount_amount = $scope.productsList[index].products_discount_regular*1;
                 $scope.productsList[index].cost_with_discount = $scope.productsList[index].cost_netto - $scope.productsList[index].discount_amount;
                 var total_cost = $scope.productsList[index].cost_with_discount;
             }
@@ -448,32 +542,44 @@
                 var products_total_amount = 0;
             }
 
-            if ( ! $scope.products.shipping_price)
+            if ( ! $scope.products.products_shipping_price)
             {
-                $scope.finances.total_amount = products_total_amount;
+                $scope.finances.finances_total_amount = products_total_amount;
             }
             else
             {
-                $scope.products.shipping_price = $scope.products.shipping_price.replace(/,/g,'.');
-                $scope.products.vat_shipping_amount = ($scope.products.shipping_price * $scope.products.vat_shipping_percent) / 100;
-                $scope.finances.total_amount = $scope.products.vat_shipping_amount + products_total_amount;
+                $scope.products.products_shipping_price = $scope.products.products_shipping_price.replace(/,/g,'.');
+                $scope.products.vat_shipping_amount = ($scope.products.products_shipping_price * $scope.products.products_vat_shipping_percent) / 100;
+                $scope.finances.finances_total_amount = $scope.products.vat_shipping_amount + products_total_amount;
             }
 
-            return $scope.finances.total_amount;
+            return $scope.finances.finances_total_amount;
         };
 
 	    /* Setting page titles */
 	    if ($location.path() == '/finances/list/')
-	    {
-	        Page.setTitle('Wystawione faktury');
-	        Page.setIcon('fa fa-th-list');
-	    }
+        {
+            Page.setTitle('Wystawione faktury');
+            Page.setIcon('fa fa-th-list');
+        }
 
 	    if ($location.path() == '/finances/add/')
 	    {
 	        Page.setTitle('Wystaw fakturę');
 	        Page.setIcon('fa fa-plus');
 	    }
+
+        if ($location.path() == '/finances/register/')
+        {
+            Page.setTitle('Zarejestruj fakturę');
+            Page.setIcon('fa fa-plus');
+        }
+
+        if ($location.path() == '/finances/registered_list/')
+        {
+            Page.setTitle('Zarejestrowane faktury');
+            Page.setIcon('fa fa-th-list');
+        }
 	};
 })();
 
@@ -492,22 +598,9 @@
 
     	$scope.initList = function() {
             request.send('/customers/getList', {}, function(data) {
-            	$scope.pagination(data);
+            	$scope.customers = data;
             });
         };
-
-        $scope.numPages = function () {
-		    return Math.ceil($scope.customers.length / $scope.numPerPage);
-		};
-
-		$scope.pagination = function(customers) {
-			$scope.$watch('currentPage + numPerPage', function() {
-			    var begin = (($scope.currentPage - 1) * $scope.numPerPage)
-			    , end = begin + $scope.numPerPage;
-
-			    $scope.filteredCustomers = customers.slice(begin, end);
-		  	});
-		};
 
 
 	  	$scope.getCustomer = function(customer) {

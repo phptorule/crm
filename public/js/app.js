@@ -182,7 +182,7 @@
         $scope.getClass = function (path) {
             if ( ! $location.path().split('/')[3])
             {
-                return ($location.path().substr(0, path.length) === path) ? 'active' : '';
+                return ($location.path() === path) ? 'active' : '';
             }
         }
 
