@@ -315,18 +315,22 @@
             modalInstance.result.then(function(response) {
                 //$scope.finances = response;
                 $scope.finances.finances_invoice_street = response.invoice_street;
-                $scope.finances.finances_invoice_mailbox = response.invoice_mailbox;
                 $scope.finances.finances_invoice_town = response.invoice_town;
                 $scope.finances.finances_invoice_province = response.invoice_province;
                 $scope.finances.finances_invoice_post_code = response.invoice_post_code;
                 $scope.finances.finances_invoice_region = response.invoice_region;
                 $scope.finances.finances_send_street = response.send_street;
-                $scope.finances.finances_send_mailbox = response.send_mailbox;
                 $scope.finances.finances_send_town = response.send_town;
                 $scope.finances.finances_send_province = response.send_province;
                 $scope.finances.finances_send_post_code = response.send_post_code;
                 $scope.finances.finances_send_region = response.send_region;
                 $scope.finances.finances_customer_name = response.company_name;
+                $scope.finances.registered_bank_account = response.bank_account;
+                $scope.finances.registered_bank_nip = response.nip;
+                $scope.finances.registered_bank_street = response.invoice_street;
+                $scope.finances.registered_bank_town = response.invoice_town;
+                $scope.finances.registered_bank_postcode = response.invoice_post_code;
+                $scope.finances.registered_bank_region = response.invoice_region;
             	$scope.getTeamUsers();
             }, function () {
 
