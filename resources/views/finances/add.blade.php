@@ -481,7 +481,7 @@
     </div>
 
     <div class="col-sm-12 text-right">
-        <button type="submit" class="btn btn-add" ng-click="saveProduct()">Zapisc</button>
+        <button type="submit" class="btn btn-add" ng-click="saveProduct()">Zapisz</button>
     </div>
 </div>
 

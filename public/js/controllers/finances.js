@@ -156,7 +156,7 @@
                     else
                     {
                         $timeout(function() {
-                            $window.location.href = "/finances/list/";
+                            $window.location.href = "/finances/add/" + data;
                         }, 1000);
                     }
                 }
@@ -191,7 +191,7 @@
                         else
                         {
                             $timeout(function() {
-                                $window.location.href = "/finances/registered_list/";
+                                $window.location.href = "/finances/register/" + data;
                             }, 1000);
                         }
                     }
@@ -567,7 +567,13 @@
         };
 
 	    /* Setting page titles */
-	    if ($location.path() == '/finances/list/')
+	    if ($scope.finances_id)
+        {
+            Page.setTitle('Edytuj fakturę');
+            Page.setIcon('fa fa-th-list');
+        }
+
+        if ($location.path() == '/finances/list/')
         {
             Page.setTitle('Wystawione faktury');
             Page.setIcon('fa fa-th-list');
