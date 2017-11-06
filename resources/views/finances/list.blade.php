@@ -96,28 +96,34 @@
                   <tbody>
                      <tr ng-repeat="finances in pagesList | filter:searchInput">
                         <td>@{{ finances.finances_number }}</td>
+
                         <td class="td_products">
                            <p ng-show="finances.products.length == 1 && finances.products[0].products_name.length <= 105">@{{ finances.products[0].products_name }}</p>
-                           <p ng-show="finances.products.length == 1 && finances.products[0].products_name.length >= 105" class="long_products_name">@{{ finances.products[0].products_name }}</p>
+                           <p ng-show="finances.products.length == 1 && finances.products[0].products_name.length >= 105" ng-class="{'closed': ! toggled, 'open': toggled}" class="products_names">@{{ finances.products[0].products_name }}</p>
                            <div class="products_names" ng-class="{'closed': ! toggled, 'open': toggled}" ng-show="finances.products.length > 1" >
                               <p ng-repeat="product in finances.products">
                                  @{{ product.products_name }}
                               </p>
                            </div>
-                           <button class="btn btn-add show_all" ng-show="finances.products.length > 1 || finances.products[0].products_name.length >= 105" ng-click="toggled = !toggled"><i class="fa fa-plus"></i></button>
+                           <button class="btn btn-add show_all" ng-show="finances.products.length > 1 || finances.products[0].products_name.length >= 105" ng-click="toggled = ! toggled"><i class="fa fa-plus"></i></button>
                         </td>
+
                         <td>@{{ finances.finances_customer_name }}</td>
+
                         <td>
                            <span ng-show="finances.finances_paid == '0'">Nie</span>
                            <span ng-show="finances.finances_paid == '1'">Tak</span>
                         </td>
+
                         <td>
                            @{{ finances.finances_total_amount }}
                            <span ng-show="finances.products_currency == '0'">(PLN)</span>
                            <span ng-show="finances.products_currency == '1'">(EUR)</span>
                            <span ng-show="finances.products_currency == '2'">(USD)</span>
                         </td>
+
                         <td>@{{ finances.users.users_first_name + ' ' + finances.users.users_last_name }}</td>
+
                         <td class="view_customer">
                            <a href="/finances/add/@{{ finances.finances_id }}" class="btn btn-success btn-labeled m-b-5">
                               <span class="btn-label"><i class="glyphicon glyphicon-info-sign"></i></span>Otwórz

@@ -5485,7 +5485,11 @@ button.toast-close-button {
     content: none;
 }
 
-.products_names {
+.products_names,
+.products_names p {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
     -webkit-transition: transform 0.3s ease-in-out, width 0.3s ease-in-out, -webkit-transform 0.3s ease-in-out;
     transition: transform 0.3s ease-in-out, width 0.3s ease-in-out, -webkit-transform 0.3s ease-in-out;
 }
@@ -5495,15 +5499,12 @@ button.toast-close-button {
     height: 20px;
 }
 
-.long_products_name {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.products_names.open {
+.products_names.open,
+.products_names.open p {
     height: 100%;
     overflow: visible;
+    white-space: normal;
+    word-wrap: break-word;
 }
 
 .btn.show_all {
@@ -5519,5 +5520,5 @@ button.toast-close-button {
 #content .td_products {
     position: relative;
     z-index: 1;
-    padding-right: 25px;
+    padding-right: 30px;
 }
