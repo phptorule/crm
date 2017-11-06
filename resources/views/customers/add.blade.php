@@ -177,12 +177,6 @@
                             </div>
 
                             <div class="form-group">
-                                <label>Skrytka Pocztowa</label>
-                                <span class="form-span" ng-model="customers.invoice_mailbox" ng-show=" ! edit_address && customer_id">@{{ customers.invoice_mailbox }}</span>
-                                <input type="text" class="form-control" name="invoice_mailbox" ng-show="edit_address || ! customer_id" ng-model="customers.invoice_mailbox" />
-                            </div>
-
-                            <div class="form-group">
                                 <label>Miejscowosc</label>
                                 <span class="form-span" ng-model="customers.invoice_town" ng-show=" ! edit_address && customer_id">@{{ customers.invoice_town }}</span>
                                 <input type="text" class="form-control" name="invoice_town" ng-show="edit_address || ! customer_id" ng-model="customers.invoice_town" />
@@ -213,12 +207,6 @@
                                 <label>Ulica</label>
                                 <span class="form-span" ng-model="customers.send_street" ng-show=" ! edit_address && customer_id">@{{ customers.send_street }}</span>
                                 <input type="text" class="form-control" name="send_street" ng-show="edit_address || ! customer_id" ng-model="customers.send_street" />
-                            </div>
-
-                            <div class="form-group">
-                                <label>Skrytka Pocztowa</label>
-                                <span class="form-span" ng-model="customers.send_mailbox" ng-show=" ! edit_address && customer_id">@{{ customers.send_mailbox }}</span>
-                                <input type="text" class="form-control" name="send_mailbox" ng-show="edit_address || ! customer_id" ng-model="customers.send_mailbox" />
                             </div>
 
                             <div class="form-group">

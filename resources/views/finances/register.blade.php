@@ -282,7 +282,7 @@
         </div>
 
         <div class="col-sm-12 text-right" ng-show="! registered_id">
-            <button type="submit" class="btn btn-add" ng-click="registerFinance()">Zapisc</button>
+            <button type="submit" class="btn btn-add" ng-click="registerFinance()">Zapisz</button>
         </div>
     </form>
 </div>
