@@ -6,16 +6,18 @@
                     <h3>Informacje podstawowe</h3>
                 </div>
 
-                <div class="custom_panel_item pull-right" ng-show="teams_id">
-                    <a href="javascript:void(0);" ng-show=" ! edit_general" ng-click="editTeam('general')">Edytuj dane <i class="panel-control-icon ti-pencil"></i></a>
-                </div>
+                <div class="custom_panel_block" ng-show="teams_id">
+                    <div class="custom_panel_item pull-right">
+                        <a href="javascript:void(0);" ng-show=" ! edit_general" ng-click="editTeam('general')">Edytuj dane <i class="panel-control-icon ti-pencil"></i></a>
+                    </div>
 
-                <div class="custom_panel_item pull-right" ng-show="edit_general">
-                    <a href="javascript:void(0);" ng-click="save()">Zapisz <i class="fa fa-floppy-o"></i></a>
-                </div>
+                    <div class="custom_panel_item" ng-show="edit_general">
+                        <a href="javascript:void(0);" ng-click="save()">Zapisz <i class="fa fa-floppy-o"></i></a>
+                    </div>
 
-                <div class="custom_panel_item pull-right" ng-show="edit_general">
-                    <a href="javascript:void(0);" ng-click="cancelEdit('general')">Anuluj</a>
+                    <div class="custom_panel_item pull-right" ng-show="edit_general">
+                        <a href="javascript:void(0);" ng-click="cancelEdit('general')">Anuluj</a>
+                    </div>
                 </div>
             </div>
 
@@ -98,16 +100,18 @@
                     <h3>Informacje adresowe</h3>
                 </div>
 
-                <div class="custom_panel_item pull-right" ng-show="teams_id">
-                    <a href="javascript:void(0);" ng-show=" ! edit_address" ng-click="editTeam('address')">Edytuj dane <i class="panel-control-icon ti-pencil"></i></a>
-                </div>
+                <div class="custom_panel_block" ng-show="teams_id">
+                    <div class="custom_panel_item pull-right" ng-show="teams_id">
+                        <a href="javascript:void(0);" ng-show=" ! edit_address" ng-click="editTeam('address')">Edytuj dane <i class="panel-control-icon ti-pencil"></i></a>
+                    </div>
 
-                <div class="custom_panel_item pull-right" ng-show="edit_address">
-                    <a href="javascript:void(0);" ng-click="save()">Zapisz <i class="fa fa-floppy-o"></i></a>
-                </div>
+                    <div class="custom_panel_item" ng-show="edit_address">
+                        <a href="javascript:void(0);" ng-click="save()">Zapisz <i class="fa fa-floppy-o"></i></a>
+                    </div>
 
-                <div class="custom_panel_item pull-right" ng-show="edit_address">
-                    <a href="javascript:void(0);" ng-click="cancelEdit('address')">Anuluj</a>
+                    <div class="custom_panel_item pull-right" ng-show="edit_address">
+                        <a href="javascript:void(0);" ng-click="cancelEdit('address')">Anuluj</a>
+                    </div>
                 </div>
             </div>
 
