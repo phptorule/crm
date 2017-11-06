@@ -74,13 +74,11 @@ class CustomersController extends Controller
             $customer->website = empty($post['website']) ? '' : $post['website'];
             $customer->fb_link =empty($post['fb_link']) ? '' : $post['fb_link'];
             $customer->invoice_street = empty($post['invoice_street']) ? '' : $post['invoice_street'];
-            $customer->invoice_mailbox = empty($post['invoice_mailbox']) ? '' : $post['invoice_mailbox'];
             $customer->invoice_town = empty($post['invoice_town']) ? '' : $post['invoice_town'];
             $customer->invoice_province = empty($post['invoice_province']) ? '' : $post['invoice_province'];
             $customer->invoice_post_code = empty($post['invoice_post_code']) ? '' : $post['invoice_post_code'];
             $customer->invoice_region = empty($post['invoice_region']) ? '' : $post['invoice_region'];
             $customer->send_street = empty($post['send_street']) ? '' : $post['send_street'];
-            $customer->send_mailbox = empty($post['send_mailbox']) ? '' : $post['send_mailbox'];
             $customer->send_town = empty($post['send_town']) ? '' : $post['send_town'];
             $customer->send_province = empty($post['send_province']) ? '' : $post['send_province'];
             $customer->send_post_code = empty($post['send_post_code']) ? '' : $post['send_post_code'];

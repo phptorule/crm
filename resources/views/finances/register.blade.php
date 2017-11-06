@@ -190,7 +190,7 @@
                     <div class="row">
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <label>Rachunek</label>
+                                <label>Konto bankowe</label>
                                 <span class="form-span" ng-show=" ! edit_bank && registered_id">@{{ finances.registered_bank_account }}</span>
                                 <input type="text" class="form-control" ng-show="edit_bank || ! registered_id" ng-model="finances.registered_bank_account" required />
                             </div>

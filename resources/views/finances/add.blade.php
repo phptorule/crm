@@ -169,12 +169,6 @@
                             </div>
 
                             <div class="form-group">
-                                <label>Skrytka Pocztowa</label>
-                                <span class="form-span" ng-show=" ! edit_address && finances_id">@{{ finances.finances_invoice_mailbox }}</span>
-                                <input type="text" class="form-control" ng-show="edit_address || ! finances_id" ng-model="finances.finances_invoice_mailbox" />
-                            </div>
-
-                            <div class="form-group">
                                 <label>Miejscowosc</label>
                                 <span class="form-span" ng-show=" ! edit_address && finances_id">@{{ finances.finances_invoice_town }}</span>
                                 <input type="text" class="form-control" ng-show="edit_address || ! finances_id" ng-model="finances.finances_invoice_town" />
@@ -205,12 +199,6 @@
                                 <label>Ulica</label><span class="req_field"> *</span>
                                 <span class="form-span" ng-show=" ! edit_address && finances_id">@{{ finances.finances_send_street }}</span>
                                 <input type="text" class="form-control" ng-show="edit_address || ! finances_id" name="finances_send_street" ng-model="finances.finances_send_street" required />
-                            </div>
-
-                            <div class="form-group">
-                                <label>Skrytka Pocztowa</label>
-                                <span class="form-span" ng-show=" ! edit_address && finances_id">@{{ finances.finances_send_mailbox }}</span>
-                                <input type="text" class="form-control" ng-show="edit_address || ! finances_id" ng-model="finances.finances_send_mailbox" />
                             </div>
 
                             <div class="form-group">
