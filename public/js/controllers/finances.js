@@ -60,6 +60,7 @@
                 request.send('/finances/get', {'finances_id': $scope.finances_id}, function(data) {
                     $scope.finances = data;
                     $scope.productsList = data.products;
+                    $scope.finances.finances_assign_to = data.finances_assign_to.toString();
                     for (var k in $scope.productsList)
                     {
                         $scope.productsList[k].products_type = $scope.productsList[k].products_type.toString();
@@ -67,10 +68,10 @@
                     $scope.setDate($scope.finances.finances_issue_date, $scope.finances.finances_payment_date);
                 });
 
-                for (var k in $scope.productsList)
+                /*for (var k in $scope.productsList)
                 {
                     $scope.getProductCost(k);
-                }
+                }*/
             }
 
             $scope.getFinancesNumber();
@@ -119,7 +120,6 @@
             error *= validate.check($scope.form.finances_send_street, 'Ulica (do wysylki)');
             for (var k in $scope.productsList)
             {
-                console.log(k);
                 error *= validate.check($scope.form_products['product_name_' + k], 'Nazwa pozycji');
                 error *= validate.check($scope.form_products['product_cost_' + k], 'Cena');
             }
@@ -146,9 +146,19 @@
             request.send('/finances/save', $scope.finances, function(data) {
                 if (data)
                 {
-                    $timeout(function() {
-                        $window.location.href = "/finances/list/";
-                    }, 1000);
+                    if ($scope.finances_id)
+                    {
+                        $scope.edit_general = false;
+                        $scope.edit_address = false;
+                        $scope.edit_products = false;
+                        $scope.init();
+                    }
+                    else
+                    {
+                        $timeout(function() {
+                            $window.location.href = "/finances/list/";
+                        }, 1000);
+                    }
                 }
             });
         };

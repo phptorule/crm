@@ -5218,12 +5218,6 @@ button.toast-close-button {
 
 .custom_panel_item {
     display: inline-block;
-    position: absolute;
-    right: 70px;
-}
-
-.custom_panel_item:nth-child(3) {
-    right: 120px;
 }
 
 .custom_panel_item a {
@@ -5235,6 +5229,12 @@ button.toast-close-button {
     font-size: 13px;
     color: #374767;
     transition: none;
+}
+
+.custom_panel_block {
+    position: absolute;
+    right: 70px;
+    top: 6px;
 }
 
 .custom_panel_item a:hover {

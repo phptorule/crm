@@ -7,16 +7,18 @@
                         <h3>Informacje podstawowe</h3>
                     </div>
 
-                    <div class="custom_panel_item pull-right" ng-show="registered_id">
-                        <a href="javascript:void(0);" ng-show=" ! edit_general" ng-click="editFinances('general')">Edytuj dane <i class="panel-control-icon ti-pencil"></i></a>
-                    </div>
+                    <div class="custom_panel_block" ng-show="registered_id">
+                        <div class="custom_panel_item pull-right">
+                            <a href="javascript:void(0);" ng-show=" ! edit_general" ng-click="editFinances('general')">Edytuj dane <i class="panel-control-icon ti-pencil"></i></a>
+                        </div>
 
-                    <div class="custom_panel_item pull-right" ng-show="edit_general">
-                        <a href="javascript:void(0);" ng-click="registerFinance()">Zapisz <i class="fa fa-floppy-o"></i></a>
-                    </div>
+                        <div class="custom_panel_item" ng-show="edit_general">
+                            <a href="javascript:void(0);" ng-click="registerFinance()">Zapisz <i class="fa fa-floppy-o"></i></a>
+                        </div>
 
-                    <div class="custom_panel_item pull-right" ng-show="edit_general">
-                        <a href="javascript:void(0);" ng-click="cancelEdit('general')">Anuluj</a>
+                        <div class="custom_panel_item pull-right" ng-show="edit_general">
+                            <a href="javascript:void(0);" ng-click="cancelEdit('general')">Anuluj</a>
+                        </div>
                     </div>
                 </div>
 
@@ -165,16 +167,18 @@
                         <h3>Informacje konta bankowego</h3>
                     </div>
 
-                    <div class="custom_panel_item pull-right" ng-show="registered_id">
-                        <a href="javascript:void(0);" ng-show=" ! edit_bank" ng-click="editFinances('bank')">Edytuj dane <i class="panel-control-icon ti-pencil"></i></a>
-                    </div>
+                    <div class="custom_panel_block" ng-show="registered_id">
+                        <div class="custom_panel_item pull-right">
+                            <a href="javascript:void(0);" ng-show=" ! edit_bank" ng-click="editFinances('bank')">Edytuj dane <i class="panel-control-icon ti-pencil"></i></a>
+                        </div>
 
-                    <div class="custom_panel_item pull-right" ng-show="edit_bank">
-                        <a href="javascript:void(0);" ng-click="registerFinance()">Zapisz <i class="fa fa-floppy-o"></i></a>
-                    </div>
+                        <div class="custom_panel_item" ng-show="edit_bank">
+                            <a href="javascript:void(0);" ng-click="registerFinance()">Zapisz <i class="fa fa-floppy-o"></i></a>
+                        </div>
 
-                    <div class="custom_panel_item pull-right" ng-show="edit_bank">
-                        <a href="javascript:void(0);" ng-click="cancelEdit('bank')">Anuluj</a>
+                        <div class="custom_panel_item pull-right" ng-show="edit_bank">
+                            <a href="javascript:void(0);" ng-click="cancelEdit('bank')">Anuluj</a>
+                        </div>
                     </div>
                 </div>
 
@@ -243,16 +247,18 @@
                         <h3>Inne</h3>
                     </div>
 
-                    <div class="custom_panel_item pull-right" ng-show="registered_id">
-                        <a href="javascript:void(0);" ng-show=" ! edit_rest" ng-click="editFinances('rest')">Edytuj <i class="panel-control-icon ti-pencil"></i></a>
-                    </div>
+                    <div class="custom_panel_block" ng-show="registered_id">
+                        <div class="custom_panel_item pull-right">
+                            <a href="javascript:void(0);" ng-show=" ! edit_rest" ng-click="editFinances('rest')">Edytuj <i class="panel-control-icon ti-pencil"></i></a>
+                        </div>
 
-                    <div class="custom_panel_item pull-right" ng-show="registered_id && edit_rest">
-                        <a href="javascript:void(0);" ng-click="registerFinance()">Zapisz <i class="fa fa-floppy-o"></i></a>
-                    </div>
+                        <div class="custom_panel_item" ng-show="registered_id && edit_rest">
+                            <a href="javascript:void(0);" ng-click="registerFinance()">Zapisz <i class="fa fa-floppy-o"></i></a>
+                        </div>
 
-                    <div class="custom_panel_item pull-right" ng-show="registered_id && edit_rest">
-                        <a href="javascript:void(0);" ng-click="cancelEdit('rest')">Anuluj</a>
+                        <div class="custom_panel_item pull-right" ng-show="registered_id && edit_rest">
+                            <a href="javascript:void(0);" ng-click="cancelEdit('rest')">Anuluj</a>
+                        </div>
                     </div>
                 </div>
 
