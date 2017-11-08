@@ -316,7 +316,7 @@
                                 <td class="text-right discount">
                                     <div class="form-group">
                                         <span class="form-span table-span" ng-show=" ! edit_products && finances_id">@{{ productsList[k].products_cost }}</span>
-                                        <input type="text" class="form-control" ng-show="edit_products || ! finances_id" name="product_cost_@{{ k }}" ng-change="getProductCost(k)" ng-model="productsList[k].products_cost" required />
+                                        <input type="text" class="form-control" ng-show="edit_products || ! finances_id" ng-keypress="replaceComma(k)" name="product_cost_@{{ k }}" ng-change="getProductCost(k)" ng-model="productsList[k].products_cost" required />
                                     </div>
 
                                     <div class="form-group">
