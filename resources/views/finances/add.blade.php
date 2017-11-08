@@ -1,8 +1,15 @@
 <div class="row" data-ng-controller="FinancesCtrl" ng-init="init()">
+    
     <form class="no-transition" name="form" method="post" novalidate="novalidate">
+        <button type="button" class="btn-add pull-right" style="margin:15px;">Export to PDF</button>
+
         <div class="col-sm-12">
+
+
             <div class="panel panel-bd lobidrag">
+
                 <div class="panel-heading">
+
                     <div class="btn-group" id="buttonlist">
                         <h3>Informacje podstawowe</h3>
                     </div>
