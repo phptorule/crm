@@ -28,3 +28,5 @@ Route::any('{catchall}', function() {
 		return view('template');
 	}
 })->where('catchall', '(.*)');
+
+//Route::post('pdfview',array('as'=>'pdfview','uses'=>'ItemController@pdfview'));

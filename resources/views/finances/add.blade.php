@@ -1,7 +1,7 @@
 <div class="row" data-ng-controller="FinancesCtrl" ng-init="init()">
     
     <form class="no-transition" name="form" method="post" novalidate="novalidate">
-        <button type="button" class="btn-add pull-right" style="margin:15px;">Export to PDF</button>
+        <button type="button" class="btn btn-add pull-right" style="margin:15px;">Export to PDF</button>
 
         <div class="col-sm-12">
 
