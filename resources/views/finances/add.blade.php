@@ -1,7 +1,10 @@
 <div class="row" data-ng-controller="FinancesCtrl" ng-init="init()">
     
     <form class="no-transition" name="form" method="post" novalidate="novalidate">
-        <button type="button" class="btn btn-add pull-right" style="margin:15px;">Export to PDF</button>
+
+        <button type="button" class="btn btn-labeled btn-add m-b-5 delete_customer pull-right" ng-show="finances_id" ng-click="remove(finances_id)">
+            <span class="btn">Export to PDF</span>
+        </button>
 
         <div class="col-sm-12">
 
