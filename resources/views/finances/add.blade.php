@@ -1,10 +1,11 @@
 <div class="row" data-ng-controller="FinancesCtrl" ng-init="init()">
+
+
     
     <form class="no-transition" name="form" method="post" novalidate="novalidate">
 
-        <button type="button" class="btn btn-add classic_button pull-right" ng-show="finances_id" ng-click="remove(finances_id)">
-            Export to PDF
-        </button>
+        <a class="btn btn-add classic_button pull-right" href="/pdf/@{{finances_id}}" target="_blank">Export to PDF</a>
+        
 
         <div class="col-sm-12">
 

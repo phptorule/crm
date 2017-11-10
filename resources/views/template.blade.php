@@ -127,6 +127,13 @@
                                 <li><a href="/finances/registered_list" ng-class="getClass('/finances/registered_list/')">Zarejestrowane faktury</a></li>
                             </ul>
                         </li>
+
+                        <li class="treeview no-treeview" ng-show="sidebar.plugins.indexOf('Task Manager') != -1">
+                            <a href="/task_manager/desk">
+                                <i class="fa fa-cogs"></i>
+                                <span>Task Manager</span>
+                            </a>
+                        </li>
                     </ul>
                 </div>
             </aside>

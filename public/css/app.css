@@ -5526,3 +5526,7 @@ button.toast-close-button {
 .classic_button {
     margin: 0 15px 15px 0;
 }
+
+.no-treeview .sidebar-menu > li > a {
+    display: inline-block;
+}
