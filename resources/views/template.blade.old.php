@@ -137,6 +137,8 @@
         <script src="/js/controllers/teams.js"></script>
         <script src="/js/controllers/users.js"></script>
         <script src="/js/controllers/finances.js"></script>
+        <!-- Task_manager -->
+        <script src="/js/controllers/task_manager.js"></script>
         <script src="assets/dist/js/custom.js" type="text/javascript"></script>
         <script src="assets/dist/js/dashboard.js" type="text/javascript"></script>
     </body>

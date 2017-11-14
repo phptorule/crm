@@ -127,6 +127,13 @@
                                 <li><a href="/finances/registered_list" ng-class="getClass('/finances/registered_list/')">Zarejestrowane faktury</a></li>
                             </ul>
                         </li>
+
+                        <li class="treeview no-treeview" ng-show="sidebar.plugins.indexOf('Task Manager') != -1">
+                            <a href="/taskmanager/desk">
+                                <i class="fa fa-cogs"></i>
+                                <span>Task Manager</span>
+                            </a>
+                        </li>
                     </ul>
                 </div>
             </aside>
@@ -166,6 +173,8 @@
         <script src="/js/controllers/users.js"></script>
         <script src="/js/controllers/finances.js"></script>
         <script src="/js/controllers/customers.js"></script>
+        <!-- Task_manager -->
+        <script src="/js/controllers/taskmanager.js"></script>
         <script src="/theme/plugins/jQuery/jquery-1.12.4.min.js" type="text/javascript"></script>
         <script src="/theme/plugins/jquery-ui-1.12.1/jquery-ui.min.js" type="text/javascript"></script>
         <script src="/theme/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>

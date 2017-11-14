@@ -1,5 +1,5 @@
 <div class="row" data-ng-controller="CustomersCtrl" ng-init="initAdd()">
-    <button type="button" class="btn btn-labeled btn-danger m-b-5 delete_customer pull-right" ng-show="customer_id" ng-click="remove(customer_id)">
+    <button type="button" class="btn btn-labeled btn-danger m-b-5 classic_button pull-right" ng-show="customer_id" ng-click="remove(customer_id)">
         <span class="btn-label"><i class="glyphicon glyphicon-trash"></i></span>Usuń kontrahenta
     </button>
 
