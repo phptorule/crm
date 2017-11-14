@@ -48,6 +48,7 @@
         $scope.productsList.push($scope.products);
         $scope.class = "closed";
 
+
 		$scope.init = function() {
 			if ( ! $rootScope.user.users_id) {
 				$rootScope.queue.push($scope.defaultUser);

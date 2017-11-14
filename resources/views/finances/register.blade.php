@@ -48,7 +48,7 @@
                                 <div class="row">
                                     <div class="col-sm-6">
                                         <span class="form-span" ng-show=" ! edit_general && registered_id">@{{ finances.finances_customer_name }}</span>
-                                        <input type="text" class="form-control" name="finances_customer_name" ng-show="edit_general || ! registered_id" disabled="disabled" ng-model="finances.finances_customer_name" required />
+                                        <input type="text" class="form-control" name="finances_customer_name" ng-show="edit_general || ! registered_id" ng-model="finances.finances_customer_name" required />
                                     </div>
 
                                     <div class="col-sm-6" ng-show=" ! registered_id">
