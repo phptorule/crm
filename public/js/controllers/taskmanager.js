@@ -122,11 +122,36 @@
         };
 
 
+        
+        $scope.getTask = function() {
 
+            request.send('/taskmanager/getTask', $scope.list, function(data) {
+                //$scope.tasks = tasks;
 
+                //console.log(data);
+                $scope.tasks = data;
 
+                //$scope.taskss = data;
 
+                //return $scope.tasks;
 
+            });
+        };
+
+        $scope.deleteTask = function(id) {
+            console.log(id);
+            request.send('/taskmanager/getTask', $scope.list, function(id) {
+                //$scope.tasks = tasks;
+
+                //console.log(data);
+                //$scope.tasks = data;
+
+                //$scope.taskss = data;
+
+                //return $scope.tasks;
+
+            });
+        };
 
 
         /////////////////////////////////////////

@@ -13,9 +13,39 @@ class TaskManagerController extends Controller
 
 	public function getTask($post = []){
 
-    	$tasks = Task::all();
 
+		$tasks = Task::all();
+
+		/*
+    	$taskss = Task::all();
+
+    	$tasks = [];
+    	foreach ($taskss as $task) {
+    		$ta = $task->name;
+    		array_push($tasks, $ta);
+    	}
+    	*/
+
+
+
+    	//return dd($taa);
     	return $tasks;
+
+
+    }
+
+
+    public function deleteTask($post = []){
+
+
+    	dd($post);
+    	
+
+    	Task::delete($post['id']);
+    	$tasks = Task::all();
+    	//return dd($taa);
+    	return $tasks;
+    	
 
 
     }
