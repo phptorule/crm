@@ -171,6 +171,20 @@
                     icon2: 'ti-fullscreen'
                 }
             });
+
+            // Plagin task manager
+
+            $('.lobidrag_task_manager').lobiPanel({
+                sortable: true,
+                editTitle: false,
+                unpin: false,
+                reload: false,
+                minimize: false,
+                close: false,
+                expand: false,
+            });
+
+            //
         };
 
         $scope.initIcheck = function() {

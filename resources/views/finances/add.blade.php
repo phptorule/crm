@@ -1,7 +1,11 @@
 <div class="row" data-ng-controller="FinancesCtrl" ng-init="init()">
+
+
     
     <form class="no-transition" name="form" method="post" novalidate="novalidate">
-        <button type="button" class="btn-add pull-right" style="margin:15px;">Export to PDF</button>
+
+        <a class="btn btn-add classic_button pull-right" href="/pdf/@{{finances_id}}" target="_blank">Export to PDF</a>
+        
 
         <div class="col-sm-12">
 
@@ -37,7 +41,7 @@
                                 <div class="row">
                                     <div class="col-sm-6">
                                         <span class="form-span" ng-show=" ! edit_general && finances_id">@{{ finances.finances_customer_name }}</span>
-                                        <input type="text" class="form-control" name="finances_customer_name" ng-show="edit_general || ! finances_id" disabled="disabled" ng-model="finances.finances_customer_name" required />
+                                        <input type="text" class="form-control" name="finances_customer_name" ng-show="edit_general || ! finances_id" ng-model="finances.finances_customer_name" required />
                                     </div>
 
                                     <div class="col-sm-6" ng-show=" ! finances_id">

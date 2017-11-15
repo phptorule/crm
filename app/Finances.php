@@ -4,6 +4,8 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
+use App\Finances_products;
+
 class Finances extends Model
 {
     protected $table = "finances";
@@ -14,6 +16,15 @@ class Finances extends Model
     {
         return $this->belongsToMany('App\Products', 'finances_products', 'finances_id', 'products_id');
     }
+
+    //
+    /*
+    public function productss()
+    {
+        return $this->belongsToMany('App\Finances_products', 'finances_id');
+    }
+    */
+    //
 
     public function teams()
     {

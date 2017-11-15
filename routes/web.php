@@ -13,6 +13,8 @@
 
 Illuminate\Support\Facades\Artisan::call('migrate');
 
+Route::get('/pdf/{id?}',['uses'=>'PdfController@pdf', 'as'=>'pdf'])->where('id','[0-9]+');
+
 Route::get('/template/{file}/', function($file) { return view($file); });
 
 Route::get('/view/{filder}/{file?}/{param?}', function($folder, $file = '', $param = '') {
@@ -28,3 +30,13 @@ Route::any('{catchall}', function() {
 		return view('template');
 	}
 })->where('catchall', '(.*)');
+
+//Route::get('pdfview',array('as'=>'pdfview','uses'=>'PdfController@pdfview'));
+
+
+//Route::post('submitpdf','PdfController@downloadPDF')->name('submitpdf');
+
+//Route::post('submitpdf',['uses'=>'PdfController@downloadPDF', 'as'=>'submitpdf']);
+
+//Route::post('submitpdf',['uses'=>'PdfController@downloadPDF', 'as'=>'submitpdf']);
+

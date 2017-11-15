@@ -48,6 +48,7 @@
         $scope.productsList.push($scope.products);
         $scope.class = "closed";
 
+
 		$scope.init = function() {
 			if ( ! $rootScope.user.users_id) {
 				$rootScope.queue.push($scope.defaultUser);
@@ -605,6 +606,25 @@
             Page.setTitle('Zarejestrowane faktury');
             Page.setIcon('fa fa-th-list');
         }
+
+
+
+        ///////////////
+        
+        $scope.print = function() {
+            request.send('/pdf/downloadPdf', {'post': $scope.finances}, function(data) {    
+            //request.send('downloadPDF', {'post': $scope.finances}, function(data) {
+
+            });
+            /*
+            request.send('/downloadPDF', {'post': $scope.finances}, function(data) {
+                
+            });
+            */
+        };
+
+        
+        /////////////
 	};
 })();
 

@@ -5522,3 +5522,11 @@ button.toast-close-button {
     z-index: 1;
     padding-right: 30px;
 }
+
+.classic_button {
+    margin: 0 15px 15px 0;
+}
+
+.no-treeview .sidebar-menu > li > a {
+    display: inline-block;
+}
