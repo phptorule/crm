@@ -110,6 +110,7 @@
 
         $scope.initRegisteredList = function() {
             request.send('/finances/getRegisteredList', {}, function(data) {
+                console.log(data);
                 $scope.pagesList = data;
             });
         };
@@ -610,20 +611,20 @@
 
 
         ///////////////
-        
+
         $scope.print = function() {
-            request.send('/pdf/downloadPdf', {'post': $scope.finances}, function(data) {    
+            request.send('/pdf/downloadPdf', {'post': $scope.finances}, function(data) {
             //request.send('downloadPDF', {'post': $scope.finances}, function(data) {
 
             });
             /*
             request.send('/downloadPDF', {'post': $scope.finances}, function(data) {
-                
+
             });
             */
         };
 
-        
+
         /////////////
 	};
 })();
