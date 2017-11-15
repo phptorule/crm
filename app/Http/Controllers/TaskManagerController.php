@@ -6,6 +6,7 @@ use App\Http\Requests;
 use Illuminate\Http\Request;
 use DB;
 use App\Task;
+use App\TaskList;
 use Illuminate\Support\Facades\Auth;
 
 class TaskManagerController extends Controller
@@ -13,51 +14,29 @@ class TaskManagerController extends Controller
 
 	public function getTask($post = []){
 
-
 		$tasks = Task::all();
-
-		/*
-    	$taskss = Task::all();
-
-    	$tasks = [];
-    	foreach ($taskss as $task) {
-    		$ta = $task->name;
-    		array_push($tasks, $ta);
-    	}
-    	*/
-
-
-
-    	//return dd($taa);
     	return $tasks;
-
 
     }
 
 
     public function deleteTask($post = []){
 
+        $delete_task = Task::find($post['id']);
+        $delete_task->delete();
 
-    	dd($post);
-    	
-
-    	Task::delete($post['id']);
     	$tasks = Task::all();
-    	//return dd($taa);
-    	return $tasks;
-    	
 
+    	return $tasks;
 
     }
 
 
     public function addTask($post = []){
 
-
 		//return $request->name_task_block;
       	//dd(request()->name_task_block);
       	//return $post['name'];
-
 		
     	$task = new Task();
     	$task->name = $post['name_task_block'];
@@ -67,18 +46,22 @@ class TaskManagerController extends Controller
     	$data = Task::all();
 
     	return $data;
-    	
 
+    }
 
+    public function createCard($post = []){
 
-      	
-		//$post
-    	//return $request->finances_id; 
+        //dd($post);
+        $task = new TaskList();
+        $task->name = $post['name_card'];
+        $task->user_id = Auth::user()->users_id;
+        //$task->task_id = $post['task_id'];
+        $task->task_id = '1';
+        $task->save();
 
-    	//return response()->json($post);
+        $data_card = Task::all();
 
-    	//return view('test', compact('post'));
-
+        return $data_card;
 
     }
 
