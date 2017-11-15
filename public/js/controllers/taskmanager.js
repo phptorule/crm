@@ -14,7 +14,8 @@
         //
         //$scope.list = [];
         $scope.tasks = {};
-        $scope.taskss = [];
+        $scope.card = {};
+
         $scope.listFiltered = [];
         $scope.pagesList = [];
         $scope.numPerPage = 20;
@@ -56,77 +57,37 @@
         $scope.class = "closed";
 
 
-        $scope.initList = function(data) {
-            request.send('/finances/getList', {}, function(data) {
-                $scope.pagesList = data;
-            });
-        };
-
-        $scope.initRegisteredList = function() {
-            request.send('/finances/getRegisteredList', {}, function(data) {
-                $scope.pagesList = data;
-            });
-        };
-
-    
-        $scope.save = function(products_ids) {
-            $scope.finances.products_ids = products_ids;
-            $scope.finances.finances_payment_method = $scope.finances_payment_method;
-            $scope.finances.finances_paid = $scope.finances_paid;
-            $scope.finances.finances_issue_date = $scope.finances_issue_date;
-            $scope.finances.finances_payment_date = $scope.finances_payment_date;
-            $scope.finances.finances_number = $scope.finances_number;
-            request.send('/finances/save', $scope.finances, function(data) {
-                if (data)
-                {
-                    if ($scope.finances_id)
-                    {
-                        $scope.edit_general = false;
-                        $scope.edit_address = false;
-                        $scope.edit_products = false;
-                        $scope.init();
-                    }
-                    else
-                    {
-                        $timeout(function() {
-                            $window.location.href = "/finances/add/" + data;
-                        }, 1000);
-                    }
-                }
-            });
-        };
-
         
+        $scope.getTask = function() {
 
-        $scope.getFinancesNumber = function() {
-            request.send('/finances/getFinancesNumber', {}, function(data) {
-                $scope.finances_number = data;
+            request.send('/taskmanager/getTask', $scope.list, function(data) {
+                //$scope.tasks = tasks;
+
+                //console.log(data);
+                $scope.tasks = data;
+
+                //$scope.taskss = data;
+
+                //return $scope.tasks;
+
             });
         };
 
-        
+        $scope.deleteTask = function(id) {
+            $scope.id = id;
+            console.log($scope.id);
+            request.send('/taskmanager/deleteTask', {'id': $scope.id}, function(data) {
+                $scope.tasks = data;
 
-		$scope.initTeamUsers = function() {
-            request.send('/users/getTeamUsers', {}, function(data) {
-                $scope.team_users = data;
-				$scope.users = [];
+                //console.log(data);
+                //$scope.tasks = data;
 
-                for (var k in $scope.team_users)
-                {
-                    if ($scope.team_users[k].users_id == $rootScope.user.users_id)
-                    {
-                        $scope.finances.finances_assign_to = $rootScope.user.users_id.toString();
-                    }
-                }
+                //$scope.taskss = data;
+
+                //return $scope.tasks;
+
             });
         };
-
-
-
-
-
-
-
 
 
         /////////////////////////////////////////
@@ -136,12 +97,10 @@
             console.log($scope.list);
             request.send('/taskmanager/addTask', $scope.list, function(data) {
                 $scope.tasks = data;
-                $scope.taskss = data;
 
-                console.log($scope.tasks);
-                console.log($scope.taskss);
+                //console.log($scope.tasks);
 
-                return $scope.tasks;
+                //return $scope.tasks;
                 //$scope.tasks = data;
                 //console.log($data);
                 //$scope.list = data;
@@ -153,11 +112,15 @@
             });
         };
 
-        ///name_task_block
+        $scope.createCard = function() {
+            //request.send('/add_task', {'post':$scope.name_task_block}, function(data) {
+            console.log($scope.card);
+            request.send('/taskmanager/createCard', {'post': $scope.card}, function(data) {
+                $scope.card = data;
 
-       
-
-       
+            });
+        };
+      
 
 	    
 
