@@ -14,8 +14,24 @@ class TaskManagerController extends Controller
 
 	public function getTask($post = []){
 
-		$tasks = Task::all();
-    	return $tasks;
+		//$tasks = Task::all();
+    	//return $tasks;
+
+
+        ////////////////
+
+        $tasks = Task::all();
+          //return dd($tasks = Task::all());
+          //return dd($tasks->tasks());
+          //$all = [];
+          //$tasks->cards;
+
+        //$carts = TaskList::all();
+
+
+
+
+        return $tasks;
 
     }
 
@@ -59,9 +75,9 @@ class TaskManagerController extends Controller
         $task->task_id = '1';
         $task->save();
 
-        $data_card = Task::all();
+        //$data_card = Task::all();
 
-        return $data_card;
+        //return $data_card;
 
     }
 

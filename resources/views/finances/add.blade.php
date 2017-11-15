@@ -282,7 +282,9 @@
                         </thead>
 
                         <tbody>
-                            <tr ng-repeat="(k, products) in productsList">
+                        
+                            <tr ng-repeat="(k, products) in productsList">                             
+
                                 <td>
                                     <span class="form-span table-span" ng-show=" ! edit_products && finances_id && productsList[k].products_type == 0">Produkt</span>
                                     <span class="form-span table-span" ng-show=" ! edit_products && finances_id && productsList[k].products_type == 1">Usługa</span>
@@ -317,11 +319,26 @@
                                     <span class="form-span table-span" ng-show=" ! edit_products && finances_id && products_currency == 0">PLN</span>
                                     <span class="form-span table-span" ng-show=" ! edit_products && finances_id && products_currency == 1">EUR</span>
                                     <span class="form-span table-span" ng-show=" ! edit_products && finances_id && products_currency == 2">USD</span>
-                                    <select class="form-control" name="products_currency" ng-show="edit_products || ! finances_id" ng-model="products_currency">
-                                        <option value="0">PLN</option>
-                                        <option value="1">EUR</option>
-                                        <option value="2">USD</option>
-                                    </select>
+
+                                    <span ng-if="productsList[k].i == NULL">
+                                        
+                                        <select class="form-control" name="products_currency"  ng-show="edit_products || ! finances_id" ng-model="products_currency">
+                                            <option value="0">PLN</option>
+                                            <option value="1">EUR</option>
+                                            <option value="2">USD</option>
+                                        </select>
+                                        
+                                    </span>
+
+                                    <span ng-if="productsList[k].i == '1'"> 
+                                        <select class="form-control" name="products_currency" disabled ng-show="edit_products || ! finances_id" ng-model="products_currency">
+                                            <option value="0">PLN</option>
+                                            <option value="1">EUR</option>
+                                            <option value="2">USD</option>
+                                        </select>
+                                        
+                                    </span>
+
                                 </td>
 
                                 <td class="text-right discount">

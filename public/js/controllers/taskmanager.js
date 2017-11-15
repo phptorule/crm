@@ -115,7 +115,7 @@
         $scope.createCard = function() {
             //request.send('/add_task', {'post':$scope.name_task_block}, function(data) {
             console.log($scope.card);
-            request.send('/taskmanager/createCard', {'post': $scope.card}, function(data) {
+            request.send('/taskmanager/createCard',$scope.card, function(data) {
                 $scope.card = data;
 
             });

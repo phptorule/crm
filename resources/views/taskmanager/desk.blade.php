@@ -14,7 +14,9 @@
             <div class="panel panel-bd lobidrag_task_manager">
                 <div class="panel-heading">
                     <p>@{{task.name}} <button class="btn-danger pull-right" ng-click="deleteTask(task.id)">X</button></p>
+                    <p ng-repeat-"card_names in task.cards">@{{card_names.name}}</p>
                 </div>
+
 
                 <div class="panel panel-bd lobidrag_task_manager">
                     <div class="panel-heading">
