@@ -68,7 +68,7 @@
             });
         };
 
-    
+
         $scope.save = function(products_ids) {
             $scope.finances.products_ids = products_ids;
             $scope.finances.finances_payment_method = $scope.finances_payment_method;
@@ -96,7 +96,7 @@
             });
         };
 
-        
+
 
         $scope.getFinancesNumber = function() {
             request.send('/finances/getFinancesNumber', {}, function(data) {
@@ -104,7 +104,7 @@
             });
         };
 
-        
+
 
 		$scope.initTeamUsers = function() {
             request.send('/users/getTeamUsers', {}, function(data) {
@@ -122,7 +122,7 @@
         };
 
 
-        
+
         $scope.getTask = function() {
 
             request.send('/taskmanager/getTask', $scope.list, function(data) {
@@ -180,28 +180,28 @@
 
         ///name_task_block
 
-       
 
-       
 
-	    
+
+
+
 
 
         ///////////////////////////////////////////////////////////////
-        
+
         $scope.print = function() {
-            request.send('/pdf/downloadPdf', {'post': $scope.finances}, function(data) {    
+            request.send('/pdf/downloadPdf', {'post': $scope.finances}, function(data) {
             //request.send('downloadPDF', {'post': $scope.finances}, function(data) {
 
             });
             /*
             request.send('/downloadPDF', {'post': $scope.finances}, function(data) {
-                
+
             });
             */
         };
 
-        
+
         ////////////////////////////////////////////////////////////////////////////////
 	};
 
