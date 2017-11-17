@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.5/jspdf.min.js"></script>
-    <script src="https://code.jquery.com/jquery-1.12.3.min.js"></script> 
+    <script src="https://code.jquery.com/jquery-1.12.3.min.js"></script>
     <script type="text/javascript">
         window.close();
-    </script>   
+    </script>
   </head>
 
   <body style="background-color:#ffffff; font-weight:bold; color:#000000;">
@@ -62,7 +62,7 @@
                 <p>Phone: {{$team->teams_phone}}</p>
             </div>
 
-            
+
             <div class="right_block" class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
                 <p>Name firm: {{$finances->finances_customer_name}}</p>
                 <p>Ulaca:</p>
@@ -89,7 +89,7 @@
 
             <div class="table-responsive">
                 <table id="dataTableExample1" class="table table-bordered table-striped table-hover">
-                    
+
                         <tr class="info">
                             <th>Number</th>
                             <th>Nazva</th>
@@ -102,23 +102,23 @@
 
                     <?php $i=1; ?>
                     @foreach($products as $product)
-                    
+
                         <tr>
                             <td>{{$i}}</td>
                             <td>{{$product->products_name}}</td>
                             <td>{{$product->products_amount}}</td>
-                            <td></td>
+                            <td>{{$product->products_discount_amount}}</td>
                             <td>{{$product->products_vat_amount}}</td>
                             <td>{{$product->products_total_cost}}</td>
                         </tr>
-                    
+
                     <?php $i++; ?>
                     @endforeach
-                    
+
                         <tr>
                             <td>Razom do zaplatu: {{$finances->finances_total_amount}}</td>
                         </tr>
-                    
+
                 </table>
             </div>
 
