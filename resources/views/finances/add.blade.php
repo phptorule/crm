@@ -274,7 +274,7 @@
                                 <th class="product_name_column">Nazwa pozycji<span class="req_field"> *</span></th>
                                 <th class="product_small_column">Ilosc<span class="req_field" ng-show="products.products_type == 0"> *</span></th>
                                 <th class="product_small_column">Jm</th>
-                                <th>Waluta</th>
+                                <th style="width:100px;">Waluta</th>
                                 <th>Cena<span class="req_field"> *</span></th>
                                 <th>Suma netto</th>
                                 <th>Suma brutto</th>
@@ -315,29 +315,39 @@
                                     </div>
                                 </td>
 
-                                <td>
+                                <td style="width:100px;">
                                     <span class="form-span table-span" ng-show=" ! edit_products && finances_id && products_currency == 0">PLN</span>
                                     <span class="form-span table-span" ng-show=" ! edit_products && finances_id && products_currency == 1">EUR</span>
                                     <span class="form-span table-span" ng-show=" ! edit_products && finances_id && products_currency == 2">USD</span>
 
-                                    <span ng-if="productsList[k].i == NULL">
+                                    
                                         
-                                        <select class="form-control" name="products_currency"  ng-show="edit_products || ! finances_id" ng-model="products_currency">
-                                            <option value="0">PLN</option>
-                                            <option value="1">EUR</option>
-                                            <option value="2">USD</option>
+                                    <select class="form-control" name="products_currency"  ng-show="edit_products || ! finances_id" ng-model="productsList[k].products_currency">
+                                        <span><option value="0">PLN</option></span>
+                                        <span><option value="1">EUR</option></span>
+                                        <span><option value="2">USD</option></span>
+                                    </select>
+                                        
+                                    
+
+                                    <!---
+
+                                    <span ng-if="productsList[k].i == '1'"> 
+
+                                        <select class="form-control" name="products_currency" disabled ng-show="edit_products || ! finances_id" ng-model="products_currency">
+                                            <span ng-if="products_currency == '0'"><option value="0" selected>@{{products_currency}}</option></span>
+                                            <span ng-if="products_currency == '1'"><option value="1" selected>EUR</option></span>
+                                            <span ng-if="products_currency == '2'"><option value="2" selected>USD</option></span>
                                         </select>
                                         
                                     </span>
 
-                                    <span ng-if="productsList[k].i == '1'"> 
-                                        <select class="form-control" name="products_currency" disabled ng-show="edit_products || ! finances_id" ng-model="products_currency">
-                                            <option value="0">PLN</option>
-                                            <option value="1">EUR</option>
-                                            <option value="2">USD</option>
-                                        </select>
-                                        
-                                    </span>
+                                    <span ng-if="products_currency == '0'">@{{products_currency}}</span>
+                                    <span>@{{products_currency}}</span>
+                                    <span ng-if="products_currency == '1'">@{{products_currency}}</span>
+                                    <span ng-if="products_currency == '2'">@{{products_currency}}</span>
+
+                                -->
 
                                 </td>
 
@@ -417,7 +427,7 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <span>@{{ productsList[k].discount_amount.toFixed(2) }}</span>
+                                        <span>@{{ productsList[k].products_discount_amount.toFixed(2) }}</span>
                                     </div>
 
                                     <div class="form-group">

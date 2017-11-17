@@ -9,7 +9,7 @@ use App\Task;
 use App\TaskList;
 use Illuminate\Support\Facades\Auth;
 
-class TaskManagerController extends Controller
+class TaskmanagerController extends Controller
 {
 
 	public function getTask($post = []){
@@ -21,12 +21,20 @@ class TaskManagerController extends Controller
         ////////////////
 
         $tasks = Task::all();
+        //$mas = [];
+
+        foreach ($tasks as $task) {
+            $task->cards = TaskList::where('task_id', $task->id)->get();
+            //array_push($mas, TaskList::where('task_id', $task->id));
+        }
           //return dd($tasks = Task::all());
           //return dd($tasks->tasks());
           //$all = [];
           //$tasks->cards;
 
         //$carts = TaskList::all();
+        //$tasks->cards = $card;
+        //dd($tasks);
 
 
 
@@ -42,8 +50,14 @@ class TaskManagerController extends Controller
         $delete_task->delete();
 
     	$tasks = Task::all();
+        //$mas = [];
 
-    	return $tasks;
+        foreach ($tasks as $task) {
+            $task->cards = TaskList::where('task_id', $task->id)->get();
+            //array_push($mas, TaskList::where('task_id', $task->id));
+        }
+
+        return $tasks;
 
     }
 
@@ -59,21 +73,39 @@ class TaskManagerController extends Controller
     	$task->user_id = Auth::user()->users_id;
     	$task->save();
 
-    	$data = Task::all();
+    	$tasks = Task::all();
+        //$mas = [];
 
-    	return $data;
+        foreach ($tasks as $task) {
+            $task->cards = TaskList::where('task_id', $task->id)->get();
+            //array_push($mas, TaskList::where('task_id', $task->id));
+        }
+
+        return $tasks;
 
     }
 
     public function createCard($post = []){
 
         //dd($post);
-        $task = new TaskList();
-        $task->name = $post['name_card'];
-        $task->user_id = Auth::user()->users_id;
+        $card = new TaskList();
+        $card->name = $post['name_card'];
+        $card->user_id = Auth::user()->users_id;
         //$task->task_id = $post['task_id'];
-        $task->task_id = '1';
-        $task->save();
+        $card->task_id = $post['task_id'];
+        $card->save();
+
+
+
+        $tasks = Task::all();
+        //$mas = [];
+
+        foreach ($tasks as $task) {
+            $task->cards = TaskList::where('task_id', $task->id)->get();
+            //array_push($mas, TaskList::where('task_id', $task->id));
+        }
+
+        return $tasks;
 
         //$data_card = Task::all();
 
