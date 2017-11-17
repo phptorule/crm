@@ -105,6 +105,8 @@ class FinancesController extends Controller
 
     public function saveProduct($post = [])
     {
+
+
         //dd($post);
         foreach ($post as $item)
         {
@@ -127,6 +129,9 @@ class FinancesController extends Controller
             $product->products_discount_regular = $item['products_discount_regular'];
             $product->products_vat_shipping_percent = $item['products_vat_shipping_percent'];
             $product->products_shipping_price = $item['products_shipping_price'];
+            $product->products_discount_amount = $item['products_discount_amount'];
+
+
             $product->save();
 
             $products_ids[] = $product->products_id;
@@ -150,7 +155,7 @@ class FinancesController extends Controller
         $register->registered_finances_netto = empty($post['registered_finances_netto']) ? '' : $post['registered_finances_netto'];
         $register->registered_finances_brutto = empty($post['registered_finances_brutto']) ? '' : $post['registered_finances_brutto'];
         $register->registered_payment_method = empty($post['registered_payment_method']) ? '' : $post['registered_payment_method'];
-        $register->registered_paid = empty($post['registered_paid']) ? '' : $post['registered_paid'];
+        $register->registered_paid = empty($post['registered_paid']) ? 0 : $post['registered_paid'];
         $register->registered_payment_date = $payment_date;
         $register->registered_assign_to = $post['registered_assign_to'];
         $register->registered_bank_account = empty($post['registered_bank_account']) ? '' : $post['registered_bank_account'];

@@ -15,7 +15,7 @@
 		$scope.team_users = [];
 		$scope.finances = {};
 		$scope.products = {};
-		$scope.products_currency = '0';
+		$scope.products.products_currency = '0';
         $scope.discount_window = [];
 		$scope.discount_window[0] = false;
 		$scope.discount_sum_window = false;
@@ -37,7 +37,7 @@
         $scope.finances_id = $location.path().split('/')[3];
         $scope.registered_id = $location.path().split('/')[3];
         $scope.products.cost_netto = 0;
-        $scope.products.discount_amount = 0;
+        $scope.products.products_discount_amount = 0;
         $scope.products.cost_with_discount = 0;
         $scope.products.products_total_cost = 0;
         $scope.products.products_vat_amount = 0;
@@ -46,6 +46,7 @@
         $scope.products.products_shipping_price = 0;
         $scope.productsList = [];
         $scope.productsList.push($scope.products);
+
         $scope.class = "closed";
 
 
@@ -390,11 +391,12 @@
             $scope.object.products_discount_regular = 0;
             $scope.object.products_vat_percent = 0;
             $scope.object.cost_netto = 0;
-            $scope.object.discount_amount = 0;
+            $scope.object.products_discount_amount = 0;
             $scope.object.cost_with_discount = 0;
             $scope.object.products_vat_amount = 0;
             $scope.object.products_total_cost = 0;
             $scope.object.products_dimension = '';
+            //$scope.object.i = +1;
 
             $scope.productsList.push($scope.object);
         };
@@ -414,7 +416,7 @@
     		{
     			$scope.productsList[index].products_discount_percent = 0;
     			$scope.productsList[index].products_discount_regular = 0;
-                $scope.productsList[index].discount_amount = 0;
+                $scope.productsList[index].products_discount_amount = 0;
                 $scope.productsList[index].cost_with_discount = 0;
                 $scope.productsList[index].products_vat_amount = ($scope.productsList[index].cost_netto * $scope.productsList[index].products_vat_percent) / 100;
                 $scope.productsList[index].products_total_cost = $scope.productsList[index].cost_netto + $scope.productsList[index].products_vat_amount;
@@ -423,7 +425,7 @@
     		if (discount == 'percent')
     		{
     			$scope.productsList[index].products_discount_regular = 0;
-                $scope.productsList[index].discount_amount = 0;
+                $scope.productsList[index].products_discount_amount = 0;
                 $scope.productsList[index].cost_with_discount = 0;
                 $scope.productsList[index].products_vat_amount = ($scope.productsList[index].cost_netto * $scope.productsList[index].products_vat_percent) / 100;
                 $scope.productsList[index].products_total_cost = $scope.productsList[index].cost_netto + $scope.productsList[index].products_vat_amount;
@@ -432,7 +434,7 @@
     		if (discount == 'regular')
     		{
     			$scope.productsList[index].products_discount_percent = 0;
-                $scope.productsList[index].discount_amount = 0;
+                $scope.productsList[index].products_discount_amount = 0;
                 $scope.productsList[index].cost_with_discount = 0;
                 $scope.productsList[index].products_vat_amount = ($scope.productsList[index].cost_netto * $scope.productsList[index].products_vat_percent) / 100;
                 $scope.productsList[index].products_total_cost = $scope.productsList[index].cost_netto + $scope.productsList[index].products_vat_amount;
@@ -490,22 +492,22 @@
 
             if ($scope.productsList[index].products_discount_percent == 0 && $scope.productsList[index].products_discount_regular == 0)
             {
-                $scope.productsList[index].discount_amount = 0;
+                $scope.productsList[index].products_discount_amount = 0;
             }
 
             if ($scope.productsList[index].products_discount_percent != 0)
             {
                 $scope.productsList[index].products_discount_percent = $scope.productsList[index].products_discount_percent.replace(/,/g,'.');
-                $scope.productsList[index].discount_amount = ($scope.productsList[index].cost_netto * $scope.productsList[index].products_discount_percent / 100)*1;
-                $scope.productsList[index].cost_with_discount = $scope.productsList[index].cost_netto - $scope.productsList[index].discount_amount;
+                $scope.productsList[index].products_discount_amount = ($scope.productsList[index].cost_netto * $scope.productsList[index].products_discount_percent / 100)*1;
+                $scope.productsList[index].cost_with_discount = $scope.productsList[index].cost_netto - $scope.productsList[index].products_discount_amount;
                 var total_cost = $scope.productsList[index].cost_with_discount;
             }
 
             if ($scope.productsList[index].products_discount_regular != 0)
             {
                 $scope.productsList[index].products_discount_regular = $scope.productsList[index].products_discount_regular.replace(/,/g,'.');
-                $scope.productsList[index].discount_amount = $scope.productsList[index].products_discount_regular*1;
-                $scope.productsList[index].cost_with_discount = $scope.productsList[index].cost_netto - $scope.productsList[index].discount_amount;
+                $scope.productsList[index].products_discount_amount = $scope.productsList[index].products_discount_regular*1;
+                $scope.productsList[index].cost_with_discount = $scope.productsList[index].cost_netto - $scope.productsList[index].products_discount_amount;
                 var total_cost = $scope.productsList[index].cost_with_discount;
             }
 

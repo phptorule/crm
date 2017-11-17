@@ -100,7 +100,7 @@
                             <td>{{$product->products_cost}}</td>
                             <td>{{$product->products_cost}}</td>
                             <td>{{$product->products_discount_percent}}</td>
-                            <td></td>
+                            <td>{{$product->products_discount_amount}}</td>
                             <td>{{$product->products_vat_percent}}</td>
                             <td>{{$product->products_vat_amount}}</td>
                             <td>{{$product->products_total_cost}}</td>

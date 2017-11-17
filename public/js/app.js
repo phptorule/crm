@@ -176,12 +176,12 @@
 
             $('.lobidrag_task_manager').lobiPanel({
                 sortable: true,
-                editTitle: false,
-                unpin: false,
-                reload: false,
-                minimize: false,
-                close: false,
-                expand: false,
+                editTitle: true,
+                unpin: true,
+                reload: true,
+                minimize: true,
+                close: true,
+                expand: true,
             });
 
             //

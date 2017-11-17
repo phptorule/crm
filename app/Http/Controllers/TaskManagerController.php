@@ -6,79 +6,110 @@ use App\Http\Requests;
 use Illuminate\Http\Request;
 use DB;
 use App\Task;
+use App\TaskList;
 use Illuminate\Support\Facades\Auth;
 
-class TaskManagerController extends Controller
+class TaskmanagerController extends Controller
 {
 
 	public function getTask($post = []){
 
-
-		$tasks = Task::all();
-
-		/*
-    	$taskss = Task::all();
-
-    	$tasks = [];
-    	foreach ($taskss as $task) {
-    		$ta = $task->name;
-    		array_push($tasks, $ta);
-    	}
-    	*/
+		//$tasks = Task::all();
+    	//return $tasks;
 
 
+        ////////////////
 
-    	//return dd($taa);
-    	return $tasks;
+        $tasks = Task::all();
+        //$mas = [];
 
+        foreach ($tasks as $task) {
+            $task->cards = TaskList::where('task_id', $task->id)->get();
+            //array_push($mas, TaskList::where('task_id', $task->id));
+        }
+          //return dd($tasks = Task::all());
+          //return dd($tasks->tasks());
+          //$all = [];
+          //$tasks->cards;
+
+        //$carts = TaskList::all();
+        //$tasks->cards = $card;
+        //dd($tasks);
+
+
+
+
+        return $tasks;
 
     }
 
 
     public function deleteTask($post = []){
 
+        $delete_task = Task::find($post['id']);
+        $delete_task->delete();
 
-    	dd($post);
-    	
-
-    	Task::delete($post['id']);
     	$tasks = Task::all();
-    	//return dd($taa);
-    	return $tasks;
-    	
+        //$mas = [];
 
+        foreach ($tasks as $task) {
+            $task->cards = TaskList::where('task_id', $task->id)->get();
+            //array_push($mas, TaskList::where('task_id', $task->id));
+        }
+
+        return $tasks;
 
     }
 
 
     public function addTask($post = []){
 
-
 		//return $request->name_task_block;
       	//dd(request()->name_task_block);
       	//return $post['name'];
-
 		
     	$task = new Task();
     	$task->name = $post['name_task_block'];
     	$task->user_id = Auth::user()->users_id;
     	$task->save();
 
-    	$data = Task::all();
+    	$tasks = Task::all();
+        //$mas = [];
 
-    	return $data;
-    	
+        foreach ($tasks as $task) {
+            $task->cards = TaskList::where('task_id', $task->id)->get();
+            //array_push($mas, TaskList::where('task_id', $task->id));
+        }
+
+        return $tasks;
+
+    }
+
+    public function createCard($post = []){
+
+        //dd($post);
+        $card = new TaskList();
+        $card->name = $post['name_card'];
+        $card->user_id = Auth::user()->users_id;
+        //$task->task_id = $post['task_id'];
+        $card->task_id = $post['task_id'];
+        $card->save();
 
 
 
-      	
-		//$post
-    	//return $request->finances_id; 
+        $tasks = Task::all();
+        //$mas = [];
 
-    	//return response()->json($post);
+        foreach ($tasks as $task) {
+            $task->cards = TaskList::where('task_id', $task->id)->get();
+            //array_push($mas, TaskList::where('task_id', $task->id));
+        }
 
-    	//return view('test', compact('post'));
+        return $tasks;
 
+        //$data_card = Task::all();
+
+        //return $data_card;
 
     }
 
