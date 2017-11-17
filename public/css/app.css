@@ -5537,3 +5537,69 @@ button.toast-close-button {
     border: solid 1px #000000;
     border-radius: 5px;
 }
+
+.customers_table td {
+    padding: 5px;
+    vertical-align: top;
+    text-transform: uppercase;
+    font-weight: 700;
+}
+
+.pdf_line {
+    border-bottom: 3px solid #d9edf7;
+}
+
+#pdf .row {
+    margin-bottom: 20px;
+}
+
+#pdf .info th {
+    text-align: center;
+    vertical-align: middle;
+}
+
+.pdf_number {
+    width: 50px;
+}
+
+.pdf_amount {
+    width: 50px;
+}
+
+.pdf_dimension {
+    width: 50px;
+}
+
+.pdf_cost_netto {
+    width: 50px;
+}
+
+.pdf_discount_percent {
+    width: 50px;
+}
+
+.pdf_cost_with_discount {
+    width: 50px;
+}
+
+.pdf_vat_percent {
+    width: 50px;
+}
+
+.pdf_vat_amount {
+    width: 50px;
+}
+
+.pdf_total_cost {
+    width: 50px;
+}
+
+#pdf .pfd_total_sum {
+    background-color: #00adef;
+    color: #fff;
+    text-transform: uppercase;
+    padding: 20px;
+    text-align: center;
+    font-weight: 700;
+    vertical-align: middle;
+}

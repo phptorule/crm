@@ -1,138 +1,140 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="/css/bootstrap.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.5/jspdf.min.js"></script>
-    <script src="https://code.jquery.com/jquery-1.12.3.min.js"></script> 
-    <script type="text/javascript">
-        window.close();
-    </script>   
-  </head>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="/css/bootstrap.min.css" rel="stylesheet" >
+        <link href="/css/app.css" rel="stylesheet" type="text/css"/>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.5/jspdf.min.js"></script>
+        <script src="https://code.jquery.com/jquery-1.12.3.min.js"></script>
+        <script type="text/javascript">
+            window.close();
+        </script>
+    </head>
 
-  <body style="background-color:#ffffff; font-weight:bold; color:#000000;">
-    <style>
-       .title{
-            text-align: center;
-       }
-       .left_block{
-            float: left;
-            width: 50%;
-        }
-        .right_block{
-            width: 50%;
-            float: right;
-        }
-        .clearfix{
-            clear: both;
-        }
-        .table{
-            width: 100%;
-        }
-        .table tr, th, td{
-            border: 1px #000000 solid;
-        }
-        .info{
-            background-color: #d4d4d4;
-        }
-  </style>
+    <body>
+        <div id="pdf">
+            <div class="container" id="container">
+                <h2 class="title text-center mb-30"><b>Faktura pro forma Nr {{$finances->finances_number}}</b></h2>
 
-
-<div id="pdf">
-    <div class="container" id="container">
-        <div class="row">
-
-
-
-        @foreach($data as $finances)
-            <h3 class="title">Faktura pro forma Nr {{$finances->finances_id}}</h3>
-
-            <div class="left_block" class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                <p>Name firm: {{$team->teams_name}}</p>
-                <p>Ulaca:</p>
-                <ul>
-                    <li>Kod: {{$team->teams_invoice_postcode}}</li>
-                    <li>Province: {{$team->teams_invoice_province}}</li>
-                    <li>Region: {{$team->teams_invoice_region}}</li>
-                    <li>Street: {{$team->teams_invoice_street}}</li>
-                    <li>Town: {{$team->teams_invoice_town}}</li>
-                </ul>
-                <p>Number NIP: {{$team->teams_nip}}</p>
-                <p>Phone: {{$team->teams_phone}}</p>
-            </div>
-
-            
-            <div class="right_block" class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                <p>Name firm: {{$finances->finances_customer_name}}</p>
-                <p>Ulaca:</p>
-                <ul>
-                    <li>Kod: {{$finances->finances_invoice_post_code}}</li>
-                    <li>province: {{$finances->finances_invoice_province}}</li>
-                    <li>region: {{$finances->finances_invoice_region}}</li>
-                    <li>street: {{$finances->finances_invoice_street}}</li>
-                    <li>town: {{$finances->finances_invoice_town}}</li>
-                </ul>
-                <p>NIP: {{$finances->finances_number}}</p>
-            </div>
-
-            <div class="clearfix"></div>
-            <hr>
-
-            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                <p>Data wystawienia: {{$finances->finances_issue_date}}</p>
-                <p>Termin platnosci: {{$finances->finances_payment_date }}</p>
-            </div>
-
-            <div class="clearfix"></div>
-
-
-            <div class="table-responsive">
-                <table id="dataTableExample1" class="table table-bordered table-striped table-hover">
-                    
-                        <tr class="info">
-                            <th>Number</th>
-                            <th>Nazva</th>
-                            <th>Iiosc</th>
-                            <th>Jm</th>
-                            <th>Cena netto</th>
-                            <th>Suma brutto</th>
+                <div class="row">
+                    <table class="col-xs-6 customers_table">
+                        <tr>
+                            <td class="text-right">Spzedawca:</td>
+                            <td>{{$team->teams_name}}</td>
                         </tr>
 
-
-                    <?php $i=1; ?>
-                    @foreach($products as $product)
-                    
                         <tr>
-                            <td>{{$i}}</td>
-                            <td>{{$product->products_name}}</td>
-                            <td>{{$product->products_amount}}</td>
+                            <td class="text-right">Adres:</td>
+                            <td>{{$team->teams_invoice_street}}, {{$team->teams_invoice_postcode}}, <br /> {{$team->teams_invoice_town}}</td>
+                        </tr>
+
+                        <tr>
+                            <td class="text-right">NIP:</td>
+                            <td>{{$team->teams_nip}}</td>
+                        </tr>
+
+                        <tr class="pdf_line">
+                            <td class="text-right">Phone:</td>
+                            <td>{{$team->teams_phone}}</td>
+                        </tr>
+
+                        <tr>
+                            <td class="text-right">Data wystawienia:</td>
+                            <td>{{$finances->finances_issue_date}}</td>
+                        </tr>
+
+                        <tr>
+                            <td class="text-right">Termin platnosci:</td>
+                            <td>{{$finances->finances_payment_date}}</td>
+                        </tr>
+
+                        <tr>
                             <td></td>
-                            <td>{{$product->products_vat_amount}}</td>
-                            <td>{{$product->products_total_cost}}</td>
+                            <td></td>
                         </tr>
-                    
-                    <?php $i++; ?>
-                    @endforeach
-                    
+                    </table>
+
+                    <table class="col-xs-6 customers_table">
                         <tr>
-                            <td>Razom do zaplatu: {{$finances->finances_total_amount}}</td>
+                            <td class="text-right">Nabywca:</td>
+                            <td>{{$finances->finances_customer_name}}</td>
                         </tr>
-                    
+
+                        <tr>
+                            <td class="text-right">Adres:</td>
+                            <td>{{$finances->finances_invoice_street}}, {{$finances->finances_invoice_post_code}}, <br /> {{$finances->finances_invoice_town}}</td>
+                        </tr>
+
+                        <tr>
+                            <td class="text-right">NIP:</td>
+                            <td>{{$finances->finances_nip}}</td>
+                        </tr>
+
+                        <tr class="pdf_line">
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                        </tr>
+
+                        <tr>
+                            <td class="text-right">Sposób płatności:</td>
+                            <td>{{$finances->finances_payment_method == 0 ? 'Gotówką' : 'Przelew'}}</td>
+                        </tr>
+
+                        <tr>
+                            <td class="text-right">Bank:</td>
+                            <td>{{$team->teams_bank_name}}</td>
+                        </tr>
+
+                        <tr>
+                            <td class="text-right">Numer konta:</td>
+                            <td>{{$team->teams_nip}}</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <table class="table table-responsive table-bordered table-striped">
+                    <tr class="info">
+                        <th class="pdf_number">Lp.</th>
+                        <th>Nazwa</th>
+                        <th class="pdf_amount">Iłość</th>
+                        <th class="pdf_dimension">J.m.</th>
+                        <th class="pdf_cost_netto">Cena netto</th>
+                        <th class="pdf_cost_netto">Wartość netto</th>
+                        <th class="pdf_discount_percent">Rabat, %</th>
+                        <th class="pdf_cost_with_discount">Wartość po rabacie</th>
+                        <th class="pdf_vat_percent">Stawka VAT, %</th>
+                        <th class="pdf_vat_amount">Kwota VAT</th>
+                        <th class="pdf_total_cost">Wartość brutto</th>
+                    </tr>
+
+                <?php $i=1; ?>
+                @foreach($products as $product)
+
+                    <tr>
+                        <td>{{$i}}</td>
+                        <td>{{$product->products_name}}</td>
+                        <td>{{$product->products_amount}}</td>
+                        <td>{{$product->products_dimension}}</td>
+                        <td>{{$product->products_cost}}</td>
+                        <td>{{$product->products_cost}}</td>
+                        <td>{{$product->products_discount_percent}}</td>
+                        <td>{{$product->products_cost_with_discount}}</td>
+                        <td>{{$product->products_vat_percent}}</td>
+                        <td>{{$product->products_vat_amount}}</td>
+                        <td>{{$product->products_total_cost}}</td>
+                    </tr>
+
+                <?php $i++; ?>
+                @endforeach
+
+                    <tr>
+                        <td colspan="2" class="pfd_total_sum">Razem do zapłąty: {{$finances->finances_total_amount}}</td>
+                    </tr>
                 </table>
             </div>
-
-
-
-        @endforeach
-
         </div>
-
-    </div>
-</div>
-
-
-  </body>
+    </body>
 </html>
 
 
