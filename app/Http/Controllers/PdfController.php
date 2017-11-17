@@ -10,6 +10,8 @@ use App\Finances;
 use App\Teams;
 use App\Products;
 use App\Finances_products;
+use App\Task;
+use App\TaskList;
 
 class PdfController extends Controller
 {
@@ -61,4 +63,44 @@ class PdfController extends Controller
       return $pdf->download('invoice.pdf');
 
     }
+
+
+    public function test(){
+
+      /*
+      $tasks = Task::all();
+      //return dd($tasks = Task::all());
+      //return dd($tasks->tasks());
+      $all = [];
+      foreach ($tasks as $task)
+        {
+
+            //$task_list = TaskList::find('task_id', '=',$task->id);
+            $task_list = TaskList::where('task_id',$task->id)->get();
+            //return dd($task_list);
+            array_push($all, $task_list);
+            //return $task->id;
+
+            //return dd($task);
+        }
+
+        return dd($all);
+        */
+
+        $tasks = Task::all();
+      //return dd($tasks = Task::all());
+      //return dd($tasks->tasks());
+      //$all = [];
+        //$tasks->cards;
+
+
+
+        $tasks->cards = $mass;
+
+        //return $tasks;
+
+        return dd($mass);
+
+    }
+
 }
