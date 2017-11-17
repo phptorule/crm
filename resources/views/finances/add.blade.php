@@ -1,11 +1,11 @@
 <div class="row" data-ng-controller="FinancesCtrl" ng-init="init()">
 
 
-    
+
     <form class="no-transition" name="form" method="post" novalidate="novalidate">
 
         <a class="btn btn-add classic_button pull-right" href="/pdf/@{{finances_id}}" target="_blank">Export to PDF</a>
-        
+
 
         <div class="col-sm-12">
 
@@ -282,8 +282,8 @@
                         </thead>
 
                         <tbody>
-                        
-                            <tr ng-repeat="(k, products) in productsList">                             
+
+                            <tr ng-repeat="(k, products) in productsList">
 
                                 <td>
                                     <span class="form-span table-span" ng-show=" ! edit_products && finances_id && productsList[k].products_type == 0">Produkt</span>
@@ -320,26 +320,26 @@
                                     <span class="form-span table-span" ng-show=" ! edit_products && finances_id && products_currency == 1">EUR</span>
                                     <span class="form-span table-span" ng-show=" ! edit_products && finances_id && products_currency == 2">USD</span>
 
-                                    
-                                        
+
+
                                     <select class="form-control" name="products_currency"  ng-show="edit_products || ! finances_id" ng-model="productsList[k].products_currency">
                                         <span><option value="0">PLN</option></span>
                                         <span><option value="1">EUR</option></span>
                                         <span><option value="2">USD</option></span>
                                     </select>
-                                        
-                                    
+
+
 
                                     <!---
 
-                                    <span ng-if="productsList[k].i == '1'"> 
+                                    <span ng-if="productsList[k].i == '1'">
 
                                         <select class="form-control" name="products_currency" disabled ng-show="edit_products || ! finances_id" ng-model="products_currency">
                                             <span ng-if="products_currency == '0'"><option value="0" selected>@{{products_currency}}</option></span>
                                             <span ng-if="products_currency == '1'"><option value="1" selected>EUR</option></span>
                                             <span ng-if="products_currency == '2'"><option value="2" selected>USD</option></span>
                                         </select>
-                                        
+
                                     </span>
 
                                     <span ng-if="products_currency == '0'">@{{products_currency}}</span>
@@ -361,7 +361,7 @@
                                         <button type="submit" class="btn btn-add" ng-click="openDiscount(k)">Rabat</button>
                                         <div class="discount_window" ng-show="discount_window[k]">
                                             <div class="discount_header">
-                                                <h4>Kwota całkowita netto: @{{ productsList[k].cost_with_discount.toFixed(2) }}</h4>
+                                                <h4>Kwota całkowita netto: @{{ productsList[k].products_cost_with_discount.toFixed(2) }}</h4>
                                                 <button type="button" class="close" ng-click="discount_window[k] = ! discount_window[k]" aria-hidden="true">×</button>
                                             </div>
 
@@ -402,7 +402,7 @@
                                         <button type="submit" class="btn btn-add" ng-click="openTax(k)">Podatek VAT</button>
                                         <div class="vat_window" ng-show="vat_window[k]">
                                             <div class="discount_header">
-                                                <h4>Kwota netto: @{{ (productsList[k].cost_with_discount ? productsList[k].cost_with_discount : productsList[k].cost_netto).toFixed(2) }}</h4>
+                                                <h4>Kwota netto: @{{ (productsList[k].products_cost_with_discount ? productsList[k].products_cost_with_discount : productsList[k].cost_netto).toFixed(2) }}</h4>
                                                 <button type="button" class="close" ng-click="vat_window[k] = ! vat_window[k]" aria-hidden="true">×</button>
                                             </div>
 
@@ -431,7 +431,7 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <span>@{{ productsList[k].cost_with_discount.toFixed(2) }}</span>
+                                        <span>@{{ productsList[k].products_cost_with_discount.toFixed(2) }}</span>
                                     </div>
 
                                     <div class="form-group">
