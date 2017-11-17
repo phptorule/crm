@@ -98,14 +98,96 @@
 
 
         };
-      
 
 
+
+
+
+
+
+        //////
+        $scope.selectCard = function(card_id) {
+
+            //console.log(card_id);
+            var modalInstance = $uibModal.open({
+                animation: true,
+                templateUrl: 'SelectCard.html',
+                controller: 'ModalSelectCardCtrl',
+                resolve: {
+                    items: card_id
+                }
+            });
+        };
+	};
+})();
+
+
+//Модалак
+(function () {
+    'use strict';
+
+    angular.module('app').controller('ModalSelectCardCtrl', ['$rootScope', '$scope', '$uibModal', '$uibModalInstance', '$filter', 'request', 'validate', 'logger', 'langs', 'items', ModalSelectCardCtrl]);
+
+    function ModalSelectCardCtrl($rootScope, $scope, $uibModal, $uibModalInstance, $filter, request, validate, logger, langs, items) {
+        
+
+
+        $scope.card_id = items;
+
+
+        $scope.list = {};
+        $scope.desl = [];
+
+        $scope.tasks = {};
+        $scope.card = {};
 
         
-        ////////////////////////////////////////////////////////////////////////////////
-	};
+        $scope.class = "closed";
+        $scope.cards = [];
+        $scope.mass = [];
+
+        $scope.getCard = function() {
+
+            console.log($scope.card_id);
+            request.send('/TaskManager/getCard', {'card_id': $scope.card_id}, function(data) {
+
+                $scope.card_modal = data;
+
+
+            });
+        };
+
+
+        $scope.getTask = function() {
+
+            request.send('/TaskManager/getTask', $scope.list, function(data) {
+
+                $scope.tasks = data;
+
+            });
+        };
+
+
+        $scope.initTask = function() {
+
+            console.log($scope.list);
+            request.send('/TaskManager/addTask', $scope.list, function(data) {
+                $scope.tasks = data;
+
+                for (var k in data)
+                {
+                    $scope.cards[k] = data[k].cards;
+                }
+
+            });
+        };
 
 
 
+
+
+        $scope.cancel = function() {
+            $uibModalInstance.dismiss('cancel');
+        };
+    };
 })();

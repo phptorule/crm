@@ -6,15 +6,15 @@ use Illuminate\Database\Eloquent\Model;
 
 use App\TaskList;
 
-class Task extends Model
+class TasksLists extends Model
 {
-    protected $table = "task";
+    protected $table = "tasks_lists";
 
     protected $fillable = ['name','user_id','created_at', 'updated_at'];
 
 
     public function tasks() {
-        return $this->hasMany('App\TaskList');
+        return $this->hasMany('App\Cards');
     }
 
 }

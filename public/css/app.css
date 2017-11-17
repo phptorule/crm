@@ -5530,3 +5530,10 @@ button.toast-close-button {
 .no-treeview .sidebar-menu > li > a {
     display: inline-block;
 }
+
+
+.card_title{
+    padding: 5px;
+    border: solid 1px #000000;
+    border-radius: 5px;
+}

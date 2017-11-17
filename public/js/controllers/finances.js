@@ -302,6 +302,8 @@
         	$scope.finances.finances_invoice_region = $scope.finances.finances_send_region;
         };
 
+
+        //////
     	$scope.selectCustomer = function() {
             var modalInstance = $uibModal.open({
                 animation: true,
@@ -338,6 +340,8 @@
 
             });
         };
+
+        //////
 
         $scope.dateOptions = {
 			startingDay: 1,

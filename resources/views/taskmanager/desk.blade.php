@@ -14,7 +14,7 @@
                 <div class="panel-heading">
                     <p>task_block: @{{tasks[k].name}} <button class="btn-danger pull-right" ng-click="deleteTask(task.id)">X</button></p>
                     <hr>
-                    <p ng-repeat="card in cards[k]">card: @{{card.name}}</p>
+                    <p ng-repeat="card in cards[k]" class="card_title"><a href="" ng-click="selectCard(card.id)">@{{card.name}}</a></p>
                        
                 </div>
 
@@ -45,35 +45,39 @@
             </div>
         </div>
 
-
-        <div class="col-sm-4">
-            <div class="panel panel-bd lobidrag_task_manager">
-                <div class="panel-heading">
-                    <div class="col-sm-4">
-                        <div class="panel panel-bd lobidrag_task_manager">
-                            <div class="panel-heading">
-                                <p>11</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-4">
-                        <div class="panel panel-bd lobidrag_task_manager">
-                            <div class="panel-heading">
-                                <p>12</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-sm-4">
-            <div class="panel panel-bd lobidrag_task_manager">
-                <div class="panel-heading">
-                    2
-                </div>
-            </div>
-        </div>
-
     </form>
 </div>
+
+
+<script type="text/ng-template" id="SelectCard.html">
+    <div class="modal-header modal-header-primary" ng-init="getCard()">
+       <button type="button" class="close" ng-click="cancel()" aria-hidden="true">×</button>
+       <h3>Card name: <input type="text" ng-model="card_modal.name"></h3>
+    </div>
+    <div class="modal-body">
+       <div class="row">
+            <div class="col-md-12">
+                <div class="modal_content_header">
+                    <form>
+                        <div class="row">
+                            
+                        </div>
+                    </form>
+                </div>
+
+                <div class="table-responsive">
+
+                   <!--footer class="table-footer">
+                        <div class="row">
+
+                        </div>
+                    </footer-->
+                </div>
+            </div>
+        </div>
+   </div>
+
+   <div class="modal-footer">
+      <button type="button" class="btn btn-danger pull-right" ng-click="cancel()">Cancel</button>
+   </div>
+</script>
