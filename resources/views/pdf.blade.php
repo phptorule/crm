@@ -128,6 +128,23 @@
                 <?php $i++; ?>
                 @endforeach
 
+                @if ( ! empty($products[0]->products_shipping_price))
+                    <tr>
+                        <td>{{$i}}</td>
+                        <td>Koszt przesyłki</td>
+                        <td>1</td>
+                        <td>&nbsp;</td>
+                        <td>{{$products[0]->products_shipping_price}}</td>
+                        <td>{{$products[0]->products_shipping_price}}</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>{{$products[0]->products_vat_shipping_percent}}</td>
+                        <td>{{$products[0]->products_vat_shipping_amount}}</td>
+                        <td>{{$products[0]->products_vat_shipping_amount}}</td>
+                    </tr>
+
+                @endif
+
                     <tr>
                         <td colspan="2" class="pfd_total_sum">Razem do zapłąty: {{$finances->finances_total_amount}}</td>
                     </tr>

@@ -131,6 +131,7 @@
                 for (var k in $scope.productsList)
                 {
                     $scope.productsList[k].products_currency = $scope.products_currency;
+                    $scope.productsList[k].products_vat_shipping_amount = $scope.products.vat_shipping_amount;
                 }
                 request.send('/finances/saveProduct', $scope.productsList, function(data) {
                     $scope.save(data);
