@@ -52,26 +52,29 @@
 <script type="text/ng-template" id="SelectCard.html">
     <div class="modal-header modal-header-primary" ng-init="getCard()">
        <button type="button" class="close" ng-click="cancel()" aria-hidden="true">×</button>
-       <h3>Card name: <input type="text" ng-model="card_modal.name"></h3>
+       <h3>Card name: <input type="text" ng-model="card.name"></h3>
     </div>
     <div class="modal-body">
-       <div class="row">
-            <div class="col-md-12">
-                <div class="modal_content_header">
+        <div class="container">
+           <div class="row">
+                <div class="col-md-12">
                     <form>
-                        <div class="row">
-                            
+                        <div class="form-group">
+                            <textarea rows="8" class="form-control col-xs-12" ng-model="card.description"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <button class="btn btn-success" ng-click="saveCard()">Save</button>
                         </div>
                     </form>
-                </div>
 
-                <div class="table-responsive">
+                    <div class="table-responsive">
 
-                   <!--footer class="table-footer">
-                        <div class="row">
+                       <!--footer class="table-footer">
+                            <div class="row">
 
-                        </div>
-                    </footer-->
+                            </div>
+                        </footer-->
+                    </div>
                 </div>
             </div>
         </div>

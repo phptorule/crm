@@ -113,13 +113,31 @@ class TaskmanagerController extends Controller
 
     }
 
+    public function saveCard($post = []){
+
+        //dd($post);
+        $card = Cards::find($post['id']);
+        //dd($card);
+        $card->name = $post['name'];
+        //$card->user_id = Auth::user()->users_id;
+        $card->description = $post['description'];
+        $card->save();
+
+
+        $card = Cards::find($post['id']);
+
+        return $card;
+
+
+    }
+
     public function getCard($post = []){
 
         //dd($post);
-        $card_modal = Cards::find($post['card_id']);
+        $card = Cards::find($post['card_id']);
         //dd($card_modal);
 
-        return $card_modal;
+        return $card;
 
     }
 

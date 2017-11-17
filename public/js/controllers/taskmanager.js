@@ -7,17 +7,11 @@
     	$scope.types_list = ['By Month', 'By Year', 'Custom Period'];
 		$scope.months_list = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
-        //
         $scope.list = {};
         $scope.desl = [];
-        //$scope.name_task_block;
-        //
-        //$scope.list = [];
+
         $scope.tasks = {};
         $scope.card = {};
-
-
-        //$scope.cards.ids = []
 
         
         $scope.class = "closed";
@@ -38,12 +32,6 @@
                     $scope.cards[k] = data[k].cards;
                 }
 
-
-                //$scope.cards = data[0].cards;
-                //console.log($scope.cards);
-                //console.log($scope.tasks);
-
-
             });
         };
 
@@ -58,16 +46,13 @@
                     $scope.cards[k] = data[k].cards;
                 }
 
-
-
             });
         };
 
 
-        /////////////////////////////////////////
 
         $scope.initTask = function() {
-            //request.send('/add_task', {'post':$scope.name_task_block}, function(data) {
+
             console.log($scope.list);
             request.send('/TaskManager/addTask', $scope.list, function(data) {
                 $scope.tasks = data;
@@ -81,11 +66,10 @@
         };
 
         $scope.createCard = function(id) {
-            //request.send('/add_task', {'post':$scope.name_task_block}, function(data) {
-            //console.log(id);
+
+
             $scope.card.task_id = id;
             request.send('/TaskManager/createCard',$scope.card, function(data) {
-                //$scope.card = data;
 
                 $scope.tasks = data;
 
@@ -100,15 +84,8 @@
         };
 
 
-
-
-
-
-
-        //////
         $scope.selectCard = function(card_id) {
 
-            //console.log(card_id);
             var modalInstance = $uibModal.open({
                 animation: true,
                 templateUrl: 'SelectCard.html',
@@ -131,28 +108,27 @@
     function ModalSelectCardCtrl($rootScope, $scope, $uibModal, $uibModalInstance, $filter, request, validate, logger, langs, items) {
         
 
-
-        $scope.card_id = items;
-
-
-        $scope.list = {};
-        $scope.desl = [];
-
-        $scope.tasks = {};
         $scope.card = {};
-
+        $scope.card.card_id = items;
         
-        $scope.class = "closed";
-        $scope.cards = [];
-        $scope.mass = [];
+
 
         $scope.getCard = function() {
 
-            console.log($scope.card_id);
-            request.send('/TaskManager/getCard', {'card_id': $scope.card_id}, function(data) {
+            console.log($scope.card.card_id);
+            request.send('/TaskManager/getCard', {'card_id': $scope.card.card_id}, function(data) {
 
-                $scope.card_modal = data;
+                $scope.card = data;
 
+            });
+        };
+
+
+        $scope.saveCard = function() {
+
+            request.send('/TaskManager/saveCard', $scope.card, function(data) {
+
+                $scope.card = data;
 
             });
         };
@@ -181,8 +157,6 @@
 
             });
         };
-
-
 
 
 
