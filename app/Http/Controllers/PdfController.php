@@ -18,7 +18,7 @@ class PdfController extends Controller
     public function downloadPdf($post = []){
      // dd($post);
 		//$post
-    	//return $request->finances_id; 
+    	//return $request->finances_id;
 
     	//return response()->json($post);
 
@@ -40,11 +40,9 @@ class PdfController extends Controller
     }
 
     public function pdf($id){
-
       $data = Finances::where('finances_id',$id)->get();
       $team = Teams::find(session('current_team'));
       $finances_products = Finances_products::where('finances_id', $id)->get();
-
 
       $products = [];
 
@@ -54,7 +52,7 @@ class PdfController extends Controller
       }
 
       //return $id;
-      //return view('pdf', compact('data', 'team', 'finances_products', 'products'));
+      return view('pdf', compact('data', 'team', 'products'));
 
       $pdf = PDF::loadView('pdf', compact('data', 'team', 'finances_products', 'products'));
       //dd($pdf);

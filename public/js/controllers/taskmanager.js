@@ -125,7 +125,7 @@
 
         $scope.getTask = function() {
 
-            request.send('/taskmanager/getTask', $scope.list, function(data) {
+            request.send('/taskManager/getTask', $scope.list, function(data) {
                 //$scope.tasks = tasks;
 
                 //console.log(data);

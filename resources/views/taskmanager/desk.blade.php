@@ -11,7 +11,7 @@
     <form class="no-transition" name="form" method="post" novalidate="novalidate">
         <div class="list_block" ng-repeat="task in tasks">
             <div class="col-sm-4">
-                <div class="panel panel-bd lobidrag_task_manager">
+                <div class="panel panel-bd lobidrag_task_manager" data-sortable="true">
                     <div class="panel-heading">
                         <p>@{{task.name}} <button class="btn-danger pull-right" ng-click="deleteTask(task.id)">X</button></p>
                     </div>
