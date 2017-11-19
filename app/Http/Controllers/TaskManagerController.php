@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use DB;
 use App\TasksLists;
 use App\Cards;
+use App\Users;
+use App\UsersTeams;
 use Illuminate\Support\Facades\Auth;
 
 class TaskmanagerController extends Controller
@@ -137,9 +139,32 @@ class TaskmanagerController extends Controller
         $card = Cards::find($post['card_id']);
         //dd($card_modal);
 
+        /*
+        $teams_users = UsersTeams::where('teams_id',session('current_team'));
+        foreach ($teams_users as $user) {
+            $users->da = Users::find('users_id',$user->users_id);
+        }
+        //$teams_users->users();
+        $card->users = $users->da;
+        //dd($teams_users);
+        */
+
         return $card;
 
     }
+
+    public function reset($post = []){
+
+        
+        $card = Cards::find($post['card_id']);
+        //dd($card);
+
+
+        return $card;
+
+    }
+
+    
 
 
 }

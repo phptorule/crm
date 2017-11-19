@@ -12,7 +12,6 @@
 */
 
 Illuminate\Support\Facades\Artisan::call('migrate');
-//Route::get('/daaa',['uses'=>'PdfController@test', 'as'=>'daaa']);
 
 Route::get('/pdf/{id?}',['uses'=>'PdfController@pdf', 'as'=>'pdf'])->where('id','[0-9]+');
 

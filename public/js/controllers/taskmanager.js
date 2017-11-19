@@ -19,6 +19,7 @@
 
         $scope.mass = [];
         
+        $scope.users = {};
 
 
 
@@ -112,6 +113,18 @@
 
         $scope.card = {};
         $scope.card.card_id = items;
+
+
+        $scope.reset = function(id) {
+
+
+            request.send('/TaskManager/reset', {'card_id': id}, function(data) {
+
+                $scope.card = data;
+                
+
+            });
+        };
         
 
         $scope.getCard = function() {
@@ -120,6 +133,7 @@
             request.send('/TaskManager/getCard', {'card_id': $scope.card.card_id}, function(data) {
 
                 $scope.card = data;
+                //console.log($scope.card);
 
             });
         };
@@ -158,6 +172,17 @@
 
             });
         };
+
+        /*
+        $scope.getUsers = function() {
+            console.log(3);
+            //console.log($scope.list);
+            request.send('/TaskManager/getUsers', $scope, function(data) {
+                $scope.users = data;
+                console.log($users);
+            });
+        };
+        */
 
 
 

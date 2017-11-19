@@ -5607,3 +5607,19 @@ button.toast-close-button {
 .resize{
     resize:none;
 }
+
+.card_nav{
+    padding:5px;
+    cursor:pointer;
+    border-radius:5px;
+    border:1px solid grey;
+    background:#dedcdc;
+}
+
+.btn_add{
+    padding:5px 10px;
+    cursor:pointer;
+    border-radius:5px;
+    border:1px solid grey;
+    background:#dedcdc;
+}

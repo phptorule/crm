@@ -47,6 +47,18 @@
             </div>
         </div>
 
+        <div class="col-sm-4">
+            <div class="panel panel-bd lobidrag_task_manager">
+                <div class="panel-heading">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Введить назву" ng-model="list.name_task_block" name="name_task_block" required />
+                    </div>
+                        <button class="btn btn-primary" ng-click="initTask()" type="reset">add</button>
+                        <button class="btn btn-danger" ng-click="deleteTask()">X</button>
+                </div>
+            </div>
+        </div>
+
     </form>
 </div>
 
@@ -67,10 +79,11 @@
                 <div class="modal_content_header">
                     <form>
                         <div class="row">
+
                             <div class="col-sm-8">
                                 <div class="form-group">
                                     <p>Users</p>
-                                    <span></span><span style="padding:5px 10px; cursor:pointer; border-radius:5px; border:1px solid grey; background:#dedcdc;">+</span>
+                                    <span></span><span class="btn_add">+</span>
                                 </div>
                                 <div class="form-group">
                                     <p ng-show="description=true" ng-click="description_textarea=!description_textarea">@{{card.description}}</p>
@@ -78,12 +91,13 @@
                                 </div>
                                 <div class="form-group">
                                     <button class="btn btn-primary" ng-click="saveCard(); description=true; description_textarea=false;">Save</button>
-                                    <button class="btn btn-danger" ng-If="card.description.length > 1">Cancel</button>
+                                    <button class="btn btn-danger" ng-If="card.description.length > 1" ng-click="reset(card.id)">Cancel</button>
                                 </div>
                             </div>
+
                             <div class="col-sm-4">
                                 <p class="text-center">Add</p>
-                                <p style="padding:5px; cursor:pointer; border-radius:5px; border:1px solid grey; background:#dedcdc;"><i class="fa fa-user m-r-5"></i>Users</p>
+                                <p ng-click="getUsers()" class="card_nav"><i class="fa fa-user m-r-5"></i>Users</p>
                             </div>
                         </div>
                     </form>
