@@ -18,6 +18,8 @@
         $scope.cards = [];
 
         $scope.mass = [];
+        
+
 
 
         
@@ -112,7 +114,6 @@
         $scope.card.card_id = items;
         
 
-
         $scope.getCard = function() {
 
             console.log($scope.card.card_id);
@@ -157,6 +158,8 @@
 
             });
         };
+
+
 
 
 

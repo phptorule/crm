@@ -54,27 +54,41 @@
        <button type="button" class="close" ng-click="cancel()" aria-hidden="true">×</button>
        <h3>Card name: <input type="text" ng-model="card.name"></h3>
     </div>
-    <div class="modal-body">
-        <div class="container">
-           <div class="row">
-                <div class="col-md-12">
+
+
+        
+
+
+   <div class="modal-body">
+       <div class="row">
+            <div class="col-md-12">
+                <div class="modal_content_header">
                     <form>
-                        <div class="form-group">
-                            <textarea rows="8" class="form-control col-xs-12" ng-model="card.description"></textarea>
-                        </div>
-                        <div class="form-group">
-                            <button class="btn btn-success" ng-click="saveCard()">Save</button>
+                        <div class="row">
+                            <div class="col-sm-8">
+                                <div class="form-group">
+                                    <p>Users</p>
+                                    <span></span><span style="padding:5px 10px; cursor:pointer; border-radius:5px; border:1px solid grey; background:#dedcdc;">+</span>
+                                </div>
+                                <div class="form-group">
+                                    <p ng-show="description=true" ng-click="description_textarea=!description_textarea">@{{card.description}}</p>
+                                    <textarea rows="5" class="form-control" ng-show="description_textarea" ng-model="card.description"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <button class="btn btn-primary" ng-click="saveCard(); description=true; description_textarea=false;">Save</button>
+                                    <button class="btn btn-danger" ng-If="card.description.length > 1">Cancel</button>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <p class="text-center">Add</p>
+                                <p style="padding:5px; cursor:pointer; border-radius:5px; border:1px solid grey; background:#dedcdc;"><i class="fa fa-user m-r-5"></i>Users</p>
+                            </div>
                         </div>
                     </form>
+                </div>
 
-                    <div class="table-responsive">
-
-                       <!--footer class="table-footer">
-                            <div class="row">
-
-                            </div>
-                        </footer-->
-                    </div>
+                <div class="table-responsive">
+                    
                 </div>
             </div>
         </div>
@@ -83,4 +97,10 @@
    <div class="modal-footer">
       <button type="button" class="btn btn-danger pull-right" ng-click="cancel()">Cancel</button>
    </div>
+
+
+
+
+    
+
 </script>

@@ -406,7 +406,7 @@
             $scope.object.products_vat_amount = 0;
             $scope.object.products_total_cost = 0;
             $scope.object.products_dimension = '';
-            //$scope.object.i = +1;
+            $scope.object.i = +1;
 
             $scope.productsList.push($scope.object);
         };
