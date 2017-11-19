@@ -5603,3 +5603,7 @@ button.toast-close-button {
     font-weight: 700;
     vertical-align: middle;
 }
+
+.resize{
+    resize:none;
+}
