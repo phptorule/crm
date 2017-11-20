@@ -17,15 +17,6 @@ class Finances extends Model
         return $this->belongsToMany('App\Products', 'finances_products', 'finances_id', 'products_id');
     }
 
-    //
-    /*
-    public function productss()
-    {
-        return $this->belongsToMany('App\Finances_products', 'finances_id');
-    }
-    */
-    //
-
     public function teams()
     {
         return $this->belongsToMany('App\Teams', 'finances_teams', 'finances_id', 'teams_id');

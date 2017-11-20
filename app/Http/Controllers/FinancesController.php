@@ -126,7 +126,12 @@ class FinancesController extends Controller
             $product->products_discount_percent = $item['products_discount_percent'];
             $product->products_discount_regular = $item['products_discount_regular'];
             $product->products_vat_shipping_percent = $item['products_vat_shipping_percent'];
+            $product->products_vat_shipping_amount = $item['products_vat_shipping_amount'];
             $product->products_shipping_price = $item['products_shipping_price'];
+            $product->products_discount_amount = $item['products_discount_amount'];
+            $product->products_cost_with_discount = $item['products_cost_with_discount'];
+
+
             $product->save();
 
             $products_ids[] = $product->products_id;
@@ -137,6 +142,7 @@ class FinancesController extends Controller
 
     public function registerFinance($post = [])
     {
+        //dd($post);
         $issue_date = date('Y-m-d', strtotime($post['registered_issue_date']));
         $payment_date = date('Y-m-d', strtotime($post['registered_payment_date']));
 
@@ -164,7 +170,7 @@ class FinancesController extends Controller
 
         $register->save();
         $this->message(__('Faktura was successfully registered'), 'success');
-
+        dd($register);
         return $register->registered_id;
     }
 }

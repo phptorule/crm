@@ -7,15 +7,12 @@
     	$scope.types_list = ['By Month', 'By Year', 'Custom Period'];
 		$scope.months_list = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
-        //
         $scope.list = {};
         $scope.desl = [];
-        //$scope.name_task_block;
-        //
-        //$scope.list = [];
-        $scope.tasks = {};
-        $scope.card = {};
 
+        $scope.tasks = {};
+<<<<<<< HEAD
+        $scope.taskss = [];
         $scope.listFiltered = [];
         $scope.pagesList = [];
         $scope.numPerPage = 20;
@@ -57,18 +54,87 @@
         $scope.class = "closed";
 
 
+        $scope.initList = function(data) {
+            request.send('/finances/getList', {}, function(data) {
+                $scope.pagesList = data;
+            });
+        };
+
+        $scope.initRegisteredList = function() {
+            request.send('/finances/getRegisteredList', {}, function(data) {
+                $scope.pagesList = data;
+            });
+        };
+
+
+        $scope.save = function(products_ids) {
+            $scope.finances.products_ids = products_ids;
+            $scope.finances.finances_payment_method = $scope.finances_payment_method;
+            $scope.finances.finances_paid = $scope.finances_paid;
+            $scope.finances.finances_issue_date = $scope.finances_issue_date;
+            $scope.finances.finances_payment_date = $scope.finances_payment_date;
+            $scope.finances.finances_number = $scope.finances_number;
+            request.send('/finances/save', $scope.finances, function(data) {
+                if (data)
+                {
+                    if ($scope.finances_id)
+                    {
+                        $scope.edit_general = false;
+                        $scope.edit_address = false;
+                        $scope.edit_products = false;
+                        $scope.init();
+                    }
+                    else
+                    {
+                        $timeout(function() {
+                            $window.location.href = "/finances/add/" + data;
+                        }, 1000);
+                    }
+                }
+            });
+        };
+
+
+=======
+        $scope.card = {};
+
+<<<<<<< HEAD
+>>>>>>> a918d0ddcbec8745445fe0e1b1f71e7e12214650
+
+        //$scope.cards.ids = []
+
+<<<<<<< HEAD
+
+=======
+=======
+>>>>>>> dce715eee232b799639601bc621397ec5601c227
         
+        $scope.class = "closed";
+        $scope.cards = [];
+>>>>>>> a918d0ddcbec8745445fe0e1b1f71e7e12214650
+
+        $scope.mass = [];
+        
+        $scope.users = {};
+
+
+
+
         $scope.getTask = function() {
 
-            request.send('/taskmanager/getTask', $scope.list, function(data) {
+<<<<<<< HEAD
+            request.send('/taskManager/getTask', $scope.list, function(data) {
                 //$scope.tasks = tasks;
+=======
+            request.send('/TaskManager/getTask', $scope.list, function(data) {
+>>>>>>> a918d0ddcbec8745445fe0e1b1f71e7e12214650
 
-                //console.log(data);
                 $scope.tasks = data;
 
-                //$scope.taskss = data;
-
-                //return $scope.tasks;
+                for (var k in data)
+                {
+                    $scope.cards[k] = data[k].cards;
+                }
 
             });
         };
@@ -76,85 +142,182 @@
         $scope.deleteTask = function(id) {
             $scope.id = id;
             console.log($scope.id);
-            request.send('/taskmanager/deleteTask', {'id': $scope.id}, function(data) {
+            request.send('/TaskManager/deleteTask', {'id': $scope.id}, function(data) {
                 $scope.tasks = data;
 
-                //console.log(data);
-                //$scope.tasks = data;
-
-                //$scope.taskss = data;
-
-                //return $scope.tasks;
+                for (var k in data)
+                {
+                    $scope.cards[k] = data[k].cards;
+                }
 
             });
         };
 
 
-        /////////////////////////////////////////
 
         $scope.initTask = function() {
-            //request.send('/add_task', {'post':$scope.name_task_block}, function(data) {
+
             console.log($scope.list);
-            request.send('/taskmanager/addTask', $scope.list, function(data) {
+            request.send('/TaskManager/addTask', $scope.list, function(data) {
                 $scope.tasks = data;
 
-                //console.log($scope.tasks);
-
-                //return $scope.tasks;
-                //$scope.tasks = data;
-                //console.log($data);
-                //$scope.list = data;
-            //request.send('/task/addTask', $scope.list, function(data) {
-                //console.log($scope.list);
-                //$scope.team_users = data;
-                //$scope.pagesList = data;
-                //$scope.name_task_block = $scope.name_task_block;
-            });
-        };
-
-        $scope.createCard = function() {
-            //request.send('/add_task', {'post':$scope.name_task_block}, function(data) {
-            console.log($scope.card);
-            request.send('/taskmanager/createCard', {'post': $scope.card}, function(data) {
-                $scope.card = data;
+                for (var k in data)
+                {
+                    $scope.cards[k] = data[k].cards;
+                }
 
             });
         };
-      
 
-	    
+        $scope.createCard = function(id) {
+
+
+            $scope.card.task_id = id;
+            request.send('/TaskManager/createCard',$scope.card, function(data) {
+
+<<<<<<< HEAD
+
+
+
+
+
 
 
         ///////////////////////////////////////////////////////////////
-        
+
         $scope.print = function() {
-            request.send('/pdf/downloadPdf', {'post': $scope.finances}, function(data) {    
+            request.send('/pdf/downloadPdf', {'post': $scope.finances}, function(data) {
             //request.send('downloadPDF', {'post': $scope.finances}, function(data) {
 
             });
             /*
             request.send('/downloadPDF', {'post': $scope.finances}, function(data) {
-                
+
             });
             */
+=======
+                $scope.tasks = data;
+
+                for (var k in data)
+                {
+                    $scope.cards[k] = data[k].cards;
+                }
+
+            });
+
+
+>>>>>>> a918d0ddcbec8745445fe0e1b1f71e7e12214650
         };
 
-        
+
+        $scope.selectCard = function(card_id) {
+
+<<<<<<< HEAD
+
         ////////////////////////////////////////////////////////////////////////////////
+=======
+            var modalInstance = $uibModal.open({
+                animation: true,
+                templateUrl: 'SelectCard.html',
+                controller: 'ModalSelectCardCtrl',
+                resolve: {
+                    items: card_id
+                }
+            });
+        };
+>>>>>>> dce715eee232b799639601bc621397ec5601c227
 	};
-
-    /*
-    .controller('Task_managerCtrl', ['$scope', function($scope) {
-      $scope.list = [];
-      $scope.name_task_block = 'hello';
-      $scope.submit = function() {
-        if ($scope.name_task_block) {
-          $scope.list.push(this.name_task_block);
-          $scope.name_task_block = '';
-        }
-      };
-    }]);
-    */
+})();
 
 
+//Модалак
+(function () {
+    'use strict';
+
+    angular.module('app').controller('ModalSelectCardCtrl', ['$rootScope', '$scope', '$uibModal', '$uibModalInstance', '$filter', 'request', 'validate', 'logger', 'langs', 'items', ModalSelectCardCtrl]);
+
+    function ModalSelectCardCtrl($rootScope, $scope, $uibModal, $uibModalInstance, $filter, request, validate, logger, langs, items) {
+        
+
+        $scope.card = {};
+        $scope.card.card_id = items;
+
+
+        $scope.reset = function(id) {
+
+
+            request.send('/TaskManager/reset', {'card_id': id}, function(data) {
+
+                $scope.card = data;
+                
+
+            });
+        };
+        
+
+        $scope.getCard = function() {
+
+            console.log($scope.card.card_id);
+            request.send('/TaskManager/getCard', {'card_id': $scope.card.card_id}, function(data) {
+
+                $scope.card = data;
+                //console.log($scope.card);
+
+            });
+        };
+
+
+        $scope.saveCard = function() {
+
+            request.send('/TaskManager/saveCard', $scope.card, function(data) {
+
+                $scope.card = data;
+
+            });
+        };
+
+
+        $scope.getTask = function() {
+
+            request.send('/TaskManager/getTask', $scope.list, function(data) {
+
+                $scope.tasks = data;
+
+            });
+        };
+
+
+        $scope.initTask = function() {
+
+            console.log($scope.list);
+            request.send('/TaskManager/addTask', $scope.list, function(data) {
+                $scope.tasks = data;
+
+                for (var k in data)
+                {
+                    $scope.cards[k] = data[k].cards;
+                }
+
+            });
+        };
+
+        /*
+        $scope.getUsers = function() {
+            console.log(3);
+            //console.log($scope.list);
+            request.send('/TaskManager/getUsers', $scope, function(data) {
+                $scope.users = data;
+                console.log($users);
+            });
+        };
+        */
+
+
+
+
+
+        $scope.cancel = function() {
+            $uibModalInstance.dismiss('cancel');
+        };
+    };
 })();

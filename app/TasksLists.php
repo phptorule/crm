@@ -4,15 +4,17 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Task extends Model
+use App\TaskList;
+
+class TasksLists extends Model
 {
-    protected $table = "task";
+    protected $table = "tasks_lists";
 
     protected $fillable = ['name','user_id','created_at', 'updated_at'];
 
 
     public function tasks() {
-        return $this->hasMany('App\TaskList');
+        return $this->hasMany('App\Cards');
     }
 
 }

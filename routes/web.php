@@ -31,6 +31,9 @@ Route::any('{catchall}', function() {
 	}
 })->where('catchall', '(.*)');
 
+
+
+
 //Route::get('pdfview',array('as'=>'pdfview','uses'=>'PdfController@pdfview'));
 
 

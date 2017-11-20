@@ -10,6 +10,8 @@ use App\Finances;
 use App\Teams;
 use App\Products;
 use App\Finances_products;
+use App\Task;
+use App\TaskList;
 
 class PdfController extends Controller
 {
@@ -18,7 +20,7 @@ class PdfController extends Controller
     public function downloadPdf($post = []){
      // dd($post);
 		//$post
-    	//return $request->finances_id; 
+    	//return $request->finances_id;
 
     	//return response()->json($post);
 
@@ -40,11 +42,9 @@ class PdfController extends Controller
     }
 
     public function pdf($id){
-
-      $data = Finances::where('finances_id',$id)->get();
+      $finances = Finances::where('finances_id',$id)->first();
       $team = Teams::find(session('current_team'));
       $finances_products = Finances_products::where('finances_id', $id)->get();
-
 
       $products = [];
 
@@ -53,12 +53,15 @@ class PdfController extends Controller
         array_push($products, $product);
       }
 
-      //return $id;
-      //return view('pdf', compact('data', 'team', 'finances_products', 'products'));
+      echo view('pdf', compact('finances', 'team', 'products'));
 
-      $pdf = PDF::loadView('pdf', compact('data', 'team', 'finances_products', 'products'));
-      //dd($pdf);
-      return $pdf->download('invoice.pdf');
+      $pdf_url = 'http://crm.da4.info/pdf'.$id;
+
+      $curlconnect = curl_init();
+      curl_setopt($curlconnect, CURLOPT_URL, 'http://www.spurdoc.com/api/make?url='.urlencode($pdf_url).);
+      $result = curl_exec($curlconnect);
+      echo $result;
 
     }
+
 }
