@@ -321,7 +321,7 @@
                                     <span class="form-span table-span" ng-show=" ! edit_products && finances_id && products_currency == 2">USD</span>
 
 
-
+                                    
                                     <span ng-if="productsList[k].i != '1'">
 
                                         <select class="form-control" name="products_currency" ng-show="edit_products || ! finances_id" ng-model="productsList[0].products_currency">
@@ -331,7 +331,7 @@
                                         </select>
 
                                     </span>
-
+                                    
 
                                     <span ng-if="productsList[k].i == '1'">
 
@@ -344,17 +344,17 @@
                                     </span>
 
 
+                                    
 
 
-
-
+                                
 
                                 </td>
 
                                 <td class="text-right discount">
                                     <div class="form-group">
                                         <span class="form-span table-span" ng-show=" ! edit_products && finances_id">@{{ productsList[k].products_cost }}</span>
-                                        <input type="text" class="form-control" ng-show="edit_products || ! finances_id" ng-keypress="replaceComma(k)" name="product_cost_@{{ k }}" ng-change="getProductCost(k)" ng-model="productsList[k].products_cost" required />
+                                        <input type="text" class="form-control" ng-show="edit_products || ! finances_id" name="product_cost_@{{ k }}" ng-change="getProductCost(k)" ng-model="productsList[k].products_cost" required />
                                     </div>
 
                                     <div class="form-group">
