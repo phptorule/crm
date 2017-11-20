@@ -58,7 +58,7 @@ class PdfController extends Controller
       $pdf_url = 'http://crm.da4.info/pdf'.$id;
 
       $curlconnect = curl_init();
-      curl_setopt($curlconnect, CURLOPT_URL, 'http://www.spurdoc.com/api/make?url='.urlencode($pdf_url).);
+      curl_setopt($curlconnect, CURLOPT_URL, 'http://www.spurdoc.com/api/make?url='.urlencode($pdf_url));
       $result = curl_exec($curlconnect);
       echo $result;
 
