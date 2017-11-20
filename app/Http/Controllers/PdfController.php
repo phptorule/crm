@@ -55,12 +55,12 @@ class PdfController extends Controller
 
       echo view('pdf', compact('finances', 'team', 'products'));
 
-      $pdf_url = 'http://crm.da4.info/pdf'.$id;
+      /*$pdf_url = 'http://crm.da4.info/pdf'.$id;
 
       $curlconnect = curl_init();
       curl_setopt($curlconnect, CURLOPT_URL, 'http://www.spurdoc.com/api/make?url='.urlencode($pdf_url));
       $result = curl_exec($curlconnect);
-      echo $result;
+      echo $result;*/
 
     }
 
