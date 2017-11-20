@@ -6,6 +6,7 @@
                   <h4>Lista kontrahentów</h4>
             </div>
          </div>
+
          <div class="panel-body">
          <!-- Plugin content:powerpoint,txt,pdf,png,word,xl -->
             <div class="btn-group">

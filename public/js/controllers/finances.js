@@ -111,6 +111,7 @@
 
         $scope.initRegisteredList = function() {
             request.send('/finances/getRegisteredList', {}, function(data) {
+                console.log(data);
                 $scope.pagesList = data;
             });
         };
@@ -130,7 +131,7 @@
             {
                 for (var k in $scope.productsList)
                 {
-                    $scope.productsList[k].products_currency = $scope.products_currency;
+                    //$scope.productsList[k].products_currency = $scope.products_currency;
                     $scope.productsList[k].products_vat_shipping_amount = $scope.products.vat_shipping_amount;
                 }
                 request.send('/finances/saveProduct', $scope.productsList, function(data) {
@@ -387,12 +388,6 @@
             return result;
         };
 
-        $scope.notFloat = function(e) {
-            if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
-                e.preventDefault();
-            }
-        };
-
         $scope.addProduct = function() {
             $scope.object = angular.copy($scope.products);
             $scope.object.products_name = '';
@@ -469,6 +464,17 @@
     		}
         };
 
+        $scope.notFloat = function(e) {
+            if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+                e.preventDefault();
+            }
+        };
+
+        $scope.replaceComma = function(index) {
+            //console.log(e.keyCode);
+            $scope.productsList[index].products_cost = $scope.productsList[index].products_cost.replace(/,/g,'.');
+        };
+
         $scope.getProductCost = function(index) {
             if ( ! $scope.productsList[index].products_amount || ! $scope.productsList[index].products_cost)
             {
@@ -477,7 +483,7 @@
             }
             else
             {
-                $scope.productsList[index].products_cost = $scope.productsList[index].products_cost.replace(/,/g,'.');
+                //$scope.productsList[index].products_cost = $scope.productsList[index].products_cost.replace(/,/g,'.');
                 $scope.productsList[index].cost_netto = $scope.productsList[index].products_amount * $scope.productsList[index].products_cost;
                 var total_cost = $scope.productsList[index].cost_netto;
             }

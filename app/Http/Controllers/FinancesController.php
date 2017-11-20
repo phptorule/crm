@@ -142,6 +142,7 @@ class FinancesController extends Controller
 
     public function registerFinance($post = [])
     {
+        //dd($post);
         $issue_date = date('Y-m-d', strtotime($post['registered_issue_date']));
         $payment_date = date('Y-m-d', strtotime($post['registered_payment_date']));
 
@@ -169,7 +170,7 @@ class FinancesController extends Controller
 
         $register->save();
         $this->message(__('Faktura was successfully registered'), 'success');
-
+        dd($register);
         return $register->registered_id;
     }
 }

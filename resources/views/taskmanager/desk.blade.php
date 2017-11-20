@@ -70,7 +70,7 @@
                             <div class="col-sm-8">
                                 <div class="form-group">
                                     <p>
-                                        Users:<span ng-repeat="users_in_card in card.users_in_card">@{{users_in_card.users_first_name}} </span>, <span class="btn_add">+</span>
+                                        Users:<span ng-repeat="users_in_card in card.users_in_card">@{{users_in_card.users_first_name}}, </span> <span class="btn_add">+</span>
                                     </p>
                                 </div>
 
