@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddColumProductsDiscountAmountAndProductsVatAmountTable extends Migration
+class AddProductsVatShippingAmountColumnToProductsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,7 +14,7 @@ class AddColumProductsDiscountAmountAndProductsVatAmountTable extends Migration
     public function up()
     {
         Schema::table('products', function (Blueprint $table) {
-            $table->string('products_discount_amount')->after('products_discount_regular')->nullable(FALSE)->default('0');
+            $table->string('products_vat_shipping_amount')->after('products_vat_shipping_percent')->nullable(FALSE)->default('0');
         });
     }
 
@@ -26,11 +26,7 @@ class AddColumProductsDiscountAmountAndProductsVatAmountTable extends Migration
     public function down()
     {
         Schema::table('products', function (Blueprint $table) {
-            $table->dropColumn('products_discount_amount');
+            $table->dropColumn('products_vat_shipping_amount');
         });
     }
 }
-
-
-
-

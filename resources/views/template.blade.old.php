@@ -8,6 +8,33 @@
         <meta name="keywords" content="crm project manager" />
         <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1" />
 
+
+
+
+        <script src="js/drap-and-drop/angular-drag-and-drop-lists.js"></script>
+        <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular-route.min.js"></script>
+
+        <script>
+
+            angular.module("demo", ["ngRoute", "dndLists"])
+                .config(function($routeProvider) {
+                    $routeProvider
+                        .when('/', {
+                            templateUrl: 'nested.html',
+                            controller: 'DemoController'
+                        })
+
+                        .otherwise({redirectTo: '/nested'});
+                })
+
+        </script>
+
+        <script src="js/drap-and-drop/nested.js"></script>
+        <!-- drap and drop end -->
+
+
+
+
         <link href="http://fonts.googleapis.com/css?family=Open+Sans:300italic,600italic,400,600,300,700" rel="stylesheet" type="text/css" />
         <link rel="shortcut icon" href="/img/icon.png" type="image/png">
         <link rel="stylesheet" href="/css/bootstrap.min.css" />

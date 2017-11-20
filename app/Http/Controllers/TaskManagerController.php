@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Http\Requests;
 use Illuminate\Http\Request;
 use DB;
-use App\Task;
-use App\TaskList;
+use App\TasksLists;
+use App\Cards;
+use App\Users;
+use App\UsersTeams;
 use Illuminate\Support\Facades\Auth;
 
 class TaskmanagerController extends Controller
@@ -20,11 +22,11 @@ class TaskmanagerController extends Controller
 
         ////////////////
 
-        $tasks = Task::all();
+        $tasks = TasksLists::all();
         //$mas = [];
 
         foreach ($tasks as $task) {
-            $task->cards = TaskList::where('task_id', $task->id)->get();
+            $task->cards = Cards::where('task_id', $task->id)->get();
             //array_push($mas, TaskList::where('task_id', $task->id));
         }
           //return dd($tasks = Task::all());
@@ -46,14 +48,14 @@ class TaskmanagerController extends Controller
 
     public function deleteTask($post = []){
 
-        $delete_task = Task::find($post['id']);
+        $delete_task = TasksLists::find($post['id']);
         $delete_task->delete();
 
-    	$tasks = Task::all();
+    	$tasks = TasksLists::all();
         //$mas = [];
 
         foreach ($tasks as $task) {
-            $task->cards = TaskList::where('task_id', $task->id)->get();
+            $task->cards = Cards::where('task_id', $task->id)->get();
             //array_push($mas, TaskList::where('task_id', $task->id));
         }
 
@@ -68,16 +70,16 @@ class TaskmanagerController extends Controller
       	//dd(request()->name_task_block);
       	//return $post['name'];
 		
-    	$task = new Task();
+    	$task = new TasksLists();
     	$task->name = $post['name_task_block'];
     	$task->user_id = Auth::user()->users_id;
     	$task->save();
 
-    	$tasks = Task::all();
+    	$tasks = TasksLists::all();
         //$mas = [];
 
         foreach ($tasks as $task) {
-            $task->cards = TaskList::where('task_id', $task->id)->get();
+            $task->cards = Cards::where('task_id', $task->id)->get();
             //array_push($mas, TaskList::where('task_id', $task->id));
         }
 
@@ -88,7 +90,7 @@ class TaskmanagerController extends Controller
     public function createCard($post = []){
 
         //dd($post);
-        $card = new TaskList();
+        $card = new Cards();
         $card->name = $post['name_card'];
         $card->user_id = Auth::user()->users_id;
         //$task->task_id = $post['task_id'];
@@ -97,11 +99,11 @@ class TaskmanagerController extends Controller
 
 
 
-        $tasks = Task::all();
+        $tasks = TasksLists::all();
         //$mas = [];
 
         foreach ($tasks as $task) {
-            $task->cards = TaskList::where('task_id', $task->id)->get();
+            $task->cards = Cards::where('task_id', $task->id)->get();
             //array_push($mas, TaskList::where('task_id', $task->id));
         }
 
@@ -112,5 +114,57 @@ class TaskmanagerController extends Controller
         //return $data_card;
 
     }
+
+    public function saveCard($post = []){
+
+        //dd($post);
+        $card = Cards::find($post['id']);
+        //dd($card);
+        $card->name = $post['name'];
+        //$card->user_id = Auth::user()->users_id;
+        $card->description = $post['description'];
+        $card->save();
+
+
+        $card = Cards::find($post['id']);
+
+        return $card;
+
+
+    }
+
+    public function getCard($post = []){
+
+        //dd($post);
+        $card = Cards::find($post['card_id']);
+        //dd($card_modal);
+
+        /*
+        $teams_users = UsersTeams::where('teams_id',session('current_team'));
+        foreach ($teams_users as $user) {
+            $users->da = Users::find('users_id',$user->users_id);
+        }
+        //$teams_users->users();
+        $card->users = $users->da;
+        //dd($teams_users);
+        */
+
+        return $card;
+
+    }
+
+    public function reset($post = []){
+
+        
+        $card = Cards::find($post['card_id']);
+        //dd($card);
+
+
+        return $card;
+
+    }
+
+    
+
 
 }

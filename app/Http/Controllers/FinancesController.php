@@ -105,8 +105,6 @@ class FinancesController extends Controller
 
     public function saveProduct($post = [])
     {
-
-
         //dd($post);
         foreach ($post as $item)
         {
@@ -128,8 +126,10 @@ class FinancesController extends Controller
             $product->products_discount_percent = $item['products_discount_percent'];
             $product->products_discount_regular = $item['products_discount_regular'];
             $product->products_vat_shipping_percent = $item['products_vat_shipping_percent'];
+            $product->products_vat_shipping_amount = $item['products_vat_shipping_amount'];
             $product->products_shipping_price = $item['products_shipping_price'];
             $product->products_discount_amount = $item['products_discount_amount'];
+            $product->products_cost_with_discount = $item['products_cost_with_discount'];
 
 
             $product->save();
