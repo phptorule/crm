@@ -10,6 +10,6 @@ class UsersTeams extends Model
 
     public function users()
     {
-    	return $this->hasMany('App\Users', 'users_id', 'users_id');
+    	return $this->hasMany('App\Users','users_id');
     }
 }
