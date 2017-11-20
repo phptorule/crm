@@ -21,32 +21,32 @@
                     <table class="col-xs-6 customers_table">
                         <tr>
                             <td class="text-right">Spzedawca:</td>
-                            <td>{{$team->teams_name}}</td>
+                            <td>{{$team['teams_name']}}</td>
                         </tr>
 
                         <tr>
                             <td class="text-right">Adres:</td>
-                            <td>{{$team->teams_invoice_street}}, {{$team->teams_invoice_postcode}}, <br /> {{$team->teams_invoice_town}}</td>
+                            <td>{{$team['teams_invoice_street']}}, {{$team['teams_invoice_postcode']}}, <br /> {{$team['teams_invoice_town']}}</td>
                         </tr>
 
                         <tr>
                             <td class="text-right">NIP:</td>
-                            <td>{{$team->teams_nip}}</td>
+                            <td>{{$team['teams_nip']}}</td>
                         </tr>
 
                         <tr class="pdf_line">
                             <td class="text-right">Phone:</td>
-                            <td>{{$team->teams_phone}}</td>
+                            <td>{{$team['teams_phone']}}</td>
                         </tr>
 
                         <tr>
                             <td class="text-right">Data wystawienia:</td>
-                            <td>{{$finances->finances_issue_date}}</td>
+                            <td>{{$finances['finances_issue_date']}}</td>
                         </tr>
 
                         <tr>
                             <td class="text-right">Termin platnosci:</td>
-                            <td>{{$finances->finances_payment_date}}</td>
+                            <td>{{$finances['finances_payment_date']}}</td>
                         </tr>
 
                         <tr>
@@ -58,17 +58,17 @@
                     <table class="col-xs-6 customers_table">
                         <tr>
                             <td class="text-right">Nabywca:</td>
-                            <td>{{$finances->finances_customer_name}}</td>
+                            <td>{{$finances['finances_customer_name']}}</td>
                         </tr>
 
                         <tr>
                             <td class="text-right">Adres:</td>
-                            <td>{{$finances->finances_invoice_street}}, {{$finances->finances_invoice_post_code}}, <br /> {{$finances->finances_invoice_town}}</td>
+                            <td>{{$finances['finances_invoice_street']}}, {{$finances['finances_invoice_post_code']}}, <br /> {{$finances['finances_invoice_town']}}</td>
                         </tr>
 
                         <tr>
                             <td class="text-right">NIP:</td>
-                            <td>{{$finances->finances_nip}}</td>
+                            <td>{{$finances['finances_nip']}}</td>
                         </tr>
 
                         <tr class="pdf_line">
@@ -78,17 +78,17 @@
 
                         <tr>
                             <td class="text-right">Sposób płatności:</td>
-                            <td>{{$finances->finances_payment_method == 0 ? 'Gotówką' : 'Przelew'}}</td>
+                            <td>{{$finances['finances_payment_method'] == 0 ? 'Gotówką' : 'Przelew'}}</td>
                         </tr>
 
                         <tr>
                             <td class="text-right">Bank:</td>
-                            <td>{{$team->teams_bank_name}}</td>
+                            <td>{{$team['teams_bank_name']}}</td>
                         </tr>
 
                         <tr>
                             <td class="text-right">Numer konta:</td>
-                            <td>{{$team->teams_nip}}</td>
+                            <td>{{$team['teams_nip']}}</td>
                         </tr>
                     </table>
                 </div>
@@ -113,16 +113,16 @@
 
                     <tr>
                         <td>{{$i}}</td>
-                        <td>{{$product->products_name}}</td>
-                        <td>{{$product->products_amount}}</td>
-                        <td>{{$product->products_dimension}}</td>
-                        <td>{{$product->products_cost}}</td>
-                        <td>{{$product->products_cost}}</td>
-                        <td>{{$product->products_discount_percent}}</td>
-                        <td>{{$product->products_cost_with_discount}}</td>
-                        <td>{{$product->products_vat_percent}}</td>
-                        <td>{{$product->products_vat_amount}}</td>
-                        <td>{{$product->products_total_cost}}</td>
+                        <td>{{$product['products_name']}}</td>
+                        <td>{{$product['products_amount']}}</td>
+                        <td>{{$product['products_dimension']}}</td>
+                        <td>{{$product['products_cost']}}</td>
+                        <td>{{$product['products_cost']}}</td>
+                        <td>{{$product['products_discount_percent']}}</td>
+                        <td>{{$product['products_cost_with_discount']}}</td>
+                        <td>{{$product['products_vat_percent']}}</td>
+                        <td>{{$product['products_vat_amount']}}</td>
+                        <td>{{$product['products_total_cost']}}</td>
                     </tr>
 
                 <?php $i++; ?>
@@ -134,19 +134,19 @@
                         <td>Koszt przesyłki</td>
                         <td>1</td>
                         <td>&nbsp;</td>
-                        <td>{{$products[0]->products_shipping_price}}</td>
-                        <td>{{$products[0]->products_shipping_price}}</td>
+                        <td>{{$products[0]['products_shipping_price']}}</td>
+                        <td>{{$products[0]['products_shipping_price']}}</td>
                         <td>&nbsp;</td>
                         <td>&nbsp;</td>
-                        <td>{{$products[0]->products_vat_shipping_percent}}</td>
-                        <td>{{$products[0]->products_vat_shipping_amount}}</td>
-                        <td>{{$products[0]->products_vat_shipping_amount}}</td>
+                        <td>{{$products[0]['products_vat_shipping_percent']}}</td>
+                        <td>{{$products[0]['products_vat_shipping_amount']}}</td>
+                        <td>{{$products[0]['products_vat_shipping_amount']}}</td>
                     </tr>
 
                 @endif
 
                     <tr>
-                        <td colspan="2" class="pfd_total_sum">Razem do zapłąty: {{$finances->finances_total_amount}}</td>
+                        <td colspan="2" class="pfd_total_sum">Razem do zapłąty: {{$finances['finances_total_amount']}}</td>
                     </tr>
                 </table>
             </div>
