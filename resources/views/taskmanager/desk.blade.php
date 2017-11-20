@@ -50,7 +50,7 @@
 
 
 <script type="text/ng-template" id="SelectCard.html">
-    <div class="modal-header modal-header-primary" ng-init="getCard()">
+    <div class="modal-header modal-header-primary" ng-init="getCard();getTeamUsers()">
        <button type="button" class="close" ng-click="cancel()" aria-hidden="true">×</button>
        <p ng-show="card_title" ng-click="status_card_title_edit()">@{{card.name}}</p>
        <input type="text" ng-show="card_title_edit" ng-blur="status_card_title_edit();saveCardTitle(card.id,card.name)" ng-model="card.name">
@@ -69,9 +69,22 @@
 
                             <div class="col-sm-8">
                                 <div class="form-group">
-                                    <p>
-                                        Users:<span ng-repeat="users_in_card in card.users_in_card">@{{users_in_card.users_first_name}}, </span> <span class="btn_add">+</span>
-                                    </p>
+                                    <p>Users:</p>
+                                    
+                                        <ul class="assign-list">
+                                            <li class="form-span" ng-repeat="user in users">@{{ user.users_first_name}}</li>
+                                        </ul>
+
+                                        <ul class="assign-list" ng-model="customers.assign_to">
+                                            <li ng-repeat="user in checked_users" >
+                                                @{{ user.users_first_name}}
+
+                                                <button type="button" class="btn btn-labeled btn-danger m-b-5" ng-click="removeUser(user.users_id)">
+                                                    <i class="fa fa-minus"></i>
+                                                </button>
+                                            </li>
+                                        </ul>
+                                    
                                 </div>
 
                                 <div class="form-group">
@@ -87,25 +100,25 @@
 
                             <div class="col-sm-4">
                                 <p class="text-center">Add</p>
-                                <p ng-click="users_teams=!users_teams" class="card_nav"><i class="fa fa-user m-r-5"></i>Users</p>
-                                <div ng-show="users_teams">
 
-
-                                    <div class="row">
-                                        <div class="col-sm-8">
-                                            <select class="form-control" ng-model="user.users_id_select">
-                                                <option ng-repeat="users in card.users" ng-model="users.users_id">@{{ users.users_id }}</option>
-                                            </select>
+                                <div class="form-group">
+                                    <p class="card_nav" ng-click="openDiscount(k)"><i class="fa fa-user m-r-5"></i>Users</p>
+                                    <div class="discount_window" ng-show="discount_window[k]">
+                                        <div class="discount_header">
+                                            <button type="button" class="close" ng-click="discount_window[k] = ! discount_window[k]" aria-hidden="true">×</button>
                                         </div>
+                                        <br>
 
-                                        <div class="col-sm-3">
-                                            <button type="button" class="btn btn-primary" ng-click="addToCard(user.users_id_select)">
-                                               <i class="fa fa-plus"></i>
-                                            </button>
-                                        </div>
+                                        <select class="form-control" name="assign_to" ng-model="users_list">
+                                            <option ng-repeat="user in not_checked_users" value="@{{ user.users_id }}">@{{user.users_first_name}}</option>
+                                        </select>
+                                    
+                                        <button type="button" class="btn btn-labeled btn-add m-b-5" ng-click="addUser(users_list)">
+                                           <i class="fa fa-plus"></i>
+                                        </button> 
                                     </div>
-
                                 </div>
+
                             </div>
                         </div>
                     </form>

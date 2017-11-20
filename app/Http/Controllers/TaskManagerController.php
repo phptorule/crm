@@ -144,6 +144,7 @@ class TaskmanagerController extends Controller
     public function addToCard($post = []){
         
         //Зберігає звязок користувача з карткою
+        /*
         $cards_users = new CardsUsers();
         $cards_users->user_id = $post['user_id'];
         $cards_users->card_id = $post['card_id'];
@@ -165,15 +166,13 @@ class TaskmanagerController extends Controller
             $users_in_card[] = Users::find($user_in_this_card->user_id);
 
 
-            foreach ($teams_users as $user) {
+            
+        }
 
-                if($user_in_this_card->user_id != $user->users_id){
-                    
-                    $users[] = Users::where('users_id',$user->users_id)->get();
-                }
+        foreach ($teams_users as $user) {
 
-                
-            }
+            $users[] = Users::where('users_id',$user->users_id)->get();
+
         }
 
         
@@ -182,6 +181,7 @@ class TaskmanagerController extends Controller
         $card->users_in_card = $users_in_card;
 
         return $card;
+        */
 
     }
 
