@@ -135,7 +135,7 @@
                     $scope.productsList[k].products_vat_shipping_amount = $scope.products.vat_shipping_amount;
                 }
                 request.send('/finances/saveProduct', $scope.productsList, function(data) {
-                    //$scope.save(data);
+                    $scope.save(data);
                 });
             }
         };
