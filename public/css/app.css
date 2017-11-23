@@ -5678,3 +5678,33 @@ button.toast-close-button {
     background-color: #dff0d8;
     color: #3c763d;
 }
+
+
+.margin_li{
+    margin: 5px;
+}
+
+
+.discount_window_card,
+.vat_window_card {
+    position: absolute;
+    z-index: 1;
+    width: 400px;
+    min-height: 200px;
+    min-height: auto;
+    background-color: #fff;
+    border: 2px solid #d1d1d1;
+    border-radius: 2px;
+    text-align: left;
+    padding: 5px 5px 5px 20px;
+    right: 0;
+}
+
+
+.pointer{
+    cursor: pointer;
+}
+
+.reddata{
+    color:red;
+}

@@ -1,0 +1,21 @@
+<?php
+
+namespace App;
+
+use Illuminate\Database\Eloquent\Model;
+
+class CardsComments extends Model
+{
+    protected $table = "cards_comments";
+
+    protected $primaryKey = 'card_id';
+
+    /*
+    public function user() {
+        return $this->belongsTo('App\Users', 'users_id');
+    }
+    */
+
+
+
+}
