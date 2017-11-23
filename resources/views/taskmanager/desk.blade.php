@@ -61,7 +61,7 @@
 
 
 <script type="text/ng-template" id="SelectCard.html">
-    <div class="modal-header modal-header-add" ng-init="getCard();getTeamUsers(); initComments(); initChecklist();">
+    <div class="modal-header modal-header-add" ng-init="getCard();getTeamUsers();">
        <button type="button" class="close" ng-click="cancel()" aria-hidden="true">×</button>
        <h4 ng-show="card_title" ng-click="status_card_title_edit()"><b>@{{card.name}}</b></h4>
        <input type="text" ng-show="card_title_edit" ng-blur="status_card_title_edit();saveCardTitle(card.id,card.name)" ng-model="card.name">

@@ -24,7 +24,7 @@ class TaskmanagerController extends Controller
         return $team->users()->get();
     }
 
-	public function getTask($post = []){
+    public function getTask($post = []){
 
         $tasks = TasksLists::all();
         foreach ($tasks as $task) {
@@ -39,7 +39,7 @@ class TaskmanagerController extends Controller
         $delete_task = TasksLists::find($post['id']);
         $delete_task->delete();
 
-    	$tasks = TasksLists::all();
+        $tasks = TasksLists::all();
         foreach ($tasks as $task) {
             $task->cards = Cards::where('task_id', $task->id)->get();
         }
@@ -48,13 +48,13 @@ class TaskmanagerController extends Controller
     }
 
     public function addTask($post = []){
-		
-    	$task = new TasksLists();
-    	$task->name = $post['name_task_block'];
-    	$task->user_id = Auth::user()->users_id;
-    	$task->save();
+        
+        $task = new TasksLists();
+        $task->name = $post['name_task_block'];
+        $task->user_id = Auth::user()->users_id;
+        $task->save();
 
-    	$tasks = TasksLists::all();
+        $tasks = TasksLists::all();
         foreach ($tasks as $task) {
             $task->cards = Cards::where('task_id', $task->id)->get();
         }
@@ -119,14 +119,28 @@ class TaskmanagerController extends Controller
 
         $card->users = $users; 
 
-        
+
+        //return users work in card(no working)
         $cards_userss = CardsUsers::all()->where('card_id',$post['card_id']);
         foreach ($cards_userss as $value) {
             $card['users_works_in_card'] = Users::find($value->user_id);
-            //print_r($value);
         }
-        
 
+        //return comment
+        $comments = CardsComments::where('card_id', $post['card_id'])->get();
+        foreach ($comments as $value) {
+            $value->users = Users::find($value->user_id)->first();
+        }
+
+        //return checklist
+        $checklist = Checklist::where('card_id',$post['card_id'])->get();
+        foreach ($checklist as $value) {
+            $value->checklist_value = ChecklistValue::all()->where('checklist_id',$value->id);
+        }
+
+        
+        $card->comments = $comments;
+        $card->checklist = $checklist;
 
         return $card;
     }
@@ -189,14 +203,7 @@ class TaskmanagerController extends Controller
 
 
     // Comments begin
-    public function initComments($post = []){
-            
-        $comments = CardsComments::where('card_id', $post['card_id'])->get();
-        foreach ($comments as $value) {
-            $value->users = Users::find($value->user_id)->first();
-        }
-        return $comments;
-    }
+
 
     public function saveComment($post = []){
 
@@ -216,15 +223,6 @@ class TaskmanagerController extends Controller
 
 
     // Checklist begin
-
-    public function initChecklist($post = []){
-
-        $checklist = Checklist::where('card_id',$post['card_id'])->get();
-        foreach ($checklist as $value) {
-            $value->checklist_value = ChecklistValue::all()->where('checklist_id',$value->id);
-        }
-        return $checklist;
-    }
 
     public function saveChecklistTitle($post = []){
 

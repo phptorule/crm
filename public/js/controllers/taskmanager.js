@@ -314,6 +314,7 @@
 
         $scope.getCard = function() {
             request.send('/TaskManager/getCard', {'card_id': $scope.card.card_id}, function(data) {
+                console.log(data);
                 $scope.card = data;
                 $scope.temp_description = $scope.card.description;
             });
@@ -363,11 +364,7 @@
         };
 
         //comments begin
-        $scope.initComments = function() {
-            request.send('/TaskManager/initComments', {'card_id':items}, function(data) {
-                $scope.card.comments = data;
-            });
-        };
+
 
         $scope.saveComment = function(text) {
             request.send('/TaskManager/saveComment', {'text':text, 'card_id':items}, function(data) {
@@ -378,11 +375,6 @@
 
 
         //checklist begin
-        $scope.initChecklist = function() {
-            request.send('/TaskManager/initChecklist', {'card_id':items}, function(data) {
-                $scope.card.checklist = data;
-            });
-        };
 
         $scope.saveChecklistTitle = function(title) {
             request.send('/TaskManager/saveChecklistTitle', {'title':title,'card_id':items}, function(data) {
