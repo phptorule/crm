@@ -173,7 +173,6 @@
         <script src="/js/controllers/users.js"></script>
         <script src="/js/controllers/finances.js"></script>
         <script src="/js/controllers/customers.js"></script>
-        <!-- Task_manager -->
         <script src="/js/controllers/taskmanager.js"></script>
         <script src="/theme/plugins/jQuery/jquery-1.12.4.min.js" type="text/javascript"></script>
         <script src="/theme/plugins/jquery-ui-1.12.1/jquery-ui.min.js" type="text/javascript"></script>

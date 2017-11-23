@@ -4,27 +4,27 @@
     angular.module('app').controller('Task_managerCtrl', ['$rootScope', '$scope', '$uibModal', '$filter', '$location', '$timeout', '$window', 'request', 'validate', 'logger', 'langs', 'plugins', 'Page', Task_managerCtrl]);
 
     function Task_managerCtrl($rootScope, $scope, $uibModal, $filter, $location, $timeout, $window, request, validate, logger, langs, plugins, Page) {
-        $scope.types_list = ['By Month', 'By Year', 'Custom Period'];
-        $scope.months_list = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
 
         $scope.list = {};
         $scope.desl = [];
-
         $scope.tasks = {};
         $scope.card = {};
-        
         $scope.class = "closed";
         $scope.cards = [];
-
         $scope.mass = [];
-        
         $scope.users = {};
-
         $scope.title = true;
         $scope.title_edit = false;
-
         $scope.button_add_card = true;
         $scope.button_input_card = false;
+        $scope.models = {};
+        $scope.models.selected = null;
+        $scope.show_settings = false;
+        $scope.show_input_card = true;
+        $scope.counter = 0;
+        $scope.all = 0;
+
 
 
         $scope.task_title_edit = function() {
@@ -63,14 +63,15 @@
 
         };
 
-        
-        $scope.getTask = function() {
 
+        $scope.getTask = function() {
             request.send('/TaskManager/getTask', $scope.list, function(data) {
                 $scope.tasks = data;
+
                 for (var k in data)
                 {
                     $scope.cards[k] = data[k].cards;
+                    $scope.all += data[k].cards.length;
                 }
             });
         };
@@ -101,17 +102,18 @@
             });
         };
 
-        $scope.createCard = function(id) {
 
+        $scope.createCard = function(id) {
             $scope.card.task_id = id;
             request.send('/TaskManager/createCard',$scope.card, function(data) {
                 $scope.tasks = data;
+
                 for (var k in data)
                 {
                     $scope.cards[k] = data[k].cards;
+                    $scope.all += data[k].cards.length;
                 }
             });
-
         };
 
 
@@ -125,6 +127,21 @@
                     items: card_id
                 }
             });
+        };
+
+        $scope.initSortable = function() {
+            $scope.counter++;
+            if ($scope.counter == $scope.all) {
+                $( function() {
+                    $('.outer').sortable({
+                        items: ".sortable-outer"
+                    });
+
+                    $('.inner').sortable({
+                        items: ".sortable-inner"
+                    });
+                });
+            }
         };
     };
 })();
@@ -146,9 +163,7 @@
         $scope.card.comments = {};
         $scope.status_description = true;
         $scope.status_description_textarea = false;
-
         $scope.users_in_card = {};
-
         $scope.customers = {};
         $scope.customers.customer_type = '0';
         $scope.check = 1;
@@ -158,13 +173,15 @@
         $scope.discount_window = [];
         $scope.discount_window[0] = false;
         $scope.discount_sum_window = false;
-
         $scope.openCheklistForm = [];
         $scope.openCheklistForm[0] = false;
-
         $scope.vat_window = [];
         $scope.vat_window[0] = false;
         $scope.vat_sum_window = false;
+        $scope.show_description = true;
+        $scope.showAddUsers = false;
+        $scope.editCardUser = false;
+        $scope.temp_description = '';
 
         $scope.getTeamUsers = function() {
             request.send('/Taskmanager/getTeamUsers', {}, function(data) {
@@ -284,25 +301,30 @@
             });
         };
 
+        $scope.makeDescriptionCopy = function() {
+            $scope.old_description = angular.copy($scope.temp_description);
+        };
 
-        $scope.reset = function(id) {
-            request.send('/TaskManager/reset', {'card_id': id}, function(data) {
-                $scope.card = data;
-            });
+        $scope.reset = function() {
+            $scope.card.description = $scope.old_description;
+            $scope.temp_description = $scope.old_description;
+            $scope.show_description = true;
         };
         
 
         $scope.getCard = function() {
             request.send('/TaskManager/getCard', {'card_id': $scope.card.card_id}, function(data) {
                 $scope.card = data;
+                $scope.temp_description = $scope.card.description;
             });
         };
 
-
         $scope.saveCard = function() {
+            $scope.card.description = $scope.temp_description;
             request.send('/TaskManager/saveCard', $scope.card, function(data) {
                 $scope.card = data;
             });
+            $scope.show_description = false;
         };
 
 
