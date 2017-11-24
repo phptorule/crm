@@ -16,7 +16,7 @@ use App\Checklist;
 use App\Checklistvalue;
 use Illuminate\Support\Facades\Auth;
 
-class TaskManagerController extends Controller
+class TaskmanagerController extends Controller
 {
 
     public function getTeamUsers($post = []) {
