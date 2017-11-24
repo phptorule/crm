@@ -12,8 +12,8 @@ use App\Users;
 use App\UsersTeams;
 use App\CardsUsers;
 use App\CardsComments;
-use App\CheckList;
-use App\CheckListValue;
+use App\Checklist;
+use App\Checklistvalue;
 use Illuminate\Support\Facades\Auth;
 
 class TaskmanagerController extends Controller
