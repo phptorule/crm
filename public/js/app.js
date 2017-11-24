@@ -200,6 +200,13 @@
             }
         }
 
+        $scope.scrollClass = function() {
+            if ($location.path() == '/taskmanager/desk/')
+            {
+                return 'scrollable';
+            }
+        };
+
         $scope.sidebar = plugins.sidebar();
         plugins.getSidebar();
 

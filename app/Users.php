@@ -55,4 +55,13 @@ class Users extends Authenticatable
     {
         return $this->hasMany('App\Finances');
     }
+
+    
+    public function comments_card() {
+        return $this->HasMany('App\CardsComments', 'users_id');
+    }
+    
+    public function card_users() {
+        return $this->HasMany('App\CardsComments', 'user_id');
+    }
 }

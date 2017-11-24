@@ -4492,14 +4492,18 @@ table.text-center th {
 
 ::-webkit-scrollbar {
     width: 6px;
-    height: 5px;
+    height: 15px;
 }
 ::-webkit-scrollbar-track-piece {
-    background-color: #c4c5c6;
+    background-color: #ececec;
 }
 ::-webkit-scrollbar-thumb:vertical {
-    height: 15px;
+    height: 5px;
     background-color: #2278cf;
+}
+::-webkit-scrollbar-thumb:horizontal {
+    height: 5px;
+    background-color: #c4c5c6;
 }
 /*--- back to top ---*/
 
@@ -5614,6 +5618,7 @@ button.toast-close-button {
     border-radius:5px;
     border:1px solid grey;
     background:#dedcdc;
+    margin-bottom: 5px;
 }
 
 .btn_add{
@@ -5677,4 +5682,283 @@ button.toast-close-button {
 .simpleDemo ul[dnd-list] li.selected {
     background-color: #dff0d8;
     color: #3c763d;
+}
+
+
+.margin_li{
+    margin: 5px;
+}
+
+
+.discount_window_card,
+.vat_window_card {
+    position: absolute;
+    z-index: 1;
+    width: 400px;
+    min-height: 200px;
+    min-height: auto;
+    background-color: #fff;
+    border: 2px solid #d1d1d1;
+    border-radius: 2px;
+    text-align: left;
+    padding: 5px 5px 5px 20px;
+    right: 0;
+}
+
+
+.pointer{
+    cursor: pointer;
+}
+
+.reddata{
+    color:red;
+}
+
+
+.resize{
+    resize:none;
+}
+
+.card_nav {
+    padding: 5px 5px 5px 15px;
+    border-radius: 5px;
+    border: 1px solid transparent;
+    background: #d1d1d1;
+    width: 100%;
+    text-align: left;
+    color: #374767;
+}
+
+.card_nav:hover {
+    background: #dedede;
+}
+
+.btn_add{
+    padding:5px 10px;
+    cursor:pointer;
+    border-radius:5px;
+    border:1px solid grey;
+    background:#dedcdc;
+}
+
+#task_manager .panel-bd > .panel-heading {
+    border: none;
+}
+
+#task_manager .panel-body {
+    background-color: #d1d1d1;
+    max-height: 310px;
+    overflow-y: auto;
+}
+
+#task_manager .panel {
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+
+#task_manager .panel-footer {
+    background-color: #d1d1d1;
+    border: none;
+    font-size: 12px;
+    color: #7d7d7d;
+}
+
+#task_manager .panel-footer:hover {
+    background-color: #dedede;
+    color: #4d4d4d;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+#task_manager .panel-footer.active:hover {
+    background-color: #d1d1d1;
+    cursor: default;
+    text-decoration: none;
+}
+
+#task_manager .panel-footer input {
+    margin-bottom: 15px;
+}
+
+.task_manager_card {
+    display: block;
+    width: 100%;
+    border-radius: 3px;
+    background-color: #fff;
+    margin-bottom: 15px;
+    padding: 10px;
+    word-wrap: break-word;
+    white-space: normal;
+}
+
+.task_manager_card:hover {
+    background-color: #dedede;
+    cursor: pointer;
+}
+
+.list_settings,
+.list_title {
+    display: inline-block;
+    word-wrap: break-word;
+    white-space: normal;
+}
+
+.list_settings {
+    line-height: 26px;
+    font-size: 16px;
+    position: relative;
+    z-index: 1;
+}
+
+.list_settings a {
+    color: #000;
+}
+
+.list_settings a:hover {
+    color: #fff;
+}
+
+.settings_box {
+    background-color: #fff;
+    padding: 10px;
+    position: absolute;
+    z-index: 1;
+    right: -85px;
+    top: 25px;
+    border: 1px solid #ccc;
+}
+
+.cancel_button {
+    display: inline-block;
+    background-color: transparent;
+    color: #7d7d7d;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    background-image: none;
+    border: 1px solid transparent;
+}
+
+.cancel_button:hover {
+    color: #4d4d4d;
+}
+
+.card_settings_block {
+    position: relative;
+    z-index: 1;
+}
+
+.custom_pop_up {
+    position: absolute;
+    z-index: 1;
+    width: 100%;
+    background-color: #fff;
+    border: 1px solid #dedede;
+    padding: 10px;
+}
+
+.custom_pop_up_header {
+    height: 30px;
+    border-bottom: 1px solid #dedede;
+    margin-bottom: 20px;
+}
+
+.card_info .btn.btn-add {
+    margin-top: 0;
+}
+
+.custom_pop_up.add_users {
+    top: 62px;
+    left: 15px;
+}
+
+.card_info_header {
+    padding-bottom: 20px;
+}
+
+.users_block ul {
+    padding: 0;
+    margin-top: -10px;
+    list-style: none;
+}
+
+.card_user {
+    position: relative;
+}
+
+.card_info a {
+    color: #374767;
+}
+
+.card_info a:hover {
+    color: #374767;
+    text-decoration: underline;
+}
+
+.card_info .card_nav:hover {
+    text-decoration: none;
+}
+
+
+.card_user i {
+    font-size: 0;
+}
+
+.card_user:hover i {
+    font-size: 12px;
+}
+
+.custom_pop_up.edit_card_user {
+    width: 200px;
+}
+
+.task_manager_list {
+    width: 270px;
+    margin: 0 10px;
+    height: 100%;
+    box-sizing: border-box;
+    display: inline-block;
+    vertical-align: top;
+}
+
+/*Make scrollable task manager board*/
+.task_manager_board {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 20px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 80px 0 0 20px;
+}
+
+#task_manager {
+    user-select: none;
+    white-space: nowrap;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    padding-right: 56px;
+}
+
+.scrollable {
+    position: relative;
+}
+
+/*End scrollable task manager board*/
+
+.card_block {
+    margin-bottom: 40px;
+}
+
+.checkbox_item {
+    word-wrap: break-word;
+    white-space: normal;
 }
