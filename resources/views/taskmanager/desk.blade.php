@@ -80,16 +80,15 @@
 
                             <div class="col-sm-8">
                                 <div class="card_info_header">
-                                    <div class="users_block" ng-show="checked_users != 0">
+                                    <div class="users_block">
                                         <ul class="assign-list">
                                             <li class="form-span" ng-repeat="user in users">@{{ user.users_first_name}}</li>
                                         </ul>
 
                                         <ul>
                                             Users:
-                                            <li ng-repeat="user in checked_users">
+                                            <li ng-repeat="user in card.users_work_in_card">
                                                 <a href="javascript:void(0);" class="card_user" ng-click="editCardUser = ! editCardUser">@{{ user.users_first_name + ' ' + user.users_last_name }} <i class="fa fa-pencil"></i></a>
-
                                                 <div class="custom_pop_up edit_card_user" ng-show="editCardUser">
                                                     <div class="custom_pop_up_header text-center">
                                                         <span>@{{ user.users_first_name + ' ' + user.users_last_name }}</span>
@@ -199,7 +198,7 @@
                                             </select>
                                         </div>
 
-                                        <button type="button" class="btn btn-add" ng-click="addUser(users_list)">
+                                        <button type="button" class="btn btn-add" ng-click="addUser(users_list);">
                                            Add user
                                         </button>
                                     </div>

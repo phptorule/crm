@@ -107,24 +107,32 @@ class TaskmanagerController extends Controller
     public function getCard($post = []){
 
         $card = Cards::find($post['card_id']);
-        $teams_users = UsersTeams::all()->where('teams_id',session('current_team'));
 
         //message - toomorow deadline
         $reddata = strtotime($card->deadline) - strtotime(date('Y-m-d'));
         $card->reddata =  date('d',$reddata) - 1;
-
+        
+        //users in team
+        $teams_users = UsersTeams::all()->where('teams_id',session('current_team'));
+        $team = Teams::find(session('current_team'));
+        $teeamuser = $team->users()->get();
         foreach ($teams_users as $user) {
             $users[] = Users::find($user->users_id);
+            $users_in_work[] = CardsUsers::all()->where('user_id',$user->users_id)->where('card_id',$post['card_id'])->first();
+
         }
 
-        $card->users = $users; 
-
-
-        //return users work in card(no working)
-        $cards_userss = CardsUsers::all()->where('card_id',$post['card_id']);
-        foreach ($cards_userss as $value) {
-            $card['users_works_in_card'] = Users::find($value->user_id);
+        foreach ($users_in_work as $value) {
+            $users_works_in_card[] = Users::find($value->user_id);
         }
+
+
+        //all users in team
+        $card->users = $users;
+        //all users work in card
+        $card->users_works_in_card = $users_works_in_card;
+        //all users no work in card
+
 
         //return comment
         $comments = CardsComments::where('card_id', $post['card_id'])->get();
@@ -137,7 +145,6 @@ class TaskmanagerController extends Controller
         foreach ($checklist as $value) {
             $value->checklist_value = ChecklistValue::all()->where('checklist_id',$value->id);
         }
-
         
         $card->comments = $comments;
         $card->checklist = $checklist;
@@ -161,18 +168,13 @@ class TaskmanagerController extends Controller
     }
 
     public function saveUserToCard($post = []){
-        $users = $post['users'];
-        $card = $post['card_id'];
-        
-        foreach ($users as $value) {
 
-            $user_card = new CardsUsers();
-            $user_card->user_id = $value['users_id'];
-            $user_card->card_id = $card;
-            $user_card->save();
-        }
+        $user_card = new CardsUsers();
+        $user_card->user_id = $post['user_id'];
+        $user_card->card_id = $post['card_id'];
+        $user_card->save();
 
-        $cards_users = CardsUsers::all()->where('card_id',$card);
+        $cards_users = CardsUsers::all()->where('card_id',$post['card_id']);
 
         foreach ($cards_users as $value) {
             $users_works_in_card[] = Users::find($value->user_id);

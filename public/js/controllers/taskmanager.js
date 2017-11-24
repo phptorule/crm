@@ -201,6 +201,12 @@
         };
 
         $scope.addUser = function(user_id) {
+
+            request.send('/TaskManager/saveUserToCard', {'user_id':user_id, 'card_id':items}, function(data) {
+                $scope.card.users_work_in_card = data;
+                //console.log($scope.users_work_in_card);
+            });
+
             $scope.checked_ids.push(user_id);
             $scope.updateUserList();
         };
