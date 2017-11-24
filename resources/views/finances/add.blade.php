@@ -255,7 +255,7 @@
                     </div>
 
                     <div class="custom_panel_item" ng-show="edit_products">
-                        <a href="javascript:void(0);" ng-click="save()">Zapisz <i class="fa fa-floppy-o"></i></a>
+                        <a href="javascript:void(0);" ng-click="saveProduct()">Zapisz <i class="fa fa-floppy-o"></i></a>
                     </div>
 
                     <div class="custom_panel_item pull-right" ng-show="edit_products">
@@ -320,8 +320,6 @@
                                     <span class="form-span table-span" ng-show=" ! edit_products && finances_id && products_currency == 1">EUR</span>
                                     <span class="form-span table-span" ng-show=" ! edit_products && finances_id && products_currency == 2">USD</span>
 
-
-                                    
                                     <span ng-if="productsList[k].i != '1'">
 
                                         <select class="form-control" name="products_currency" ng-show="edit_products || ! finances_id" ng-model="productsList[0].products_currency">
@@ -331,8 +329,7 @@
                                         </select>
 
                                     </span>
-                                    
-
+                                
                                     <span ng-if="productsList[k].i == '1'">
 
                                         <select class="form-control" name="products_currency" disabled ng-show="edit_products || ! finances_id" ng-model="productsList[0].products_currency">
@@ -342,13 +339,6 @@
                                         </select>
 
                                     </span>
-
-
-                                    
-
-
-                                
-
                                 </td>
 
                                 <td class="text-right discount">

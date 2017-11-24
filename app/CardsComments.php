@@ -4,12 +4,18 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class CardsUsers extends Model
+class CardsComments extends Model
 {
-    protected $table = "cards_users";
+    protected $table = "cards_comments";
 
+    protected $primaryKey = 'card_id';
 
+    /*
     public function user() {
         return $this->belongsTo('App\Users', 'users_id');
     }
+    */
+
+
+
 }
