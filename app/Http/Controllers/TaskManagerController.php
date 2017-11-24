@@ -123,14 +123,14 @@ class TaskmanagerController extends Controller
         }
 
         foreach ($users_in_work as $value) {
-            $users_works_in_card[] = Users::find($value->user_id);
+            $users_work_in_card[] = Users::find($value->user_id);
         }
 
 
         //all users in team
         $card->users = $users;
         //all users work in card
-        $card->users_works_in_card = $users_works_in_card;
+        $card->users_work_in_card = $users_work_in_card;
         //all users no work in card
 
 
