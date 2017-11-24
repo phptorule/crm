@@ -4492,14 +4492,18 @@ table.text-center th {
 
 ::-webkit-scrollbar {
     width: 6px;
-    height: 5px;
+    height: 15px;
 }
 ::-webkit-scrollbar-track-piece {
-    background-color: #c4c5c6;
+    background-color: #ececec;
 }
 ::-webkit-scrollbar-thumb:vertical {
-    height: 15px;
+    height: 5px;
     background-color: #2278cf;
+}
+::-webkit-scrollbar-thumb:horizontal {
+    height: 5px;
+    background-color: #c4c5c6;
 }
 /*--- back to top ---*/
 
@@ -5743,6 +5747,8 @@ button.toast-close-button {
 
 #task_manager .panel-body {
     background-color: #d1d1d1;
+    max-height: 310px;
+    overflow-y: auto;
 }
 
 #task_manager .panel {
@@ -5782,12 +5788,9 @@ button.toast-close-button {
     border-radius: 3px;
     background-color: #fff;
     margin-bottom: 15px;
-    padding: 10px
-}
-
-.task_manager_card span,
-.card_info p {
+    padding: 10px;
     word-wrap: break-word;
+    white-space: normal;
 }
 
 .task_manager_card:hover {
@@ -5798,6 +5801,8 @@ button.toast-close-button {
 .list_settings,
 .list_title {
     display: inline-block;
+    word-wrap: break-word;
+    white-space: normal;
 }
 
 .list_settings {
@@ -5888,17 +5893,22 @@ button.toast-close-button {
     position: relative;
 }
 
-.card_user {
+.card_info a {
     color: #374767;
 }
+
+.card_info a:hover {
+    color: #374767;
+    text-decoration: underline;
+}
+
+.card_info .card_nav:hover {
+    text-decoration: none;
+}
+
 
 .card_user i {
     font-size: 0;
-}
-
-.card_user:hover {
-    color: #374767;
-
 }
 
 .card_user:hover i {
@@ -5907,4 +5917,48 @@ button.toast-close-button {
 
 .custom_pop_up.edit_card_user {
     width: 200px;
+}
+
+.task_manager_list {
+    width: 270px;
+    margin: 0 10px;
+    height: 100%;
+    box-sizing: border-box;
+    display: inline-block;
+    vertical-align: top;
+}
+
+/*Make scrollable task manager board*/
+.task_manager_board {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 20px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 80px 0 0 20px;
+}
+
+#task_manager {
+    user-select: none;
+    white-space: nowrap;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    padding-right: 56px;
+}
+
+.scrollable {
+    position: relative;
+}
+
+/*End scrollable task manager board*/
+
+.card_block {
+    margin-bottom: 40px;
+}
+
+.checkbox_item {
+    word-wrap: break-word;
+    white-space: normal;
 }

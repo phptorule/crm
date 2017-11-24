@@ -48,7 +48,7 @@ class TaskmanagerController extends Controller
     }
 
     public function addTask($post = []){
-        
+
         $task = new TasksLists();
         $task->name = $post['name_task_block'];
         $task->user_id = Auth::user()->users_id;
@@ -111,9 +111,9 @@ class TaskmanagerController extends Controller
         //message - toomorow deadline
         $reddata = strtotime($card->deadline) - strtotime(date('Y-m-d'));
         $card->reddata =  date('d',$reddata) - 1;
-        
+
         //users in team
-        $teams_users = UsersTeams::all()->where('teams_id',session('current_team'));
+        /*$teams_users = UsersTeams::all()->where('teams_id',session('current_team'));
         $team = Teams::find(session('current_team'));
         $teeamuser = $team->users()->get();
         foreach ($teams_users as $user) {
@@ -131,7 +131,15 @@ class TaskmanagerController extends Controller
         $card->users = $users;
         //all users work in card
         $card->users_work_in_card = $users_work_in_card;
-        //all users no work in card
+        //all users no work in card*/
+
+        //print_r($card);
+
+        $card_users = CardsUsers::where('card_id', $post['card_id'])->get();
+
+        foreach ($card_users as $value) {
+            $card->card_users = Users::find($value->user_id);
+        }
 
 
         //return comment
@@ -145,7 +153,7 @@ class TaskmanagerController extends Controller
         foreach ($checklist as $value) {
             $value->checklist_value = ChecklistValue::all()->where('checklist_id',$value->id);
         }
-        
+
         $card->comments = $comments;
         $card->checklist = $checklist;
 
@@ -153,7 +161,7 @@ class TaskmanagerController extends Controller
     }
 
     public function reset($post = []){
-        
+
         $card = Cards::find($post['card_id']);
         $teams_users = UsersTeams::all()->where('teams_id',session('current_team'));
 
@@ -161,7 +169,7 @@ class TaskmanagerController extends Controller
             $users[] = Users::find($user->users_id);
         }
 
-        $card->users = $users;      
+        $card->users = $users;
 
         return $card;
 
@@ -183,9 +191,9 @@ class TaskmanagerController extends Controller
         return $users_works_in_card;
     }
 
-    
+
     public function saveCardTitle($post = []){
-        
+
         $card_change = Cards::find($post['id']);
         $card_change->name = $post['name'];
         $card_change->save();
@@ -197,7 +205,7 @@ class TaskmanagerController extends Controller
             $users[] = Users::find($user->users_id);
         }
 
-        $card->users = $users;      
+        $card->users = $users;
 
         return $card;
 
@@ -255,7 +263,7 @@ class TaskmanagerController extends Controller
         return $checklist;
 
     }
-    
+
     public function saveChangeChecklistStatus($post = []){
 
         $checklist_value = ChecklistValue::find($post['checkbox_value_id']);
@@ -316,26 +324,6 @@ class TaskmanagerController extends Controller
         $reddata = strtotime($card->deadline) - strtotime(date('Y-m-d'));
         $card->reddata =  date('d',$reddata) - 1;
 
-        $teams_users = UsersTeams::all()->where('teams_id',session('current_team'));
-        foreach ($teams_users as $user) {
-            $users[] = Users::find($user->users_id);
-        }
-
-        $card->users = $users; 
-
-        $cards_users = CardsUsers::all()->where('card_id',$post['card_id']);
-        foreach ($cards_users as $value) {
-            $users_works_in_card[] = Users::find($value->user_id);
-        }
-
         return $card;
-
-
-
     }
-
-
-
-
-
 }

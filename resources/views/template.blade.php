@@ -138,7 +138,7 @@
                 </div>
             </aside>
 
-            <div class="content-wrapper">
+            <div class="content-wrapper" ng-class="scrollClass()">
                 <section class="content-header">
                     <div class="header-icon">
                         <i class="@{{ Page.icon() }}"></i>

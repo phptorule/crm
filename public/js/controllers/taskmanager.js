@@ -154,7 +154,7 @@
     angular.module('app').controller('ModalSelectCardCtrl', ['$rootScope', '$scope', '$uibModal', '$uibModalInstance', '$filter', 'request', 'validate', 'logger', 'langs', 'items', ModalSelectCardCtrl]);
 
     function ModalSelectCardCtrl($rootScope, $scope, $uibModal, $uibModalInstance, $filter, request, validate, logger, langs, items) {
-        
+
 
         $scope.card = {};
         $scope.card.card_id = items;
@@ -181,6 +181,7 @@
         $scope.show_description = true;
         $scope.showAddUsers = false;
         $scope.editCardUser = false;
+        $scope.showCheckBox = true;
         $scope.temp_description = '';
 
         $scope.getTeamUsers = function() {
@@ -256,7 +257,7 @@
         };
 
 
-        $scope.SaveUserToCard = function(card_id) {       
+        $scope.SaveUserToCard = function(card_id) {
 
             request.send('/TaskManager/saveUserToCard', {'users':$scope.checked_users, 'card_id':card_id}, function(data) {
                 $scope.card.users_work_in_card = data;
@@ -316,11 +317,11 @@
             $scope.temp_description = $scope.old_description;
             $scope.show_description = true;
         };
-        
+
 
         $scope.getCard = function() {
             request.send('/TaskManager/getCard', {'card_id': $scope.card.card_id}, function(data) {
-                console.log(data);
+                //console.log(data);
                 $scope.card = data;
                 $scope.temp_description = $scope.card.description;
             });
@@ -393,13 +394,13 @@
                 $scope.card.checklist = data;
             });
         };
-        
+
         $scope.saveChangeChecklistStatus = function(checkbox_value_id) {
             request.send('/TaskManager/saveChangeChecklistStatus', {'checkbox_value_id':checkbox_value_id,'card_id':items}, function(data) {
                 $scope.card.checklist = data;
             });
         };
-        
+
         $scope.showChackBoxInput  = function(checklist_id) {
 
             if($scope.showChackBox == false){
@@ -422,14 +423,14 @@
                 $scope.card.checklist = data;
             });
         };
-        
+
         //checklist end
 
         //datapicker
         $scope.saveDeadline = function(deadline) {
-            console.log(deadline);
             request.send('/TaskManager/saveDeadline', {'deadline':deadline,'card_id':items}, function(data) {
-                $scope.card = data;
+                $scope.card.deadline = data.deadline;
+                $scope.card.reddata = data.reddata;
             });
         };
 
