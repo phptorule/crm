@@ -13,7 +13,7 @@ use App\UsersTeams;
 use App\CardsUsers;
 use App\CardsComments;
 use App\Checklist;
-use App\Checklistvalue;
+use App\ChecklistValue;
 use Illuminate\Support\Facades\Auth;
 
 class TaskManagerController extends Controller
