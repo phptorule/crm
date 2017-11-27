@@ -61,54 +61,54 @@
 
 
 <script type="text/ng-template" id="SelectCard.html">
-    <div class="modal-header modal-header-add" ng-init="getCard();getTeamUsers();">
-       <button type="button" class="close" ng-click="cancel()" aria-hidden="true">×</button>
-       <h4 ng-show="card_title" ng-click="status_card_title_edit()"><b>@{{card.name}}</b></h4>
-       <input type="text" ng-show="card_title_edit" ng-blur="status_card_title_edit();saveCardTitle(card.id,card.name)" ng-model="card.name">
-       <p>
-           <span ng-If="card.reddata == 1 || card.reddata == 0" class="reddata">@{{card.deadline}}</span>
-           <span ng-If="card.reddata > 1">@{{card.deadline}}</span>
-       </p>
+    <div class="modal-header modal-header-add" ng-init="initCard()">
+        <button type="button" class="close" ng-click="cancel()" aria-hidden="true">×</button>
+        <h4 ng-show="card_title" ng-click="status_card_title_edit()"><b>@{{card.name}}</b></h4>
+        <input type="text" ng-show="card_title_edit" ng-blur="status_card_title_edit();saveCardTitle(card.id,card.name)" ng-model="card.name">
     </div>
 
-   <div class="modal-body">
-       <div class="row">
+    <div class="modal-body">
+        <div class="row">
             <div class="col-md-12">
                 <div class="modal_content_header">
                     <form class="no-transition card_info">
                         <div class="row">
-
                             <div class="col-sm-8">
                                 <div class="card_info_header">
-                                    <div class="users_block" ng-show="checked_users != 0">
-                                        <ul class="assign-list">
-                                            <li class="form-span" ng-repeat="user in users">@{{ user.users_first_name}}</li>
-                                        </ul>
+                                    <div class="row">
+                                        <div class="col-sm-5 users_block" ng-show="users">
+                                            <ul>
+                                                <h4>Users:</h4>
+                                                <li ng-repeat="user in users">
+                                                    <a href="javascript:void(0);" class="card_user" ng-click="editCardUser = ! editCardUser">@{{ user.users_first_name + ' ' + user.users_last_name }} <i class="fa fa-pencil"></i></a>
+                                                    <div class="custom_pop_up edit_card_user" ng-show="editCardUser">
+                                                        <div class="custom_pop_up_header text-center">
+                                                            <span>@{{ user.users_first_name + ' ' + user.users_last_name }}</span>
+                                                            <button type="button" class="close" ng-click="editCardUser = ! editCardUser">×</button>
+                                                        </div>
 
-                                        <ul>
-                                            Users:
-                                            <li ng-repeat="user in card.users_work_in_card">
-                                                <a href="javascript:void(0);" class="card_user" ng-click="editCardUser = ! editCardUser">@{{ user.users_first_name + ' ' + user.users_last_name }} <i class="fa fa-pencil"></i></a>
-                                                <div class="custom_pop_up edit_card_user" ng-show="editCardUser">
-                                                    <div class="custom_pop_up_header text-center">
-                                                        <span>@{{ user.users_first_name + ' ' + user.users_last_name }}</span>
-                                                        <button type="button" class="close" ng-click="editCardUser = ! editCardUser">×</button>
-                                                    </div>
+                                                        <div class="form-group">
+                                                            <button type="button" class="btn btn-danger" ng-click="removeUser(user.users_id); editCardUser = ! editCardUser">
+                                                                Delete from card
+                                                            </button>
+                                                        </div>
 
-                                                    <div class="form-group">
-                                                        <button type="button" class="btn btn-danger" ng-click="removeUser(user.users_id); editCardUser = ! editCardUser">
-                                                            Delete from card
-                                                        </button>
+                                                        <div class="form-group">
+                                                            <button type="button" class="btn btn-add">
+                                                                View profile
+                                                            </button>
+                                                        </div>
                                                     </div>
+                                                </li>
+                                            </ul>
+                                        </div>
 
-                                                    <div class="form-group">
-                                                        <button type="button" class="btn btn-add">
-                                                            View profile
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                        </ul>
+                                        <div class="col-sm-5 deadline_block">
+                                            <h4>Deadline to:</h4>
+
+                                            <span ng-If="card.reddata == 1 || card.reddata == 0" class="reddata">@{{card.deadline}}</span>
+                                            <span ng-If="card.reddata > 1">@{{card.deadline}}</span>
+                                        </div>
                                     </div>
                                 </div>
 
@@ -121,57 +121,92 @@
                                         </div>
 
                                         <div class="form-group">
-                                            <button class="btn btn-add"  ng-show="! show_description || ! card.description" ng-click="saveCard(); show_description = ! show_description">Save</button>
-                                            <button class="btn btn-danger" ng-show="! show_description && card.description" ng-click="reset()">Cancel</button>
+                                            <button class="btn btn-add" ng-show="! show_description || ! card.description" ng-click="saveCard(); show_description = ! show_description">Save</button>
+                                            <button class="btn btn-danger" ng-show="! show_description && card.description" ng-click="resetCardDescription()">Cancel</button>
                                             <button class="btn btn-add" ng-show="show_description && card.description" ng-click="makeDescriptionCopy(); show_description = ! show_description">Edit</button>
                                         </div>
                                     </div>
                                 </div>
 
-                                <div class="card_block checklists" ng-repeat="checklist in card.checklist">
+                                <div class="card_block checklists" ng-repeat="(l, checklist) in checklists">
                                     <div class="checklist_header">
                                         <h4><i class="fa fa-check-square-o"></i> @{{checklist.title}}</h4>
                                         <!--a href="javascript:void(0);" ng-click="deleteCheckList(checklist.id)">Delete checklist</a-->
                                     </div>
 
-                                    <div class="checkbox_item" ng-repeat="checkbox in checklist.checklist_value">
-                                        <div ng-If="checkbox.status == 0">
-                                            <input type="checkbox" id="checkbox" ng-click="saveChangeChecklistStatus(checkbox.id)">
-                                            <label for="checkbox" >@{{checkbox.title}}</label>
-                                            <!--i class="fa fa-minus pointer" ng-click="deleteCheckBox(checkbox.id)"></i-->
+                                    <div class="checkbox_item" ng-repeat="(k, checkbox) in checklists[l].checkboxes">
+                                        <div ng-show="checkbox.status == 0">
+                                            <div class="card_checkbox" ng-click="saveChangeChecklistStatus(checkbox.id)">
+                                                <i class="fa fa-check"></i>
+                                            </div>
+
+                                            <div class="card_checkbox_description" ng-click="makeCheckboxDescriptionCopy(k, l); editChecklistItem[k] = ! editChecklistItem[k]">
+                                                <span ng-show="editChecklistItem[k]" ng-model="checklists[l].checkboxes[k].title">@{{checklists[l].checkboxes[k].title}}</span>
+                                                <textarea ng-show=" ! editChecklistItem[k]" class="form-control" ng-click="editChecklistItem[k] = ! editChecklistItem[k]" ng-model="checklists[l].checkboxes[k].title"></textarea>
+                                            </div>
+
+                                            <div class="checkbox_description_buttons">
+                                                <button class="btn btn-add" ng-show="! editChecklistItem[k]" ng-click="saveChecklistValue(checklists[l].checkboxes[k]); editChecklistItem[k] = ! editChecklistItem[k]">Save</button>
+                                                <button class="btn btn-danger" ng-show="! editChecklistItem[k]" ng-click="resetCheckboxDescription(k, l); editChecklistItem[k] = ! editChecklistItem[k]">Cancel</button>
+                                            </div>
                                         </div>
-                                        <div ng-If="checkbox.status == 1">
-                                            <input type="checkbox" checked id="checkbox" ng-click="saveChangeChecklistStatus(checkbox.id)">
-                                            <label for="checkbox" ><s>@{{checkbox.title}}</s></label>
-                                            <!--i class="fa fa-minus pointer" ng-click="deleteCheckBox(checkbox.id)"></i-->
+
+                                        <div ng-show="checkbox.status == 1">
+                                            <div class="card_checkbox active" ng-click="saveChangeChecklistStatus(checkbox.id)">
+                                                <i class="fa fa-check"></i>
+                                            </div>
+
+                                            <div class="card_checkbox_description" ng-click="makeCheckboxDescriptionCopy(k, l); editChecklistItem[k] = ! editChecklistItem[k]">
+                                                <span class="active_span" ng-show="editChecklistItem[k]" ng-model="checklists[l].checkboxes[k].title">@{{checklists[l].checkboxes[k].title}}</span>
+                                                <textarea ng-show=" ! editChecklistItem[k]" class="form-control" ng-click="editChecklistItem[k] = ! editChecklistItem[k]" ng-model="old_checkbox_description">@{{old_checkbox_description}}</textarea>
+                                            </div>
+
+                                            <div class="checkbox_description_buttons">
+                                                <button class="btn btn-add" ng-show="! editChecklistItem[k]" ng-click="saveChecklistValue(checklist.id, checklists[l].checkboxes[k].title); editChecklistItem[k] = ! editChecklistItem[k]">Save</button>
+                                                <button class="btn btn-danger" ng-show="! editChecklistItem[k]" ng-click="resetCheckboxDescription(k, l); editChecklistItem[k] = ! editChecklistItem[k]">Cancel</button>
+                                            </div>
+                                        </div>
+
+                                        <div class="delete_chceckbox" ng-click="deleteCheckBox(checkbox.id)">
+                                            <i class="fa fa-trash-o"></i>
                                         </div>
                                     </div>
 
 
                                     <div ng-show=" ! showCheckBox">
                                         <div class="form-group">
-                                            <input class="form-control" type="text" ng-model="card.checklist.checkbox.title">
+                                            <input class="form-control" type="text" ng-model="checklists[l].checkbox_title">
                                         </div>
-                                        <button class="btn btn-add" ng-click="saveChecklistValue(checklist.id, card.checklist.checkbox.title)" type="reset">Add</button>
+                                        <button class="btn btn-add" ng-click="createCheckboxItem(checklists[l])">Add</button>
                                         <button class="btn btn-danger" ng-click="showCheckBox = ! showCheckBox" type="reset">Cancel</button>
                                     </div>
 
                                     <a href="javascript:void(0);" ng-show="showCheckBox" ng-click="showCheckBox = ! showCheckBox">Add new item</a>
                                 </div>
 
+                                <div class="card_comments">
+                                    <div class="form-group">
+                                        <h4><i class="fa fa-comments-o"></i> Add comment</h4>
+                                        <textarea class="form-control resize" ng-model="card.comment"></textarea>
+                                    </div>
 
-                                <div class="form-group">
-                                    <p>Add comment</p>
-                                    <textarea class="form-control resize" ng-model="card.comment"></textarea>
+                                    <div class="form-group">
+                                        <button class="btn btn-add" ng-click="saveComment(card.comment)" type="reset">Save</button>
+                                    </div>
+
+                                    <p ng-show="comments">Comments: </p>
+                                    <div ng-repeat="comments in comments">
+                                        <div class="card_comment_block">
+                                            <div class="comment_author">
+                                                @{{comments.users.users_first_name + ' ' + comments.users.users_last_name + ' (' + comments.created_at + ')'}}
+                                            </div>
+
+                                            <div class="comment_text">
+                                                @{{comments.text}}
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-
-                                <div class="form-group">
-                                    <button class="btn btn-add" ng-click="saveComment(card.comment)" type="reset">Save</button>
-                                </div>
-
-                                <p>Comments: </p>
-                                <p ng-repeat="comments in card.comments">@{{comments.users.users_first_name}}: @{{comments.text}}</p>
-
                             </div>
 
 
@@ -179,11 +214,7 @@
                                 <h4>Add</h4>
 
                                 <div class="form-group">
-
-                                    <a href="javascript:void(0);" class="btn card_nav" ng-click="showAddUsers = ! showAddUsers"><i class="fa fa-user m-r-5"></i>Users</a>
-                                    <a class="btn card_nav" ng-click="openCheklistForm(k)">Checklist</a>
-                                    <a class="btn card_nav" ng-click="calendarOpen(0);"><i class="glyphicon glyphicon-calendar"></i> Timing</a>
-                                    <input type="hidden" ng-change="saveDeadline(card.checklist.deadline);" class="form-control" uib-datepicker-popup="dd/MM/yyyy" ng-model="card.checklist.deadline" is-open="date[0].opened" show-button-bar="false" datepicker-options="dateOptions" />
+                                    <a href="javascript:void(0);" class="btn card_nav" ng-click="showAddUsers = ! showAddUsers"><i class="fa fa-user"></i> Users</a>
 
                                     <div class="custom_pop_up add_users" ng-show="showAddUsers">
                                         <div class="custom_pop_up_header text-center">
@@ -197,59 +228,30 @@
                                             </select>
                                         </div>
 
-                                        <button type="button" class="btn btn-add" ng-click="addUser(users_list);">
+                                        <button type="button" class="btn btn-add" ng-click="saveUserToCard(users_list);">
                                            Add user
                                         </button>
                                     </div>
 
-                                    <div class="discount_window_card" ng-show="discount_window[k]">
-                                        <div class="discount_header">
-                                            <button type="button" class="close" ng-click="discount_window[k] = ! discount_window[k]" aria-hidden="true">×</button>
-                                        </div>
-                                        <br>
+                                    <a class="btn card_nav" ng-click="openCheklistForm = ! openCheklistForm"><i class="fa fa-check-square-o"></i> Checklist</a>
 
-                                        <div>
-                                            <select name="assign_to" ng-model="users_list">
-                                                <span ng-repeat="user_work in users_work_in_card">
-                                                    <option ng-repeat="user in not_checked_users" ng-If="user_work.users_id != user.users_id" value="@{{ user.users_id }}">@{{user.users_first_name}}</option>
-                                                </span>
-                                            </select>
-
-                                            <button type="button" class="btn" ng-click="addUser(users_list)">
-                                               <i class="fa fa-plus"></i>
-                                            </button>
+                                    <div class="custom_pop_up add_checklist" ng-show="openCheklistForm">
+                                        <div class="custom_pop_up_header text-center">
+                                            <span>Add checklist</span>
+                                            <button type="button" class="close" ng-click="openCheklistForm = ! openCheklistForm">×</button>
                                         </div>
 
-                                        <ul class="assign-list">
-                                            <li class="form-span" ng-repeat="user in users">@{{ user.users_first_name}}</li>
-                                        </ul>
-
-                                        <ul class="assign-list" ng-model="customers.assign_to">
-                                            <li ng-repeat="user in checked_users" class="margin_li">
-                                                @{{ user.users_first_name}}
-
-                                                <button type="button" class="btn btn-danger" ng-click="removeUser(user.users_id)">
-                                                    <i class="fa fa-minus"></i>
-                                                </button>
-                                            </li>
-
-                                            <button type="button" class="btn btn-add" ng-click="SaveUserToCard(card.id)">
-                                                Save
-                                            </button>
-                                        </ul>
-                                    </div>
-
-                                    <div class="discount_window_card" ng-show="openCheklistForm[k]">
-                                        <div class="discount_header">
-                                            <button type="button" class="close" ng-click="openCheklistForm[k] = ! openCheklistForm[k]" aria-hidden="true">×</button>
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" ng-model="checklists.title">
                                         </div>
-                                        <br>
 
-                                        <input type="text" ng-model="card.checklist.title">
-                                        <button type="button" aria-hidden="true" class="btn btn-primary m-b-5" ng-click="saveChecklistTitle(card.checklist.title);">
+                                        <button type="button" aria-hidden="true" class="btn btn-primary" ng-click="saveChecklist()">
                                             Save
                                         </button>
                                     </div>
+
+                                    <a class="btn card_nav" ng-click="calendarOpen(0);"><i class="glyphicon glyphicon-calendar"></i> Timing</a>
+                                    <input type="hidden" ng-change="saveDeadline(card.checklist.deadline);" class="form-control" uib-datepicker-popup="dd/MM/yyyy" ng-model="card.checklist.deadline" is-open="date[0].opened" show-button-bar="false" datepicker-options="dateOptions" />
                                 </div>
                             </div>
                         </div>

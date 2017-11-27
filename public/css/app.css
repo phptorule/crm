@@ -5265,7 +5265,8 @@ button.toast-close-button {
 }
 
 .no-transition .form-control,
-.no-transition .form-span {
+.no-transition .form-span,
+.no-transition a {
     transition: none;
 }
 
@@ -5862,6 +5863,7 @@ button.toast-close-button {
     background-color: #fff;
     border: 1px solid #dedede;
     padding: 10px;
+    left: 15px;
 }
 
 .custom_pop_up_header {
@@ -5875,8 +5877,11 @@ button.toast-close-button {
 }
 
 .custom_pop_up.add_users {
-    top: 62px;
-    left: 15px;
+    top: 70px;
+}
+
+.custom_pop_up.add_checklist {
+    top: 108px;
 }
 
 .card_info_header {
@@ -5885,7 +5890,6 @@ button.toast-close-button {
 
 .users_block ul {
     padding: 0;
-    margin-top: -10px;
     list-style: none;
 }
 
@@ -5959,6 +5963,106 @@ button.toast-close-button {
 }
 
 .checkbox_item {
+    position: relative;
+    z-index: 1;
+    padding: 5px 0;
+}
+
+.checkbox_item:hover {
+    background-color: #E2E4E6;
+}
+
+.delete_chceckbox {
+    position: absolute;
+    z-index: 1;
+    top: 5px;
+    right: 5px;
+    color: #E5343D;
+    display: none;
+}
+
+.checkbox_item:hover .delete_chceckbox {
+    display: block;
+}
+
+.delete_chceckbox:hover {
+    color: #374767;
+    cursor: pointer;
+}
+
+.card_checkbox {
+    background: #fff;
+    border-radius: 3px;
+    box-shadow: 0 2px 3px rgba(0,0,0,.1);
+    border: 1px solid #D6DADC;
+    border-bottom-color: #C4C9CC;
+    font-weight: 700;
+    position: absolute;
+    left: 5px;
+    line-height: 18px;
+    overflow: hidden;
+    text-align: center;
+    text-indent: 100%;
+    top: 5px;
+    height: 18px;
+    width: 18px;
+    white-space: nowrap;
+}
+
+.card_checkbox:hover {
+    background-color: #F8F9F9;
+    box-shadow: 0 1px 2px rgba(0,0,0,.1);
+    cursor: pointer;
+    text-indent: 0;
+    color: #bebebe;
+}
+
+.card_checkbox.active {
+    background-color: #E2E4E6;
+    box-shadow: inset 0 3px 6px rgba(0,0,0,.1);
+    text-indent: 0;
+}
+
+.card_checkbox_description {
+    margin-left: 30px;
     word-wrap: break-word;
-    white-space: normal;
+    padding-right: 30px;
+}
+
+.card_checkbox_description .active_span {
+    color: #bebebe;
+    text-decoration: line-through;
+}
+
+.card_checkbox_description:hover {
+    cursor: pointer;
+}
+
+.checkbox_description_buttons {
+    margin: 10px 0 0 30px;
+}
+
+.card_comment_block {
+    margin-bottom: 30px;
+}
+
+.card_comment_block .comment_author {
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.card_comment_block .comment_text {
+    background: #fff;
+    border-radius: 3px;
+    box-shadow: 0 2px 3px rgba(0,0,0,.1);
+    border: 1px solid #D6DADC;
+    border-bottom-color: #C4C9CC;
+    padding: 5px 5px 5px 15px;
+    word-wrap: break-word;
+}
+
+@media (min-width: 768px) {
+    .modal-dialog {
+        width: 800px;
+    }
 }
