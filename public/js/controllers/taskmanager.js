@@ -63,7 +63,6 @@
 
         };
 
-
         $scope.getTask = function() {
             request.send('/TaskManager/getTask', $scope.list, function(data) {
                 $scope.tasks = data;
@@ -89,7 +88,6 @@
         };
 
 
-
         $scope.initTask = function() {
 
             request.send('/TaskManager/addTask', $scope.list, function(data) {
@@ -101,7 +99,6 @@
 
             });
         };
-
 
         $scope.createCard = function(id) {
             $scope.card.task_id = id;
@@ -115,7 +112,6 @@
                 }
             });
         };
-
 
         $scope.selectCard = function(card_id) {
 
@@ -199,6 +195,7 @@
             $scope.getTeamUsers();
             $scope.getChecklists();
             $scope.getComments();
+            $scope.getDeadline();
         };
 
         $scope.getCard = function() {
@@ -230,7 +227,7 @@
             if ($scope.cards_users != 0)
             {
                 $scope.not_checked_users = [];
-                //console.log($scope.cards_users);
+
                 for (var k in $scope.team_users)
                 {
                     if ($scope.inArray($scope.cards_users, $scope.team_users[k].users_id))
@@ -430,10 +427,16 @@
         //checklist end
 
         //datapicker
-        $scope.saveDeadline = function(deadline) {
-            request.send('/TaskManager/saveDeadline', {'deadline': deadline,'card_id': $scope.card.id}, function(data) {
+        $scope.getDeadline = function(deadline) {
+            request.send('/TaskManager/getDeadline', {'card_id': $scope.card.id}, function(data) {
                 $scope.card.deadline = data.deadline;
                 $scope.card.reddata = data.reddata;
+            });
+        };
+
+        $scope.saveDeadline = function(deadline) {
+            request.send('/TaskManager/saveDeadline', {'deadline': deadline,'card_id': $scope.card.id}, function(data) {
+                $scope.getDeadline();
             });
         };
 

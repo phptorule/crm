@@ -151,16 +151,17 @@ class TaskManagerController extends Controller
 
     public function getCardUsers($post = [])
     {
-        $card_with_users = CardsUsers::all()->where('card_id', $post['card_id']);
+        $card_users = [];
+        $card_with_users = CardsUsers::where('card_id', $post['card_id'])->get();
 
-        if ( ! empty($card_with_users))
-        {
-            foreach ($card_with_users as $value) {
+        foreach ($card_with_users as $value) {
+            if (! empty($value->user_id))
+            {
                 $card_users[] = Users::find($value->user_id);
             }
-
-            return $card_users;
         }
+
+        return $card_users;
     }
 
     public function saveUserToCard($post = []){
@@ -297,7 +298,15 @@ class TaskManagerController extends Controller
     }
 
     //Checklist end
+    public function getDeadline($post = []){
+        $card = Cards::find($post['card_id']);
 
+        //message - toomorow deadline
+        $reddata = strtotime($card->deadline) - strtotime(date('Y-m-d'));
+        $card->reddata =  date('d',$reddata) - 1;
+
+        return $card;
+    }
 
     public function saveDeadline($post = []){
 
