@@ -1,4 +1,4 @@
-<div class="row task_manager_board"  data-ng-controller="Task_managerCtrl" ng-init="getTask()">
+<div class="row task_manager_board"  data-ng-controller="Task_managerCtrl" ng-init="initTask()">
     <form class="no-transition" id="task_manager" name="form" method="post" novalidate="novalidate">
         <div class="outer">
             <div class="sortable-outer task_manager_list" ng-repeat="(k,task) in tasks">
@@ -22,7 +22,7 @@
 
                     <div class="inner">
                         <div class="panel-body">
-                            <div class="sortable-inner task_manager_card" ng-repeat="card in cards[k]" ng-click="selectCard(card.id)" ng-init="initSortable()">
+                            <div class="sortable-inner task_manager_card" ng-repeat="card in cards[k]" ng-click="selectCard(card.cards_id)" ng-init="initSortable()">
                                 <span>@{{card.name}}</span>
                             </div>
                         </div>
@@ -50,7 +50,7 @@
                             <input type="text" class="form-control" placeholder="Enter list name" ng-model="list.name_task_block" name="name_task_block" required />
                         </div>
 
-                        <button class="btn btn-add" ng-click="initTask()" type="reset">Add list</button>
+                        <button class="btn btn-add" ng-click="addTask()" type="reset">Add list</button>
                         <!--a class="cancel_button" href="javascript:void(0);" ng-click="deleteTask()"><i class="fa fa-times"></i></a-->
                     </div>
                 </div>
@@ -121,7 +121,7 @@
                                         </div>
 
                                         <div class="form-group">
-                                            <button class="btn btn-add" ng-show="! show_description || ! card.description" ng-click="saveCard(); show_description = ! show_description">Save</button>
+                                            <button class="btn btn-add" ng-show="! show_description || ! card.description" ng-click="saveCardDescription(); show_description = ! show_description">Save</button>
                                             <button class="btn btn-danger" ng-show="! show_description && card.description" ng-click="resetCardDescription()">Cancel</button>
                                             <button class="btn btn-add" ng-show="show_description && card.description" ng-click="makeDescriptionCopy(); show_description = ! show_description">Edit</button>
                                         </div>
@@ -136,7 +136,7 @@
 
                                     <div class="checkbox_item" ng-repeat="(k, checkbox) in checklists[l].checkboxes">
                                         <div ng-show="checkbox.status == 0">
-                                            <div class="card_checkbox" ng-click="saveChangeChecklistStatus(checkbox.id)">
+                                            <div class="card_checkbox" ng-click="changeCheckboxStatus(checklists[l].checkboxes[k].id)">
                                                 <i class="fa fa-check"></i>
                                             </div>
 
@@ -146,13 +146,13 @@
                                             </div>
 
                                             <div class="checkbox_description_buttons">
-                                                <button class="btn btn-add" ng-show="! editChecklistItem[k]" ng-click="saveChecklistValue(checklists[l].checkboxes[k]); editChecklistItem[k] = ! editChecklistItem[k]">Save</button>
+                                                <button class="btn btn-add" ng-show="! editChecklistItem[k]" ng-click="saveCheckboxec(checklists[l].checkboxes[k]); editChecklistItem[k] = ! editChecklistItem[k]">Save</button>
                                                 <button class="btn btn-danger" ng-show="! editChecklistItem[k]" ng-click="resetCheckboxDescription(k, l); editChecklistItem[k] = ! editChecklistItem[k]">Cancel</button>
                                             </div>
                                         </div>
 
                                         <div ng-show="checkbox.status == 1">
-                                            <div class="card_checkbox active" ng-click="saveChangeChecklistStatus(checkbox.id)">
+                                            <div class="card_checkbox active" ng-click="changeCheckboxStatus(checklists[l].checkboxes[k].id)">
                                                 <i class="fa fa-check"></i>
                                             </div>
 
@@ -162,7 +162,7 @@
                                             </div>
 
                                             <div class="checkbox_description_buttons">
-                                                <button class="btn btn-add" ng-show="! editChecklistItem[k]" ng-click="saveChecklistValue(checklist.id, checklists[l].checkboxes[k].title); editChecklistItem[k] = ! editChecklistItem[k]">Save</button>
+                                                <button class="btn btn-add" ng-show="! editChecklistItem[k]" ng-click="saveCheckboxec(checklist.id, checklists[l].checkboxes[k].title); editChecklistItem[k] = ! editChecklistItem[k]">Save</button>
                                                 <button class="btn btn-danger" ng-show="! editChecklistItem[k]" ng-click="resetCheckboxDescription(k, l); editChecklistItem[k] = ! editChecklistItem[k]">Cancel</button>
                                             </div>
                                         </div>
@@ -177,7 +177,7 @@
                                         <div class="form-group">
                                             <input class="form-control" type="text" ng-model="checklists[l].checkbox_title">
                                         </div>
-                                        <button class="btn btn-add" ng-click="createCheckboxItem(checklists[l])">Add</button>
+                                        <button class="btn btn-add" ng-click="addCheckbox(checklists[l])">Add</button>
                                         <button class="btn btn-danger" ng-click="showCheckBox = ! showCheckBox" type="reset">Cancel</button>
                                     </div>
 
@@ -187,22 +187,22 @@
                                 <div class="card_comments">
                                     <div class="form-group">
                                         <h4><i class="fa fa-comments-o"></i> Add comment</h4>
-                                        <textarea class="form-control resize" ng-model="card.comment"></textarea>
+                                        <textarea class="form-control resize" ng-model="comment_text"></textarea>
                                     </div>
 
                                     <div class="form-group">
-                                        <button class="btn btn-add" ng-click="saveComment(card.comment)" type="reset">Save</button>
+                                        <button class="btn btn-add" ng-click="saveComment()" type="reset">Save</button>
                                     </div>
 
                                     <p ng-show="comments">Comments: </p>
-                                    <div ng-repeat="comments in comments">
+                                    <div ng-repeat="comment in comments">
                                         <div class="card_comment_block">
                                             <div class="comment_author">
-                                                @{{comments.users.users_first_name + ' ' + comments.users.users_last_name + ' (' + comments.created_at + ')'}}
+                                                @{{comment.users.users_first_name + ' ' + comment.users.users_last_name + ' (' + comment.created_at + ')'}}
                                             </div>
 
                                             <div class="comment_text">
-                                                @{{comments.text}}
+                                                @{{comment.text}}
                                             </div>
                                         </div>
                                     </div>
