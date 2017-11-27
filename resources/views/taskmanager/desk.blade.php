@@ -224,7 +224,7 @@
 
                                         <div class="form-group">
                                             <select class="form-control" name="assign_to" ng-model="users_list">
-                                                <option ng-repeat="user in not_checked_users" value="@{{ user.users_id }}">@{{user.users_first_name + ' ' + user.users_last_name}}</option>
+                                                <option ng-repeat="user in team_users" value="@{{ user.users_id }}">@{{user.users_first_name + ' ' + user.users_last_name}}</option>
                                             </select>
                                         </div>
 
