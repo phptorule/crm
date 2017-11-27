@@ -51,7 +51,7 @@
                         </div>
 
                         <button class="btn btn-add" ng-click="initTask()" type="reset">Add list</button>
-                        <a class="cancel_button" href="javascript:void(0);" ng-click="deleteTask()"><i class="fa fa-times"></i></a>
+                        <!--a class="cancel_button" href="javascript:void(0);" ng-click="deleteTask()"><i class="fa fa-times"></i></a-->
                     </div>
                 </div>
             </div>
@@ -76,7 +76,7 @@
                             <div class="col-sm-8">
                                 <div class="card_info_header">
                                     <div class="row">
-                                        <div class="col-sm-5 users_block" ng-show="users">
+                                        <div class="col-sm-5 users_block" ng-show="users != ''">
                                             <ul>
                                                 <h4>Users:</h4>
                                                 <li ng-repeat="user in users">
@@ -103,7 +103,7 @@
                                             </ul>
                                         </div>
 
-                                        <div class="col-sm-5 deadline_block">
+                                        <div class="col-sm-5 deadline_block" ng-show="card.deadline">
                                             <h4>Deadline to:</h4>
 
                                             <span ng-If="card.reddata == 1 || card.reddata == 0" class="reddata">@{{card.deadline}}</span>
