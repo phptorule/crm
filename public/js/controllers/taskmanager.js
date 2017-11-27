@@ -202,14 +202,14 @@
         };
 
         $scope.getCard = function() {
-            request.send('/Taskmanager/getCard', {'card_id': $scope.card.id}, function(data) {
+            request.send('/TaskManager/getCard', {'card_id': $scope.card.id}, function(data) {
                 $scope.card = data;
                 $scope.temp_description = $scope.card.description;
             });
         };
 
         $scope.getTeamUsers = function() {
-            request.send('/Taskmanager/getTeamUsers', {}, function(data) {
+            request.send('/TaskManager/getTeamUsers', {}, function(data) {
                 $scope.team_users = data;
                 $scope.not_checked_ids = [];
                 $scope.users_list = $scope.team_users[0].users_id.toString();
@@ -256,7 +256,7 @@
         };
 
         $scope.getCardUsers = function() {
-            request.send('/Taskmanager/getCardUsers', {'card_id': $scope.card.id}, function(data) {
+            request.send('/TaskManager/getCardUsers', {'card_id': $scope.card.id}, function(data) {
                 $scope.users = data;
 
                 for (var k in data)
@@ -269,7 +269,7 @@
         };
 
         $scope.saveUserToCard = function(user_id) {
-            request.send('/Taskmanager/saveUserToCard', {'user_id': user_id, 'card_id': $scope.card.id}, function(data) {
+            request.send('/TaskManager/saveUserToCard', {'user_id': user_id, 'card_id': $scope.card.id}, function(data) {
                 $scope.users = data;
 
                 for (var k in data)
@@ -310,13 +310,13 @@
         };
 
         $scope.saveCardTitle = function(id,name) {
-            request.send('/Taskmanager/saveCardTitle', {'id': id,'name': name}, function(data) {
+            request.send('/TaskManager/saveCardTitle', {'id': id,'name': name}, function(data) {
                 $scope.card = data;
             });
         };
 
         $scope.addToCard = function(id) {
-            request.send('/Taskmanager/addToCard', {'user_id': id, 'card_id': $scope.card.id}, function(data) {
+            request.send('/TaskManager/addToCard', {'user_id': id, 'card_id': $scope.card.id}, function(data) {
                 $scope.card = data;
             });
         };
@@ -333,7 +333,7 @@
 
         $scope.saveCard = function() {
             $scope.card.description = $scope.temp_description;
-            request.send('/Taskmanager/saveCard', $scope.card, function(data) {
+            request.send('/TaskManager/saveCard', $scope.card, function(data) {
                 $scope.card = data;
             });
             $scope.show_description = false;
@@ -341,13 +341,13 @@
 
 
         $scope.getTask = function() {
-            request.send('/Taskmanager/getTask', $scope.list, function(data) {
+            request.send('/TaskManager/getTask', $scope.list, function(data) {
                 $scope.tasks = data;
             });
         };
 
         $scope.initTask = function() {
-            request.send('/Taskmanager/addTask', $scope.list, function(data) {
+            request.send('/TaskManager/addTask', $scope.list, function(data) {
                 $scope.tasks = data;
 
                 for (var k in data)
@@ -363,13 +363,13 @@
 
         //comments begin
         $scope.getComments = function(text) {
-            request.send('/Taskmanager/getComments', {'card_id': $scope.card.id}, function(data) {
+            request.send('/TaskManager/getComments', {'card_id': $scope.card.id}, function(data) {
                 $scope.comments = data;
             });
         };
 
         $scope.saveComment = function(text) {
-            request.send('/Taskmanager/saveComment', {'text':text, 'card_id': $scope.card.id}, function(data) {
+            request.send('/TaskManager/saveComment', {'text':text, 'card_id': $scope.card.id}, function(data) {
                 $scope.getComments();
             });
         };
@@ -378,7 +378,7 @@
 
         //checklist begin
         $scope.getChecklists = function() {
-            request.send('/Taskmanager/getChecklists', {'card_id': $scope.card.id}, function(data) {
+            request.send('/TaskManager/getChecklists', {'card_id': $scope.card.id}, function(data) {
                 $scope.checklists = data;
             });
         };
@@ -392,37 +392,37 @@
         };
 
         $scope.saveChecklist = function() {
-            request.send('/Taskmanager/saveChecklist', {'title': $scope.checklists.title, 'card_id': $scope.card.id}, function(data) {
+            request.send('/TaskManager/saveChecklist', {'title': $scope.checklists.title, 'card_id': $scope.card.id}, function(data) {
                 $scope.getChecklists();
             });
         };
 
         $scope.saveChecklistValue = function(checkbox) {
-            request.send('/Taskmanager/saveChecklistValue', checkbox, function(data) {
+            request.send('/TaskManager/saveChecklistValue', checkbox, function(data) {
                 $scope.getChecklists();
             });
         };
 
         $scope.createCheckboxItem = function(checkbox) {
-            request.send('/Taskmanager/createCheckboxItem', checkbox, function(data) {
+            request.send('/TaskManager/createCheckboxItem', checkbox, function(data) {
                 $scope.getChecklists();
             });
         };
 
         $scope.saveChangeChecklistStatus = function(checkbox_id) {
-            request.send('/Taskmanager/saveChangeChecklistStatus', {'checkbox_value_id': checkbox_id, 'card_id': $scope.card.id}, function(data) {
+            request.send('/TaskManager/saveChangeChecklistStatus', {'checkbox_value_id': checkbox_id, 'card_id': $scope.card.id}, function(data) {
                 $scope.getChecklists();
             });
         };
 
         $scope.deleteCheckList = function(id) {
-            request.send('/Taskmanager/deleteCheckList', {'checklist_id': id,'card_id': $scope.card.id}, function(data) {
+            request.send('/TaskManager/deleteCheckList', {'checklist_id': id,'card_id': $scope.card.id}, function(data) {
                 $scope.getChecklists();
             });
         };
 
         $scope.deleteCheckBox = function(id) {
-            request.send('/Taskmanager/deleteCheckBox', {'checkbox_id': id,'card_id': $scope.card.id}, function(data) {
+            request.send('/TaskManager/deleteCheckBox', {'checkbox_id': id,'card_id': $scope.card.id}, function(data) {
                 $scope.getChecklists();
             });
         };
@@ -431,7 +431,7 @@
 
         //datapicker
         $scope.saveDeadline = function(deadline) {
-            request.send('/Taskmanager/saveDeadline', {'deadline': deadline,'card_id': $scope.card.id}, function(data) {
+            request.send('/TaskManager/saveDeadline', {'deadline': deadline,'card_id': $scope.card.id}, function(data) {
                 $scope.card.deadline = data.deadline;
                 $scope.card.reddata = data.reddata;
             });
