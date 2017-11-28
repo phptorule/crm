@@ -45,6 +45,7 @@ class TaskManagerController extends Controller
             }
         }
 
+        //із-за проблем з індексами
         if(count($result) == 1){
             if(!empty($result[0])){
                 $users_not_checked[] = Users::find($result[0]);
@@ -52,14 +53,11 @@ class TaskManagerController extends Controller
             if(!empty($result[1])){
                 $users_not_checked[] = Users::find($result[1]);
             }
-            
         }
 
         if(!empty($users_not_checked)){
             return $team->users_not_checked = $users_not_checked;
         }
-
-        
     }
 
     public function getTask($post = []){

@@ -206,18 +206,13 @@
                 $scope.comments = data.comments;
                 $scope.temp_description = $scope.card.description;
                 $scope.users = data.users;
-
-                //console.log(data);
             });
 
         };
 
         $scope.getTeamUsers = function() {
             request.send('/TaskManager/getTeamUsers', {'cards_id': $scope.card.cards_id}, function(data) {
-                //$scope.team_users = data.teams;
-                //$scope.users_in_card = data.in_card;
                 $scope.team_users = data;
-                console.log(data);
             });
         };
 
