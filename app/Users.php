@@ -61,7 +61,7 @@ class Users extends Authenticatable
         return $this->HasMany('App\CardsComments', 'users_id');
     }
     
-    public function card_users() {
-        return $this->HasMany('App\CardsComments', 'user_id');
+    public function cards() {
+        return $this->belongsToMany('App\Cards', 'cards_users', 'users_id', 'cards_id');
     }
 }

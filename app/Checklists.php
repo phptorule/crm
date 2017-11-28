@@ -4,8 +4,8 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Checklist extends Model
+class Checklists extends Model
 {
-    protected $table = "checklist";
+    protected $table = "checklists";
 
 }
