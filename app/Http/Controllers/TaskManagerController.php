@@ -14,6 +14,7 @@ use App\CardsUsers;
 use App\CardsComments;
 use App\Checklists;
 use App\Checkboxes;
+use App\ListsUsers;
 use Illuminate\Support\Facades\Auth;
 
 class TaskManagerController extends Controller
@@ -49,8 +50,7 @@ class TaskManagerController extends Controller
         if(count($result) == 1){
             if(!empty($result[0])){
                 $users_not_checked[] = Users::find($result[0]);
-            }
-            if(!empty($result[1])){
+            }elseif(empty($result[1])) {
                 $users_not_checked[] = Users::find($result[1]);
             }
         }
@@ -68,6 +68,11 @@ class TaskManagerController extends Controller
         }
 
         return $tasks;
+    }
+
+    public function getTaskTeamUsers($post = []) {
+
+        
     }
 
     public function getCard($post = []){
