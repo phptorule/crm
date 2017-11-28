@@ -307,6 +307,8 @@ a:focus {
 }
 hr {
     border-top: 1px solid #e1e6ef;
+    margin-top: 25px;
+    margin-bottom: 25px;
 }
 /* margins & paddings */
 
@@ -5673,12 +5675,14 @@ button.toast-close-button {
 
 #task_manager .panel-bd > .panel-heading {
     border: none;
+    padding-bottom: 0;
 }
 
 #task_manager .panel-body {
     background-color: #d1d1d1;
     max-height: 310px;
     overflow-y: auto;
+    padding: 0 15px;
 }
 
 #task_manager .panel {
@@ -5813,7 +5817,7 @@ button.toast-close-button {
 }
 
 .card_info_header {
-    padding-bottom: 20px;
+    padding-bottom: 0px;
 }
 
 .users_block ul {
@@ -5887,7 +5891,7 @@ button.toast-close-button {
 /*End scrollable task manager board*/
 
 .card_block {
-    margin-bottom: 40px;
+    margin-bottom: 0px;
 }
 
 .checkbox_item {

@@ -64,4 +64,8 @@ class Users extends Authenticatable
     public function cards() {
         return $this->belongsToMany('App\Cards', 'cards_users', 'users_id', 'cards_id');
     }
+
+    public function lists() {
+        return $this->belongsToMany('App\TasksLists', 'lists_users', 'users_id', 'lists_id');
+    }
 }

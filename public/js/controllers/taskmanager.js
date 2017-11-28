@@ -34,8 +34,19 @@
                     $scope.cards[k] = data[k].cards;
                     $scope.all += data[k].cards.length;
                 }
+
+                //$scope.getTaskTeamUsers();
             });
         };
+
+        /*
+        $scope.getTaskTeamUsers = function() {
+            request.send('/TaskManager/getTaskTeamUsers', {'cards_id': $scope.card.cards_id}, function(data) {
+                $scope.team_users = data;
+                $scope.users_list = $scope.team_users[0].users_id.toString();
+            });
+        };
+        */
 
         $scope.addTask = function() {
 

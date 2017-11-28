@@ -11,11 +11,23 @@
                             </div>
                             <div class="list_settings col-sm-2 pull-right">
                                 <div uib-dropdown class="m-b-5" auto-close="outsideClick">
-                                    <a href="javascript:void(0);" class="btn dropdown-toggle" uib-dropdown-toggle><i class="fa fa-cog" aria-hidden="true"></i></a>
+                                    <a href="javascript:void(0);" class="btn dropdown-toggle" uib-dropdown-toggle ng-click="getTask(tasks[k].id)"><i class="fa fa-cog" aria-hidden="true"></i></a>
                                     <div uib-dropdown-menu class="custom_pop_up">
                                         <div class="text-left">
                                             <button class="btn btn-danger" ng-click="deleteTask(task.id)">Delete list</button>
                                         </div>
+
+                                        <span>Users</span>
+
+                                        <div class="form-group">
+                                            <select class="form-control" name="assign_to" ng-model="users_list">
+                                                <option ng-repeat="user in team_users" value="@{{ user.users_id }}">@{{user.users_first_name + ' ' + user.users_last_name}}</option>
+                                            </select>
+                                        </div>
+
+                                        <button type="button" class="btn btn-add" ng-click="saveUserToCard(users_list);">
+                                            Add user
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -82,7 +94,7 @@
                                                 <h4>Users:</h4>
                                                 <li ng-repeat="user in users">
                                                     <div uib-dropdown class="m-b-5" auto-close="outsideClick">
-                                                        <a href="javascript:void(0);" class="btn card_nav dropdown-toggle" uib-dropdown-toggle>@{{ user.users_first_name + ' ' + user.users_last_name }} <i class="fa fa-pencil"></i></a>
+                                                        <a href="javascript:void(0);" class="card_user dropdown-toggle" uib-dropdown-toggle>@{{ user.users_first_name + ' ' + user.users_last_name }} <i class="fa fa-pencil"></i></a>
                                                         <div uib-dropdown-menu class="custom_pop_up">
 
                                                             <div class="form-group">
@@ -111,6 +123,8 @@
                                     </div>
                                 </div>
 
+                                <hr ng-show="users != ''">
+
                                 <div class="card_block description">
                                     <h4>Description:</h4>
                                     <div class="card_description">
@@ -126,6 +140,8 @@
                                         </div>
                                     </div>
                                 </div>
+
+                                <hr>
 
                                 <div class="card_block checklists" ng-repeat="(l, checklist) in checklists">
                                     <div class="checklist_header">
@@ -182,6 +198,8 @@
 
                                     <a href="javascript:void(0);" ng-show="showCheckBox" ng-click="showCheckBox = ! showCheckBox">Add new item</a>
                                 </div>
+
+                                <hr ng-show="checklists != ''">
 
                                 <div class="card_comments">
                                     <div class="form-group">
