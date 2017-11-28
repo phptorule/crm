@@ -185,6 +185,8 @@
         $scope.comment_text = '';
         $scope.card_users_ids = [];
         $scope.team_users_ids = [];
+        $scope.team_userss = [];
+        $scope.users_teamssa = [];
 
         $scope.editChecklistItem = [];
         for (var i = 0; i < 20; i++)
@@ -205,92 +207,33 @@
                 $scope.temp_description = $scope.card.description;
                 $scope.users = data.users;
 
-                for (var k in $scope.users)
-                {
-                    $scope.card_users_ids[k] = $scope.users[k].users_id;
-                }
-
-                $scope.updateUserList();
+                //console.log(data);
             });
+
         };
 
         $scope.getTeamUsers = function() {
-            request.send('/TaskManager/getTeamUsers', {}, function(data) {
+            request.send('/TaskManager/getTeamUsers', {'cards_id': $scope.card.cards_id}, function(data) {
+                //$scope.team_users = data.teams;
+                //$scope.users_in_card = data.in_card;
                 $scope.team_users = data;
-                $scope.not_checked_ids = [];
-                $scope.users_list = $scope.team_users[0].users_id.toString();
-
-                for (var k in $scope.team_users)
-                {
-                    $scope.team_users_ids[k] = $scope.team_users[k].users_id;
-                }
-
-                $scope.updateUserList();
+                console.log(data);
             });
         };
 
-        $scope.updateUserList = function() {
-            var temp = [];
-            $scope.dropdown_users_ids = [];
-
-            for (var k in $scope.team_users_ids)
-            {
-                
-                if ($scope.inArray($scope.card_users_ids, $scope.team_users_ids[k]))
-                {
-                    //console.log($scope.card_users_ids);
-                    for (var l in $scope.dropdown_users_ids)
-                    {
-                        if ($scope.dropdown_users_ids[l] != $scope.team_users_ids[l])
-                        {
-                            temp.push($scope.team_users_ids[l]);
-                        }
-                    }
-
-                    $scope.dropdown_users_ids = temp;
-                }
-                else
-                {
-                    $scope.dropdown_users_ids.push($scope.team_users_ids[k]);
-                    //$scope.users_list = $scope.not_checked_users[0].users_id.toString();
-                }
-            }
-
-            console.log($scope.dropdown_users_ids);
-
-        };
 
         $scope.saveUserToCard = function(user_id) {
             request.send('/TaskManager/saveUserToCard', {'users_id': user_id, 'cards_id': $scope.card.cards_id}, function(data) {
-                $scope.updateUserList();
+                $scope.getCard();
+                $scope.getTeamUsers();
             });
         };
 
         $scope.removeUser = function(user_id) {
-            var temp = [];
-            for (var k in $scope.checked_ids)
-            {
-                if ($scope.checked_ids[k] != user_id)
-                {
-                    temp.push($scope.checked_ids[k]);
-                }
-            }
-            $scope.checked_ids = temp;
-            $scope.updateUserList();
-        };
-
-        $scope.inArray = function(list, value) {
-            var result = false;
-
-            for (var k in list)
-            {
-                if (list[k] == value)
-                {
-                    result = true;
-                }
-            }
-
-            return result;
+            request.send('/TaskManager/removeUser', {'users_id': user_id, 'cards_id': $scope.card.cards_id}, function(data) {
+                $scope.getCard();
+                $scope.getTeamUsers();
+            });
         };
 
         $scope.saveCardTitle = function(id,name) {

@@ -19,8 +19,47 @@ use Illuminate\Support\Facades\Auth;
 class TaskManagerController extends Controller
 {
     public function getTeamUsers($post = []) {
+
+        //користувачі в команді
         $team = Teams::find(session('current_team'));
-        return $team->users()->get();
+        $team->teams  = $team->users()->get();
+        foreach ($team->teams as $teams) {
+            $a[] = $teams->users_id;
+        }
+
+        //користувачі в картці
+        $users_in_card = Cards::find($post['cards_id']);
+        $team->in_card = $users_in_card->users()->get();
+        $b = [];
+        foreach ($team->in_card as $card_users) {
+            if(!empty($card_users->users_id)){
+                $b[] = $card_users->users_id;
+            }
+        }
+
+        //користувачі вкоманді, які не вибрані
+        $result = array_diff($a,$b);
+        if(count($result)>1){
+            for ($i=0; $i < count($result); $i++) {
+                $users_not_checked[] = Users::find($result[$i]);
+            }
+        }
+
+        if(count($result) == 1){
+            if(!empty($result[0])){
+                $users_not_checked[] = Users::find($result[0]);
+            }
+            if(!empty($result[1])){
+                $users_not_checked[] = Users::find($result[1]);
+            }
+            
+        }
+
+        if(!empty($users_not_checked)){
+            return $team->users_not_checked = $users_not_checked;
+        }
+
+        
     }
 
     public function getTask($post = []){
@@ -141,8 +180,16 @@ class TaskManagerController extends Controller
     }
 
     public function saveUserToCard($post = []){
-        $card = Cards::find($post['cards_id']);
-        $card->users()->sync($post['users_id']);
+        if(!empty($post['users_id'])){
+            $card = new CardsUsers();
+            $card->cards_id = $post['cards_id'];
+            $card->users_id = $post['users_id'];
+            $card->save();
+        }
+    }
+
+    public function removeUser($post = []){
+        $card = CardsUsers::where('cards_id',$post['cards_id'])->where('users_id',$post['users_id'])->delete();
     }
 
 
