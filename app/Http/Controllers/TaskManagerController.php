@@ -40,18 +40,12 @@ class TaskManagerController extends Controller
 
         //користувачі вкоманді, які не вибрані
         $result = array_diff($a,$b);
-        if(count($result)>1){
+        $result = array_values($result);
+        if(count($result)>=1){
             for ($i=0; $i < count($result); $i++) {
-                $users_not_checked[] = Users::find($result[$i]);
-            }
-        }
-
-        //із-за проблем з індексами
-        if(count($result) == 1){
-            if(!empty($result[0])){
-                $users_not_checked[] = Users::find($result[0]);
-            }elseif(empty($result[1])) {
-                $users_not_checked[] = Users::find($result[1]);
+                if(isset($result[$i])){
+                    $users_not_checked[] = Users::find($result[$i]);
+                }
             }
         }
 

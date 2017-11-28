@@ -164,9 +164,9 @@
                   curXPos = 0;
 
               $('.task_manager_board').mousemove(function(m){
-                console.log(m);
+                //console.log(m);
                 if(curDown === true){
-                 $('.task_manager_board').scrollTop($('.task_manager_board').scrollTop() + (curYPos - m.pageY)); 
+                 $('.task_manager_board').scrollTop($('.task_manager_board').scrollTop() + (curYPos - m.pageY));
                  $('.task_manager_board').scrollLeft($('.task_manager_board').scrollLeft() + (curXPos - m.pageX));
                 }
               });
@@ -255,6 +255,7 @@
 
         $scope.getTeamUsers = function() {
             request.send('/TaskManager/getTeamUsers', {'cards_id': $scope.card.cards_id}, function(data) {
+                console.log(data);
                 $scope.team_users = data;
                 $scope.users_list = $scope.team_users[0].users_id.toString();
             });
@@ -377,3 +378,4 @@
 
     };
 })();
+
