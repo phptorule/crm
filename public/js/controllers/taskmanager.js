@@ -149,7 +149,39 @@
                     });
                 });
             }
+
+
         };
+
+        $scope.$watch('$viewContentLoaded', function(){
+            $scope.initScroll();
+        });
+
+        $scope.initScroll = function(){
+            
+              var curDown = false,
+                  curYPos = 0,
+                  curXPos = 0;
+
+              $('.task_manager_board').mousemove(function(m){
+                console.log(m);
+                if(curDown === true){
+                 $('.task_manager_board').scrollTop($('.task_manager_board').scrollTop() + (curYPos - m.pageY)); 
+                 $('.task_manager_board').scrollLeft($('.task_manager_board').scrollLeft() + (curXPos - m.pageX));
+                }
+              });
+              
+              $('.task_manager_board').mousedown(function(m){
+                curDown = true;
+                curYPos = m.pageY;
+                curXPos = m.pageX;
+              });
+              
+              $('.task_manager_board').mouseup(function(){
+                curDown = false;
+              });
+        }
+
     };
 })();
 
