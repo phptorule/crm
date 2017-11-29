@@ -42,7 +42,7 @@
                         <div class="panel-body">
                             <div class="sortable-inner task_manager_card" ng-repeat="card in cards[k]" ng-click="selectCard(card.cards_id)" ng-init="initSortable()">
                                 <p>@{{card.name}}</p>
-                                <span>
+                                <span class="preview_card">
                                     <i ng-If="card_user_me[card.cards_id]" class="glyphicon glyphicon-user"></i>
                                     <i ng-If="card_description[card.cards_id]" class="glyphicon glyphicon-list-alt"></i>
                                     <i ng-If="card_comments_count[card.cards_id]" class="glyphicon glyphicon-comment">@{{card_comments_count[card.cards_id]}}</i>
