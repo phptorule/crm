@@ -41,7 +41,14 @@
                     <div class="inner">
                         <div class="panel-body">
                             <div class="sortable-inner task_manager_card" ng-repeat="card in cards[k]" ng-click="selectCard(card.cards_id)" ng-init="initSortable()">
-                                <span>@{{card.name}}</span>
+                                <p>@{{card.name}}</p>
+                                <span>
+                                    <i ng-If="card_user_me[card.cards_id]" class="glyphicon glyphicon-user"></i>
+                                    <i ng-If="card_description[card.cards_id]" class="glyphicon glyphicon-list-alt"></i>
+                                    <i ng-If="card_comments_count[card.cards_id]" class="glyphicon glyphicon-comment">@{{card_comments_count[card.cards_id]}}</i>
+                                    <i ng-If="card_deadline[card.cards_id]" class="glyphicon glyphicon-calendar">@{{card_deadline[card.cards_id]}}</i>
+                                    <i ng-If="card_checkbox_all[card.cards_id]" class="glyphicon glyphicon-check">@{{card_cheked_checkbox[card.cards_id]}}/@{{card_checkbox_all[card.cards_id]}}</i>
+                                </span>
                             </div>
                         </div>
                     </div>

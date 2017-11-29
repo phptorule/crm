@@ -59,7 +59,39 @@ class TaskManagerController extends Controller
         $tasks = TasksLists::all();
         foreach ($tasks as $task) {
             $task->cards = Cards::where('task_id', $task->id)->get();
+            foreach ($task->cards as $cards) {
+
+                $cards_users[$cards->cards_id] = $cards->users()->get();
+                foreach ($cards_users[$cards->cards_id] as $value) {
+                    if($value->users_id == Auth::user()->users_id){
+                        $card_user_me[$cards->cards_id] = true;
+                    }
+                }
+                $checklists[$cards->cards_id] = Checklists::where('cards_id',$cards->cards_id)->get();
+                foreach ($checklists[$cards->cards_id] as $value) {
+                    $all_count_checkboxes[$cards->cards_id][] = count(Checkboxes::where('checklist_id',$value->id)->get());
+                    $all_conut_checked_checkboxes[$cards->cards_id][] = count(Checkboxes::where('checklist_id',$value->id)->where('status',1)->get());
+                }
+                if(!empty($all_count_checkboxes[$cards->cards_id])){
+                    $card_checkbox_all[$cards->cards_id] = array_sum($all_count_checkboxes[$cards->cards_id]);
+                }
+                if(!empty($all_conut_checked_checkboxes[$cards->cards_id])){
+                    $card_cheked_checkbox[$cards->cards_id] = array_sum($all_conut_checked_checkboxes[$cards->cards_id]);
+                }
+                $card_description[$cards->cards_id] = $cards->description;
+                $card_deadline[$cards->cards_id] = $cards->deadline;
+                $card_comments_count[$cards->cards_id] = count(CardsComments::where('cards_id', $cards->cards_id)->get());
+                
+            }
         }
+
+        $tasks['card_checkbox_all'] = $card_checkbox_all;
+        $tasks['card_cheked_checkbox'] = $card_cheked_checkbox;
+        $tasks['card_user_me'] = $card_user_me;
+        $tasks['card_description'] = $card_description;
+        $tasks['card_deadline'] = $card_deadline;
+        $tasks['card_comments_count'] = $card_comments_count;
+
         return $tasks;
     }
 
