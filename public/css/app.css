@@ -5999,4 +5999,14 @@ button.toast-close-button {
     }
 }
 
+.icon_hidden{
+    display: none;
+}
+
+.user_in_list:hover .icon_hidden{
+    display: block;
+    cursor: pointer;
+}
+
+
 

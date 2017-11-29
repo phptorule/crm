@@ -25,9 +25,13 @@
                                             </select>
                                         </div>
 
-                                        <button type="button" class="btn btn-add" ng-click="saveUserToCard(users_list);">
+                                        <button type="button" class="btn btn-add" ng-click="saveUserToList(users_list,tasks[k].id);">
                                             Add user
                                         </button>
+
+                                        <span ng-repeat="user in users">
+                                            <p class="user_in_list"><span>@{{ user.users_first_name + ' ' + user.users_last_name }}</span><i class="icon_hidden fa fa-trash-o" ng-click="removeUserList(user.users_id,tasks[k].id)"></i></p>
+                                        </span>
                                     </div>
                                 </div>
                             </div>

@@ -34,23 +34,30 @@
                     $scope.cards[k] = data[k].cards;
                     $scope.all += data[k].cards.length;
                 }
-
-                console.log(data.teams_users);
-                console.log(data.list_users);
-                //$scope.getListTeamUsers(list_id);
             });
         };
-
         
         $scope.getListTeamUsers = function(list_id) {
             request.send('/TaskManager/getListTeamUsers', {'list_id': list_id}, function(data) {
-                $scope.team_users = data;
+                $scope.list.this_lists_id = list_id;
+                $scope.users = data.users;
+                $scope.team_users = data.users_not_checked;
                 $scope.users_list = $scope.team_users[0].users_id.toString();
-                console.log(data);
+            });
+        };
+
+        $scope.saveUserToList = function(user_id,list_id) {
+            request.send('/TaskManager/saveUserToList', {'users_id': user_id, 'lists_id': list_id}, function(data) {
+                $scope.getListTeamUsers(list_id);
+            });
+        };
+
+        $scope.removeUserList = function(user_id,list_id) {
+            request.send('/TaskManager/removeUserList', {'users_id': user_id, 'lists_id': list_id}, function(data) {
+                $scope.getListTeamUsers(list_id);
             });
         };
         
-
         $scope.addTask = function() {
             request.send('/TaskManager/addTask', $scope.list, function(data) {
                 $scope.tasks = data;
@@ -80,7 +87,6 @@
                 }
             });
         };
-
 
         $scope.show_input_card = function() {
             if($scope.button_add_card == false){

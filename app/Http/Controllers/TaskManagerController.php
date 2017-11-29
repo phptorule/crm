@@ -56,40 +56,27 @@ class TaskManagerController extends Controller
 
     public function initTask($post = []){
 
-        //$list = TasksLists::all();
-        //$list->users = $list->users()->get();
-        //$list_users = ListsUsers::all();
-        //list_users = $list_users->users()->get();
-
-        $team = Teams::find(session('current_team'));
-        $team->teams  = $team->users()->get();
-
-        $list_users[] = ListsUsers::all();
-
         $tasks = TasksLists::all();
         foreach ($tasks as $task) {
             $task->cards = Cards::where('task_id', $task->id)->get();
         }
-
-        $tasks->teams_users = $team->teams;
-        $tasks->list_users = $list_users;
-
         return $tasks;
     }
 
     public function getListTeamUsers($post = []) {
+
         //користувачі в команді
         $team = Teams::find(session('current_team'));
-        $team->teams  = $team->users()->get();
-        foreach ($team->teams as $teams) {
+        $team->users_team  = $team->users()->get();
+        foreach ($team->users_team as $teams) {
             $a[] = $teams->users_id;
         }
 
         //користувачі в картці
         $users_in_list = TasksLists::find($post['list_id']);
-        $team->in_list = $users_in_list->users()->get();
+        $team->users = $users_in_list->users()->get();
         $b = [];
-        foreach ($team->in_list as $list_users) {
+        foreach ($team->users as $list_users) {
             if(!empty($list_users->users_id)){
                 $b[] = $list_users->users_id;
             }
@@ -107,9 +94,23 @@ class TaskManagerController extends Controller
         }
 
         if(!empty($users_not_checked)){
-            return $team->users_not_checked = $users_not_checked;
+            $team->users_not_checked = $users_not_checked;
         }
+        return $team;
         
+    }
+
+    public function saveUserToList($post = []){
+        if(!empty($post['users_id'])){
+            $user_list = new ListsUsers();
+            $user_list->lists_id = $post['lists_id'];
+            $user_list->users_id = $post['users_id'];
+            $user_list->save();
+        }
+    }
+
+    public function removeUserList($post = []){
+        $user_list = ListsUsers::where('lists_id',$post['lists_id'])->where('users_id',$post['users_id'])->delete();
     }
 
     public function getCard($post = []){
