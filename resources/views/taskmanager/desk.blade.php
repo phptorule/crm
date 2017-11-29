@@ -11,7 +11,7 @@
                             </div>
                             <div class="list_settings col-sm-2 pull-right">
                                 <div uib-dropdown class="m-b-5" auto-close="outsideClick">
-                                    <a href="javascript:void(0);" class="btn dropdown-toggle" uib-dropdown-toggle ng-click="getTask(tasks[k].id)"><i class="fa fa-cog" aria-hidden="true"></i></a>
+                                    <a href="javascript:void(0);" class="btn dropdown-toggle" uib-dropdown-toggle ng-click="getListTeamUsers(tasks[k].id)"><i class="fa fa-cog" aria-hidden="true"></i></a>
                                     <div uib-dropdown-menu class="custom_pop_up">
                                         <div class="text-left">
                                             <button class="btn btn-danger" ng-click="deleteTask(task.id)">Delete list</button>
