@@ -54,24 +54,66 @@ class TaskManagerController extends Controller
         }
     }
 
-    public function getTask($post = []){
+    public function initTask($post = []){
+
+        //$list = TasksLists::all();
+        //$list->users = $list->users()->get();
+        //$list_users = ListsUsers::all();
+        //list_users = $list_users->users()->get();
+
+        $team = Teams::find(session('current_team'));
+        $team->teams  = $team->users()->get();
+
+        $list_users[] = ListsUsers::all();
 
         $tasks = TasksLists::all();
         foreach ($tasks as $task) {
             $task->cards = Cards::where('task_id', $task->id)->get();
         }
 
+        $tasks->teams_users = $team->teams;
+        $tasks->list_users = $list_users;
+
         return $tasks;
     }
 
-    public function getTaskTeamUsers($post = []) {
+    public function getListTeamUsers($post = []) {
+        //користувачі в команді
+        $team = Teams::find(session('current_team'));
+        $team->teams  = $team->users()->get();
+        foreach ($team->teams as $teams) {
+            $a[] = $teams->users_id;
+        }
 
+        //користувачі в картці
+        $users_in_list = TasksLists::find($post['list_id']);
+        $team->in_list = $users_in_list->users()->get();
+        $b = [];
+        foreach ($team->in_list as $list_users) {
+            if(!empty($list_users->users_id)){
+                $b[] = $list_users->users_id;
+            }
+        }
+
+        //користувачі вкоманді, які не вибрані
+        $result = array_diff($a,$b);
+        $result = array_values($result);
+        if(count($result)>=1){
+            for ($i=0; $i < count($result); $i++) {
+                if(isset($result[$i])){
+                    $users_not_checked[] = Users::find($result[$i]);
+                }
+            }
+        }
+
+        if(!empty($users_not_checked)){
+            return $team->users_not_checked = $users_not_checked;
+        }
         
     }
 
     public function getCard($post = []){
         $card = Cards::find($post['cards_id']);
-
         $card->users = $card->users()->get();    
 
         //message - toomorow deadline
@@ -92,7 +134,6 @@ class TaskManagerController extends Controller
 
         $card->comments = $comments;
         $card->checklists = $checklists;
-
         return $card;
     }
 
@@ -105,7 +146,6 @@ class TaskManagerController extends Controller
         foreach ($tasks as $task) {
             $task->cards = Cards::where('task_id', $task->id)->get();
         }
-
         return $tasks;
     }
 
@@ -120,7 +160,6 @@ class TaskManagerController extends Controller
         foreach ($tasks as $task) {
             $task->cards = Cards::where('task_id', $task->id)->get();
         }
-
         return $tasks;
     }
 

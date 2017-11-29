@@ -18,7 +18,7 @@ class TasksLists extends Model
     }
 
     public function users() {
-        return $this->belongsToMany('App\Users', 'lists_users', 'id', 'users_id');
+        return $this->belongsToMany('App\Users', 'lists_users', 'lists_id', 'users_id');
     }
 
 }
