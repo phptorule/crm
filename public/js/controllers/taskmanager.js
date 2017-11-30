@@ -27,6 +27,13 @@
 
         $scope.initTask = function() {
             request.send('/TaskManager/initTask', $scope.list, function(data) {
+                
+                $scope.card_checkbox_all = data.card_checkbox_all;
+                $scope.card_cheked_checkbox = data.card_cheked_checkbox;
+                $scope.card_user_me = data.card_user_me;
+                $scope.card_description = data.card_description;
+                $scope.card_comments_count = data.card_comments_count;
+                $scope.card_deadline = data.card_deadline;
                 $scope.tasks = data;
 
                 for (var k in data)
@@ -164,7 +171,6 @@
                   curXPos = 0;
 
               $('.task_manager_board').mousemove(function(m){
-                //console.log(m);
                 if(curDown === true){
                  $('.task_manager_board').scrollTop($('.task_manager_board').scrollTop() + (curYPos - m.pageY));
                  $('.task_manager_board').scrollLeft($('.task_manager_board').scrollLeft() + (curXPos - m.pageX));

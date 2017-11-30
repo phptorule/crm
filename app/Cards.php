@@ -19,4 +19,8 @@ class Cards extends Model
         return $this->belongsToMany('App\Users', 'cards_users', 'cards_id', 'users_id');
     }
 
+    public function comments() {
+        return $this->belongsToMany('App\CardsComments', 'cards_users', 'cards_id', 'users_id');
+    }
+
 }
