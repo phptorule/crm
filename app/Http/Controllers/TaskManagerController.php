@@ -79,7 +79,7 @@ class TaskManagerController extends Controller
                     $card_cheked_checkbox[$cards->cards_id] = array_sum($all_conut_checked_checkboxes[$cards->cards_id]);
                 }
                 $card_description[$cards->cards_id] = $cards->description;
-                $card_deadline[$cards->cards_id] = date("m.d", strtotime($cards->deadline));
+                $card_deadline[$cards->cards_id] = date("m/d", strtotime($cards->deadline));
                 $card_comments_count[$cards->cards_id] = count(CardsComments::where('cards_id', $cards->cards_id)->get());
 
             }
