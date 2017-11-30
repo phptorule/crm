@@ -1,6 +1,7 @@
 (function () {
     'use strict';
 
+
     angular.module('app').controller('Task_managerCtrl', ['$rootScope', '$scope', '$uibModal', '$filter', '$location', '$timeout', '$window', 'request', 'validate', 'logger', 'langs', 'plugins', 'Page', Task_managerCtrl]);
 
     function Task_managerCtrl($rootScope, $scope, $uibModal, $filter, $location, $timeout, $window, request, validate, logger, langs, plugins, Page) {
@@ -14,7 +15,8 @@
         $scope.cards = [];
         $scope.mass = [];
         $scope.users = {};
-        $scope.title = true;
+        //$scope.title = true;
+        $scope.title = {};
         $scope.title_edit = false;
         $scope.button_add_card = true;
         $scope.button_input_card = false;
@@ -24,6 +26,7 @@
         $scope.show_input_card = true;
         $scope.counter = 0;
         $scope.all = 0;
+
 
         $scope.initTask = function() {
             request.send('/TaskManager/initTask', $scope.list, function(data) {
@@ -86,13 +89,16 @@
         };
 
         $scope.saveTitle = function(id,name) {
-            request.send('/TaskManager/saveTitle', {'id': id,'name': name}, function(data) {
-                $scope.tasks = data;
-                for (var k in data)
-                {
-                    $scope.cards[k] = data[k].cards;
-                }
-            });
+            if(id){
+                request.send('/TaskManager/saveTitle', {'id': id,'name': name}, function(data) {
+                    $scope.tasks = data;
+                    for (var k in data)
+                    {
+                        $scope.cards[k] = data[k].cards;
+                    }
+                });
+            }
+            
         };
 
         $scope.show_input_card = function() {
@@ -168,12 +174,13 @@
             
               var curDown = false,
                   curYPos = 0,
-                  curXPos = 0;
+                  curXPos = 0,
+                  curScroll = 0;
+
 
               $('.task_manager_board').mousemove(function(m){
                 if(curDown === true){
-                 $('.task_manager_board').scrollTop($('.task_manager_board').scrollTop() + (curYPos - m.pageY));
-                 $('.task_manager_board').scrollLeft($('.task_manager_board').scrollLeft() + (curXPos - m.pageX));
+                 $('.task_manager_board').scrollLeft(curScroll + (curXPos - m.pageX));
                 }
               });
               
@@ -181,6 +188,7 @@
                 curDown = true;
                 curYPos = m.pageY;
                 curXPos = m.pageX;
+                curScroll = $('.task_manager_board').scrollLeft();
               });
               
               $('.task_manager_board').mouseup(function(){
@@ -189,6 +197,28 @@
         }
 
     };
+})();
+
+(function () {
+    'use strict';
+
+    angular.module('app').directive('focusMe', ['$timeout', '$parse', function ($timeout, $parse) {
+        return {
+            link: function (scope, element, attrs) {
+                var model = $parse(attrs.focusMe);
+                scope.$watch(model, function (value) {
+                    if (value === true) {
+                        $timeout(function () {
+                            element[0].selectionStart = element[0].value.length;
+                            element[0].selectionEnd = element[0].value.length;
+                            element[0].focus();
+                        });
+                    }
+                });
+            }
+        };
+    }]);
+
 })();
 
 
@@ -204,7 +234,7 @@
         $scope.card = {};
         $scope.card.cards_id = items;
         $scope.card_title = true;
-        $scope.card_title_edit = false;
+        //$scope.card_title_edit = false;
         $scope.card.comments = {};
         $scope.status_description = true;
         $scope.status_description_textarea = false;
@@ -381,4 +411,3 @@
 
     };
 })();
-
