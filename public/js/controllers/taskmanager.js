@@ -87,13 +87,7 @@
         $scope.createCard = function(id) {
             $scope.card.task_id = id;
             request.send('/TaskManager/createCard',$scope.card, function(data) {
-                $scope.tasks = data;
-
-                for (var k in data)
-                {
-                    $scope.cards[k] = data[k].cards;
-                    $scope.all += data[k].cards.length;
-                }
+                $scope.getTask();
             });
         };
 
