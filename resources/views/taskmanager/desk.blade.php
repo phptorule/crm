@@ -75,7 +75,7 @@
                     <div class="panel-footer" ng-class="{active: ! show_input_card}" ng-show=" ! show_input_card">
                         <div ng-show=" ! show_input_card">
                             <input type="text" class="form-control" ng-model="card.name_card" name="name_card" />
-                            <button class="btn btn-add" ng-click="createCard(tasks[k].id)">Add card</button>
+                            <button class="btn btn-add" ng-click="createCard(task.id)">Add card</button>
                             <a class="cancel_button" href="javascript:void(0);" ng-click="show_input_card = ! show_input_card"><i class="fa fa-times"></i></a>
                         </div>
                     </div>
