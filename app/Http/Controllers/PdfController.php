@@ -53,6 +53,7 @@ class PdfController extends Controller
         array_push($products, $product);
       }
 
+
       return view('pdf', compact('finances', 'team', 'products'));
 
       /*$pdf_url = 'http://crm.da4.info/pdf'.$id;

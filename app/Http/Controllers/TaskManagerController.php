@@ -12,25 +12,166 @@ use App\Users;
 use App\UsersTeams;
 use App\CardsUsers;
 use App\CardsComments;
-use App\Checklist;
-use App\ChecklistValue;
+use App\Checklists;
+use App\Checkboxes;
+use App\ListsUsers;
 use Illuminate\Support\Facades\Auth;
 
 class TaskManagerController extends Controller
 {
     public function getTeamUsers($post = []) {
+
+        //користувачі в команді
         $team = Teams::find(session('current_team'));
-        return $team->users()->get();
+        $team->teams  = $team->users()->get();
+        foreach ($team->teams as $teams) {
+            $a[] = $teams->users_id;
+        }
+
+        //користувачі в картці
+        $users_in_card = Cards::find($post['cards_id']);
+        $team->in_card = $users_in_card->users()->get();
+        $b = [];
+        foreach ($team->in_card as $card_users) {
+            if(!empty($card_users->users_id)){
+                $b[] = $card_users->users_id;
+            }
+        }
+
+        //користувачі вкоманді, які не вибрані
+        $result = array_diff($a,$b);
+        $result = array_values($result);
+        if(count($result)>=1){
+            for ($i=0; $i < count($result); $i++) {
+                if(isset($result[$i])){
+                    $users_not_checked[] = Users::find($result[$i]);
+                }
+            }
+        }
+
+        if(!empty($users_not_checked)){
+            return $team->users_not_checked = $users_not_checked;
+        }
     }
 
-    public function getTask($post = []){
+    public function getTask(){
+        $team_id = session('current_team');
+        $team = Teams::with('tasks.cards.users','tasks.cards.checkLists.checkBoxes')->find($team_id);
+        $tasks = $team->tasks;
 
-        $tasks = TasksLists::all();
         foreach ($tasks as $task) {
-            $task->cards = Cards::where('task_id', $task->id)->get();
+            
+            foreach ($task->cards as $card) {
+                $card_user_me = $card->users->contains('users_id', Auth::user()->users_id);
+                //$card_users = $card->users()->get();
+ 
+                foreach ($card->checkLists as $value) {
+                    $all_count_checkboxes[] = $value->checkBoxes->count();
+                    $all_conut_checked_checkboxes[] =  $value->checkBoxes->where('status', 1)->count();
+                }
+                
+                if(!empty($all_count_checkboxes)){
+                    $card_checkbox_all = array_sum($all_count_checkboxes);
+                }
+                if(!empty($all_conut_checked_checkboxes)){
+                    $card_cheked_checkbox = array_sum($all_conut_checked_checkboxes);
+                }
+
+                $card_description = $card->description;
+
+                if(!empty($card->deadline)){
+                    $card_deadline = date("M d", strtotime($card->deadline));
+                }
+
+                $card_comments_count = $card->cardComments()->get()->count();
+
+                $card->card_user_me = $card_user_me;
+                $card->card_checkbox_all = $card_checkbox_all;
+                $card->card_cheked_checkbox = $card_cheked_checkbox;
+                $card->card_description = $card_description;
+                $card->card_deadline = $card_deadline;
+                $card->card_comments_count = $card_comments_count;
+                
+            }
+            
         }
 
         return $tasks;
+    }
+
+    public function getListTeamUsers($post = []) {
+
+        //користувачі в команді
+        $team = Teams::find(session('current_team'));
+        $team->users_team  = $team->users()->get();
+        foreach ($team->users_team as $teams) {
+            $a[] = $teams->users_id;
+        }
+
+        //користувачі в картці
+        $users_in_list = TasksLists::find($post['list_id']);
+        $team->users = $users_in_list->users()->get();
+        $b = [];
+        foreach ($team->users as $list_users) {
+            if(!empty($list_users->users_id)){
+                $b[] = $list_users->users_id;
+            }
+        }
+
+        //користувачі вкоманді, які не вибрані
+        $result = array_diff($a,$b);
+        $result = array_values($result);
+        if(count($result)>=1){
+            for ($i=0; $i < count($result); $i++) {
+                if(isset($result[$i])){
+                    $users_not_checked[] = Users::find($result[$i]);
+                }
+            }
+        }
+
+        if(!empty($users_not_checked)){
+            $team->users_not_checked = $users_not_checked;
+        }
+        return $team;
+
+    }
+
+    public function saveUserToList($post = []){
+        if(!empty($post['users_id'])){
+            $user_list = new ListsUsers();
+            $user_list->lists_id = $post['lists_id'];
+            $user_list->users_id = $post['users_id'];
+            $user_list->save();
+        }
+    }
+
+    public function removeUserList($post = []){
+        $user_list = ListsUsers::where('lists_id',$post['lists_id'])->where('users_id',$post['users_id'])->delete();
+    }
+
+    public function getCard($post = []){
+        $card = Cards::find($post['cards_id']);
+        $card->users = $card->users()->get();
+
+        //message - toomorow deadline
+        $reddata = strtotime($card->deadline) - strtotime(date('Y-m-d'));
+        $card->reddata =  date('d',$reddata) - 1;
+
+        //return comment
+        $comments = CardsComments::where('cards_id', $post['cards_id'])->orderBy('created_at', 'desc')->get();
+        foreach ($comments as $value) {
+            $value->users = Users::find($value->users_id)->first();
+        }
+
+        //return checklists
+        $checklists = Checklists::where('cards_id',$post['cards_id'])->get();
+        foreach ($checklists as $value) {
+            $value->checkboxes = Checkboxes::where('checklist_id', $value->id)->get();
+        }
+
+        $card->comments = $comments;
+        $card->checklists = $checklists;
+        return $card;
     }
 
     public function deleteTask($post = []){
@@ -42,7 +183,6 @@ class TaskManagerController extends Controller
         foreach ($tasks as $task) {
             $task->cards = Cards::where('task_id', $task->id)->get();
         }
-
         return $tasks;
     }
 
@@ -51,21 +191,16 @@ class TaskManagerController extends Controller
         $task = new TasksLists();
         $task->name = $post['name_task_block'];
         $task->user_id = Auth::user()->users_id;
+        $task->position = '0';
+        $task->teams_id = session('current_team');
         $task->save();
-
-        $tasks = TasksLists::all();
-        foreach ($tasks as $task) {
-            $task->cards = Cards::where('task_id', $task->id)->get();
-        }
-
-        return $tasks;
     }
 
     public function createCard($post = []){
 
         $card = new Cards();
         $card->name = $post['name_card'];
-        $card->user_id = Auth::user()->users_id;
+        $card->users_id = Auth::user()->users_id;
         $card->task_id = $post['task_id'];
         $card->save();
 
@@ -82,61 +217,17 @@ class TaskManagerController extends Controller
         $task_change = TasksLists::find($post['id']);
         $task_change->name = $post['name'];
         $task_change->save();
-
-        $tasks = TasksLists::all();
-
-        foreach ($tasks as $task) {
-            $task->cards = Cards::where('task_id', $task->id)->get();
-        }
-
-        return $tasks;
     }
 
-    public function saveCard($post = []){
-
-        $card = Cards::find($post['id']);
-        $card->name = $post['name'];
+    public function saveCardDescription($post = []){
+        $card = Cards::find($post['cards_id']);
         $card->description = $post['description'];
         $card->save();
-
-        $card = Cards::find($post['id']);
-        return $card;
-    }
-
-    public function getCard($post = []){
-        $card = Cards::find($post['card_id']);
-
-        //message - toomorow deadline
-        $reddata = strtotime($card->deadline) - strtotime(date('Y-m-d'));
-        $card->reddata =  date('d',$reddata) - 1;
-
-        $card_users = CardsUsers::where('card_id', $post['card_id'])->get();
-
-        foreach ($card_users as $value) {
-            $card->card_users = Users::find($value->user_id);
-        }
-
-        //return comment
-        $comments = CardsComments::where('card_id', $post['card_id'])->get();
-        foreach ($comments as $value) {
-            $value->users = Users::find($value->user_id)->first();
-        }
-
-        //return checklist
-        $checklist = Checklist::where('card_id',$post['card_id'])->get();
-        foreach ($checklist as $value) {
-            $value->checklist_value = ChecklistValue::all()->where('checklist_id',$value->id);
-        }
-
-        $card->comments = $comments;
-        $card->checklist = $checklist;
-
-        return $card;
     }
 
     public function reset($post = []){
 
-        $card = Cards::find($post['card_id']);
+        $card = Cards::find($post['cards_id']);
         $teams_users = UsersTeams::all()->where('teams_id',session('current_team'));
 
         foreach ($teams_users as $user) {
@@ -149,30 +240,17 @@ class TaskManagerController extends Controller
 
     }
 
-    public function getCardUsers($post = [])
-    {
-        $card_users = [];
-        $card_with_users = CardsUsers::where('card_id', $post['card_id'])->get();
-
-        foreach ($card_with_users as $value) {
-            if (! empty($value->user_id))
-            {
-                $card_users[] = Users::find($value->user_id);
-            }
+    public function saveUserToCard($post = []){
+        if(!empty($post['users_id'])){
+            $card = new CardsUsers();
+            $card->cards_id = $post['cards_id'];
+            $card->users_id = $post['users_id'];
+            $card->save();
         }
-
-        return $card_users;
     }
 
-    public function saveUserToCard($post = []){
-        $user_card = new CardsUsers();
-        $user_card->user_id = $post['user_id'];
-        $user_card->card_id = $post['card_id'];
-        $user_card->save();
-
-        $card_users = CardsUsers::where('card_id', $post['card_id'])->get();
-
-        return $card_users;
+    public function removeUser($post = []){
+        $card = CardsUsers::where('cards_id',$post['cards_id'])->where('users_id',$post['users_id'])->delete();
     }
 
 
@@ -195,111 +273,75 @@ class TaskManagerController extends Controller
 
     }
 
-    // Comments begin
-    public function getComments($post = []){
-        $comments = CardsComments::where('card_id',$post['card_id'])->orderBy('created_at', 'desc')->get();
-
-        foreach ($comments as $value) {
-            $value->users = Users::find($value->user_id)->first();
-        }
-
-        return $comments;
-    }
-
     public function saveComment($post = []){
         $comments = new CardsComments();
-        $comments->card_id = $post['card_id'];
-        $comments->user_id = Auth::user()->users_id;
+        $comments->cards_id = $post['cards_id'];
+        $comments->users_id = Auth::user()->users_id;
         $comments->text = $post['text'];
         $comments->save();
     }
     // Comments end
 
+    public function saveChecklist($post = []){
+        $checklists = new Checklists();
+        $checklists->title = $post['title'];
+        $checklists->users_id = Auth::user()->users_id;
+        $checklists->cards_id= $post['cards_id'];
+        $checklists->save();
+    }
 
-    // Checklist begin
-    public function getChecklists($post = [])
-    {
-        $checklists = Checklist::where('card_id', $post['card_id'])->get();
+    public function addCheckbox($post = []){
+        $checkbox = new Checkboxes;
+        $checkbox->checklist_id = $post['id'];
+        $checkbox->title = $post['checkbox_title'];
+        $checkbox->save();
+    }
 
-        foreach ($checklists as $item)
-        {
-            $item->checkboxes = ChecklistValue::where('checklist_id', $item->id)->get();
+    public function saveCheckboxec($post = []){
+        $checklists_value = Checkboxes::find($post['id']);
+        $checklists_value->title = $post['title'];
+        $checklists_value->save();
+    }
+
+    public function changeCheckboxStatus($post = []){
+        $checkbox = Checkboxes::find($post['checkbox_value_id']);
+
+        if($checkbox->status == 0){
+            $checkbox->status = 1;
+        }else{
+            $checkbox->status = 0;
+        }
+
+        $checkbox->save();
+    }
+
+    public function deleteChecklists($post = []){
+
+        $checklists = Checklists::find($post['checklists_id']);
+        $checklists->delete();
+
+        $checklists = Checklists::where('cards_id',$post['cards_id'])->get();
+        foreach ($checklists as $value) {
+            $value->checklists_value = Checkboxes::all()->where('checklists_id',$value->id);
         }
         return $checklists;
     }
 
-    public function saveChecklist($post = []){
-        $checklist = new Checklist();
-        $checklist->title = $post['title'];
-        $checklist->user_id = Auth::user()->users_id;
-        $checklist->card_id= $post['card_id'];
-        $checklist->save();
-
-        $checklist = Checklist::where('card_id',$post['card_id'])->get();
-        foreach ($checklist as $value) {
-            $value->checklist_value = ChecklistValue::all()->where('checklist_id',$value->id);
-        }
-        return $checklist;
-    }
-
-    public function createCheckboxItem($post = []){
-        $checklist_value = new ChecklistValue;
-        $checklist_value->checklist_id = $post['id'];
-        $checklist_value->title = $post['checkbox_title'];
-        $checklist_value->save();
-    }
-
-    public function saveChecklistValue($post = []){
-        $checklist_value = ChecklistValue::find($post['id']);
-        $checklist_value->title = $post['title'];
-        $checklist_value->save();
-    }
-
-    public function saveChangeChecklistStatus($post = []){
-        $checklist_value = ChecklistValue::find($post['checkbox_value_id']);
-
-        if($checklist_value->status == 0){
-            $checklist_value->status = 1;
-        }else{
-            $checklist_value->status = 0;
-        }
-
-        $checklist_value->save();
-
-        $checklist = Checklist::where('card_id', $post['card_id'])->get();
-
-        foreach ($checklist as $value) {
-            $checkboxes = ChecklistValue::all()->where('checklist_id',$value->id);
-        }
-    }
-
-    public function deleteCheckList($post = []){
-
-        $checklist = Checklist::find($post['checklist_id']);
-        $checklist->delete();
-
-        $checklist = Checklist::where('card_id',$post['card_id'])->get();
-        foreach ($checklist as $value) {
-            $value->checklist_value = ChecklistValue::all()->where('checklist_id',$value->id);
-        }
-        return $checklist;
-    }
-
     public function deleteCheckBox($post = []){
 
-        $checkbox = ChecklistValue::find($post['checkbox_id']);
+        $checkbox = Checkboxes::find($post['checkbox_id']);
         $checkbox->delete();
 
-        $checklist = Checklist::where('card_id',$post['card_id'])->get();
-        foreach ($checklist as $value) {
-            $value->checklist_value = ChecklistValue::all()->where('checklist_id',$value->id);
+        $checklists = Checklists::where('cards_id',$post['cards_id'])->get();
+        foreach ($checklists as $value) {
+            $value->checklists_value = Checkboxes::all()->where('checklists_id',$value->id);
         }
-        return $checklist;
+        return $checklists;
     }
 
-    //Checklist end
+    //checklists end
     public function getDeadline($post = []){
-        $card = Cards::find($post['card_id']);
+        $card = Cards::find($post['cards_id']);
 
         //message - toomorow deadline
         $reddata = strtotime($card->deadline) - strtotime(date('Y-m-d'));
@@ -310,14 +352,14 @@ class TaskManagerController extends Controller
 
     public function saveDeadline($post = []){
 
-        $cards = Cards::find($post['card_id']);
+        $cards = Cards::find($post['cards_id']);
 
 
         $reddata = strtotime($post['deadline']);
         $cards->deadline =  date('Y-m-d',$reddata + 86400);
         $cards->save();
 
-        $card = Cards::find($post['card_id']);
+        $card = Cards::find($post['cards_id']);
 
         //message - toomorow deadline
         $reddata = strtotime($card->deadline) - strtotime(date('Y-m-d'));

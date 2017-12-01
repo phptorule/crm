@@ -307,6 +307,8 @@ a:focus {
 }
 hr {
     border-top: 1px solid #e1e6ef;
+    margin-top: 25px;
+    margin-bottom: 25px;
 }
 /* margins & paddings */
 
@@ -5613,77 +5615,6 @@ button.toast-close-button {
     resize:none;
 }
 
-.card_nav{
-    padding:5px;
-    cursor:pointer;
-    border-radius:5px;
-    border:1px solid grey;
-    background:#dedcdc;
-    margin-bottom: 5px;
-}
-
-.btn_add{
-    padding:5px 10px;
-    cursor:pointer;
-    border-radius:5px;
-    border:1px solid grey;
-    background:#dedcdc;
-}
-
-
-[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
-  display: none !important;
-}
-
-
-
-/**
- * The dnd-list should always have a min-height,
- * otherwise you can't drop to it once it's empty
- */
-.simpleDemo ul[dnd-list] {
-    min-height: 42px;
-    padding-left: 0px;
-}
-
-/**
- * The dndDraggingSource class will be applied to
- * the source element of a drag operation. It makes
- * sense to hide it to give the user the feeling
- * that he's actually moving it.
- */
-.simpleDemo ul[dnd-list] .dndDraggingSource {
-    display: none;
-}
-
-/**
- * An element with .dndPlaceholder class will be
- * added to the dnd-list while the user is dragging
- * over it.
- */
-.simpleDemo ul[dnd-list] .dndPlaceholder {
-    background-color: #ddd;
-    display: block;
-    min-height: 42px;
-}
-
-.simpleDemo ul[dnd-list] li {
-    background-color: #fff;
-    border: 1px solid #ddd;
-    border-top-right-radius: 4px;
-    border-top-left-radius: 4px;
-    display: block;
-    padding: 10px 15px;
-    margin-bottom: -1px;
-}
-
-/**
- * Show selected elements in green
- */
-.simpleDemo ul[dnd-list] li.selected {
-    background-color: #dff0d8;
-    color: #3c763d;
-}
 
 
 .margin_li{
@@ -5744,12 +5675,14 @@ button.toast-close-button {
 
 #task_manager .panel-bd > .panel-heading {
     border: none;
+    padding-bottom: 15px;
 }
 
 #task_manager .panel-body {
     background-color: #d1d1d1;
     max-height: 310px;
     overflow-y: auto;
+    padding: 0 15px;
 }
 
 #task_manager .panel {
@@ -5857,13 +5790,12 @@ button.toast-close-button {
 }
 
 .custom_pop_up {
-    position: absolute;
-    z-index: 1;
-    width: 100%;
-    background-color: #fff;
     border: 1px solid #dedede;
     padding: 10px;
-    left: 15px;
+}
+
+.custom_pop_up.dropdown-menu{
+    margin-top: 0px;
 }
 
 .custom_pop_up_header {
@@ -5885,7 +5817,7 @@ button.toast-close-button {
 }
 
 .card_info_header {
-    padding-bottom: 20px;
+    padding-bottom: 0px;
 }
 
 .users_block ul {
@@ -5959,7 +5891,7 @@ button.toast-close-button {
 /*End scrollable task manager board*/
 
 .card_block {
-    margin-bottom: 40px;
+    margin-bottom: 0px;
 }
 
 .checkbox_item {
@@ -6065,4 +5997,20 @@ button.toast-close-button {
     .modal-dialog {
         width: 800px;
     }
+}
+
+.icon_hidden{
+    display: none;
+}
+
+.user_in_list:hover .icon_hidden{
+    display: block;
+    cursor: pointer;
+}
+
+.cards_preview_item {
+    display: inline-block;
+    margin: 0 5px;
+    font-size: 11px;
+    color: #abadb1;
 }

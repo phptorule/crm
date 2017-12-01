@@ -17,4 +17,13 @@ class TasksLists extends Model
         return $this->hasMany('App\Cards');
     }
 
+    public function users() {
+        return $this->belongsToMany('App\Users', 'lists_users', 'lists_id', 'users_id');
+    }
+
+    public function cards()
+    {
+        return $this->hasMany('App\Cards', 'task_id');
+    }
+
 }
