@@ -111,7 +111,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="modal_content_header">
-                    <form class="card_info">
+                    <form class="card_info no-transition">
                         <div class="row">
                             <div class="col-sm-8">
                                 <div class="card_info_header">
