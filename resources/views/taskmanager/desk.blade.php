@@ -5,9 +5,10 @@
                 <div class="panel panel-bd">
                     <div class="panel-heading">
                         <div class="row">
+
                             <div class="list_title col-sm-10">
-                                <h4 ng-click="title = ! title" ng-show="title">@{{tasks[k].name}}</h4>
-                                <input type="text" class="form-control" ng-show=" ! title" ng-blur="saveTitle(tasks[k].id,tasks[k].name); title = ! title" ng-model="tasks[k].name">
+                                <h4 ng-click="title[k] = ! title[k]" ng-show="title[k]">@{{tasks[k].name}}</h4>
+                                <input type="text" focus-me="! title[k]" class="form-control" ng-show=" ! title[k]" ng-blur="saveTitle(tasks[k].id,tasks[k].name); title[k] = ! title[k]" ng-model="tasks[k].name">
                             </div>
                             <div class="list_settings col-sm-2 pull-right">
                                 <div uib-dropdown class="m-b-5" auto-close="outsideClick">
@@ -87,8 +88,9 @@
 <script type="text/ng-template" id="SelectCard.html">
     <div class="modal-header modal-header-add" ng-init="initCard()">
         <button type="button" class="close" ng-click="cancel()" aria-hidden="true">×</button>
-        <h4 ng-show="card_title" ng-click="status_card_title_edit()"><b>@{{card.name}}</b></h4>
-        <input type="text" ng-show="card_title_edit" ng-blur="status_card_title_edit();saveCardTitle(card.id,card.name)" ng-model="card.name">
+        
+        <h4 ng-show="card_title" ng-click="card_title = ! card_title"><b>@{{card.name}}</b></h4>
+        <input type="text" focus-me="! card_title" ng-show="! card_title" ng-blur="saveCardTitle(card.cards_id,card.name); card_title = ! card_title" ng-model="card.name">
     </div>
 
     <div class="modal-body">

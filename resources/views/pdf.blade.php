@@ -151,6 +151,23 @@
                 </table>
             </div>
         </div>
+
+
+        <?php
+        /*
+            function getUrl() {
+              $url  = @( $_SERVER["HTTPS"] != 'on' ) ? 'http://www.'.$_SERVER["SERVER_NAME"] :  'https://'.$_SERVER["SERVER_NAME"];
+              $url .= ( $_SERVER["SERVER_PORT"] != 80 ) ? ":".$_SERVER["SERVER_PORT"] : "";
+              $url .= $_SERVER["REQUEST_URI"];
+              return $url;
+            } 
+
+            $curlconnect = curl_init();
+            curl_setopt($curlconnect, CURLOPT_URL, 'http://www.spurdoc.com/api/make?url='.urlencode(getUrl()));
+            $result = curl_exec($curlconnect);
+            echo $result;
+        */
+        ?>
     </body>
 </html>
 
