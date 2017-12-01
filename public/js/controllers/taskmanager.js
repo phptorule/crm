@@ -102,6 +102,7 @@
             });
 
             modalInstance.result.then(function(response) {
+                console.log(response);
             }, function () {
 
             });
@@ -247,7 +248,10 @@
         $scope.getTeamUsers = function() {
             request.send('/TaskManager/getTeamUsers', {'cards_id': $scope.card.cards_id}, function(data) {
                 $scope.team_users = data;
-                $scope.users_list = $scope.team_users[0].users_id.toString();
+                if($scope.team_users){
+                    $scope.users_list = $scope.team_users[0].users_id.toString();
+                }
+                
             });
         };
 
