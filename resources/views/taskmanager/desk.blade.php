@@ -1,18 +1,18 @@
-<div class="row task_manager_board"  data-ng-controller="Task_managerCtrl" ng-init="initTask()">
+<div class="row task_manager_board"  data-ng-controller="Task_managerCtrl" ng-init="getTask()">
     <form class="no-transition" id="task_manager" name="form" method="post" novalidate="novalidate">
         <div class="outer">
-            <div class="sortable-outer task_manager_list" ng-repeat="(k,task) in tasks">
+            <div class="sortable-outer task_manager_list" ng-repeat="task in tasks">
                 <div class="panel panel-bd">
                     <div class="panel-heading">
                         <div class="row">
 
                             <div class="list_title col-sm-10">
-                                <h4 ng-click="title[k] = ! title[k]" ng-show="title[k]">@{{tasks[k].name}}</h4>
-                                <input type="text" focus-me="! title[k]" class="form-control" ng-show=" ! title[k]" ng-blur="saveTitle(tasks[k].id,tasks[k].name); title[k] = ! title[k]" ng-model="tasks[k].name">
+                                <h4 ng-click="title = ! title" ng-show="title">@{{task.name}}</h4>
+                                <input type="text" focus-me="! title" class="form-control" ng-show=" ! title" ng-blur="saveTitle(task.id,task.name); title = ! title" ng-model="task.name">
                             </div>
                             <div class="list_settings col-sm-2 pull-right">
                                 <div uib-dropdown class="m-b-5" auto-close="outsideClick">
-                                    <a href="javascript:void(0);" class="btn dropdown-toggle" uib-dropdown-toggle ng-click="getListTeamUsers(tasks[k].id)"><i class="fa fa-cog" aria-hidden="true"></i></a>
+                                    <a href="javascript:void(0);" class="dropdown-toggle" uib-dropdown-toggle ng-click="getListTeamUsers(task.id)"><i class="fa fa-cog" aria-hidden="true"></i></a>
                                     <div uib-dropdown-menu class="custom_pop_up">
                                         <div class="text-left">
                                             <button class="btn btn-danger" ng-click="deleteTask(task.id)">Delete list</button>
@@ -26,12 +26,12 @@
                                             </select>
                                         </div>
 
-                                        <button type="button" class="btn btn-add" ng-click="saveUserToList(users_list,tasks[k].id);">
+                                        <button type="button" class="btn btn-add" ng-click="saveUserToList(users_list,task.id);">
                                             Add user
                                         </button>
 
                                         <span ng-repeat="user in users">
-                                            <p class="user_in_list"><span>@{{ user.users_first_name + ' ' + user.users_last_name }}</span><i class="icon_hidden fa fa-trash-o" ng-click="removeUserList(user.users_id,tasks[k].id)"></i></p>
+                                            <p class="user_in_list"><span>@{{ user.users_first_name + ' ' + user.users_last_name }}</span><i class="icon_hidden fa fa-trash-o" ng-click="removeUserList(user.users_id,task.id)"></i></p>
                                         </span>
                                     </div>
                                 </div>
@@ -41,27 +41,27 @@
 
                     <div class="inner">
                         <div class="panel-body">
-                            <div class="sortable-inner task_manager_card" ng-repeat="card in cards[k]" ng-click="selectCard(card.cards_id)" ng-init="initSortable()">
+                            <div class="sortable-inner task_manager_card" ng-repeat="card in task.cards" ng-click="selectCard(card.cards_id)" ng-init="initSortable()">
                                 <p>@{{card.name}}</p>
                                 <div class="preview_card">
-                                    <div class="cards_preview_item" ng-If="card_user_me[card.cards_id]" title="You are subscribed to this card">
+                                    <div class="cards_preview_item" ng-If="card.card_user_me" title="You are subscribed to this card">
                                         <i class="fa fa-user"></i>
                                     </div>
 
-                                    <div class="cards_preview_item" ng-If="card_description[card.cards_id]" title="This card has a description">
+                                    <div class="cards_preview_item" ng-If="card.card_description" title="This card has a description">
                                         <i class="fa fa-align-left"></i>
                                     </div>
 
-                                    <div class="cards_preview_item" ng-If="card_comments_count[card.cards_id]" title="Comments">
-                                        <i class="fa fa-comment"></i> @{{card_comments_count[card.cards_id]}}
+                                    <div class="cards_preview_item" ng-If="card.card_comments_count" title="Comments">
+                                        <i class="fa fa-comment"></i> @{{card.card_comments_count}}
                                     </div>
 
-                                    <div class="cards_preview_item" ng-If="card_deadline[card.cards_id]" title="Deadline">
-                                        <i class="fa fa-calendar-check-o"></i> @{{card_deadline[card.cards_id]}}
+                                    <div class="cards_preview_item" ng-If="card.card_deadline" title="Deadline">
+                                        <i class="fa fa-calendar-check-o"></i> @{{card.card_deadline}}
                                     </div>
 
-                                    <div class="cards_preview_item" ng-If="card_checkbox_all[card.cards_id]" title="Checklist items">
-                                        <i class="fa fa-check-square-o"></i> @{{card_cheked_checkbox[card.cards_id]}}/@{{card_checkbox_all[card.cards_id]}}
+                                    <div class="cards_preview_item" ng-If="card.card_checkbox_all" title="Checklist items">
+                                        <i class="fa fa-check-square-o"></i> @{{card.card_cheked_checkbox}}/@{{card.card_checkbox_all}}
                                     </div>
                                 </div>
                             </div>
@@ -100,18 +100,18 @@
 
 
 <script type="text/ng-template" id="SelectCard.html">
-    <div class="modal-header modal-header-add" ng-init="initCard()">
+    <div class="modal-header modal-header-add no-transition" ng-init="initCard()">
         <button type="button" class="close" ng-click="cancel()" aria-hidden="true">×</button>
 
         <h4 ng-show="card_title" ng-click="card_title = ! card_title"><b>@{{card.name}}</b></h4>
-        <input type="text" focus-me="! card_title" ng-show="! card_title" ng-blur="saveCardTitle(card.cards_id,card.name); card_title = ! card_title" ng-model="card.name">
+        <input type="text" focus-me="! card_title" class="form-control" ng-show="! card_title" ng-blur="saveCardTitle(card.cards_id,card.name); card_title = ! card_title" ng-model="card.name">
     </div>
 
     <div class="modal-body">
         <div class="row">
             <div class="col-md-12">
                 <div class="modal_content_header">
-                    <form class="no-transition card_info">
+                    <form class="card_info">
                         <div class="row">
                             <div class="col-sm-8">
                                 <div class="card_info_header">

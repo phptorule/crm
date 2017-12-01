@@ -27,23 +27,16 @@
         $scope.counter = 0;
         $scope.all = 0;
 
-
-        $scope.initTask = function() {
-            request.send('/TaskManager/initTask', $scope.list, function(data) {
-
-                $scope.card_checkbox_all = data.card_checkbox_all;
-                $scope.card_cheked_checkbox = data.card_cheked_checkbox;
-                $scope.card_user_me = data.card_user_me;
-                $scope.card_description = data.card_description;
-                $scope.card_comments_count = data.card_comments_count;
-                $scope.card_deadline = data.card_deadline;
+        $scope.getTask = function() {
+            request.send('/TaskManager/getTask', {}, function(data) {
                 $scope.tasks = data;
 
                 for (var k in data)
                 {
-                    $scope.cards[k] = data[k].cards;
                     $scope.all += data[k].cards.length;
                 }
+
+                console.log($scope.tasks);
             });
         };
 
@@ -70,45 +63,14 @@
 
         $scope.addTask = function() {
             request.send('/TaskManager/addTask', $scope.list, function(data) {
-                $scope.tasks = data;
-                for (var k in data)
-                {
-                    $scope.cards[k] = data[k].cards;
-                }
+                $scope.getTask();
             });
         };
 
-        $scope.task_title_edit = function() {
-            if($scope.title == false){
-                $scope.title = true;
-                $scope.title_edit = false;
-            }else{
-                $scope.title = false;
-                $scope.title_edit = true;
-            }
-        };
-
         $scope.saveTitle = function(id,name) {
-            if(id){
-                request.send('/TaskManager/saveTitle', {'id': id,'name': name}, function(data) {
-                    $scope.tasks = data;
-                    for (var k in data)
-                    {
-                        $scope.cards[k] = data[k].cards;
-                    }
-                });
-            }
-
-        };
-
-        $scope.show_input_card = function() {
-            if($scope.button_add_card == false){
-                $scope.button_add_card = true;
-                $scope.button_input_card = false;
-            }else{
-                $scope.button_add_card = false;
-                $scope.button_input_card = true;
-            }
+            request.send('/TaskManager/saveTitle', {'id': id,'name': name}, function(data) {
+                //$scope.getTask();
+            });
         };
 
         $scope.deleteTask = function(id) {

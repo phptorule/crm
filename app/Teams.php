@@ -33,4 +33,10 @@ class Teams extends Model
     {
         return $this->belongsToMany('App\FinancesRegistered', 'finances_registered_teams', 'teams_id', 'registered_id');
     }
+
+    public function tasks()
+    {
+        return $this->hasMany('App\TasksLists', 'teams_id');
+    }
+
 }

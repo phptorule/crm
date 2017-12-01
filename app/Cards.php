@@ -23,4 +23,13 @@ class Cards extends Model
         return $this->belongsToMany('App\CardsComments', 'cards_users', 'cards_id', 'users_id');
     }
 
+    public function checkLists() {
+        return $this->hasMany('App\Checklists', 'cards_id');
+    }
+
+    public function cardComments() {
+        return $this->hasMany('App\CardsComments', 'cards_id');
+    }
+
+
 }

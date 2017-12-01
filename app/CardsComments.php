@@ -8,7 +8,6 @@ class CardsComments extends Model
 {
     protected $table = "cards_comments";
 
-    protected $primaryKey = 'card_id';
 
     /*
     public function user() {
