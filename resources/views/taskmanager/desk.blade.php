@@ -43,13 +43,27 @@
                         <div class="panel-body">
                             <div class="sortable-inner task_manager_card" ng-repeat="card in cards[k]" ng-click="selectCard(card.cards_id)" ng-init="initSortable()">
                                 <p>@{{card.name}}</p>
-                                <span class="preview_card">
-                                    <i ng-If="card_user_me[card.cards_id]" class="glyphicon glyphicon-user" title="Ви приймаєте участь"></i>
-                                    <i ng-If="card_description[card.cards_id]" class="glyphicon glyphicon-list-alt" title="Опис присутній"></i>
-                                    <i ng-If="card_comments_count[card.cards_id]" class="glyphicon glyphicon-comment" title="Кількість кометарів">@{{card_comments_count[card.cards_id]}}</i>
-                                    <i ng-If="card_deadline[card.cards_id]" class="glyphicon glyphicon-calendar" title="Дедлайн">@{{card_deadline[card.cards_id]}}</i>
-                                    <i ng-If="card_checkbox_all[card.cards_id]" class="glyphicon glyphicon-check" title="Чекбокси">@{{card_cheked_checkbox[card.cards_id]}}/@{{card_checkbox_all[card.cards_id]}}</i>
-                                </span>
+                                <div class="preview_card">
+                                    <div class="cards_preview_item" ng-If="card_user_me[card.cards_id]" title="You are subscribed to this card">
+                                        <i class="fa fa-user"></i>
+                                    </div>
+
+                                    <div class="cards_preview_item" ng-If="card_description[card.cards_id]" title="This card has a description">
+                                        <i class="fa fa-align-left"></i>
+                                    </div>
+
+                                    <div class="cards_preview_item" ng-If="card_comments_count[card.cards_id]" title="Comments">
+                                        <i class="fa fa-comment"></i> @{{card_comments_count[card.cards_id]}}
+                                    </div>
+
+                                    <div class="cards_preview_item" ng-If="card_deadline[card.cards_id]" title="Deadline">
+                                        <i class="fa fa-calendar-check-o"></i> @{{card_deadline[card.cards_id]}}
+                                    </div>
+
+                                    <div class="cards_preview_item" ng-If="card_checkbox_all[card.cards_id]" title="Checklist items">
+                                        <i class="fa fa-check-square-o"></i> @{{card_cheked_checkbox[card.cards_id]}}/@{{card_checkbox_all[card.cards_id]}}
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -68,7 +82,7 @@
                 </div>
             </div>
 
-            <div class="task_manager_list">
+            <div class="task_manager_list add_list">
                 <div class="panel panel-bd">
                     <div class="panel-heading">
                         <div class="form-group">
@@ -88,7 +102,7 @@
 <script type="text/ng-template" id="SelectCard.html">
     <div class="modal-header modal-header-add" ng-init="initCard()">
         <button type="button" class="close" ng-click="cancel()" aria-hidden="true">×</button>
-        
+
         <h4 ng-show="card_title" ng-click="card_title = ! card_title"><b>@{{card.name}}</b></h4>
         <input type="text" focus-me="! card_title" ng-show="! card_title" ng-blur="saveCardTitle(card.cards_id,card.name); card_title = ! card_title" ng-model="card.name">
     </div>

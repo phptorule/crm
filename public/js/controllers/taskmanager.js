@@ -30,7 +30,7 @@
 
         $scope.initTask = function() {
             request.send('/TaskManager/initTask', $scope.list, function(data) {
-                
+
                 $scope.card_checkbox_all = data.card_checkbox_all;
                 $scope.card_cheked_checkbox = data.card_cheked_checkbox;
                 $scope.card_user_me = data.card_user_me;
@@ -46,7 +46,7 @@
                 }
             });
         };
-        
+
         $scope.getListTeamUsers = function(list_id) {
             request.send('/TaskManager/getListTeamUsers', {'list_id': list_id}, function(data) {
                 $scope.list.this_lists_id = list_id;
@@ -67,7 +67,7 @@
                 $scope.getListTeamUsers(list_id);
             });
         };
-        
+
         $scope.addTask = function() {
             request.send('/TaskManager/addTask', $scope.list, function(data) {
                 $scope.tasks = data;
@@ -98,7 +98,7 @@
                     }
                 });
             }
-            
+
         };
 
         $scope.show_input_card = function() {
@@ -171,7 +171,7 @@
         });
 
         $scope.initScroll = function(){
-            
+
               var curDown = false,
                   curYPos = 0,
                   curXPos = 0,
@@ -183,14 +183,14 @@
                  $('.task_manager_board').scrollLeft(curScroll + (curXPos - m.pageX));
                 }
               });
-              
+
               $('.task_manager_board').mousedown(function(m){
                 curDown = true;
                 curYPos = m.pageY;
                 curXPos = m.pageX;
                 curScroll = $('.task_manager_board').scrollLeft();
               });
-              
+
               $('.task_manager_board').mouseup(function(){
                 curDown = false;
               });

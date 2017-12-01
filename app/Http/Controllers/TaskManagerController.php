@@ -129,7 +129,7 @@ class TaskManagerController extends Controller
             $team->users_not_checked = $users_not_checked;
         }
         return $team;
-        
+
     }
 
     public function saveUserToList($post = []){
@@ -147,7 +147,7 @@ class TaskManagerController extends Controller
 
     public function getCard($post = []){
         $card = Cards::find($post['cards_id']);
-        $card->users = $card->users()->get();    
+        $card->users = $card->users()->get();
 
         //message - toomorow deadline
         $reddata = strtotime($card->deadline) - strtotime(date('Y-m-d'));
