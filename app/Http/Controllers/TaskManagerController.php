@@ -65,19 +65,19 @@ class TaskManagerController extends Controller
                 $card_user_me = $card->users->contains('users_id', Auth::user()->users_id);
                 //$card_users = $card->users()->get();
  
+                $i = 0;
                 foreach ($card->checkLists as $value) {
-                    $all_count_checkboxes[] = $value->checkBoxes->count();
-                    $all_conut_checked_checkboxes[] =  $value->checkBoxes->where('status', 1)->count();
+                    $all_count_checkboxes[$card->cards_id][] = $value->checkBoxes->count();
+                    $all_conut_checked_checkboxes[$card->cards_id][] =  $value->checkBoxes->where('status', 1)->count();
                 }
-                //var_dump($all_conut_checked_checkboxes);
                 
-                if(!empty($all_count_checkboxes)){
-                    $card_checkbox_all = array_sum($all_count_checkboxes);
+                if(!empty($all_count_checkboxes[$card->cards_id])){
+                    $card_checkbox_all = array_sum($all_count_checkboxes[$card->cards_id]);
                 }else{
                     $card_checkbox_all = NULL;
                 }
-                if(!empty($all_conut_checked_checkboxes)){
-                    $card_cheked_checkbox = array_sum($all_conut_checked_checkboxes);
+                if(!empty($all_conut_checked_checkboxes[$card->cards_id])){
+                    $card_cheked_checkbox = array_sum($all_conut_checked_checkboxes[$card->cards_id]);
                 }else{
                     $card_cheked_checkbox = NULL;
                 }
@@ -98,7 +98,6 @@ class TaskManagerController extends Controller
                 $card->card_description = $card_description;
                 $card->card_deadline = $card_deadline;
                 $card->card_comments_count = $card_comments_count;
-
             }
             
         }
