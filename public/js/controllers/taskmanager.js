@@ -35,8 +35,6 @@
                 {
                     $scope.all += data[k].cards.length;
                 }
-
-                console.log($scope.tasks);
             });
         };
 
