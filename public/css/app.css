@@ -5675,7 +5675,7 @@ button.toast-close-button {
 
 #task_manager .panel-bd > .panel-heading {
     border: none;
-    padding-bottom: 0;
+    padding-bottom: 15px;
 }
 
 #task_manager .panel-body {
@@ -6008,12 +6008,9 @@ button.toast-close-button {
     cursor: pointer;
 }
 
-
-.preview_card{
+.cards_preview_item {
+    display: inline-block;
+    margin: 0 5px;
     font-size: 11px;
-}
-
-.preview_card i {
-    padding: 5px;
-    color: #000000;
+    color: #abadb1;
 }
