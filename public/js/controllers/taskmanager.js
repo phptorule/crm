@@ -32,6 +32,7 @@
             request.send('/TaskManager/getTask', {}, function(data) {
                 
                 $scope.tasks = data;
+                console.log(data);
 
                 for (var k in data)
                 {

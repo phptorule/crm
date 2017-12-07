@@ -72,6 +72,11 @@
                                         <i class="fa fa-check-square-o"></i> @{{card.card_cheked_checkbox}}/@{{card.card_checkbox_all}}
                                     </div>
                                 </div>
+                                <div class="preview_users">
+                                    <div ng-repeat="user in card.users" class="img-circle" style="width:35px;height:35px;background-color:RGB(@{{ user.icon_color}})">
+                                        <span class="icon_name">@{{user.users_first_name.slice(0,1)}}</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

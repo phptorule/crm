@@ -3923,6 +3923,19 @@ pre .arg {
     text-align: center;
     word-wrap: break-word;
 }
+
+.preview_users{
+    height: auto;
+}
+
+.preview_users .icon_name {
+    display: block;
+    text-align: center;
+    word-wrap: break-word;
+    padding: 0px;
+}
+
+
 @media (min-width: 768px) {
     .flag-icon {
         margin-right: 0;
@@ -6036,6 +6049,28 @@ button.toast-close-button {
     padding-top: 12px;
     font-size: 24px;
 
+}
+
+.preview_card .icon_name {
+    display: block;
+    text-align: center;
+    word-wrap: break-word;
+    padding: 0px;
+}
+
+.preview_users{
+    padding-top: 5px;
+    min-height: 45px;
+    padding-bottom: 5px;
+}
+
+.preview_users > .img-circle{
+    float: right;
+    margin: 2px;
+}
+
+.preview_users > .img-circle{
+    
 }
 
 .input-group-unstyled .input-group-addon {

@@ -63,6 +63,7 @@ class TaskManagerController extends Controller
         foreach ($tasks as $task) {
             
             foreach ($task->cards as $card) {
+                $card_users = $card->users;
                 $card_user_me = $card->users->contains('users_id', Auth::user()->users_id);
  
                 $i = 0;

@@ -31,5 +31,9 @@ class Cards extends Model
         return $this->hasMany('App\CardsComments', 'cards_id');
     }
 
+    public function cardUsers() {
+        return $this->hasMany('App\Users', 'cards_users', 'cards_id', 'users_id');
+    }
+
 
 }
