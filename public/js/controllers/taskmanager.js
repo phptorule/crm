@@ -414,5 +414,11 @@
         };
         //datapicker end
 
+        $scope.changeDone = function() {
+            request.send('/TaskManager/changeDone', {'cards_id': $scope.card.cards_id}, function(data) {
+                $scope.getCard();
+            });
+        };
+
     };
 })();

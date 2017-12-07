@@ -6037,3 +6037,22 @@ button.toast-close-button {
     font-size: 24px;
 
 }
+
+.input-group-unstyled .input-group-addon {
+    border: 0px;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+.list_title > h4{
+    cursor: pointer;
+}
+
+.modal-header > h4 > .fa-check, .task_manager_card > p > .fa-check{
+    color: green;
+}
+
+.card_done{
+    background-color: #c7c7c7;
+    color: #a9a9a9;
+}

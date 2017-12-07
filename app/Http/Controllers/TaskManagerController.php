@@ -371,4 +371,19 @@ class TaskManagerController extends Controller
 
         return $card;
     }
+
+    public function changeDone($post = []){
+
+        $cards = Cards::find($post['cards_id']);
+
+
+        if($cards->done == '0'){
+            $cards->done = '1';
+        }else{
+            $cards->done = '0';
+        }
+        $cards->save();
+
+    }
+
 }

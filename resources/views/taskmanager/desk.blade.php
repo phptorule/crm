@@ -10,9 +10,13 @@
                             <div class="list_title col-sm-10">
                                 <h4 ng-click="title = ! title" ng-show="title">@{{task.name}}</h4>
                                 <input type="text" name="task[]"  ng-model="task.id" hidden>
-                                <input type="text" focus-me="! title" class="form-control" ng-enter="saveTitle(task.id,task.name); title = ! title" ng-show=" ! title" ng-model="task.name">
-                                <i class="fa fa-check" ng-show=" ! title" ng-mousedown="saveTitle(task.id,task.name); title = ! title"></i>
+                                <div class="input-group input-group-unstyled" ng-show=" ! title">
+                                    <input type="text" focus-me="! title" class="form-control" ng-enter="saveTitle(task.id,task.name); title = ! title" ng-show=" ! title" ng-model="task.name">
+                                    <span class="input-group-addon">
+                                        <i class="fa fa-check" area-hidden="true" ng-show=" ! title" ng-mousedown="saveTitle(task.id,task.name); title = ! title"></i>
+                                    </span>
                                 <!--ng-blur="saveTitle(task.id,task.name);title = ! title"-->
+                                </div>
                             </div>
                             <div class="list_settings col-sm-2 pull-right">
                                 <div uib-dropdown class="m-b-5" auto-close="outsideClick">
@@ -45,8 +49,8 @@
 
                     <div class="inner">
                         <div class="panel-body">
-                            <div class="sortable-inner task_manager_card" ng-repeat="card in task.cards" ng-click="selectCard(card.cards_id)" ng-init="initSortable()">
-                                <p>@{{card.name}}</p>
+                            <div class="sortable-inner task_manager_card" ng-repeat="card in task.cards" ng-class="{card_done: card.done==1}" ng-click="selectCard(card.cards_id)" ng-init="initSortable()">
+                                <p>@{{card.name}} <i class="fa fa-check" ng-If="card.done == 1"></i></p>
                                 <div class="preview_card">
                                     <div class="cards_preview_item" ng-If="card.card_user_me" title="You are subscribed to this card">
                                         <i class="fa fa-user"></i>
@@ -106,10 +110,8 @@
 <script type="text/ng-template" id="SelectCard.html">
     <div class="modal-header modal-header-add no-transition" ng-init="initCard()">
         <button type="button" class="close" ng-click="cancel()" aria-hidden="true">×</button>
-
-        <h4 ng-show="card_title" ng-click="card_title = ! card_title"><b>@{{card.name}}</b></h4>
+        <h4 ng-show="card_title" ng-click="card_title = ! card_title"><b>@{{card.name}}</b> <i class="fa fa-check" area-hidden="true" ng-If="card.done == 1"></i></h4>
         <input type="text" focus-me="! card_title" ng-enter="saveCardTitle(card.cards_id,card.name);card_title = ! card_title" class="form-control" ng-show="! card_title" ng-model="card.name">
-        <i class="fa fa-check" ng-show=" ! card_title" ng-mousedown="saveCardTitle(card.cards_id,card.name); card_title = ! card_title"></i>
     </div>
 
     <div class="modal-body">
@@ -261,6 +263,12 @@
 
 
                             <div class="col-sm-4 card_settings_block">
+
+                                <div class="form-group">
+                                    <a class="btn card_nav" ng-If="card.done == 0" ng-click="changeDone()">Mark as done</a>
+                                    <a class="btn card_nav" ng-If="card.done == 1" ng-click="changeDone()">Mark as undone</a>
+                                </div>
+                                
                                 <h4>Add</h4>
 
                                 <div class="form-group">
