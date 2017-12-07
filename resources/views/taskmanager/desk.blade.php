@@ -2,7 +2,7 @@
     <form class="no-transition" id="task_manager" name="form" method="post" novalidate="novalidate">
         <div class="outer">
 
-            <div class="sortable-outer task_manager_list" id="item-@{{task.id}} " ng-repeat="task in tasks">
+            <div class="sortable-outer task_manager_list" id="item-@{{task.id}} " ng-repeat="task in tasks" >
                 <div class="panel panel-bd">
                     <div class="panel-heading">
                         <div class="row">
@@ -10,7 +10,9 @@
                             <div class="list_title col-sm-10">
                                 <h4 ng-click="title = ! title" ng-show="title">@{{task.name}}</h4>
                                 <input type="text" name="task[]"  ng-model="task.id" hidden>
-                                <input type="text" focus-me="! title" class="form-control" ng-enter="title = ! title" ng-show=" ! title" ng-blur="saveTitle(task.id,task.name); title = ! title" ng-model="task.name">
+                                <input type="text" focus-me="! title" class="form-control" ng-enter="saveTitle(task.id,task.name); title = ! title" ng-show=" ! title" ng-model="task.name">
+                                <i class="fa fa-check" ng-show=" ! title" ng-mousedown="saveTitle(task.id,task.name); title = ! title"></i>
+                                <!--ng-blur="saveTitle(task.id,task.name);title = ! title"-->
                             </div>
                             <div class="list_settings col-sm-2 pull-right">
                                 <div uib-dropdown class="m-b-5" auto-close="outsideClick">
@@ -106,7 +108,8 @@
         <button type="button" class="close" ng-click="cancel()" aria-hidden="true">×</button>
 
         <h4 ng-show="card_title" ng-click="card_title = ! card_title"><b>@{{card.name}}</b></h4>
-        <input type="text" focus-me="! card_title" ng-enter="card_title = ! card_title" class="form-control" ng-show="! card_title" ng-blur="saveCardTitle(card.cards_id,card.name)" ng-model="card.name">
+        <input type="text" focus-me="! card_title" ng-enter="saveCardTitle(card.cards_id,card.name);card_title = ! card_title" class="form-control" ng-show="! card_title" ng-model="card.name">
+        <i class="fa fa-check" ng-show=" ! card_title" ng-mousedown="saveCardTitle(card.cards_id,card.name); card_title = ! card_title"></i>
     </div>
 
     <div class="modal-body">
@@ -290,7 +293,7 @@
                                             </div>
 
                                             <div class="form-group">
-                                                <input type="text" class="form-control" ng-model="checklists.title">
+                                                <input type="text" class="form-control" ng-model="checklists.title" ng-enter="saveChecklist()">
                                             </div>
 
                                             <button type="button" aria-hidden="true" class="btn btn-primary" ng-click="saveChecklist()">
@@ -299,7 +302,7 @@
                                         </div>
                                     </div>
 
-                                    <a class="btn card_nav" ng-click="calendarOpen(0);"><i class="glyphicon glyphicon-calendar"></i> Timing</a>
+                                    <a class="btn card_nav" ng-click="calendarOpen(0);"><i class="glyphicon glyphicon-calendar"></i> Deadline</a>
                                     <input type="hidden" ng-change="saveDeadline(card.checklist.deadline);" class="form-control" uib-datepicker-popup="dd/MM/yyyy" ng-model="card.checklist.deadline" is-open="date[0].opened" show-button-bar="false" datepicker-options="dateOptions" />
                                 </div>
                             </div>

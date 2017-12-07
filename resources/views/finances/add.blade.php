@@ -4,7 +4,7 @@
 
     <form class="no-transition" name="form" method="post" novalidate="novalidate">
 
-        <a class="btn btn-add classic_button pull-right" href="/pdf/@{{finances_id}}" target="_blank">Export to PDF</a>
+        <a class="btn btn-add classic_button pull-right" ng-If="finances_id" href="/pdf/@{{finances_id}}" target="_blank">Export to PDF</a>
 
 
         <div class="col-sm-12">

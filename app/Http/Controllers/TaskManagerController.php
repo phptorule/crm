@@ -283,11 +283,13 @@ class TaskManagerController extends Controller
     // Comments end
 
     public function saveChecklist($post = []){
-        $checklists = new Checklists();
-        $checklists->title = $post['title'];
-        $checklists->users_id = Auth::user()->users_id;
-        $checklists->cards_id= $post['cards_id'];
-        $checklists->save();
+        if(!empty($post['title'])){
+            $checklists = new Checklists();
+            $checklists->title = $post['title'];
+            $checklists->users_id = Auth::user()->users_id;
+            $checklists->cards_id= $post['cards_id'];
+            $checklists->save();
+        }
     }
 
     public function addCheckbox($post = []){
