@@ -213,6 +213,7 @@
                     });
      
                     event.preventDefault();
+
                 }
             });
         };
@@ -365,11 +366,9 @@
         };
 
         $scope.addCheckbox = function(checkbox) {
-            if(!empty(checkbox)){
-                request.send('/TaskManager/addCheckbox', checkbox, function(data) {
-                    $scope.getCard();
-                });
-            }
+            request.send('/TaskManager/addCheckbox', checkbox, function(data) {
+                $scope.getCard();
+            });
         };
 
         $scope.changeCheckboxStatus = function(checkbox_id) {
