@@ -26,9 +26,19 @@
         $scope.show_input_card = true;
         $scope.counter = 0;
         $scope.all = 0;
+        $scope.task = {};
 
         $scope.getTask = function() {
             request.send('/TaskManager/getTask', {}, function(data) {
+                
+                //var task
+                //var tasks = array();
+                
+                
+
+                //Array.from(data)
+                
+                console.log(data);
                 $scope.tasks = data;
 
                 for (var k in data)
@@ -74,11 +84,7 @@
         $scope.deleteTask = function(id) {
             $scope.id = id;
             request.send('/TaskManager/deleteTask', {'id': $scope.id}, function(data) {
-                $scope.tasks = data;
-                for (var k in data)
-                {
-                    $scope.cards[k] = data[k].cards;
-                }
+                $scope.getTask();
             });
         };
 
@@ -102,7 +108,12 @@
             modalInstance.result.then(function(response) {
                 console.log(response);
             }, function () {
+                $scope.getTask();
+            });
+        };
 
+        $scope.savePosition = function(id,position) {
+            request.send('/TaskManager/savePosition',{'id': id,'position': position}, function(data) {
             });
         };
 
@@ -111,12 +122,28 @@
             if ($scope.counter == $scope.all) {
                 $( function() {
                     $('.outer').sortable({
-                        items: ".sortable-outer"
+                        items: ".sortable-outer",
+
+                        update: function( event, ui ){
+
+                            $scope.da = $(this).sortable('serialize');
+                            //console.log($scope._data);
+                            //$scope.da = data;
+
+                            //var _val = ui.item.find("input[name='task[]']").val();
+                            //var _list_id = ui.item.find("input[name='task[]']").val();
+                            //var _position_index = ui.item.index();
+                            //alert(_list_id+' : '+_position_index);
+                            //console.log(ui.item);
+                            $scope.savePosition($scope.da);
+                        }
+                        
                     });
 
                     $('.inner').sortable({
                         items: ".sortable-inner"
                     });
+
                 });
             }
         };
@@ -127,28 +154,34 @@
 
         $scope.initScroll = function(){
 
-              var curDown = false,
-                  curYPos = 0,
-                  curXPos = 0,
-                  curScroll = 0;
+            var curDown = false,
+                curYPos = 0,
+                curXPos = 0,
+                curScroll = 0;
 
 
-              $('.task_manager_board').mousemove(function(m){
+            $('.task_manager_board').mousemove(function(m){
                 if(curDown === true){
-                 $('.task_manager_board').scrollLeft(curScroll + (curXPos - m.pageX));
+                    $('.task_manager_board').scrollLeft(curScroll + (curXPos - m.pageX));
                 }
-              });
+            });
 
-              $('.task_manager_board').mousedown(function(m){
-                curDown = true;
-                curYPos = m.pageY;
-                curXPos = m.pageX;
-                curScroll = $('.task_manager_board').scrollLeft();
-              });
+            $('.task_manager_board').mousedown(function(m){
+                if (m.target.closest('.task_manager_list')){
+                    curDown = false;
+                }else {
 
-              $('.task_manager_board').mouseup(function(){
+                    curDown = true;
+                    curYPos = m.pageY;
+                    curXPos = m.pageX;
+                    curScroll = $('.task_manager_board').scrollLeft();
+                }
+                
+            });
+
+            $('.task_manager_board').mouseup(function(){
                 curDown = false;
-              });
+            });
         }
 
     };
@@ -173,6 +206,25 @@
             }
         };
     }]);
+
+})();
+
+(function () {
+    'use strict';
+
+    angular.module('app').directive('ngEnter', function () {
+        return function (scope, element, attrs) {
+            element.bind("keydown keypress", function (event) {
+                if(event.which === 13) {
+                    scope.$apply(function (){
+                        scope.$eval(attrs.ngEnter);
+                    });
+     
+                    event.preventDefault();
+                }
+            });
+        };
+    });
 
 })();
 
@@ -269,7 +321,8 @@
 
         $scope.saveCardTitle = function(id,name) {
             request.send('/TaskManager/saveCardTitle', {'id': id,'name': name}, function(data) {
-                $scope.card = data;
+                $scope.getCard();
+                $scope.getTeamUsers();
             });
         };
 
@@ -320,9 +373,11 @@
         };
 
         $scope.addCheckbox = function(checkbox) {
-            request.send('/TaskManager/addCheckbox', checkbox, function(data) {
-                $scope.getCard();
-            });
+            if(!empty(checkbox)){
+                request.send('/TaskManager/addCheckbox', checkbox, function(data) {
+                    $scope.getCard();
+                });
+            }
         };
 
         $scope.changeCheckboxStatus = function(checkbox_id) {

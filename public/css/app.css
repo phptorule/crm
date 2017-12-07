@@ -734,6 +734,12 @@ a.sidebar-toggle .pe-7s-angle-left-circle {
     margin-top: 3px;
     margin-bottom: 3px;
 }
+
+.nav > li > a > div {
+    max-width: none;
+    margin-top: 3px;
+    margin-bottom: 3px;
+}
 @media (max-width: 550px) {
     .navbar-nav > li > a > i {
         padding: 8px 0px;
@@ -800,6 +806,11 @@ a.sidebar-toggle .pe-7s-angle-left-circle {
         padding-bottom: 2px;
         color: #fff;
     }
+
+    .nav > li > a > div {
+        max-width: none;
+        margin-top: -4px;
+    }
 }
 @media (max-width: 767px) {
     .content-header {
@@ -807,6 +818,11 @@ a.sidebar-toggle .pe-7s-angle-left-circle {
         margin-bottom: 20px;
     }
     .nav > li > a > img {
+        max-width: none;
+        margin-top: -4px;
+    }
+
+    .nav > li > a > div {
         max-width: none;
         margin-top: -4px;
     }
@@ -6013,4 +6029,11 @@ button.toast-close-button {
     margin: 0 5px;
     font-size: 11px;
     color: #abadb1;
+}
+
+
+.icon_name{
+    padding-top: 12px;
+    font-size: 24px;
+
 }
