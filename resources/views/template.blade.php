@@ -22,6 +22,7 @@
     </head>
 
     <body data-ng-app="app" class="hold-transition sidebar-mini" data-ng-controller="AppCtrl" data-ng-init="token('{{ csrf_token() }}')">
+
         <div id="preloader">
             <div id="status"></div>
         </div>
@@ -57,12 +58,16 @@
                         <ul class="nav navbar-nav">
                             <li class="nav-username">
                                 <span class="hidden-xs">
-                                    <span>@{{ user.users_first_name + ' ' + user.users_last_name}}</span><span ng-show="current_team"> (@{{ current_team.teams_name }})</span>
+                                    <span style="background-color=cc()">@{{ user.users_first_name + ' ' + user.users_last_name}}</span><span ng-show="current_team"> (@{{ current_team.teams_name }})</span>
                                 </span>
                             </li>
-                            <li class="dropdown dropdown-user">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                    <img src="/img/avatar5.png" class="img-circle" width="45" height="45" alt="user">
+                            <li class="dropdown dropdown-user" style="background-color=cc()">
+                                
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" >
+                                    <div  class="img-circle" style="width:45px;height:45px;background-color:RGB(@{{ user.icon_color}})">
+                                        <span class="icon_name">@{{user.users_first_name.slice(0,1)}}</span>
+                                    </div>
+                                    <!--<img src="/img/avatar5.png" class="img-circle" width="45" height="45" alt="user">-->
                                 </a>
 
                                 <ul class="dropdown-menu">

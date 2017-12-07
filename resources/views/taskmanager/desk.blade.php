@@ -1,21 +1,23 @@
 <div class="row task_manager_board"  data-ng-controller="Task_managerCtrl" ng-init="getTask()">
     <form class="no-transition" id="task_manager" name="form" method="post" novalidate="novalidate">
         <div class="outer">
-            <div class="sortable-outer task_manager_list" ng-repeat="task in tasks">
+
+            <div class="sortable-outer task_manager_list" id="item-@{{task.id}} " ng-repeat="task in tasks">
                 <div class="panel panel-bd">
                     <div class="panel-heading">
                         <div class="row">
 
                             <div class="list_title col-sm-10">
                                 <h4 ng-click="title = ! title" ng-show="title">@{{task.name}}</h4>
-                                <input type="text" focus-me="! title" class="form-control" ng-show=" ! title" ng-blur="saveTitle(task.id,task.name); title = ! title" ng-model="task.name">
+                                <input type="text" name="task[]"  ng-model="task.id" hidden>
+                                <input type="text" focus-me="! title" class="form-control" ng-enter="title = ! title" ng-show=" ! title" ng-blur="saveTitle(task.id,task.name); title = ! title" ng-model="task.name">
                             </div>
                             <div class="list_settings col-sm-2 pull-right">
                                 <div uib-dropdown class="m-b-5" auto-close="outsideClick">
                                     <a href="javascript:void(0);" class="dropdown-toggle" uib-dropdown-toggle ng-click="getListTeamUsers(task.id)"><i class="fa fa-cog" aria-hidden="true"></i></a>
                                     <div uib-dropdown-menu class="custom_pop_up">
                                         <div class="text-left">
-                                            <button class="btn btn-danger" ng-click="deleteTask(task.id)">Delete list</button>
+                                            <input type="button" value="Delete list" class="btn btn-danger" ng-click="deleteTask(task.id)">
                                         </div>
 
                                         <span>Users</span>
@@ -74,7 +76,7 @@
 
                     <div class="panel-footer" ng-class="{active: ! show_input_card}" ng-show=" ! show_input_card">
                         <div ng-show=" ! show_input_card">
-                            <input type="text" class="form-control" ng-model="card.name_card" name="name_card" />
+                            <input type="text" class="form-control" ng-enter="createCard(task.id)" ng-model="card.name_card" name="name_card" />
                             <button class="btn btn-add" ng-click="createCard(task.id)">Add card</button>
                             <a class="cancel_button" href="javascript:void(0);" ng-click="show_input_card = ! show_input_card"><i class="fa fa-times"></i></a>
                         </div>
@@ -86,7 +88,7 @@
                 <div class="panel panel-bd">
                     <div class="panel-heading">
                         <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Enter list name" ng-model="list.name_task_block" name="name_task_block" required />
+                            <input type="text" class="form-control" ng-enter="addTask()" placeholder="Enter list name" ng-model="list.name_task_block" name="name_task_block" required />
                         </div>
 
                         <button class="btn btn-add" ng-click="addTask()" type="reset">Add list</button>
@@ -104,7 +106,7 @@
         <button type="button" class="close" ng-click="cancel()" aria-hidden="true">×</button>
 
         <h4 ng-show="card_title" ng-click="card_title = ! card_title"><b>@{{card.name}}</b></h4>
-        <input type="text" focus-me="! card_title" class="form-control" ng-show="! card_title" ng-blur="saveCardTitle(card.cards_id,card.name); card_title = ! card_title" ng-model="card.name">
+        <input type="text" focus-me="! card_title" ng-enter="card_title = ! card_title" class="form-control" ng-show="! card_title" ng-blur="saveCardTitle(card.cards_id,card.name)" ng-model="card.name">
     </div>
 
     <div class="modal-body">
@@ -217,8 +219,9 @@
 
                                     <div ng-show=" ! showCheckBox">
                                         <div class="form-group">
-                                            <input class="form-control" type="text" ng-model="checklists[l].checkbox_title">
+                                            <input class="form-control" ng-enter="addCheckbox(checklists[l])" type="text" ng-model="checklists[l].checkbox_title">
                                         </div>
+
                                         <button class="btn btn-add" ng-click="addCheckbox(checklists[l])">Add</button>
                                         <button class="btn btn-danger" ng-click="showCheckBox = ! showCheckBox" type="reset">Cancel</button>
                                     </div>

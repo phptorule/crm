@@ -57,13 +57,13 @@ class TaskManagerController extends Controller
     public function getTask(){
         $team_id = session('current_team');
         $team = Teams::with('tasks.cards.users','tasks.cards.checkLists.checkBoxes')->find($team_id);
+        //$tasks = $team->tasks->sortByDesc('position');
         $tasks = $team->tasks;
 
         foreach ($tasks as $task) {
             
             foreach ($task->cards as $card) {
                 $card_user_me = $card->users->contains('users_id', Auth::user()->users_id);
-                //$card_users = $card->users()->get();
  
                 $i = 0;
                 foreach ($card->checkLists as $value) {
@@ -184,12 +184,6 @@ class TaskManagerController extends Controller
 
         $delete_task = TasksLists::find($post['id']);
         $delete_task->delete();
-
-        $tasks = TasksLists::all();
-        foreach ($tasks as $task) {
-            $task->cards = Cards::where('task_id', $task->id)->get();
-        }
-        return $tasks;
     }
 
     public function addTask($post = []){
@@ -209,6 +203,25 @@ class TaskManagerController extends Controller
         $card->user_id = Auth::user()->users_id;
         $card->task_id = $post['task_id'];
         $card->save();
+    }
+
+    public function savePosition($post = []){
+
+
+        $mass = explode(" ", $post['id']);
+
+        foreach ($mass as $value) {
+           $new_value = explode("=", $value);
+           $list_value[] = $new_value[1];
+        }
+
+        for ($i=0; $i < count($list_value); $i++) { 
+            $taskslists = TasksLists::find($list_value[$i]);
+            //return $taskslists;
+            $taskslists->position = $i;
+            $taskslists->save();
+        }
+
     }
 
     public function saveTitle($post = []){
@@ -258,18 +271,6 @@ class TaskManagerController extends Controller
         $card_change = Cards::find($post['id']);
         $card_change->name = $post['name'];
         $card_change->save();
-
-        $card = Cards::find($post['id']);
-        $teams_users = UsersTeams::all()->where('teams_id',session('current_team'));
-
-        foreach ($teams_users as $user) {
-            $users[] = Users::find($user->users_id);
-        }
-
-        $card->users = $users;
-
-        return $card;
-
     }
 
     public function saveComment($post = []){
