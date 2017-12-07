@@ -57,18 +57,13 @@ class TaskManagerController extends Controller
     public function getTask(){
         $team_id = session('current_team');
         $team = Teams::with('tasks.cards.users','tasks.cards.checkLists.checkBoxes')->find($team_id);
-        //$tasks = $team->tasks->orderBy('position', 'desc');
         //$tasks = $team->tasks->sortByDesc('position');
-        $tasks = $team->tasks->sortBy('position');
-        
-        //return $tasks;
-        //$tasks->sortByDesc('id');
+        $tasks = $team->tasks;
 
         foreach ($tasks as $task) {
             
             foreach ($task->cards as $card) {
                 $card_user_me = $card->users->contains('users_id', Auth::user()->users_id);
-                //$card_users = $card->users()->get();
  
                 $i = 0;
                 foreach ($card->checkLists as $value) {

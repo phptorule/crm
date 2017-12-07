@@ -31,14 +31,6 @@
         $scope.getTask = function() {
             request.send('/TaskManager/getTask', {}, function(data) {
                 
-                //var task
-                //var tasks = array();
-                
-                
-
-                //Array.from(data)
-                
-                console.log(data);
                 $scope.tasks = data;
 
                 for (var k in data)
