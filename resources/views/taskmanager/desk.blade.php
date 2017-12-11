@@ -1,9 +1,4 @@
 <div class="row task_manager_board"  data-ng-controller="Task_managerCtrl" ng-init="getTask()">
-
-
-
-
-
     <form class="no-transition" id="task_manager" name="form" method="post" novalidate="novalidate">
         <div class="outer">
 
@@ -244,7 +239,7 @@
                                         <button class="btn btn-danger" ng-click="showCheckBox = ! showCheckBox" type="reset" ng-click="addCheckbox(checklists[l],checklists[l].checkbox_title,save=false)">Cancel</button>
 
 
-                                        <div uib-dropdown class="m-b-5" auto-close="outsideClick" style="width:130px; float:left; margin-right:5px;">
+                                        <div uib-dropdown class="m-b-5" auto-close="outsideClick" class="dropdown_left">
                                             <a href="javascript:void(0);" class="btn card_nav dropdown-toggle" uib-dropdown-toggle><i class="fa fa-user"></i> Users</a>
 
                                            <div uib-dropdown-menu class="custom_pop_up">
@@ -264,7 +259,7 @@
                                             </div>
                                         </div>
 
-                                        <div uib-dropdown class="m-b-5" auto-close="outsideClick" style="width:130px; float:left; margin-right:5px;">
+                                        <div uib-dropdown class="m-b-5" auto-close="outsideClick" class="dropdown_left">
                                         <a href="javascript:void(0);" class="btn card_nav dropdown-toggle" uib-dropdown-toggle><i class="glyphicon glyphicon-calendar"></i> Deadline</a>
 
                                         <div uib-dropdown-menu class="custom_pop_up">
@@ -328,7 +323,6 @@
                                     </div>
                                 </div>
                             </div>
-
 
                             <div class="col-sm-4 card_settings_block">
 
@@ -396,11 +390,11 @@
                                             </div>
 
                                             <div class="form-group">
-                                                <select class="form-control" name="assign_to" ng-model="hh" style="width:80px;float:left; margin-right:10px;">
+                                                <select class="form-control" name="assign_to" ng-model="hh" class="time_select">
                                                     <option ng-repeat="h in time_h" value="@{{ h }}">@{{h}}</option>
                                                 </select>
 
-                                                <select class="form-control" name="assign_to" ng-model="mm" style="width:80px;">
+                                                <select class="form-control" name="assign_to" ng-model="mm" class="time_select">
                                                     <option ng-repeat="m in time_m" value="@{{ m }}">@{{m}}</option>
                                                 </select>
                                             </div>

@@ -6100,3 +6100,18 @@ button.toast-close-button {
 .title_pointer{
     cursor: pointer;
 }
+
+
+.dropdown_left{
+    width:130px;
+    float:left;
+    margin-right:5px;
+}
+
+.time_select:first{
+    width:80px;float:left; margin-right:10px;
+}
+
+.time_select:first{
+    width:80px;
+}
