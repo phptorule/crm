@@ -6091,3 +6091,12 @@ button.toast-close-button {
     background-color: #c7c7c7;
     color: #a9a9a9;
 }
+
+.dev_add_checkbox{
+    margin-top: 10px;
+
+}
+
+.title_pointer{
+    cursor: pointer;
+}

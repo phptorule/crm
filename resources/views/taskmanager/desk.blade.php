@@ -1,4 +1,9 @@
 <div class="row task_manager_board"  data-ng-controller="Task_managerCtrl" ng-init="getTask()">
+
+
+
+
+
     <form class="no-transition" id="task_manager" name="form" method="post" novalidate="novalidate">
         <div class="outer">
 
@@ -115,7 +120,7 @@
 <script type="text/ng-template" id="SelectCard.html">
     <div class="modal-header modal-header-add no-transition" ng-init="initCard()">
         <button type="button" class="close" ng-click="cancel()" aria-hidden="true">×</button>
-        <h4 ng-show="card_title" ng-click="card_title = ! card_title"><b>@{{card.name}}</b> <i class="fa fa-check" area-hidden="true" ng-If="card.done == 1"></i></h4>
+        <h4 class="title_pointer" ng-show="card_title" ng-click="card_title = ! card_title"><b>@{{card.name}}</b> <i class="fa fa-check" area-hidden="true" ng-If="card.done == 1"></i></h4>
         <input type="text" focus-me="! card_title" ng-enter="saveCardTitle(card.cards_id,card.name);card_title = ! card_title" class="form-control" ng-show="! card_title" ng-model="card.name">
     </div>
 
@@ -168,7 +173,7 @@
                                     <h4>Description:</h4>
                                     <div class="card_description">
                                         <div class="form-group">
-                                            <p ng-show="show_description" ng-click="makeDescriptionCopy(); show_description = ! show_description">@{{card.description}}</p>
+                                            <p class="title_pointer" ng-show="show_description" ng-click="makeDescriptionCopy(); show_description = ! show_description">@{{card.description}}</p>
                                             <textarea class="form-control resize" ng-show="! show_description || ! card.description" ng-model="temp_description"></textarea>
                                         </div>
 
@@ -184,7 +189,8 @@
 
                                 <div class="card_block checklists" ng-repeat="(l, checklist) in checklists">
                                     <div class="checklist_header">
-                                        <h4><i class="fa fa-check-square-o"></i> @{{checklist.title}}</h4>
+                                        <h4 class="title_pointer" ng-show="checklist.created_at" ng-click="checklist.created_at = ! checklist.created_at"><i class="fa fa-check-square-o"></i> @{{checklist.title}}</h4>
+                                        <input type="text" focus-me="! checklist.created_at" ng-enter="saveChecklistTitle(checklist.id, checklist.title);checklist.created_at = ! checklist.created_at" class="form-control" ng-show="! checklist.created_at" ng-model="checklist.title">
                                         <!--a href="javascript:void(0);" ng-click="deleteCheckList(checklist.id)">Delete checklist</a-->
                                     </div>
 
@@ -221,19 +227,76 @@
                                             </div>
                                         </div>
 
+                                        <span>deadline: @{{checklists[l].checkboxes[k].deadline}}</span>
+
                                         <div class="delete_chceckbox" ng-click="deleteCheckBox(checkbox.id)">
                                             <i class="fa fa-trash-o"></i>
                                         </div>
                                     </div>
 
 
-                                    <div ng-show=" ! showCheckBox">
+                                    <div ng-show=" ! showCheckBox" class="dev_add_checkbox">
                                         <div class="form-group">
-                                            <input class="form-control" ng-enter="addCheckbox(checklists[l])" type="text" ng-model="checklists[l].checkbox_title">
+                                            <input class="form-control" ng-enter="addCheckbox(checklists[l],checklists[l].checkbox_title,save=true)" type="text" ng-model="checklists[l].checkbox_title">
                                         </div>
 
-                                        <button class="btn btn-add" ng-click="addCheckbox(checklists[l])">Add</button>
-                                        <button class="btn btn-danger" ng-click="showCheckBox = ! showCheckBox" type="reset">Cancel</button>
+                                        <button class="btn btn-add" ng-click="addCheckbox(checklists[l],checklists[l].checkbox_title,save=true)">Add</button>
+                                        <button class="btn btn-danger" ng-click="showCheckBox = ! showCheckBox" type="reset" ng-click="addCheckbox(checklists[l],checklists[l].checkbox_title,save=false)">Cancel</button>
+
+
+                                        <div uib-dropdown class="m-b-5" auto-close="outsideClick" style="width:130px; float:left; margin-right:5px;">
+                                            <a href="javascript:void(0);" class="btn card_nav dropdown-toggle" uib-dropdown-toggle><i class="fa fa-user"></i> Users</a>
+
+                                           <div uib-dropdown-menu class="custom_pop_up">
+                                                <div class="custom_pop_up_header text-center">
+                                                    <span>Users</span>
+                                                </div>
+
+                                               <div class="form-group">
+                                                    <select class="form-control" name="assign_to" ng-model="users_list">
+                                                        <option ng-repeat="user in users" value="@{{ user.users_id }}">@{{user.users_first_name + ' ' + user.users_last_name}}</option>
+                                                    </select>
+                                                </div>
+
+                                               <button type="button" class="btn btn-add" ng-click="saveUserToCheckbox(users_list);">
+                                                   Add user
+                                                </button>
+                                            </div>
+                                        </div>
+
+                                        <div uib-dropdown class="m-b-5" auto-close="outsideClick" style="width:130px; float:left; margin-right:5px;">
+                                        <a href="javascript:void(0);" class="btn card_nav dropdown-toggle" uib-dropdown-toggle><i class="glyphicon glyphicon-calendar"></i> Deadline</a>
+
+                                        <div uib-dropdown-menu class="custom_pop_up">
+                                            <div class="custom_pop_up_header text-center">
+                                                <span>Add deadline</span>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <div class="input-group custom-datapicker-input">
+                                                    <input type="text" class="form-control" uib-datepicker-popup="yyyy/MM/dd" ng-model="deadline" is-open="date[0].opened" show-button-bar="false" datepicker-options="dateOptions" />
+                                                    <span class="input-group-btn">
+                                                        <button type="button" class="btn btn-default" ng-click="calendarOpen(0)"><i class="glyphicon glyphicon-calendar"></i></button>
+                                                    </span>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <select class="form-control" name="assign_to" ng-model="hh" style="width:60px;float:left; margin-right:10px;">
+                                                    <option ng-repeat="h in time_h" value="@{{ h }}">@{{h}}</option>
+                                                </select>
+
+                                                <select class="form-control" name="assign_to" ng-model="mm" style="width:60px;">
+                                                    <option ng-repeat="m in time_m" value="@{{ m }}">@{{m}}</option>
+                                                </select>
+                                            </div>
+
+                                            <button type="button" aria-hidden="true" class="btn btn-primary" ng-click="saveCheckboxDeadline(deadline,hh,mm);">
+                                                Save
+                                            </button>
+                                        </div>
+                                    </div>
+
                                     </div>
 
                                     <a href="javascript:void(0);" ng-show="showCheckBox" ng-click="showCheckBox = ! showCheckBox">Add new item</a>
@@ -300,7 +363,7 @@
                                     <div uib-dropdown class="m-b-5" auto-close="outsideClick">
                                         <a href="javascript:void(0);" class="btn card_nav dropdown-toggle" uib-dropdown-toggle><i class="fa fa-check-square-o"></i> Checklist</a>
 
-                                       <div uib-dropdown-menu class="custom_pop_up">
+                                        <div uib-dropdown-menu class="custom_pop_up">
                                             <div class="custom_pop_up_header text-center">
                                                 <span>Add checklist</span>
                                             </div>
@@ -315,8 +378,39 @@
                                         </div>
                                     </div>
 
-                                    <a class="btn card_nav" ng-click="calendarOpen(0);"><i class="glyphicon glyphicon-calendar"></i> Deadline</a>
-                                    <input type="hidden" ng-change="saveDeadline(card.checklist.deadline);" class="form-control" uib-datepicker-popup="dd/MM/yyyy" ng-model="card.checklist.deadline" is-open="date[0].opened" show-button-bar="false" datepicker-options="dateOptions" />
+                                    <div uib-dropdown class="m-b-5" auto-close="outsideClick">
+                                        <a href="javascript:void(0);" class="btn card_nav dropdown-toggle" uib-dropdown-toggle><i class="glyphicon glyphicon-calendar"></i> Deadline</a>
+
+                                        <div uib-dropdown-menu class="custom_pop_up">
+                                            <div class="custom_pop_up_header text-center">
+                                                <span>Add deadline</span>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <div class="input-group custom-datapicker-input">
+                                                    <input type="text" class="form-control" uib-datepicker-popup="yyyy/MM/dd" ng-model="deadline" is-open="date[0].opened" show-button-bar="false" datepicker-options="dateOptions" />
+                                                    <span class="input-group-btn">
+                                                        <button type="button" class="btn btn-default" ng-click="calendarOpen(0)"><i class="glyphicon glyphicon-calendar"></i></button>
+                                                    </span>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <select class="form-control" name="assign_to" ng-model="hh" style="width:80px;float:left; margin-right:10px;">
+                                                    <option ng-repeat="h in time_h" value="@{{ h }}">@{{h}}</option>
+                                                </select>
+
+                                                <select class="form-control" name="assign_to" ng-model="mm" style="width:80px;">
+                                                    <option ng-repeat="m in time_m" value="@{{ m }}">@{{m}}</option>
+                                                </select>
+                                            </div>
+
+                                            <button type="button" aria-hidden="true" class="btn btn-primary" ng-click="saveDeadline(deadline,hh,mm);">
+                                                Save
+                                            </button>
+                                        </div>
+                                    </div>
+                                    
                                 </div>
                             </div>
                         </div>

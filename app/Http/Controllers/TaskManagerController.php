@@ -15,7 +15,10 @@ use App\CardsComments;
 use App\Checklists;
 use App\Checkboxes;
 use App\ListsUsers;
+use App\Descs;
+use App\CheckboxesUsers;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class TaskManagerController extends Controller
 {
@@ -174,7 +177,21 @@ class TaskManagerController extends Controller
         $checklists = Checklists::where('cards_id',$post['cards_id'])->get();
         foreach ($checklists as $value) {
             $value->checkboxes = Checkboxes::where('checklist_id', $value->id)->get();
+            //$checkboxes_user = $value->checkboxes->checkboxesUsers()->get();
         }
+
+        //$a = Checkboxes::find(92);
+        //return $checkboxes_user = $a->checkboxesUsers()->get();
+
+        $card->this_data = date('Y/m/d');
+        for ($i=0; $i <= 24; $i++) { 
+            $time_h[] = $i;
+        }
+        for ($i=0; $i <= 60; $i++) { 
+            $time_m[] = $i;
+        }
+        $card->time_h = $time_h;
+        $card->time_m = $time_m;
 
         $card->comments = $comments;
         $card->checklists = $checklists;
@@ -294,13 +311,52 @@ class TaskManagerController extends Controller
     }
 
     public function addCheckbox($post = []){
-        if (!empty($post['checkbox_title'])) {
-            $checkbox = new Checkboxes;
-            $checkbox->checklist_id = $post['id'];
-            $checkbox->title = $post['checkbox_title'];
+
+        if($post['save'] == 'true' and !empty($post['title'])){
+
+
+
+            $checkbox = new Checkboxes();
+            $checkbox->checklist_id = $post['checklist_id'];
+            $checkbox->title = $post['title'];
+            $checkbox->deadline = session()->get('deadline');
             $checkbox->save();
+
+            $users = session()->get('teams.user[]');
+
+            foreach ($users as $value) {
+                //return $value;
+                $checkboxes_user = new CheckboxesUsers();
+                $checkboxes_user->checkboxes_id = $checkbox->id;
+                $checkboxes_user->users_id = $value;
+                $checkboxes_user->save();
+            }
+
+            session()->pull('deadline');
+            session()->pull('teams.user[]');
+            unset($users);
+        }else{
+            session()->pull('deadline');
+            session()->pull('teams.user[]');
         }
     }
+
+    public function saveUserToCheckbox($post = []){
+        
+        session()->push('teams.user[]', $post['user']);
+        //session()->pull('teams.user[]');
+        return session()->get('teams.user[]');
+    }
+
+    public function saveCheckboxDeadline($post = []){
+
+        $reddata = strtotime($post['deadline']) + ($post['h'] * 3600) + ($post['m'] * 60);
+        $deadline =  date('Y/m/d G:i',$reddata + 3600);
+
+        session()->put('deadline' , $deadline);
+        return session()->get('deadline');
+    }
+
 
     public function saveCheckboxec($post = []){
         $checklists_value = Checkboxes::find($post['id']);
@@ -358,10 +414,9 @@ class TaskManagerController extends Controller
     public function saveDeadline($post = []){
 
         $cards = Cards::find($post['cards_id']);
+        $reddata = strtotime($post['deadline']) + ($post['h'] * 3600) + ($post['m'] * 60);
 
-
-        $reddata = strtotime($post['deadline']);
-        $cards->deadline =  date('Y-m-d',$reddata + 86400);
+        $cards->deadline =  date('Y/m/d G:i',$reddata + 3600);
         $cards->save();
 
         $card = Cards::find($post['cards_id']);
@@ -384,6 +439,16 @@ class TaskManagerController extends Controller
             $cards->done = '0';
         }
         $cards->save();
+
+    }
+
+    public function saveChecklistTitle($post = []){
+
+        if(!empty($post['value'])){
+            $checklist = Checklists::find($post['checklist_id']);
+            $checklist->title = $post['value'];
+            $checklist->save();
+        }
 
     }
 
