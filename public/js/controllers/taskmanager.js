@@ -271,11 +271,9 @@
         $scope.comment_text = '';
         $scope.card_users_ids = [];
         $scope.team_users_ids = [];
-        $scope.team_userss = [];
-        $scope.users_teamssa = [];
-
-
-
+        $scope.temp_users_id = [];
+        $scope.temp_users = [];
+        $scope.checkbox = {};
 
         $scope.editChecklistItem = [];
         for (var i = 0; i < 20; i++)
@@ -378,30 +376,48 @@
         };
 
         $scope.saveChecklist = function() {
+
             request.send('/TaskManager/saveChecklist', {'title': $scope.checklists.title, 'cards_id': $scope.card.cards_id}, function(data) {
                 $scope.getCard();
             });
         };
 
-        $scope.addCheckbox = function(checklist_id,title,save) {
-            request.send('/TaskManager/addCheckbox', {'checklist_id': checklist_id['id'], 'title': title, 'save': save}, function(data) {
+        $scope.addCheckbox = function(checklist_id, checkbox_title) {
+            $scope.checkbox.users = $scope.temp_users_id;
+            $scope.checkbox.deadline = $scope.temp_deadline;
+            $scope.checkbox.checklist_id = checklist_id;
+            $scope.checkbox.checkbox_title = checkbox_title;
+
+            request.send('/TaskManager/addCheckbox', $scope.checkbox, function(data) {
                 $scope.getCard();
             });
         };
 
-        $scope.saveUserToCheckbox = function(user) {
-            request.send('/TaskManager/saveUserToCheckbox', {'user': user}, function(data) {
-            });
+        $scope.saveUserToCheckbox = function(user_id) {
+            $scope.temp_users_id.push(user_id);
+
+            for (var k in $scope.users) {
+                
+                if(user_id == $scope.users[k].users_id){
+                    $scope.temp_users[k] = $scope.users[k];
+                }
+                
+            };
+
+            //console.log($scope.temp_users_id);
+
         };
 
         $scope.saveCheckboxDeadline = function(deadline,h,m,) {
+            
             request.send('/TaskManager/saveCheckboxDeadline', {'deadline': deadline, 'h': h, 'm': m}, function(data) {
+            
+                $scope.temp_deadline = data;
+                console.log($scope.temp_deadline);    
+
             });
+            
         };
-
-
-
-
 
         $scope.changeCheckboxStatus = function(checkbox_id) {
             request.send('/TaskManager/changeCheckboxStatus', {'checkbox_value_id': checkbox_id, 'cards_id': $scope.card.cards_id}, function(data) {

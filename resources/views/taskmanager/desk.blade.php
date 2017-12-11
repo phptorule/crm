@@ -222,7 +222,13 @@
                                             </div>
                                         </div>
 
-                                        <span>deadline: @{{checklists[l].checkboxes[k].deadline}}</span>
+                                        <span ng-repeat="user in temp_users">
+                                            <div  class="img-circle" style="width:45px;height:45px;background-color:RGB(@{{ user.icon_color}})">
+                                                <span class="icon_name">@{{user.users_first_name.slice(0,1)}}</span>
+                                            </div>
+                                        </span>
+
+                                        <span>Deadline: @{{checklists[l].checkboxes[k].deadline}}</span>
 
                                         <div class="delete_chceckbox" ng-click="deleteCheckBox(checkbox.id)">
                                             <i class="fa fa-trash-o"></i>
@@ -232,10 +238,10 @@
 
                                     <div ng-show=" ! showCheckBox" class="dev_add_checkbox">
                                         <div class="form-group">
-                                            <input class="form-control" ng-enter="addCheckbox(checklists[l],checklists[l].checkbox_title,save=true)" type="text" ng-model="checklists[l].checkbox_title">
+                                            <input class="form-control" ng-enter="addCheckbox(checklists[l].id, checklists[l].checkbox_title)" type="text" ng-model="checklists[l].checkbox_title">
                                         </div>
 
-                                        <button class="btn btn-add" ng-click="addCheckbox(checklists[l],checklists[l].checkbox_title,save=true)">Add</button>
+                                        <button class="btn btn-add" ng-click="addCheckbox(checklists[l].id, checklists[l].checkbox_title)">Add</button>
                                         <button class="btn btn-danger" ng-click="showCheckBox = ! showCheckBox" type="reset" ng-click="addCheckbox(checklists[l],checklists[l].checkbox_title,save=false)">Cancel</button>
 
 

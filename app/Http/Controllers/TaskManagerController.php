@@ -272,10 +272,8 @@ class TaskManagerController extends Controller
 
     public function saveUserToCard($post = []){
         if(!empty($post['users_id'])){
-            $card = new CardsUsers();
-            $card->cards_id = $post['cards_id'];
-            $card->users_id = $post['users_id'];
-            $card->save();
+            $card = Cards::find($post['cards_id']);
+            $card->users()->syncWithoutDetaching($post['users_id']);
         }
     }
 
@@ -312,40 +310,15 @@ class TaskManagerController extends Controller
 
     public function addCheckbox($post = []){
 
-        if($post['save'] == 'true' and !empty($post['title'])){
-
-
-
+        if(!empty($post['checkbox_title'])){
             $checkbox = new Checkboxes();
             $checkbox->checklist_id = $post['checklist_id'];
-            $checkbox->title = $post['title'];
-            $checkbox->deadline = session()->get('deadline');
+            $checkbox->title = $post['checkbox_title'];
+            $checkbox->deadline = $post['deadline'];
             $checkbox->save();
 
-            $users = session()->get('teams.user[]');
-
-            foreach ($users as $value) {
-                //return $value;
-                $checkboxes_user = new CheckboxesUsers();
-                $checkboxes_user->checkboxes_id = $checkbox->id;
-                $checkboxes_user->users_id = $value;
-                $checkboxes_user->save();
-            }
-
-            session()->pull('deadline');
-            session()->pull('teams.user[]');
-            unset($users);
-        }else{
-            session()->pull('deadline');
-            session()->pull('teams.user[]');
+            $checkbox->users()->sync($post['users']);
         }
-    }
-
-    public function saveUserToCheckbox($post = []){
-        
-        session()->push('teams.user[]', $post['user']);
-        //session()->pull('teams.user[]');
-        return session()->get('teams.user[]');
     }
 
     public function saveCheckboxDeadline($post = []){
@@ -353,8 +326,7 @@ class TaskManagerController extends Controller
         $reddata = strtotime($post['deadline']) + ($post['h'] * 3600) + ($post['m'] * 60);
         $deadline =  date('Y/m/d G:i',$reddata + 3600);
 
-        session()->put('deadline' , $deadline);
-        return session()->get('deadline');
+        return $deadline;
     }
 
 
