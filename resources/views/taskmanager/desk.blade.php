@@ -239,7 +239,7 @@
                                         <button class="btn btn-danger" ng-click="showCheckBox = ! showCheckBox" type="reset" ng-click="addCheckbox(checklists[l],checklists[l].checkbox_title,save=false)">Cancel</button>
 
 
-                                        <div uib-dropdown class="m-b-5" auto-close="outsideClick" class="dropdown_left">
+                                        <div uib-dropdown class="m-b-5" auto-close="outsideClick" class="dropdown_left" style="width:130px; float:left;margin-right:5px;">
                                             <a href="javascript:void(0);" class="btn card_nav dropdown-toggle" uib-dropdown-toggle><i class="fa fa-user"></i> Users</a>
 
                                            <div uib-dropdown-menu class="custom_pop_up">
@@ -259,7 +259,7 @@
                                             </div>
                                         </div>
 
-                                        <div uib-dropdown class="m-b-5" auto-close="outsideClick" class="dropdown_left">
+                                        <div uib-dropdown class="m-b-5" auto-close="outsideClick" class="dropdown_left" style="width:130px; float:left;margin-right:5px;">
                                         <a href="javascript:void(0);" class="btn card_nav dropdown-toggle" uib-dropdown-toggle><i class="glyphicon glyphicon-calendar"></i> Deadline</a>
 
                                         <div uib-dropdown-menu class="custom_pop_up">

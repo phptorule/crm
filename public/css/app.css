@@ -6060,12 +6060,11 @@ button.toast-close-button {
 
 .preview_users{
     padding-top: 5px;
-    min-height: 45px;
     padding-bottom: 5px;
 }
 
 .preview_users > .img-circle{
-    float: right;
+    
     margin: 2px;
 }
 
