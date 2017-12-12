@@ -62,9 +62,9 @@
                                 </span>
                             </li>
                             <li class="dropdown dropdown-user" style="background-color=cc()">
-                                
+
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" >
-                                    <div  class="img-circle" style="width:45px;height:45px;background-color:RGB(@{{ user.icon_color}})">
+                                    <div  class="user_avatar" style="width:45px;height:45px;background-color:RGB(@{{ user.icon_color}})">
                                         <span class="icon_name">@{{user.users_first_name.slice(0,1)}}</span>
                                     </div>
                                     <!--<img src="/img/avatar5.png" class="img-circle" width="45" height="45" alt="user">-->

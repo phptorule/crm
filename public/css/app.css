@@ -3918,23 +3918,6 @@ pre .arg {
 .icon_list li:hover i {
     color: #fff;
 }
-.icon_name {
-    display: block;
-    text-align: center;
-    word-wrap: break-word;
-}
-
-.preview_users{
-    height: auto;
-}
-
-.preview_users .icon_name {
-    display: block;
-    text-align: center;
-    word-wrap: break-word;
-    padding: 0px;
-}
-
 
 @media (min-width: 768px) {
     .flag-icon {
@@ -5694,6 +5677,15 @@ button.toast-close-button {
     background: #dedede;
 }
 
+.dev_add_checkbox .card_nav {
+    width: auto;
+    padding: 5px 15px;
+}
+
+.dev_add_checkbox .dropdown {
+    display: inline-block;
+}
+
 .btn_add{
     padding:5px 10px;
     cursor:pointer;
@@ -5766,6 +5758,10 @@ button.toast-close-button {
     display: inline-block;
     word-wrap: break-word;
     white-space: normal;
+}
+
+.save_title.btn-add {
+    display: table-cell;
 }
 
 .list_settings {
@@ -5923,6 +5919,11 @@ button.toast-close-button {
     margin-bottom: 0px;
 }
 
+.card_block.checklists {
+    margin-bottom: 40px;
+}
+
+
 .checkbox_item {
     position: relative;
     z-index: 1;
@@ -6037,39 +6038,35 @@ button.toast-close-button {
     cursor: pointer;
 }
 
+.preview_card {
+    margin-bottom: 10px;
+}
+
 .cards_preview_item {
     display: inline-block;
     margin: 0 5px;
     font-size: 11px;
-    color: #abadb1;
+    color: #9a9a9a;
 }
 
 
-.icon_name{
-    padding-top: 12px;
-    font-size: 24px;
-
-}
-
-.preview_card .icon_name {
-    display: block;
+.user_avatar {
+    display: inline-block;
     text-align: center;
-    word-wrap: break-word;
-    padding: 0px;
+    width: 45px;
+    height: 45px;
+    line-height: 45px;
+    border-radius: 50%;
+    color: #fff;
+    margin-right: 5px;
+    font-size: 24px;
 }
 
-.preview_users{
-    padding-top: 5px;
-    padding-bottom: 5px;
-}
-
-.preview_users > .img-circle{
-    
-    margin: 2px;
-}
-
-.preview_users > .img-circle{
-    
+.user_avatar.preview {
+    width: 35px;
+    height: 35px;
+    line-height: 35px;
+    font-size: 20px;
 }
 
 .input-group-unstyled .input-group-addon {
@@ -6088,7 +6085,7 @@ button.toast-close-button {
 
 .card_done{
     background-color: #c7c7c7;
-    color: #a9a9a9;
+    color: #9a9a9a;
 }
 
 .dev_add_checkbox{
@@ -6113,4 +6110,8 @@ button.toast-close-button {
 
 .time_select:first{
     width:80px;
+}
+
+.checkbox_settings {
+    margin-left: 30px;
 }
