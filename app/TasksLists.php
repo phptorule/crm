@@ -26,4 +26,8 @@ class TasksLists extends Model
         return $this->hasMany('App\Cards', 'task_id');
     }
 
+    public function desc() {
+        return $this->belongsTo('App\Descs');
+    }
+
 }

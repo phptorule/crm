@@ -3918,11 +3918,7 @@ pre .arg {
 .icon_list li:hover i {
     color: #fff;
 }
-.icon_name {
-    display: block;
-    text-align: center;
-    word-wrap: break-word;
-}
+
 @media (min-width: 768px) {
     .flag-icon {
         margin-right: 0;
@@ -5681,6 +5677,15 @@ button.toast-close-button {
     background: #dedede;
 }
 
+.dev_add_checkbox .card_nav {
+    width: auto;
+    padding: 5px 15px;
+}
+
+.dev_add_checkbox .dropdown {
+    display: inline-block;
+}
+
 .btn_add{
     padding:5px 10px;
     cursor:pointer;
@@ -5753,6 +5758,10 @@ button.toast-close-button {
     display: inline-block;
     word-wrap: break-word;
     white-space: normal;
+}
+
+.save_title.btn-add {
+    display: table-cell;
 }
 
 .list_settings {
@@ -5910,6 +5919,11 @@ button.toast-close-button {
     margin-bottom: 0px;
 }
 
+.card_block.checklists {
+    margin-bottom: 40px;
+}
+
+
 .checkbox_item {
     position: relative;
     z-index: 1;
@@ -6024,16 +6038,80 @@ button.toast-close-button {
     cursor: pointer;
 }
 
+.preview_card {
+    margin-bottom: 10px;
+}
+
 .cards_preview_item {
     display: inline-block;
     margin: 0 5px;
     font-size: 11px;
-    color: #abadb1;
+    color: #9a9a9a;
 }
 
 
-.icon_name{
-    padding-top: 12px;
+.user_avatar {
+    display: inline-block;
+    text-align: center;
+    width: 45px;
+    height: 45px;
+    line-height: 45px;
+    border-radius: 50%;
+    color: #fff;
+    margin-right: 5px;
     font-size: 24px;
+}
 
+.user_avatar.preview {
+    width: 35px;
+    height: 35px;
+    line-height: 35px;
+    font-size: 20px;
+}
+
+.input-group-unstyled .input-group-addon {
+    border: 0px;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+.list_title > h4{
+    cursor: pointer;
+}
+
+.modal-header > h4 > .fa-check, .task_manager_card > p > .fa-check{
+    color: green;
+}
+
+.card_done{
+    background-color: #c7c7c7;
+    color: #9a9a9a;
+}
+
+.dev_add_checkbox{
+    margin-top: 10px;
+
+}
+
+.title_pointer{
+    cursor: pointer;
+}
+
+
+.dropdown_left{
+    width:130px;
+    float:left;
+    margin-right:5px;
+}
+
+.time_select:first{
+    width:80px;float:left; margin-right:10px;
+}
+
+.time_select:first{
+    width:80px;
+}
+
+.checkbox_settings {
+    margin-left: 30px;
 }
