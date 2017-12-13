@@ -41,7 +41,7 @@ class Teams extends Model
 
     public function descs()
     {
-        return $this->hasMany('App\Descs', 'teams_id');
+        return $this->hasMany('App\Descs', 'team_id');
     }
 
 }

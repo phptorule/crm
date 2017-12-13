@@ -65,8 +65,8 @@ class Users extends Authenticatable
         return $this->belongsToMany('App\Cards', 'cards_users', 'users_id', 'cards_id');
     }
 
-    public function checkboxes() {
-        return $this->belongsToMany('App\Checkboxes', 'checkboxes_users', 'users_id', 'checkboxes_id');
+    public function checkbox() {
+        return $this->belongsTo('App\Checkboxes', 'checkboxes_users', 'users_id', 'checkboxes_id');
     }
 
     public function lists() {
