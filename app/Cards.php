@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Cards extends Model
 {
     protected $table = "cards";
-	protected $primaryKey = 'cards_id';
+	protected $primaryKey = "cards_id";
     protected $fillable = ['name','user_id','task_id','created_at', 'updated_at'];
 
 
@@ -30,6 +30,4 @@ class Cards extends Model
     public function cardComments() {
         return $this->hasMany('App\CardsComments', 'cards_id');
     }
-
-
 }

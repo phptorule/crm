@@ -39,4 +39,9 @@ class Teams extends Model
         return $this->hasMany('App\TasksLists', 'teams_id')->orderBy('position');
     }
 
+    public function descs()
+    {
+        return $this->hasMany('App\Descs', 'team_id');
+    }
+
 }
