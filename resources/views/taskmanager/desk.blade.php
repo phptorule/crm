@@ -1,25 +1,31 @@
 <div class="row task_manager_board"  data-ng-controller="Task_managerCtrl" ng-init="getDescs()">
     <form class="no-transition" id="task_manager" name="form" method="post" novalidate="novalidate">
         <div class="outer">
-
-            <div class="form-group">
-
+            <div class="hotfix_desk_switcher">
                 <ul class="nav navbar-nav">
                     <li class="dropdown dropdown-user">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" >
-                            <span class="icon_name">Descs</span>
-                        </a>
+                        <button href="#" class="btn btn-add dropdown-toggle" data-toggle="dropdown" >
+                            Choose your desk
+                        </button>
                         <ul class="dropdown-menu">
                             <li><a href="#" ng-repeat="desc in descs" ng-click="changeDesc(desc.id)"><i class="fa fa-trello"></i> @{{desc.name}}</a></li>
-                            <li><a href=""><input type="text" placeholder="Введіть назву дошки" name="desc_name" ng-model="desc_name" ng-enter="saveDesc(desc_name)"></a></li>
+                            <li class="text-center" style="padding: 0 20px 10px 20px">
+                                <span>Create new desk</span>
+                                <div class="input-group input-group-unstyled">
+                                    <a href=""><input type="text" class="form-control" name="desc_name" ng-model="desc_name" ng-enter="saveDesc(desc_name)"></a>
+                                    <div class="btn btn-add save_title" ng-click="saveDesc(desc_name)">
+                                        Save
+                                    </div>
+                                </div>
+
+                            </li>
                         </ul>
                     </li>
                 </ul>
-
             </div>
 
             <div ng-repeat="desc in descs" ng-if="desc.id == check_desc">
-                <h4 style="color:red;">this desc: @{{desc.name}}</h4>
+                <!--h4 style="color:red;">this desc: @{{desc.name}}</h4-->
                 <div class="sortable-outer task_manager_list" id="item-@{{task.id}} " ng-repeat="task in desc.tasks" >
                     <div class="panel panel-bd">
                         <div class="panel-heading">
@@ -28,7 +34,7 @@
                                     <h4 ng-click="title = ! title" ng-show="title">@{{task.name}}</h4>
                                     <input type="text" name="task[]"  ng-model="task.id" hidden>
                                     <div class="input-group input-group-unstyled" ng-show=" ! title">
-                                        <input type="text" focus-me="! title" class="form-control" ng-enter="saveTitle(task.id,task.name); title = ! title" ng-show=" ! title" ng-model="task.name">
+                                        <input type="text" focus-me="! title" class="form-control" ng-enter="saveTitle(task.id,task.name); title = ! title" ng-model="task.name">
                                         <div class="btn btn-add save_title" ng-show=" ! title" ng-mousedown="saveTitle(task.id,task.name); title = ! title">
                                             Save
                                         </div>
@@ -123,7 +129,7 @@
                         </div>
                     </div>
                 </div>
-            
+
             </div>
         </div>
     </form>
@@ -249,8 +255,8 @@
                                         </div>
 
                                         <div class="checkbox_settings">
-                                            <span>Deadline: @{{checkbox.deadline}}</span>
-                                            <span>Users: </span>
+                                            <span ng-show="checkbox.deadline">Deadline: @{{checkbox.deadline}}</span>
+                                            <span ng-show="checkbox.users">Users: </span>
 
                                             <div  class="user_avatar preview" ng-repeat="users in checkbox.users" style="background-color:RGB(@{{ user.icon_color}})">
                                                 <span class="icon_name">@{{users.users_first_name.slice(0,1)}}</span>
@@ -266,6 +272,16 @@
                                     <div ng-show=" ! showCheckBox" class="dev_add_checkbox">
                                         <div class="form-group">
                                             <input class="form-control" ng-enter="addCheckbox(checklist.id, checklists[l].checkbox_title)" type="text" ng-model="checklists[l].checkbox_title">
+                                        </div>
+
+                                        <div class="checkbox_settings" style="margin-left: 0; margin-bottom: 20px;">
+                                            <div  class="user_avatar preview" ng-repeat="user in temp_users" style="background-color:RGB(@{{ user.icon_color}})">
+                                                <span class="icon_name" style="cursor:pointer;" ng-click="deletePreviewUserCheckbox(user.users_id)">@{{user.users_first_name.slice(0,1)}}
+                                                    <span style="font-size:10px;">x</span>
+                                                </span>
+                                            </div>
+
+                                            <span ng-If="temp_deadline" ng-click="clearCheckboxDeadline()" style="cursor:pointer;">Deadline: @{{temp_deadline}} X</span>
                                         </div>
 
                                         <button class="btn btn-add" ng-click="addCheckbox(checklist.id, checklists[l].checkbox_title)">Add</button>
@@ -292,10 +308,10 @@
                                                 </div>
                                             </div>
 
-                                            <div uib-dropdown class="m-b-5" auto-close="outsideClick" class="dropdown_left checkbox_deadline">
+                                            <div uib-dropdown class="m-b-5" auto-close="outsideClick" class="dropdown_left">
                                                 <a href="javascript:void(0);" class="btn card_nav dropdown-toggle" uib-dropdown-toggle><i class="glyphicon glyphicon-calendar"></i> Deadline</a>
 
-                                                <div uib-dropdown-menu class="custom_pop_up">
+                                                <div uib-dropdown-menu class="custom_pop_up checkbox_deadline">
                                                     <div class="custom_pop_up_header text-center">
                                                         <span>Add deadline</span>
                                                     </div>
@@ -331,16 +347,6 @@
                                                         Save
                                                     </button>
                                                 </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="checkbox_settings">
-                                            <span ng-If="temp_deadline" ng-click="clearCheckboxDeadline()" style="cursor:pointer;">Deadline: @{{temp_deadline}} X</span>
-
-                                            <div  class="user_avatar preview" ng-repeat="user in temp_users" style="background-color:RGB(@{{ user.icon_color}})">
-                                                <span class="icon_name" style="cursor:pointer;" ng-click="deletePreviewUserCheckbox(user.users_id)">@{{user.users_first_name.slice(0,1)}}
-                                                    <span style="font-size:10px;">x</span>
-                                                </span>
                                             </div>
                                         </div>
 

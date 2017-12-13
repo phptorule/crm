@@ -6115,3 +6115,20 @@ button.toast-close-button {
 .checkbox_settings {
     margin-left: 30px;
 }
+
+.hotfix_desk_switcher {
+    position: absolute;
+    z-index: 1;
+    top: 20px;
+    right: 40px;
+}
+
+.hotfix_desk_switcher .dropdown-menu {
+    right: 0;
+    left: auto;
+    min-width: 260px;
+}
+
+.checkbox_deadline.custom_pop_up.dropdown-menu {
+    min-width: 260px;
+}

@@ -258,7 +258,8 @@
         $scope.editChecklistItem = {};
         $scope.title = {};
         $scope.checkbox_title = {};
-        $scope.deadline= {}
+        $scope.deadline= {};
+        $scope.temp_users = {};
 
         $scope.initCard = function() {
             $scope.getTeamUsers();
@@ -278,7 +279,7 @@
                 $scope.hh = $scope.time_h[0].toString();
                 $scope.mm = $scope.time_m[0].toString();
 
-                console.log(data);
+                //console.log(data);
             });
 
         };
@@ -366,38 +367,29 @@
         };
 
         $scope.addCheckbox = function(checklist_id, checkbox_title) {
-            console.log($scope.temp_users_id);
-
-
             $scope.checkbox.users = $scope.temp_users_id;
             $scope.checkbox.deadline = $scope.temp_deadline;
             $scope.checkbox.checklist_id = checklist_id;
             $scope.checkbox.checkbox_title = checkbox_title;
 
-            request.send('/TaskManager/addCheckbox', $scope.checkbox, function(data) {
+            $scope.temp_users = {};
 
+            request.send('/TaskManager/addCheckbox', $scope.checkbox, function(data) {
                 $scope.getCard();
             });
-
-            //$scope.temp_users_id.splice(0);
-            //$scope.temp_users.splice(0);
-
-            //console.log($scope.temp_users_id);
-            //console.log($scope.temp_users);
-
         };
 
-        $scope.temp_users = {};
-
         $scope.saveUserToCheckbox = function(user_id) {
-            /*$scope.temp_users_id.push(user_id);
+            $scope.temp_users_id.push(user_id);
 
             for (var k in $scope.users) {
 
                 if(user_id == $scope.users[k].users_id){
                     $scope.temp_users[k] = $scope.users[k];
                 }
-            };*/
+            };
+
+            console.log($scope.temp_users);
 
         };
 
