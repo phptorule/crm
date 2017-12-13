@@ -13,8 +13,8 @@ class Descs extends Model
     protected $fillable = ['name','user_id','created_at', 'updated_at'];
 
 
-    public function Descs() {
-        return $this->hasMany('App\Tasks');
+    public function tasks() {
+        return $this->hasMany('App\TasksLists', 'desc_id');
     }
 
 }
