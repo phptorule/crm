@@ -284,23 +284,11 @@
         $scope.search = function(value) {
 
             request.send('/customers/searchCustomer', {'value': value}, function(data) {
-            
+
 
             });
 
         };
-
-        $scope.confirm = function(greeting) {
-            $scope.customers.confirm = $window.confirm('Exit');
-            //window.close();
-        };
-        if ($scope.customers.confirm) {
-            window.close();
-            //window.setTimeout("window.close()",1000);
-        }else{
-
-        }
-
     };
 })();
 
