@@ -255,12 +255,12 @@
                                         </div>
 
                                         <div class="checkbox_settings">
-                                            <span ng-show="checkbox.deadline">Deadline: @{{checkbox.deadline}}</span>
-                                            <span ng-show="checkbox.users">Users: </span>
-
-                                            <div  class="user_avatar preview" ng-repeat="users in checkbox.users" style="background-color:RGB(@{{ user.icon_color}})">
+                                            <span ng-show="checkbox.users != '' ">Users: </span>
+                                            <div  class="user_avatar preview" ng-repeat="users in checkbox.users" title="@{{users.users_first_name + ' ' + users.users_last_name}}" style="background-color:RGB(@{{ user.icon_color}})">
                                                 <span class="icon_name">@{{users.users_first_name.slice(0,1)}}</span>
                                             </div>
+
+                                            <span ng-show="checkbox.deadline">Deadline: @{{checkbox.deadline}}</span>
                                         </div>
 
                                         <div class="delete_chceckbox" ng-click="deleteCheckBox(checkbox.id)">
@@ -275,13 +275,29 @@
                                         </div>
 
                                         <div class="checkbox_settings" style="margin-left: 0; margin-bottom: 20px;">
-                                            <div  class="user_avatar preview" ng-repeat="user in temp_users" style="background-color:RGB(@{{ user.icon_color}})">
-                                                <span class="icon_name" style="cursor:pointer;" ng-click="deletePreviewUserCheckbox(user.users_id)">@{{user.users_first_name.slice(0,1)}}
-                                                    <span style="font-size:10px;">x</span>
-                                                </span>
-                                            </div>
+                                            <div class="row">
+                                                <div class="col-sm-6" ng-show="temp_users != '' ">
+                                                    <h5>Users:</h5>
+                                                    <div ng-repeat="user in temp_users">
+                                                        <div uib-dropdown class="m-b-5" auto-close="outsideClick" ng-show="user != ''">
+                                                            <a href="javascript:void(0);" class="card_user dropdown-toggle" uib-dropdown-toggle>@{{ user.users_first_name + ' ' + user.users_last_name }} <i class="fa fa-pencil"></i></a>
+                                                            <div uib-dropdown-menu class="custom_pop_up">
 
-                                            <span ng-If="temp_deadline" ng-click="clearCheckboxDeadline()" style="cursor:pointer;">Deadline: @{{temp_deadline}} X</span>
+                                                                <div class="form-group">
+                                                                    <button type="button" class="btn btn-danger" ng-click="deletePreviewUserCheckbox(user)">
+                                                                        Delete user
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-sm-6" ng-show="temp_deadline">
+                                                    <h5>Deadline:</h5>
+                                                    <span ng-click="clearCheckboxDeadline()" style="cursor:pointer;">@{{temp_deadline}}</span>
+                                                </div>
+                                            </div>
                                         </div>
 
                                         <button class="btn btn-add" ng-click="addCheckbox(checklist.id, checklists[l].checkbox_title)">Add</button>
@@ -297,12 +313,12 @@
                                                     </div>
 
                                                    <div class="form-group">
-                                                        <select class="form-control" name="assign_to" ng-model="users_list">
-                                                            <option ng-repeat="user in users" value="@{{ user.users_id }}">@{{user.users_first_name + ' ' + user.users_last_name}}</option>
+                                                        <select class="form-control" name="assign_to" ng-model="checkbox_users_list">
+                                                            <option ng-repeat="user in checkbox_users" value="@{{ user.users_id }}">@{{user.users_first_name + ' ' + user.users_last_name}}</option>
                                                         </select>
                                                     </div>
 
-                                                   <button type="button" class="btn btn-add" ng-click="saveUserToCheckbox(users_list);">
+                                                   <button type="button" class="btn btn-add" ng-click="addUserToCheckbox(checkbox_users_list)">
                                                        Add user
                                                     </button>
                                                 </div>
