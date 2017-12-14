@@ -34,10 +34,7 @@
         };
 
         $scope.getDescs = function() {
-            //console.log(desc_id);
             request.send('/TaskManager/getDescs', {}, function(data) {
-
-                //console.log(data);
                 $scope.descs = data;
 
                 for (var k in data)
@@ -53,7 +50,6 @@
         };
 
         $scope.saveDesc = function(desc_name) {
-            console.log(desc_name);
             request.send('/TaskManager/saveDesc', {'desc_name':desc_name}, function(data) {
                 $scope.getDescs();
             });
@@ -130,6 +126,7 @@
 
         $scope.initSortable = function() {
             $scope.counter++;
+
             if ($scope.counter == $scope.all) {
                 $( function() {
                     $('.outer').sortable({
@@ -273,15 +270,17 @@
                 $scope.comments = data.comments;
                 $scope.temp_description = $scope.card.description;
                 $scope.users = data.users;
+                $scope.checkbox_users = angular.copy($scope.users);
                 $scope.deadline = data.this_data;
                 $scope.time_h = data.time_h;
                 $scope.time_m = data.time_m;
                 $scope.hh = $scope.time_h[0].toString();
                 $scope.mm = $scope.time_m[0].toString();
-
-                //console.log(data);
+                if ($scope.checkbox_users[0])
+                {
+                    $scope.checkbox_users_list = $scope.checkbox_users[0].users_id.toString();
+                }
             });
-
         };
 
         $scope.getTeamUsers = function() {
@@ -290,7 +289,6 @@
                 if($scope.team_users){
                     $scope.users_list = $scope.team_users[0].users_id.toString();
                 }
-
             });
         };
 
@@ -372,46 +370,52 @@
             $scope.checkbox.checklist_id = checklist_id;
             $scope.checkbox.checkbox_title = checkbox_title;
 
-            $scope.temp_users = {};
+            $scope.temp_users = [];
 
             request.send('/TaskManager/addCheckbox', $scope.checkbox, function(data) {
                 $scope.getCard();
             });
         };
 
-        $scope.saveUserToCheckbox = function(user_id) {
+        $scope.addUserToCheckbox = function(user_id) {
+            var temp = [];
             $scope.temp_users_id.push(user_id);
 
-            for (var k in $scope.users) {
-
-                if(user_id == $scope.users[k].users_id){
-                    $scope.temp_users[k] = $scope.users[k];
+            for (var k in $scope.checkbox_users) {
+                if (user_id == $scope.checkbox_users[k].users_id){
+                    $scope.temp_users[k] = $scope.checkbox_users[k];
                 }
-            };
+            }
+
+            for (var k in $scope.checkbox_users) {
+                if (user_id == $scope.checkbox_users[k].users_id){
+
+                }else {
+                    temp.push($scope.checkbox_users[k]);
+                }
+            }
 
             console.log($scope.temp_users);
 
+            $scope.checkbox_users = temp;
         };
 
 
-        $scope.deletePreviewUserCheckbox = function(user_id) {
+        $scope.deletePreviewUserCheckbox = function(user) {
             var temp = [];
+
+            $scope.checkbox_users.push(user);
 
             for (var k in $scope.temp_users) {
 
-                //console.log(scope.temp_users[k].users_id);
-
-
-                if(user_id == $scope.temp_users[k].users_id){
+                if (user.users_id == $scope.temp_users[k].users_id){
 
                 }else {
                     temp.push($scope.temp_users[k]);
                 }
-            };
+            }
+
             $scope.temp_users = temp;
-
-
-            console.log($scope.temp_users);
         };
 
         $scope.saveCheckboxDeadline = function(deadline,h,m) {
