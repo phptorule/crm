@@ -144,16 +144,6 @@
             </aside>
 
             <div class="content-wrapper" ng-class="scrollClass()">
-                <section class="content-header">
-                    <div class="header-icon">
-                        <i class="@{{ Page.icon() }}"></i>
-                    </div>
-
-                    <div class="header-title">
-                        <h1>@{{ Page.title() }}</h1>
-                    </div>
-                </section>
-
                 <section class="content" id="content" data-ng-view>
                 </section>
             </div>

@@ -2,14 +2,11 @@
     'use strict';
 
 
-    angular.module('app').controller('Task_managerCtrl', ['$rootScope', '$scope', '$uibModal', '$filter', '$location', '$timeout', '$window', 'request', 'validate', 'logger', 'langs', 'plugins', 'Page', Task_managerCtrl]);
+    angular.module('app').controller('TaskManagerCtrl', ['$rootScope', '$scope', '$uibModal', '$filter', '$location', '$timeout', '$window', 'request', 'validate', 'logger', 'langs', 'plugins', 'Page', TaskManagerCtrl]);
 
-    function Task_managerCtrl($rootScope, $scope, $uibModal, $filter, $location, $timeout, $window, request, validate, logger, langs, plugins, Page) {
-
-
+    function TaskManagerCtrl($rootScope, $scope, $uibModal, $filter, $location, $timeout, $window, request, validate, logger, langs, plugins, Page) {
         $scope.list = {};
         $scope.desks = {};
-        $scope.desk = {};
         $scope.tasks = {};
         $scope.card = {};
         $scope.class = "closed";
@@ -24,10 +21,12 @@
         $scope.models.selected = null;
         $scope.show_settings = false;
         $scope.show_input_card = true;
+        $scope.desk_title = true;
         $scope.counter = 0;
         $scope.all = 0;
         $scope.task = {};
         $scope.desk_name = '';
+        $scope.create_desk_name = '';
         $scope.desk_id = '';
         $scope.task_name = '';
 
@@ -40,15 +39,15 @@
         $scope.getDesks = function() {
             request.send('/TaskManager/getDesks', {}, function(data) {
                 $scope.desks = data;
-                $scope.desk_id = $scope.desks[0].id;
-                $scope.getDeskTasks($scope.desk_id);
+                $scope.desk = data[0];
+                $scope.getDeskTasks($scope.desk);
             });
         };
 
-        $scope.getDeskTasks = function(desk_id) {
-            $scope.desk_id = desk_id;
+        $scope.getDeskTasks = function(desk) {
+            $scope.desk = desk;
 
-            request.send('/TaskManager/getTasks', {'desk_id': desk_id}, function(data) {
+            request.send('/TaskManager/getTasks', {'desk_id': desk.id}, function(data) {
                 $scope.tasks = data;
 
                 for (var k in data)
@@ -58,11 +57,20 @@
             });
         };
 
+        $scope.saveDeskTitle = function(desk) {
+            request.send('/TaskManager/saveDeskTitle', $scope.desk, function(data) {
+
+            });
+
+            $scope.desk_title = ! $scope.desk_title;
+        };
+
+
         /* End of Norm desks functionality */
 
-        $scope.saveDesc = function(desc_name) {
-            request.send('/TaskManager/saveDesc', {'desc_name':desc_name}, function(data) {
-                $scope.getDescs();
+        $scope.saveDesk = function(desc_name) {
+            request.send('/TaskManager/saveDesk', {'desc_name':desc_name}, function(data) {
+                $scope.getDesks();
             });
         };
 
@@ -240,19 +248,12 @@
         $scope.card = items;
         $scope.checklists = items.checklists;
         $scope.temp_description = $scope.card.description;
-        $scope.users = items.users;
         $scope.card_title = true;
-        $scope.status_description = true;
-        $scope.status_description_textarea = false;
-        $scope.users_in_card = {};
         $scope.check = 1;
-        $scope.openCheklistForm = false;
         $scope.show_description = true;
-        $scope.showAddUsers = false;
         $scope.editCardUser = false;
         $scope.showCheckBox = {};
         $scope.checkbox_active = true;
-        $scope.checklists = {};
         $scope.old_checkbox_description = [];
         $scope.cards_users = [];
         $scope.comment_text = '';
@@ -270,14 +271,16 @@
         $scope.not_checked_users = [];
         $scope.checked_users = [];
         $scope.checked_ids = [];
+        $scope.card_deadline = {};
         $scope.checkbox_deadline = {};
         $scope.temp_checkbox_deadline = {};
-        $scope.addCheckboxDeadline = false;
+        $scope.showCheckboxDeadline = false;
+        $scope.checklist_title = '';
 
         $scope.initCard = function() {
             $scope.getTeamUsers();
             $scope.getCheckboxUsers();
-
+            //console.log($scope.card);
         };
 
         $scope.saveCardTitle = function() {
@@ -297,6 +300,23 @@
             $scope.show_description = ! $scope.show_description;
         };
 
+        $scope.changeDone = function() {
+            request.send('/TaskManager/changeDone', {'cards_id': $scope.card.cards_id}, function(data) {
+                $scope.card.done = data;
+            });
+        };
+
+        ////////////////////////////////////
+
+        /* CHECKLISTS */
+
+        $scope.saveChecklist = function() {
+            request.send('/TaskManager/saveChecklist', {'title': $scope.checklist_title, 'cards_id': $scope.card.cards_id}, function(data) {
+                $scope.card.checklists = data;
+                $scope.checklist_title = '';
+            });
+        };
+
         $scope.saveChecklistTitle = function(checklist) {
             request.send('/TaskManager/saveChecklistTitle', {'checklist_id': checklist.id, 'checklist_title': checklist.title}, function(data) {
 
@@ -305,56 +325,45 @@
             $scope.showChecklistTitle[checklist.id] = ! $scope.showChecklistTitle[checklist.id];
         };
 
-        $scope.getTeamUsers = function() {
-            request.send('/TaskManager/getTeamUsers', {'cards_id': $scope.card.cards_id}, function(data) {
-                $scope.team_users = data;
-                if($scope.team_users){
-                    $scope.users_list = $scope.team_users[0].users_id.toString();
-                }
+        $scope.deleteChecklists = function(id) {
+            request.send('/TaskManager/deleteChecklists', {'checklists_id': id,'cards_id': $scope.card.cards_id}, function(data) {
+                $scope.getChecklists();
             });
         };
 
-        $scope.saveUserToCard = function(user_id) {
-            request.send('/TaskManager/saveUserToCard', {'users_id': user_id, 'cards_id': $scope.card.cards_id}, function(data) {
-                $scope.getTeamUsers();
-            });
-        };
+        /* END CHECKLISTS */
 
-        $scope.removeUser = function(user_id) {
-            request.send('/TaskManager/removeUser', {'users_id': user_id, 'cards_id': $scope.card.cards_id}, function(data) {
-                $scope.getTeamUsers();
-            });
-        };
+        ////////////////////////////////////
 
-        $scope.makeDescriptionCopy = function() {
-            $scope.old_description = angular.copy($scope.temp_description);
-            $scope.show_description = ! $scope.show_description;
-        };
+        /* CHECKBOXES */
 
-        $scope.resetCardDescription = function() {
-            $scope.card.description = $scope.old_description;
-            $scope.temp_description = $scope.old_description;
-            $scope.show_description = true;
-        };
-
-        $scope.cancel = function() {
-            $uibModalInstance.dismiss('cancel');
-        };
-
-        $scope.saveComment = function() {
-            request.send('/TaskManager/saveComment', {'text': $scope.comment_text, 'cards_id': $scope.card.cards_id}, function(data) {
-
-            });
-        };
-
-        $scope.makeCheckboxDescriptionCopy = function(checkbox) {
+        $scope.selectCheckbox = function(checkbox) {
+            $scope.editChecklistItem = {};
+            $scope.checked_users = {};
+            $scope.checked_ids = [];
+            $scope.showCheckBox = {};
+            //$scope.showCheckboxDeadline = false;
             $scope.checkbox_title[checkbox.id] = angular.copy(checkbox.title);
             $scope.editChecklistItem[checkbox.id] = ! $scope.editChecklistItem[checkbox.id];
+            if (checkbox.deadline != '') {
+                $scope.temp_checkbox_deadline = checkbox.deadline;
+            }
         };
 
         $scope.saveCheckboxDescription = function(checkbox) {
-            request.send('/TaskManager/saveCheckboxDescription', {'title': $scope.checkbox_title[checkbox.id], 'checkbox_id': checkbox.id}, function(data) {
+            $scope.chekbox_users_ids = [];
+            for (var k in checkbox.users)
+            {
+                $scope.chekbox_users_ids[k] = checkbox.users[k].users_id;
+            }
 
+            $scope.checkbox.title = $scope.checkbox_title[checkbox.id];
+            $scope.checkbox.id = checkbox.id;
+            $scope.checkbox.users = $scope.chekbox_users_ids;
+            $scope.checkbox.deadline = $scope.temp_checkbox_deadline;
+
+            request.send('/TaskManager/saveCheckboxDescription', $scope.checkbox, function(data) {
+                checkbox.deadline = data;
             });
 
             checkbox.title = $scope.checkbox_title[checkbox.id];
@@ -365,15 +374,20 @@
             $scope.editChecklistItem[checkbox.id] = ! $scope.editChecklistItem[checkbox.id];
         };
 
-        $scope.saveChecklist = function() {
-            request.send('/TaskManager/saveChecklist', {'title': $scope.checklists.title, 'cards_id': $scope.card.cards_id}, function(data) {
-                $scope.getCard();
-            });
+        $scope.createNewCheckbox = function(checklist) {
+            $scope.editChecklistItem = {};
+            $scope.checked_users = {};
+            $scope.checked_ids = [];
+            $scope.temp_checkbox_deadline = {};
+            $scope.showCheckboxDeadline = false;
+            $scope.showCheckBox = {};
+            $scope.showCheckBox[checklist.id] = ! $scope.showCheckBox[checklist.id];
+            $scope.updateUserList();
         };
 
         $scope.addCheckbox = function(checklist) {
             $scope.checkbox.users = $scope.checked_ids;
-            //$scope.checkbox.deadline = $scope.checked_users;
+            $scope.checkbox.deadline = $scope.temp_checkbox_deadline;
             $scope.checkbox.checklist_id = checklist.id;
             $scope.checkbox.checkbox_title = $scope.add_checkbox_title[checklist.id];
             $scope.temp_users = [];
@@ -388,9 +402,21 @@
             $scope.getCheckboxUsers();
         };
 
-        $scope.deleteCheckbox = function(checkbox_id, checklist) {
-            request.send('/TaskManager/deleteCheckbox', {'checkbox_id': checkbox_id}, function(data) {
+        $scope.deleteCheckbox = function(checkbox, checklist) {
+            var modalInstance = $uibModal.open({
+                animation: true,
+                size: 'sm',
+                templateUrl: 'ConfirmWindow.html',
+                controller: 'ModalConfirmWindowCtrl',
+                resolve: {
+                    items: checkbox
+                }
+            });
+
+            modalInstance.result.then(function(response) {
                 $scope.getCheckboxes(checklist);
+            }, function () {
+
             });
         };
 
@@ -400,13 +426,57 @@
             });
         };
 
+        $scope.uncheckedUsers = function(checkbox) {
+            return function(value, index, array) {
+                for (var k in checkbox.users) {
+                    if (checkbox.users[k].users_id == value.users_id) {
+                        return false;
+                    }
+                }
+
+                return true;
+            }
+        };
+
         $scope.getCheckboxUsers = function() {
-            $scope.checkbox_users = angular.copy($scope.users);
+            $scope.checkbox_users = angular.copy($scope.card.users);
+
+            if ($scope.checkbox_users) {
+                $scope.add_checkbox_users_list = $scope.checkbox_users[0].users_id.toString();
+            }
+
             $scope.updateUserList();
+        };
+
+        $scope.addCheckboxUser = function(checkbox, user_id) {
+            for (var k in $scope.card.users)
+            {
+                if ($scope.card.users[k].users_id == user_id)
+                {
+                    checkbox.users.push($scope.card.users[k]);
+                }
+            }
+
+            console.log(checkbox.users);
         };
 
         $scope.addUserToCheckbox = function(user_id) {
             $scope.checked_ids.push(user_id);
+            $scope.updateUserList();
+        };
+
+        $scope.removeUserFromCheckbox = function(checkbox, user_id) {
+            var temp = [];
+            for (var k in checkbox.users)
+            {
+                if (checkbox.users[k].users_id != user_id)
+                {
+                    temp.push(checkbox.users[k]);
+                }
+            }
+
+            checkbox.users = temp;
+
             $scope.updateUserList();
         };
 
@@ -439,6 +509,10 @@
                     $scope.not_checked_users.push($scope.checkbox_users[k]);
                 }
             }
+
+            if ($scope.not_checked_users != '') {
+                $scope.add_checkbox_users_list = $scope.not_checked_users[0].users_id.toString();
+            }
         };
 
         $scope.inArray = function(list, value) {
@@ -455,47 +529,88 @@
             return result;
         };
 
-        $scope.deletePreviewUserCheckbox = function(user) {
-            var temp = [];
+        $scope.addTempCheckboxDeadline = function() {
+            //console.log($scope.checkbox_deadline.date.toDateString());
+            var date = $scope.checkbox_deadline.date;
 
-            $scope.checkbox_users.push(user);
+            $scope.temp_checkbox_deadline = date.getFullYear() + '/' + (date.getMonth() + 1) + '/' + date.getDate() + ' ' + $scope.checkbox_deadline.hour + ':' + $scope.checkbox_deadline.minute;
+            $scope.showCheckboxDeadline = true;
+        };
 
-            for (var k in $scope.temp_users) {
+        $scope.removeTempCheckboxDeadline = function() {
+            $scope.temp_checkbox_deadline = '';
+        };
 
-                if (user.users_id == $scope.temp_users[k].users_id){
+        $scope.changeCheckboxStatus = function(checkbox) {
+            request.send('/TaskManager/changeCheckboxStatus', {'checkbox_id': checkbox.id, 'cards_id': $scope.card.cards_id}, function(data) {
+                checkbox.status = data;
+            });
+        };
 
-                }else {
-                    temp.push($scope.temp_users[k]);
+        /* END CHECKBOXES */
+
+        ////////////////////////////////////
+
+        /* COMMENTS */
+
+        $scope.saveComment = function() {
+            request.send('/TaskManager/saveComment', {'text': $scope.comment_text, 'cards_id': $scope.card.cards_id}, function(data) {
+                $scope.card.comments = data;
+                $scope.comment_text = '';
+            });
+        };
+
+        /* END COMMENTS */
+
+        ////////////////////////////////////
+
+        $scope.getTeamUsers = function() {
+            request.send('/TaskManager/getTeamUsers', {'cards_id': $scope.card.cards_id}, function(data) {
+                $scope.team_users = data;
+                if($scope.team_users){
+                    $scope.users_list = $scope.team_users[0].users_id.toString();
                 }
-            }
-
-            $scope.temp_users = temp;
-        };
-
-        $scope.addCheckboxDeadline = function() {
-            $scope.temp_checkbox_deadline = $scope.checkbox_deadline;
-            console.log($scope.checkbox_deadline);
-        };
-
-        $scope.clearCheckboxDeadline = function(deadline,h,m) {
-            delete $scope.temp_deadline;
-        };
-
-        $scope.changeCheckboxStatus = function(checkbox_id) {
-            request.send('/TaskManager/changeCheckboxStatus', {'checkbox_value_id': checkbox_id, 'cards_id': $scope.card.cards_id}, function(data) {
-
             });
         };
 
-        $scope.deleteChecklists = function(id) {
-            request.send('/TaskManager/deleteChecklists', {'checklists_id': id,'cards_id': $scope.card.cards_id}, function(data) {
-                $scope.getChecklists();
+        $scope.addUserToCard = function(user_id) {
+            request.send('/TaskManager/addUserToCard', {'users_id': user_id, 'cards_id': $scope.card.cards_id}, function(data) {
+                $scope.getTeamUsers();
+                $scope.card.users = data;
             });
         };
 
-        $scope.saveDeadline = function(deadline,h,m) {
-            request.send('/TaskManager/saveDeadline', {'cards_id': $scope.card.cards_id,'deadline': deadline, 'h':h, 'm':m}, function(data) {
-                $scope.getCard();
+        $scope.removeUser = function(user_id) {
+            request.send('/TaskManager/removeUser', {'users_id': user_id, 'cards_id': $scope.card.cards_id}, function(data) {
+                $scope.getTeamUsers();
+                $scope.card.users = data;
+            });
+        };
+
+        $scope.makeDescriptionCopy = function() {
+            $scope.old_description = angular.copy($scope.temp_description);
+            $scope.show_description = ! $scope.show_description;
+        };
+
+        $scope.resetCardDescription = function() {
+            $scope.card.description = $scope.old_description;
+            $scope.temp_description = $scope.old_description;
+            $scope.show_description = true;
+        };
+
+        $scope.cancel = function() {
+            $uibModalInstance.dismiss('cancel');
+        };
+
+        $scope.saveCardDeadline = function() {
+            request.send('/TaskManager/saveCardDeadline', {'cards_id': $scope.card.cards_id, 'deadline': $scope.card_deadline}, function(data) {
+                $scope.card.deadline = data;
+            });
+        };
+
+        $scope.removeCardDeadline = function() {
+            request.send('/TaskManager/removeCardDeadline', {'cards_id': $scope.card.cards_id}, function(data) {
+                $scope.card.deadline = data;
             });
         };
 
@@ -516,9 +631,14 @@
 
         $scope.setDate = function() {
             var checkbox_deadline_time = ($scope.checkbox_deadline_time) ? (new Date($scope.checkbox_deadline_time)) : (new Date());
-            $scope.checkbox_deadline.hour = checkbox_deadline_time.getHours().toString();
-            $scope.checkbox_deadline.minute = checkbox_deadline_time.getMinutes().toString();
+            $scope.checkbox_deadline.hour = ((checkbox_deadline_time.getHours() < 10 ? '0' : '') + checkbox_deadline_time.getHours()).toString();
+            $scope.checkbox_deadline.minute = ((checkbox_deadline_time.getMinutes() < 10 ? '0' : '') + checkbox_deadline_time.getMinutes()).toString();
             $scope.checkbox_deadline.date = ($scope.checkbox_deadline.date) ? (new Date($scope.checkbox_deadline.date)) : (new Date());
+
+            var card_deadline_time = ($scope.card_deadline_time) ? (new Date($scope.card_deadline_time)) : (new Date());
+            $scope.card_deadline.hour = ((card_deadline_time.getHours() < 10 ? '0' : '') + card_deadline_time.getHours()).toString();
+            $scope.card_deadline.minute = ((card_deadline_time.getMinutes() < 10 ? '0' : '') + card_deadline_time.getMinutes()).toString();
+            $scope.card_deadline.date = ($scope.card_deadline.date) ? (new Date($scope.card_deadline.date)) : (new Date());
         };
 
         $scope.setDate();
@@ -527,15 +647,34 @@
             var list = [];
             for (var i = 0; i <= n; i++)
             {
-                list.push(i);
+                if (i < 10) {
+                    var am = '0' + i;
+                    list.push(am);
+                }else {
+                   list.push(i);
+                }
             }
             return list;
         };
+    };
+})();
 
-        $scope.changeDone = function() {
-            request.send('/TaskManager/changeDone', {'cards_id': $scope.card.cards_id}, function(data) {
-                $scope.getCard();
+(function () {
+    'use strict';
+
+    angular.module('app').controller('ModalConfirmWindowCtrl', ['$rootScope', '$scope', '$uibModal', '$uibModalInstance', '$filter', 'request', 'validate', 'logger', 'langs', 'items', ModalConfirmWindowCtrl]);
+
+    function ModalConfirmWindowCtrl($rootScope, $scope, $uibModal, $uibModalInstance, $filter, request, validate, logger, langs, items) {
+        $scope.checkbox = items;
+
+        $scope.delete = function() {
+            request.send('/TaskManager/deleteCheckbox', $scope.checkbox, function(data) {
+                $uibModalInstance.close();
             });
+        };
+
+        $scope.cancel = function() {
+            $uibModalInstance.dismiss('cancel');
         };
     };
 })();
