@@ -96,8 +96,8 @@
         };
 
         $scope.addTask = function() {
-            request.send('/TaskManager/addTask', {'task_name': $scope.task_name, 'desk_id': $scope.desk_id}, function(data) {
-                $scope.getDesks();
+            request.send('/TaskManager/addTask', {'task_name': $scope.task_name, 'desk_id': $scope.desk.id}, function(data) {
+                $scope.getDeskTasks($scope.desk);
             });
         };
 
@@ -109,17 +109,56 @@
             $scope.title[task.id] = ! $scope.title[task.id];
         };
 
-        $scope.deleteTask = function(id) {
-            $scope.id = id;
-            request.send('/TaskManager/deleteTask', {'id': $scope.id}, function(data) {
-                $scope.getDesks();
+        $scope.deleteDesk = function() {
+            var modalInstance = $uibModal.open({
+                animation: true,
+                size: 'sm',
+                templateUrl: 'ConfirmWindow.html',
+                controller: 'ModalConfirmWindowCtrl',
+                resolve: {
+                    items: function () {
+                        return {
+                            'deleted_item': 'desk',
+                            'desk': $scope.desk
+                        };
+                    }
+                }
+            });
+
+            modalInstance.result.then(function(response) {
+                $scope.getDeskTasks($scope.desk);
+            }, function () {
+
+            });
+        }
+
+        $scope.deleteTask = function(task) {
+            var modalInstance = $uibModal.open({
+                animation: true,
+                size: 'sm',
+                templateUrl: 'ConfirmWindow.html',
+                controller: 'ModalConfirmWindowCtrl',
+                resolve: {
+                    items: function () {
+                        return {
+                            'deleted_item': 'task',
+                            'task': task
+                        };
+                    }
+                }
+            });
+
+            modalInstance.result.then(function(response) {
+                $scope.getDeskTasks($scope.desk);
+            }, function () {
+
             });
         };
 
         $scope.createCard = function(id) {
             $scope.card.task_id = id;
             request.send('/TaskManager/createCard', $scope.card, function(data) {
-                $scope.getDesks();
+                $scope.getDeskTasks($scope.desk);
             });
         };
 
@@ -136,7 +175,7 @@
             modalInstance.result.then(function(response) {
 
             }, function () {
-                $scope.getDesks();
+                $scope.getDeskTasks($scope.desk);
             });
         };
 
@@ -251,7 +290,6 @@
         $scope.card_title = true;
         $scope.check = 1;
         $scope.show_description = true;
-        $scope.editCardUser = false;
         $scope.showCheckBox = {};
         $scope.checkbox_active = true;
         $scope.old_checkbox_description = [];
@@ -409,7 +447,12 @@
                 templateUrl: 'ConfirmWindow.html',
                 controller: 'ModalConfirmWindowCtrl',
                 resolve: {
-                    items: checkbox
+                    items: function () {
+                        return {
+                            'deleted_item': 'checkbox',
+                            'task_id': checkbox
+                        };
+                    }
                 }
             });
 
@@ -665,13 +708,32 @@
     angular.module('app').controller('ModalConfirmWindowCtrl', ['$rootScope', '$scope', '$uibModal', '$uibModalInstance', '$filter', 'request', 'validate', 'logger', 'langs', 'items', ModalConfirmWindowCtrl]);
 
     function ModalConfirmWindowCtrl($rootScope, $scope, $uibModal, $uibModalInstance, $filter, request, validate, logger, langs, items) {
-        $scope.checkbox = items;
+        console.log(items);
 
-        $scope.delete = function() {
-            request.send('/TaskManager/deleteCheckbox', $scope.checkbox, function(data) {
-                $uibModalInstance.close();
-            });
-        };
+        if (items.deleted_item == 'checkbox') {
+            $scope.delete = function() {
+                request.send('/TaskManager/deleteCheckbox', items.checkbox, function(data) {
+                    $uibModalInstance.close();
+                });
+            };
+        }
+
+        if (items.deleted_item == 'task') {
+            $scope.delete = function() {
+                request.send('/TaskManager/deleteTask', {'id': items.task.id}, function(data) {
+                    $uibModalInstance.close();
+                });
+            };
+        }
+
+        if (items.deleted_item == 'desk') {
+            $scope.delete = function() {
+                request.send('/TaskManager/deleteDesk', items.desk, function(data) {
+                    $uibModalInstance.close();
+                });
+            };
+        }
+
 
         $scope.cancel = function() {
             $uibModalInstance.dismiss('cancel');

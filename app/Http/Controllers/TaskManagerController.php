@@ -150,6 +150,13 @@ class TaskManagerController extends Controller
         $desks->save();
     }
 
+    public function deleteDesk($post = [])
+    {
+        die(var_dump($post));
+        $desks = Descs::find($post['id']);
+        $desks->delete();
+    }
+
     public function getListTeamUsers($post = [])
     {
         //користувачі в команді
@@ -183,8 +190,8 @@ class TaskManagerController extends Controller
         if(!empty($users_not_checked)){
             $team->users_not_checked = $users_not_checked;
         }
-        return $team;
 
+        return $team;
     }
 
     public function saveUserToList($post = [])
@@ -204,9 +211,9 @@ class TaskManagerController extends Controller
 
     public function deleteTask($post = [])
     {
-
-        $delete_task = TasksLists::find($post['id']);
-        $delete_task->delete();
+        $task = TasksLists::find($post['id']);
+        $task->cards()->delete();
+        $task->delete();
     }
 
     public function addTask($post = [])

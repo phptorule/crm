@@ -1,7 +1,7 @@
 <div data-ng-controller="TaskManagerCtrl" ng-init="initTaskManager()">
     <section class="content-header">
         <div class="row">
-            <div class="col-sm-8">
+            <div class="col-sm-6">
                 <div class="header-icon">
                     <i class="@{{ Page.icon() }}"></i>
                 </div>
@@ -18,7 +18,7 @@
                 </div>
             </div>
 
-            <div class="col-sm-4">
+            <div class="col-sm-6">
                 <div class="desk_switcher pull-right">
                     <div uib-dropdown class="m-b-5" auto-close="outsideClick">
                         <button class="btn btn-add" uib-dropdown-toggle>
@@ -42,6 +42,8 @@
                             </div>
                         </div>
                     </div>
+
+                    <button class="btn btn-danger" ng-click="deleteDesk()">Delete desk</button>
                 </div>
             </div>
         </div>
@@ -68,7 +70,7 @@
                                     <div uib-dropdown class="m-b-5" auto-close="outsideClick">
                                         <a href="javascript:void(0);" class="dropdown-toggle" uib-dropdown-toggle ng-click="getListTeamUsers(task.id)"><i class="fa fa-cog" aria-hidden="true"></i></a>
                                         <div uib-dropdown-menu class="custom_pop_up">
-                                            <button type="button" value="Delete list" class="btn btn-danger" ng-click="deleteTask(task.id)">
+                                            <button type="button" value="Delete list" class="btn btn-danger" ng-click="deleteTask(task)">
                                                 Delete list
                                             </button>
 
@@ -186,9 +188,8 @@
                                                         <div uib-dropdown class="m-b-5" auto-close="outsideClick">
                                                             <a href="javascript:void(0);" class="card_user dropdown-toggle" uib-dropdown-toggle>@{{ user.users_first_name + ' ' + user.users_last_name }} <i class="fa fa-pencil"></i></a>
                                                             <div uib-dropdown-menu class="custom_pop_up">
-
                                                                 <div class="form-group">
-                                                                    <button type="button" class="btn btn-danger" ng-click="removeUser(user.users_id); editCardUser = ! editCardUser">
+                                                                    <button type="button" class="btn btn-danger" ng-click="removeUser(user.users_id)">
                                                                         Delete from card
                                                                     </button>
                                                                 </div>

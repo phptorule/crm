@@ -6137,6 +6137,10 @@ button.toast-close-button {
     min-width: 260px;
 }
 
+.desk_switcher .dropdown {
+    display: inline-block;
+}
+
 .desk_switcher ul {
     list-style: none;
     padding: 0;
