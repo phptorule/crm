@@ -249,9 +249,8 @@ body.hold-transition .main-header .logo {
     min-height: 250px;
     margin-right: auto;
     margin-left: auto;
-    padding: 0 30px 10px;
+    padding-bottom: 10px;
     background: #ececec;
-    padding-top: 20px;
 }
 @media (max-width: 767px) {
     .content {
@@ -614,6 +613,7 @@ a.sidebar-toggle .pe-7s-angle-left-circle {
 }
 .content-header {
     position: relative;
+    z-index: 10;
     padding: 20px 30px;
     background-color: #fff;
     border-bottom: 1px solid #e1e6ef;
@@ -5649,7 +5649,6 @@ button.toast-close-button {
     right: 0;
 }
 
-
 .pointer{
     cursor: pointer;
 }
@@ -5657,7 +5656,6 @@ button.toast-close-button {
 .reddata{
     color:red;
 }
-
 
 .resize{
     resize:none;
@@ -5895,18 +5893,15 @@ button.toast-close-button {
     top: 0;
     bottom: 0;
     left: 0;
-    right: 20px;
+    right: 0;
     overflow-x: auto;
     overflow-y: hidden;
-    padding: 80px 0 0 20px;
+    padding: 100px 10px 0 10px;
 }
 
 #task_manager {
     user-select: none;
     white-space: nowrap;
-    margin-bottom: 10px;
-    padding-bottom: 10px;
-    padding-right: 56px;
 }
 
 .scrollable {
@@ -5926,7 +5921,6 @@ button.toast-close-button {
 
 .checkbox_item {
     position: relative;
-    z-index: 1;
     padding: 5px 0;
 }
 
@@ -5934,22 +5928,21 @@ button.toast-close-button {
     background-color: #E2E4E6;
 }
 
-.delete_chceckbox {
+.checkbox_edit_block {
     position: absolute;
     z-index: 1;
     top: 5px;
     right: 5px;
-    color: #E5343D;
     display: none;
 }
 
-.checkbox_item:hover .delete_chceckbox {
+.checkbox_item:hover .checkbox_edit_block {
     display: block;
 }
 
-.delete_chceckbox:hover {
-    color: #374767;
+.checkbox_edit:hover {
     cursor: pointer;
+    color: #fff;
 }
 
 .card_checkbox {
@@ -5986,7 +5979,7 @@ button.toast-close-button {
 }
 
 .card_checkbox_description {
-    margin-left: 30px;
+    margin: 0 0 10px 30px;
     word-wrap: break-word;
     padding-right: 30px;
 }
@@ -6000,8 +5993,12 @@ button.toast-close-button {
     cursor: pointer;
 }
 
-.checkbox_description_buttons {
-    margin: 10px 0 0 30px;
+.card_checkbox_settings {
+    margin-left: 30px;
+}
+
+.chekbox_settings_buttons .dropdown {
+    display: inline-block;
 }
 
 .card_comment_block {
@@ -6026,6 +6023,11 @@ button.toast-close-button {
 @media (min-width: 768px) {
     .modal-dialog {
         width: 800px;
+    }
+
+    .modal-dialog.modal-sm {
+        width: 400px;
+        margin-top: 25%;
     }
 }
 
@@ -6116,19 +6118,52 @@ button.toast-close-button {
     margin-left: 30px;
 }
 
-.hotfix_desk_switcher {
-    position: absolute;
-    z-index: 2;
-    top: 20px;
-    right: 40px;
+.checkbox_settings.add_checkbox {
+    margin-left: 0;
 }
 
-.hotfix_desk_switcher .dropdown-menu {
+.delete_card_item {
+    display: inline-block;
+}
+
+.delete_card_item:hover {
+    color: #E5343D;
+    cursor: pointer;
+}
+
+.desk_switcher .dropdown-menu {
     right: 0;
     left: auto;
     min-width: 260px;
 }
 
+.desk_switcher ul {
+    list-style: none;
+    padding: 0;
+}
+
+.desk_switcher .custom_pop_up {
+    padding: 10px 0;
+}
+
+.desk_switcher ul a {
+    display: block;
+    padding: 5px;
+    color: #374767;
+}
+
+.desk_switcher ul li {
+    padding: 0 10px;
+}
+
+.desk_switcher ul li:hover {
+    background-color: #dedede;
+}
+
 .checkbox_deadline.custom_pop_up.dropdown-menu {
     min-width: 260px;
+}
+
+.page_content {
+    padding: 20px 20px 0;
 }
