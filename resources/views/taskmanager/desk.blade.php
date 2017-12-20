@@ -241,16 +241,19 @@
                                     <div class="card_block checklists" ng-repeat="checklist in checklists">
                                         <div class="checklist_header">
                                             <h4 ng-show=" ! showChecklistTitle[checklist.id]">
-                                                <i class="fa fa-check-square-o"></i> <span class="pointer" ng-click="showChecklistTitle[checklist.id] = ! showChecklistTitle[checklist.id]">@{{checklist.title}}</span>
+                                                <i class="fa fa-check-square-o"></i> <span class="checklist_title pointer" ng-click="showChecklistTitle[checklist.id] = ! showChecklistTitle[checklist.id]">@{{checklist.title}}</span>
                                             </h4>
+
+                                            <div class="delete_card_item">
+                                                <i class="fa fa-trash-o" ng-click="deleteChecklist(checklist)"></i>
+                                            </div>
 
                                             <div class="input-group input-group-unstyled" ng-show="showChecklistTitle[checklist.id]">
                                                 <input type="text" class="form-control" focus-me="showChecklistTitle[checklist.id]" ng-enter="saveChecklistTitle(checklist)" ng-model="checklist.title">
-                                                <div class="btn btn-add save_title" ng-show="showChecklistTitle[checklist.id]" ng-click="saveChecklistTitle(checklist)">
+                                                <div class="btn btn-add save_title" ng-click="saveChecklistTitle(checklist)">
                                                     Save
                                                 </div>
                                             </div>
-                                            <!--a href="javascript:void(0);" ng-click="deleteCheckList(checklist.id)">Delete checklist</a-->
                                         </div>
 
                                         <div class="checkbox_item" ng-repeat="checkbox in checkboxes[checklist.id]">
@@ -519,21 +522,21 @@
                                         <div uib-dropdown class="m-b-5" auto-close="outsideClick">
                                             <a href="javascript:void(0);" class="btn card_nav dropdown-toggle" uib-dropdown-toggle><i class="fa fa-user"></i> Users</a>
 
-                                           <div uib-dropdown-menu class="custom_pop_up">
+                                            <div uib-dropdown-menu class="custom_pop_up">
                                                 <div class="custom_pop_up_header text-center">
                                                     <span>Users</span>
                                                 </div>
 
-                                               <div class="form-group">
+                                                <div class="form-group">
                                                     <select class="form-control" name="assign_to" ng-model="users_list">
                                                         <option ng-repeat="user in team_users" value="@{{ user.users_id }}">@{{user.users_first_name + ' ' + user.users_last_name}}</option>
                                                     </select>
                                                 </div>
 
-                                               <button type="button" class="btn btn-add" ng-click="addUserToCard(users_list);">
+                                                <button type="button" class="btn btn-add" ng-click="addUserToCard(users_list);">
                                                    Add user
                                                 </button>
-                                            </div>
+                                             </div>
                                         </div>
 
                                         <div uib-dropdown class="m-b-5" auto-close="outsideClick">
@@ -594,7 +597,12 @@
                                                 </button>
                                             </div>
                                         </div>
+                                    </div>
 
+                                    <hr />
+
+                                    <div class="delete_card">
+                                        <a href="javascript:void(0);" class="btn btn-danger card_nav" ng-click="deleteCard()">Delete card</a>
                                     </div>
                                 </div>
                             </div>

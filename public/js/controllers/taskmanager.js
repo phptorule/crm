@@ -367,9 +367,26 @@
             $scope.showChecklistTitle[checklist.id] = ! $scope.showChecklistTitle[checklist.id];
         };
 
-        $scope.deleteChecklists = function(id) {
-            request.send('/TaskManager/deleteChecklists', {'checklists_id': id,'cards_id': $scope.card.cards_id}, function(data) {
-                $scope.getChecklists();
+        $scope.deleteChecklist = function(checklist) {
+            var modalInstance = $uibModal.open({
+                animation: true,
+                size: 'sm',
+                templateUrl: 'ConfirmWindow.html',
+                controller: 'ModalConfirmWindowCtrl',
+                resolve: {
+                    items: function () {
+                        return {
+                            'deleted_item': 'checklist',
+                            'checklist': checklist
+                        };
+                    }
+                }
+            });
+
+            modalInstance.result.then(function(response) {
+                $scope.getChecklists($scope.card);
+            }, function () {
+
             });
         };
 
@@ -726,7 +743,15 @@
 
         if (items.deleted_item == 'desk') {
             $scope.delete = function() {
-                request.send('/TaskManager/deleteDesk', items.desk, function(data) {
+                request.send('/TaskManager/deleteDesk', {'desk_id': items.desk.id}, function(data) {
+                    $uibModalInstance.close();
+                });
+            };
+        }
+
+        if (items.deleted_item == 'checklist') {
+            $scope.delete = function() {
+                request.send('/TaskManager/deleteChecklist', {'checklist_id': items.checklist.id}, function(data) {
                     $uibModalInstance.close();
                 });
             };
