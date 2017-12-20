@@ -331,6 +331,29 @@
             $scope.show_description = ! $scope.show_description;
         };
 
+        $scope.deleteCard = function() {
+            var modalInstance = $uibModal.open({
+                animation: true,
+                size: 'sm',
+                templateUrl: 'ConfirmWindow.html',
+                controller: 'ModalConfirmWindowCtrl',
+                resolve: {
+                    items: function () {
+                        return {
+                            'deleted_item': 'card',
+                            'card': $scope.card
+                        };
+                    }
+                }
+            });
+
+            modalInstance.result.then(function(response) {
+                $uibModalInstance.close();
+            }, function () {
+
+            });
+        };
+
         $scope.changeDone = function() {
             request.send('/TaskManager/changeDone', {'cards_id': $scope.card.cards_id}, function(data) {
                 $scope.card.done = data;
@@ -757,6 +780,13 @@
             };
         }
 
+        if (items.deleted_item == 'card') {
+            $scope.delete = function() {
+                request.send('/TaskManager/deleteCard', {'cards_id': items.card.cards_id}, function(data) {
+                    $uibModalInstance.close();
+                });
+            };
+        }
 
         $scope.cancel = function() {
             $uibModalInstance.dismiss('cancel');
