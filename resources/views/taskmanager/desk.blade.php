@@ -612,7 +612,7 @@
     <script type="text/ng-template" id="ConfirmWindow.html">
         <div class="modal-header modal-header-primary">
             <button type="button" class="close" ng-click="cancel()" aria-hidden="true">×</button>
-            <h3>Usuń checkboxa</h3>
+            <h3>Uwaga</h3>
         </div>
 
         <div class="modal-body">
