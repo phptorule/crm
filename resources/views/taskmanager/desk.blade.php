@@ -241,16 +241,19 @@
                                     <div class="card_block checklists" ng-repeat="checklist in checklists">
                                         <div class="checklist_header">
                                             <h4 ng-show=" ! showChecklistTitle[checklist.id]">
-                                                <i class="fa fa-check-square-o"></i> <span class="pointer" ng-click="showChecklistTitle[checklist.id] = ! showChecklistTitle[checklist.id]">@{{checklist.title}}</span>
+                                                <i class="fa fa-check-square-o"></i> <span class="checklist_title pointer" ng-click="showChecklistTitle[checklist.id] = ! showChecklistTitle[checklist.id]">@{{checklist.title}}</span>
                                             </h4>
+
+                                            <div class="delete_card_item">
+                                                <i class="fa fa-trash-o" ng-click="deleteChecklist(checklist)"></i>
+                                            </div>
 
                                             <div class="input-group input-group-unstyled" ng-show="showChecklistTitle[checklist.id]">
                                                 <input type="text" class="form-control" focus-me="showChecklistTitle[checklist.id]" ng-enter="saveChecklistTitle(checklist)" ng-model="checklist.title">
-                                                <div class="btn btn-add save_title" ng-show="showChecklistTitle[checklist.id]" ng-click="saveChecklistTitle(checklist)">
+                                                <div class="btn btn-add save_title" ng-click="saveChecklistTitle(checklist)">
                                                     Save
                                                 </div>
                                             </div>
-                                            <!--a href="javascript:void(0);" ng-click="deleteCheckList(checklist.id)">Delete checklist</a-->
                                         </div>
 
                                         <div class="checkbox_item" ng-repeat="checkbox in checkboxes[checklist.id]">

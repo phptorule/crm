@@ -6182,3 +6182,15 @@ button.toast-close-button {
 .create_desk {
     padding: 10px;
 }
+
+.checklist_header h4 {
+    display: inline-block;
+}
+
+.checklist_header .delete_card_item {
+    display: none;
+}
+
+.checklist_header:hover .delete_card_item {
+    display: inline-block;
+}
