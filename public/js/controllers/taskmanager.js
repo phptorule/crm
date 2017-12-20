@@ -198,12 +198,7 @@
 
         $scope.$watch('$viewContentLoaded', function(){
             $scope.initScroll();
-            $scope.taskListHeight();
         });
-
-        $scope.taskListHeight = function() {
-            console.log($('#task_manager .panel-body').length);
-        };
 
         $scope.initScroll = function(){
             var curDown = false,
@@ -312,8 +307,6 @@
         $scope.showCheckboxDeadline = false;
         $scope.checklist_title = '';
 
-        console.log($scope.card.users);
-
         $scope.initCard = function() {
             $scope.getTeamUsers();
             $scope.getChecklists();
@@ -395,12 +388,12 @@
         $scope.selectCheckbox = function(checkbox) {
             $scope.editCheckbox = {};
             $scope.showCheckBox = {};
+            $scope.temp_checkbox_deadline = {};
             $scope.checkbox_title[checkbox.id] = angular.copy(checkbox.title);
             $scope.editCheckbox[checkbox.id] = ! $scope.editCheckbox[checkbox.id];
             if (checkbox.deadline != '') {
                 $scope.temp_checkbox_deadline[checkbox.id] = checkbox.deadline;
             }
-            console.log(checkbox.users);
         };
 
         $scope.saveCheckboxDescription = function(checkbox) {
@@ -566,10 +559,10 @@
             return result;
         };
 
-        $scope.addTempCheckboxDeadline = function() {
+        $scope.addTempCheckboxDeadline = function(checkbox) {
             var date = $scope.checkbox_deadline.date;
 
-            $scope.temp_checkbox_deadline = date.getFullYear() + '/' + (date.getMonth() + 1) + '/' + date.getDate() + ' ' + $scope.checkbox_deadline.hour + ':' + $scope.checkbox_deadline.minute;
+            $scope.temp_checkbox_deadline[checkbox.id] = date.getFullYear() + '/' + (date.getMonth() + 1) + '/' + date.getDate() + ' ' + $scope.checkbox_deadline.hour + ':' + $scope.checkbox_deadline.minute;
             $scope.showCheckboxDeadline = true;
         };
 
@@ -630,8 +623,6 @@
                         $scope.checkbox[k] = $scope.checkboxes[k][l].id;
                     }
                 }
-
-            console.log($scope.checklists);
 
             /*request.send('/TaskManager/removeUserFromCard', {'users_id': user_id, 'cards_id': $scope.card.cards_id}, function(data) {
                 $scope.getTeamUsers();

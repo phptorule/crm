@@ -328,7 +328,7 @@
                                                                         </div>
                                                                     </div>
 
-                                                                    <button type="button" class="btn btn-primary" ng-click="addTempCheckboxDeadline(chekbox)">
+                                                                    <button type="button" class="btn btn-primary" ng-click="addTempCheckboxDeadline(checkbox)">
                                                                         Save
                                                                     </button>
                                                                 </div>
@@ -470,7 +470,7 @@
 
                                                     <div class="col-sm-6" ng-show="showCheckboxDeadline">
                                                         <h5>Deadline:</h5>
-                                                        <span>@{{temp_checkbox_deadline.date | date: 'yyyy/M/d' + ' ' + temp_checkbox_deadline.hour + ':' + temp_checkbox_deadline.minute}}</span>
+                                                        <span>@{{temp_checkbox_deadline}}</span>
                                                         <div class="delete_card_item">
                                                             <i class="fa fa-trash-o" ng-click="removeTempCheckboxDeadline()"></i>
                                                         </div>
