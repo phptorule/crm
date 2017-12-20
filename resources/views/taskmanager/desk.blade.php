@@ -602,7 +602,7 @@
                                     <hr />
 
                                     <div class="delete_card">
-                                        <a href="javascript:void(0);" class="btn btn-danger card_nav">Delete card</a>
+                                        <a href="javascript:void(0);" class="btn btn-danger card_nav" ng-click="deleteCard()">Delete card</a>
                                     </div>
                                 </div>
                             </div>
