@@ -522,21 +522,21 @@
                                         <div uib-dropdown class="m-b-5" auto-close="outsideClick">
                                             <a href="javascript:void(0);" class="btn card_nav dropdown-toggle" uib-dropdown-toggle><i class="fa fa-user"></i> Users</a>
 
-                                           <div uib-dropdown-menu class="custom_pop_up">
+                                            <div uib-dropdown-menu class="custom_pop_up">
                                                 <div class="custom_pop_up_header text-center">
                                                     <span>Users</span>
                                                 </div>
 
-                                               <div class="form-group">
+                                                <div class="form-group">
                                                     <select class="form-control" name="assign_to" ng-model="users_list">
                                                         <option ng-repeat="user in team_users" value="@{{ user.users_id }}">@{{user.users_first_name + ' ' + user.users_last_name}}</option>
                                                     </select>
                                                 </div>
 
-                                               <button type="button" class="btn btn-add" ng-click="addUserToCard(users_list);">
+                                                <button type="button" class="btn btn-add" ng-click="addUserToCard(users_list);">
                                                    Add user
                                                 </button>
-                                            </div>
+                                             </div>
                                         </div>
 
                                         <div uib-dropdown class="m-b-5" auto-close="outsideClick">
@@ -597,7 +597,12 @@
                                                 </button>
                                             </div>
                                         </div>
+                                    </div>
 
+                                    <hr />
+
+                                    <div class="delete_card">
+                                        <a href="javascript:void(0);" class="btn btn-danger card_nav">Delete card</a>
                                     </div>
                                 </div>
                             </div>

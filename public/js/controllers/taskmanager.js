@@ -743,7 +743,7 @@
 
         if (items.deleted_item == 'desk') {
             $scope.delete = function() {
-                request.send('/TaskManager/deleteDesk', items.desk, function(data) {
+                request.send('/TaskManager/deleteDesk', {'desk_id': items.desk.id}, function(data) {
                     $uibModalInstance.close();
                 });
             };
@@ -751,7 +751,7 @@
 
         if (items.deleted_item == 'checklist') {
             $scope.delete = function() {
-                request.send('/TaskManager/deleteChecklist', items.id, function(data) {
+                request.send('/TaskManager/deleteChecklist', {'checklist_id': items.checklist.id}, function(data) {
                     $uibModalInstance.close();
                 });
             };

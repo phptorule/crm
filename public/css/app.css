@@ -5679,6 +5679,17 @@ button.toast-close-button {
     background: #dedede;
 }
 
+.delete_card .card_nav {
+    background: #E5343D;
+    color: #fff;
+}
+
+.delete_card .card_nav:hover {
+    color: #fff;
+    background-color: #e7575e;
+    border-color: #BF2D35;
+}
+
 .dev_add_checkbox .card_nav {
     width: auto;
     padding: 5px 15px;
