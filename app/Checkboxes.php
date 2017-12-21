@@ -12,4 +12,8 @@ class Checkboxes extends Model
         return $this->belongsToMany('App\Users', 'checkboxes_users', 'checkboxes_id', 'users_id');
     }
 
+    public function usersRelation() {
+        return $this->hasMany('App\CheckboxesUsers', 'checkboxes_id');
+    }
+
 }

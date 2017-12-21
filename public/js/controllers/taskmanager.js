@@ -73,7 +73,7 @@
 
         $scope.addTaskList = function() {
             request.send('/TaskManager/addTaskList', {'task_name': $scope.task_name, 'desk_id': $scope.desk.id}, function(data) {
-                $scope.tasks = data;
+                $scope.getDeskLists($scope.desk);
             });
         };
 
@@ -120,7 +120,7 @@
             });
 
             modalInstance.result.then(function(response) {
-                $scope.getDeskLists($scope.desk);
+                $scope.getDesks();
             }, function () {
 
             });
@@ -307,6 +307,8 @@
         $scope.showCheckboxDeadline = false;
         $scope.checklist_title = '';
 
+        console.log($scope.show_description);
+
         $scope.initCard = function() {
             $scope.getTeamUsers();
             $scope.getChecklists();
@@ -319,7 +321,7 @@
 
             });
 
-            $scope.card_title = ! $scope.card_title;
+            $scope.card_title = true;
         };
 
         $scope.saveCardDescription = function() {
@@ -328,7 +330,30 @@
 
             });
 
-            $scope.show_description = ! $scope.show_description;
+            $scope.show_description = true;
+        };
+
+        $scope.deleteCard = function() {
+            var modalInstance = $uibModal.open({
+                animation: true,
+                size: 'sm',
+                templateUrl: 'ConfirmWindow.html',
+                controller: 'ModalConfirmWindowCtrl',
+                resolve: {
+                    items: function () {
+                        return {
+                            'deleted_item': 'card',
+                            'card': $scope.card
+                        };
+                    }
+                }
+            });
+
+            modalInstance.result.then(function(response) {
+                $uibModalInstance.close();
+            }, function () {
+
+            });
         };
 
         $scope.changeDone = function() {
@@ -354,7 +379,8 @@
 
         $scope.saveChecklist = function() {
             request.send('/TaskManager/saveChecklist', {'title': $scope.checklist_title, 'cards_id': $scope.card.cards_id}, function(data) {
-                $scope.card.checklists = data;
+                console.log(data);
+                $scope.checklists = data;
                 $scope.checklist_title = '';
             });
         };
@@ -367,9 +393,26 @@
             $scope.showChecklistTitle[checklist.id] = ! $scope.showChecklistTitle[checklist.id];
         };
 
-        $scope.deleteChecklists = function(id) {
-            request.send('/TaskManager/deleteChecklists', {'checklists_id': id,'cards_id': $scope.card.cards_id}, function(data) {
-                $scope.getChecklists();
+        $scope.deleteChecklist = function(checklist) {
+            var modalInstance = $uibModal.open({
+                animation: true,
+                size: 'sm',
+                templateUrl: 'ConfirmWindow.html',
+                controller: 'ModalConfirmWindowCtrl',
+                resolve: {
+                    items: function () {
+                        return {
+                            'deleted_item': 'checklist',
+                            'checklist': checklist
+                        };
+                    }
+                }
+            });
+
+            modalInstance.result.then(function(response) {
+                $scope.getChecklists($scope.card);
+            }, function () {
+
             });
         };
 
@@ -406,7 +449,7 @@
             $scope.checkbox.title = $scope.checkbox_title[checkbox.id];
             $scope.checkbox.id = checkbox.id;
             $scope.checkbox.users = $scope.chekbox_users_ids;
-            $scope.checkbox.deadline = $scope.temp_checkbox_deadline;
+            $scope.checkbox.deadline = $scope.temp_checkbox_deadline[checkbox.id];
 
             request.send('/TaskManager/saveCheckboxDescription', $scope.checkbox, function(data) {
                 checkbox.deadline = data;
@@ -562,7 +605,12 @@
         $scope.addTempCheckboxDeadline = function(checkbox) {
             var date = $scope.checkbox_deadline.date;
 
-            $scope.temp_checkbox_deadline[checkbox.id] = date.getFullYear() + '/' + (date.getMonth() + 1) + '/' + date.getDate() + ' ' + $scope.checkbox_deadline.hour + ':' + $scope.checkbox_deadline.minute;
+            if (checkbox) {
+                $scope.temp_checkbox_deadline[checkbox.id] = date.getFullYear() + '/' + (date.getMonth() + 1) + '/' + date.getDate() + ' ' + $scope.checkbox_deadline.hour + ':' + $scope.checkbox_deadline.minute;
+            }else {
+                $scope.temp_checkbox_deadline = date.getFullYear() + '/' + (date.getMonth() + 1) + '/' + date.getDate() + ' ' + $scope.checkbox_deadline.hour + ':' + $scope.checkbox_deadline.minute;
+            }
+
             $scope.showCheckboxDeadline = true;
         };
 
@@ -590,7 +638,7 @@
 
         $scope.saveComment = function() {
             request.send('/TaskManager/saveComment', {'text': $scope.comment_text, 'cards_id': $scope.card.cards_id}, function(data) {
-                $scope.card.comments = data;
+                $scope.comments = data;
                 $scope.comment_text = '';
             });
         };
@@ -726,12 +774,27 @@
 
         if (items.deleted_item == 'desk') {
             $scope.delete = function() {
-                request.send('/TaskManager/deleteDesk', items.desk, function(data) {
+                request.send('/TaskManager/deleteDesk', {'desk_id': items.desk.id}, function(data) {
                     $uibModalInstance.close();
                 });
             };
         }
 
+        if (items.deleted_item == 'checklist') {
+            $scope.delete = function() {
+                request.send('/TaskManager/deleteChecklist', {'checklist_id': items.checklist.id}, function(data) {
+                    $uibModalInstance.close();
+                });
+            };
+        }
+
+        if (items.deleted_item == 'card') {
+            $scope.delete = function() {
+                request.send('/TaskManager/deleteCard', {'cards_id': items.card.cards_id}, function(data) {
+                    $uibModalInstance.close();
+                });
+            };
+        }
 
         $scope.cancel = function() {
             $uibModalInstance.dismiss('cancel');

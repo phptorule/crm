@@ -22,4 +22,9 @@ class TasksLists extends Model
         return $this->belongsTo('App\Descs');
     }
 
+    public function usersRelation()
+    {
+        return $this->hasMany('App\ListsUsers', 'lists_id');
+    }
+
 }
