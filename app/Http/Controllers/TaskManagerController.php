@@ -111,6 +111,7 @@ class TaskManagerController extends Controller
         return $desk->tasks()->get();
     }
 
+
     public function savePosition($post = [])
     {
         $mass = explode(" ", $post['id']);
@@ -151,7 +152,30 @@ class TaskManagerController extends Controller
 
     public function deleteList($post = [])
     {
+
         $task = TasksLists::find($post['id']);
+        $cards = $task->cards()->get();
+
+        foreach ($cards as $card) {
+            $card->checkLists()->get();
+
+            foreach ($checklists as $checklist) {
+                $checkboxes = $checklist->checkBoxes()->get();
+
+                foreach ($checkboxes as $checkbox) {
+                    $checkbox->usersRelation()->delete();
+                }
+
+                $checklist->checkBoxes()->delete();
+            }
+
+            $card->cardComments()->delete();   
+            $card->checkLists()->delete();
+            $card->usersRelation()->delete();
+            $card->delete();
+        }
+
+        $task->usersRelation()->delete();
         $task->cards()->delete();
         $task->delete();
     }
@@ -170,6 +194,28 @@ class TaskManagerController extends Controller
         $task = TasksLists::find($post['task_id']);
 
         return $task->cards()->get();
+    }
+
+    public function deleteCard($post = [])
+    {
+
+        $card = Cards::findOrFail($post['cards_id']);
+        $checklists = $card->checkLists()->get();
+
+        foreach ($checklists as $checklist) {
+            $checkboxes = $checklist->checkBoxes()->get();
+
+            foreach ($checkboxes as $checkbox) {
+                $checkbox->usersRelation()->delete();
+            }
+
+            $checklist->checkBoxes()->delete();
+        }
+
+        $card->cardComments()->delete();   
+        $card->checkLists()->delete();
+        $card->usersRelation()->delete();
+        $card->delete();
     }
 
      public function saveCardDescription($post = []){
@@ -268,16 +314,19 @@ class TaskManagerController extends Controller
         }
     }
 
-    public function deleteChecklists($post = [])
+    public function deleteChecklist($post = [])
     {
-        $checklists = Checklists::find($post['checklists_id']);
-        $checklists->delete();
 
-        $checklists = Checklists::where('cards_id',$post['cards_id'])->get();
-        foreach ($checklists as $value) {
-            $value->checklists_value = Checkboxes::all()->where('checklists_id',$value->id);
+        $checklist = Checklists::findOrFail($post['checklist_id']);
+        $checkboxes = $checklist->checkBoxes()->get();
+
+        foreach ($checkboxes as $checkbox) {
+            $checkbox->usersRelation()->delete();
         }
-        return $checklists;
+
+        $checklist->checkBoxes()->delete();
+        $checklist->delete();
+
     }
     /* END CHECKLIST ACTIONS */
 
