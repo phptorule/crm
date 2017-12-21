@@ -73,7 +73,7 @@
 
         $scope.addTaskList = function() {
             request.send('/TaskManager/addTaskList', {'task_name': $scope.task_name, 'desk_id': $scope.desk.id}, function(data) {
-                $scope.tasks = data;
+                $scope.getDeskLists($scope.desk);
             });
         };
 
