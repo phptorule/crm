@@ -131,17 +131,6 @@ class TaskManagerController extends Controller
         $list->desc_id = $post['desk_id'];
         $list->teams_id = session('current_team');
         $list->save();
-
-        $tasks = Descs::with(
-            'tasks.cards',
-            'tasks.cards.users',
-            'tasks.cards.checkLists',
-            'tasks.cards.checkLists.checkBoxes',
-            'tasks.cards.checkLists.checkBoxes.users'
-            )->find($post['desk_id']);
-
-        return $tasks;
-
     }
 
 
