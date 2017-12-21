@@ -105,7 +105,6 @@ class TaskManagerController extends Controller
                     foreach ($checkboxes as $checkbox) {
                         $checkbox->usersRelation()->delete();
                     }
-
                     $checklist->checkBoxes()->delete();
                 }
 
