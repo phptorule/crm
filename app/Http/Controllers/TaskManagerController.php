@@ -89,8 +89,34 @@ class TaskManagerController extends Controller
 
     public function deleteDesk($post = [])
     {
-        die(var_dump($post));
-        $desks = Descs::find($post['id']);
+
+        $desks = Descs::find($post['desk_id']);
+        $tasklists = $desks->tasks()->get();
+
+        foreach ($tasklists as $tasklist) {
+            $cards = $tasklist->cards()->get();
+
+            foreach ($cards as $card) {
+                $checklists = $card->checkLists()->get();
+
+                foreach ($checklists as $checklist) {
+                    $checkboxes = $checklist->checkBoxes()->get();
+
+                    foreach ($checkboxes as $checkbox) {
+                        $checkbox->usersRelation()->delete();
+                    }
+
+                    $checklist->checkBoxes()->delete();
+                }
+
+                $card->cardComments()->delete();   
+                $card->checkLists()->delete();
+                $card->usersRelation()->delete();
+                $card->delete();
+            }
+        }
+
+        $desks->tasks()->delete();
         $desks->delete();
     }
     /* END DESK ACTIONS */
@@ -157,7 +183,7 @@ class TaskManagerController extends Controller
         $cards = $task->cards()->get();
 
         foreach ($cards as $card) {
-            $card->checkLists()->get();
+            $checklists = $card->checkLists()->get();
 
             foreach ($checklists as $checklist) {
                 $checkboxes = $checklist->checkBoxes()->get();
