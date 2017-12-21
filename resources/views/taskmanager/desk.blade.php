@@ -27,7 +27,7 @@
 
                         <div uib-dropdown-menu class="custom_pop_up">
                             <ul>
-                                <li ng-repeat="desk in desks"><a href="#" ng-click="getDeskTasks(desk)"><i class="fa fa-trello"></i> @{{desk.name}}</a></li>
+                                <li ng-repeat="desk in desks"><a href="#" ng-click="getDeskLists(desk)"><i class="fa fa-trello"></i> @{{desk.name}}</a></li>
                             </ul>
 
                             <div class="create_desk text-center">
@@ -224,13 +224,13 @@
                                         <h4>Description:</h4>
                                         <div class="card_description">
                                             <div class="form-group">
-                                                <p class="title_pointer" ng-show="show_description" ng-click="makeDescriptionCopy()">@{{card.description}}</p>
-                                                <textarea class="form-control resize" ng-show="! show_description || ! card.description" ng-model="temp_description"></textarea>
+                                                <p class="title_pointer" ng-show="show_description && card.description" ng-click="makeDescriptionCopy()">@{{card.description}}</p>
+                                                <textarea class="form-control resize" ng-show=" ! show_description || ! card.description" ng-model="temp_description"></textarea>
                                             </div>
 
                                             <div class="form-group">
-                                                <button class="btn btn-add" ng-show="! show_description || ! card.description" ng-click="saveCardDescription()">Save</button>
-                                                <button class="btn btn-danger" ng-show="! show_description && card.description" ng-click="resetCardDescription()">Cancel</button>
+                                                <button class="btn btn-add" ng-show=" ! show_description || ! card.description" ng-click="saveCardDescription()">Save</button>
+                                                <button class="btn btn-danger" ng-show=" ! show_description && card.description" ng-click="resetCardDescription()">Cancel</button>
                                                 <button class="btn btn-add" ng-show="show_description && card.description" ng-click="makeDescriptionCopy()">Edit</button>
                                             </div>
                                         </div>

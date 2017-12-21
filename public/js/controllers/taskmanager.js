@@ -120,7 +120,7 @@
             });
 
             modalInstance.result.then(function(response) {
-                $scope.getDeskLists($scope.desk);
+                $scope.getDesks();
             }, function () {
 
             });
@@ -307,6 +307,8 @@
         $scope.showCheckboxDeadline = false;
         $scope.checklist_title = '';
 
+        console.log($scope.show_description);
+
         $scope.initCard = function() {
             $scope.getTeamUsers();
             $scope.getChecklists();
@@ -319,7 +321,7 @@
 
             });
 
-            $scope.card_title = ! $scope.card_title;
+            $scope.card_title = true;
         };
 
         $scope.saveCardDescription = function() {
@@ -328,7 +330,7 @@
 
             });
 
-            $scope.show_description = ! $scope.show_description;
+            $scope.show_description = true;
         };
 
         $scope.deleteCard = function() {
@@ -377,7 +379,8 @@
 
         $scope.saveChecklist = function() {
             request.send('/TaskManager/saveChecklist', {'title': $scope.checklist_title, 'cards_id': $scope.card.cards_id}, function(data) {
-                $scope.card.checklists = data;
+                console.log(data);
+                $scope.checklists = data;
                 $scope.checklist_title = '';
             });
         };
@@ -446,7 +449,7 @@
             $scope.checkbox.title = $scope.checkbox_title[checkbox.id];
             $scope.checkbox.id = checkbox.id;
             $scope.checkbox.users = $scope.chekbox_users_ids;
-            $scope.checkbox.deadline = $scope.temp_checkbox_deadline;
+            $scope.checkbox.deadline = $scope.temp_checkbox_deadline[checkbox.id];
 
             request.send('/TaskManager/saveCheckboxDescription', $scope.checkbox, function(data) {
                 checkbox.deadline = data;
@@ -602,7 +605,12 @@
         $scope.addTempCheckboxDeadline = function(checkbox) {
             var date = $scope.checkbox_deadline.date;
 
-            $scope.temp_checkbox_deadline[checkbox.id] = date.getFullYear() + '/' + (date.getMonth() + 1) + '/' + date.getDate() + ' ' + $scope.checkbox_deadline.hour + ':' + $scope.checkbox_deadline.minute;
+            if (checkbox) {
+                $scope.temp_checkbox_deadline[checkbox.id] = date.getFullYear() + '/' + (date.getMonth() + 1) + '/' + date.getDate() + ' ' + $scope.checkbox_deadline.hour + ':' + $scope.checkbox_deadline.minute;
+            }else {
+                $scope.temp_checkbox_deadline = date.getFullYear() + '/' + (date.getMonth() + 1) + '/' + date.getDate() + ' ' + $scope.checkbox_deadline.hour + ':' + $scope.checkbox_deadline.minute;
+            }
+
             $scope.showCheckboxDeadline = true;
         };
 
@@ -630,7 +638,7 @@
 
         $scope.saveComment = function() {
             request.send('/TaskManager/saveComment', {'text': $scope.comment_text, 'cards_id': $scope.card.cards_id}, function(data) {
-                $scope.card.comments = data;
+                $scope.comments = data;
                 $scope.comment_text = '';
             });
         };
