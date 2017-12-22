@@ -8,6 +8,7 @@
         $scope.list = {};
         $scope.desks = {};
         $scope.tasks = {};
+        $scope.cards = {};
         $scope.card = {};
         $scope.class = "closed";
         $scope.users = {};
@@ -50,7 +51,9 @@
             $scope.desk = desk;
 
             request.send('/TaskManager/getDeskLists', {'desk_id': $scope.desk.id}, function(data) {
+                console.log(data);
                 $scope.tasks = data;
+                $scope.cards = data.cards;
 
                 for (var k in data)
                 {

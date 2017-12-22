@@ -104,24 +104,24 @@
                                 </p>
 
                                 <div class="preview_card">
-                                    <div class="cards_preview_item" ng-show="card.assign_to_card" title="You are subscribed to this card">
+                                    <div class="cards_preview_item" ng-show="card.card_preview.assign_to_card" title="You are subscribed to this card">
                                         <i class="fa fa-user"></i>
                                     </div>
 
-                                    <div class="cards_preview_item" ng-show="card.description" title="This card has a description">
+                                    <div class="cards_preview_item" ng-show="card.card_preview.description" title="This card has a description">
                                         <i class="fa fa-align-left"></i>
                                     </div>
 
-                                    <div class="cards_preview_item" ng-show="card.comments_amount" title="Comments">
-                                        <i class="fa fa-comment"></i> @{{ card.comments_amount }}
+                                    <div class="cards_preview_item" ng-show="card.card_preview.comments_amount" title="Comments">
+                                        <i class="fa fa-comment"></i> @{{ card.card_preview.comments_amount }}
                                     </div>
 
-                                    <div class="cards_preview_item" ng-show="card.deadline" title="Deadline">
+                                    <div class="cards_preview_item" ng-show="card.card_preview.deadline" title="Deadline">
                                         <i class="fa fa-calendar-check-o"></i> @{{ card.deadline_preview }}
                                     </div>
 
-                                    <div class="cards_preview_item" ng-show="card.all_checkboxes" title="Checklist items">
-                                        <i class="fa fa-check-square-o"></i> @{{ card.checked_checkboxes}}/@{{card.all_checkboxes }}
+                                    <div class="cards_preview_item" ng-show="card.card_preview.all_checkboxes" title="Checklist items">
+                                        <i class="fa fa-check-square-o"></i> @{{ card.card_preview.checked_checkboxes}}/@{{card.card_preview.all_checkboxes }}
                                     </div>
                                 </div>
 
