@@ -40,11 +40,19 @@ class TaskManagerController extends Controller
             $card_obj = new cards();
 
             foreach ($task->cards as $card) {
-                array_push($cards_preview, $card_obj->getCardPreview($card));
+                $card->card_preview = $card_obj->getCardPreview($card->cards_id);
             }
         }
 
         return $tasks;
+    }
+
+
+    public function getCardPreview($post = []){
+
+        $card_obj = new cards();
+
+        return $card_obj->getCardPreview($post['cards_id']);
     }
 
     public function saveDesk($post = [])

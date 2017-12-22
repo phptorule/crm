@@ -41,9 +41,11 @@ class Cards extends Model
     }
 
 
-    public function getCardPreview($card)
+    public function getCardPreview($card_id)
     {
 
+        $card = Cards::find($card_id);
+        
         $card->assign_to_card = $card->users->contains('users_id', Auth::user()->users_id);
 
         foreach ($card->checkLists as $checklist) {
