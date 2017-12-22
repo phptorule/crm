@@ -47,9 +47,7 @@ class TaskManagerController extends Controller
         return $tasks;
     }
 
-
     public function getCardPreview($post = []){
-
         $card_obj = new cards();
         return $card_obj->getCardPreview($post['cards_id']);
     }
