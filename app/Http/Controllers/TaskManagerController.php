@@ -100,7 +100,7 @@ class TaskManagerController extends Controller
     /* TASK LIST ACTIONS */
     public function addTaskList($post = [])
     {
-        $last_position = TasksLists::where('teams_id',session('current_team'))->max('position');
+        $last_position = TasksLists::where('teams_id',session('current_team'))->where('desc_id', $post['desk_id'])->max('position');
         $list = new TasksLists();
         $list->name = $post['task_name'];
         $list->user_id = Auth::user()->users_id;
