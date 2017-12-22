@@ -45,8 +45,8 @@ class Cards extends Model
     {
 
         $card = Cards::find($card_id);
-        
-        $card->assign_to_card = $card->users->contains('users_id', Auth::user()->users_id);
+        $card_preview = new Cards();
+        $card_preview->assign_to_card = $card->users->contains('users_id', Auth::user()->users_id);
 
         foreach ($card->checkLists as $checklist) {
             $all_checkboxes[$card->cards_id][] = $checklist->checkBoxes->count();
@@ -54,26 +54,25 @@ class Cards extends Model
         }
 
         if ( ! empty($all_checkboxes[$card->cards_id])) {
-            $card->all_checkboxes = array_sum($all_checkboxes[$card->cards_id]);
+            $card_preview->all_checkboxes = array_sum($all_checkboxes[$card->cards_id]);
         }else {
-            $card->all_checkboxes = NULL;
+            $card_preview->all_checkboxes = NULL;
         }
 
         if ( ! empty($total_checked_checkboxes[$card->cards_id])) {
-            $card->checked_checkboxes = array_sum($total_checked_checkboxes[$card->cards_id]);
+            $card_preview->checked_checkboxes = array_sum($total_checked_checkboxes[$card->cards_id]);
         }else {
-            $card->checked_checkboxes = NULL;
+            $card_preview->checked_checkboxes = NULL;
         }
 
         if( ! empty($card->deadline)) {
-            $card->deadline_preview = date("M d", strtotime($card->deadline));
+            $card_preview->deadline_preview = date("M d", strtotime($card->deadline));
         }else {
-            $card->deadline_preview = NULL;
+            $card_preview->deadline_preview = NULL;
         }
 
-        $card->comments_amount = $card->cardComments()->get()->count();
-
-        return $card;
+        $card_preview->comments_amount = $card->cardComments()->get()->count();
+        return $card_preview;
     }
 
 }
