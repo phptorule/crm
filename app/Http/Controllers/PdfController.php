@@ -45,7 +45,8 @@ class PdfController extends Controller
       $pdf->setBasePath(public_path());
       $pdf->render();
       $pdf->setPaper('A4');
-      $pdf->stream('pdf');
+      $name = str_replace ( '/' , '-' , $finances['finances_number'] );
+      $pdf->stream("Faktura pro forma Nr ".$name);
 
     }
 
