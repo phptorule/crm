@@ -117,7 +117,7 @@
                                     </div>
 
                                     <div class="cards_preview_item" ng-show="card.card_preview.deadline" title="Deadline">
-                                        <i class="fa fa-calendar-check-o"></i> @{{ card.deadline_preview }}
+                                        <i class="fa fa-calendar-check-o"></i> @{{ card.card_preview.deadline_preview }}
                                     </div>
 
                                     <div class="cards_preview_item" ng-show="card.card_preview.all_checkboxes" title="Checklist items">
