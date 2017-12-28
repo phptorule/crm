@@ -42,7 +42,7 @@
         };
 
         $scope.saveDesk = function(desc_name) {
-            request.send('/TaskManager/saveDesk', {'desc_name':desc_name}, function(data) {
+            request.send('/TaskManager/saveDesk', {'desc_name': desc_name}, function(data) {
                 $scope.getDesks();
             });
         };
