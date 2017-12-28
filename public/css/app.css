@@ -5561,12 +5561,15 @@ button.toast-close-button {
     border-radius: 5px;
 }
 
+/*
 .customers_table td {
     padding: 5px;
     vertical-align: top;
     text-transform: uppercase;
     font-weight: 700;
+    border: 1px solid red;
 }
+*/
 
 .pdf_line {
     border-bottom: 3px solid #d9edf7;
