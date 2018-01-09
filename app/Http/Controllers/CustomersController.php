@@ -184,22 +184,4 @@ class CustomersController extends Controller
 
         return $customers_comments;
     }
-
-
-    public function searchCustomer($post = [])
-    {
-        $customers = $Customers::find('company_name', 'like', ! empty($post['company_name']) ? '%' . $post['company_name'] . '%' : false)
-            ->orWhere('contact_person', 'like', ! empty($post['contact_person']) ? '%' . $post['contact_person'] . '%' : false)
-            ->orWhere('phone_number', 'like', ! empty($post['phone_number']) ? '%' . $post['phone_number'] . '%' : false)
-            ->orWhere('extra_phone_number', 'like', ! empty($post['extra_phone_number']) ? '%' . $post['extra_phone_number'] . '%' : false)
-            ->orWhere('email', 'like', ! empty($post['email']) ? '%' . $post['email'] . '%' : false)
-            ->orWhere('extra_email', 'like', ! empty($post['extra_email']) ? '%' . $post['extra_email'] . '%' : false)
-            ->orWhere('nip', 'like', ! empty($post['nip']) ? '%' . $post['nip'] . '%' : false)
-            ->orWhere('bank_account', 'like', ! empty($post['bank_account']) ? '%' . $post['bank_account'] . '%' : false)
-            ->orWhere('website', 'like', ! empty($post['website']) ? '%' . $post['website'] . '%' : false)
-            ->orWhere('fb_link', 'like', ! empty($post['fb_link']) ? '%' . $post['fb_link'] . '%' : false)
-            ->get();
-
-        return $customers;
-    }
 }

@@ -16,13 +16,15 @@
 					}
 				}
 
-				if (field.$valid )
+				console.log(field, name, object_field);
+
+				if (field.$valid)
 				{
 					return true;
 				}
 				else
 				{
-					if ( field.$viewValue == '' || field.$viewValue == undefined )
+					if (field.$viewValue == '' || field.$viewValue == undefined)
 					{
 						logger.logError(':name is required', {'name': name});
 					}
