@@ -23,6 +23,9 @@ class AuthController extends Controller
             $auth = ['users_email'=>$post['users_email'], 'password' => $post['password'] ];
             if (Auth::validate($auth))
             {
+                
+                /*session(['current_team' => $_COOKIE["current_team"]]);*/
+                
                 $user = Users::where('users_email', $auth['users_email'])->first();
                 if (!empty($user->users_active))
                 {

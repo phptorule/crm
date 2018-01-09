@@ -9,6 +9,9 @@ use App\Customers;
 use App\Teams;
 use App\CustomersComments;
 use App\Users;
+use Illuminate\Support\Facades\Validator;
+
+
 
 class CustomersController extends Controller
 {
@@ -39,6 +42,61 @@ class CustomersController extends Controller
 
 	public function save($post = [])
 	{
+
+        $validator = Validator::make(
+            [
+                'company_name' => $post['company_name'],
+                'contact_person' => $post['contact_person'],
+                'phone_number' => $post['phone_number'],
+                'extra_phone_number' => $post['extra_phone_number'],
+                'email' => $post['email'],
+                'extra_email' => $post['extra_email'],
+                'nip' => $post['nip'],
+                'bank_account' => $post['bank_account'],
+                'website' => $post['website'],
+                'fb_link' => $post['fb_link'],
+                'invoice_post_code' => $post['invoice_post_code'],
+                'invoice_street' => $post['invoice_street'],
+                'invoice_town' => $post['invoice_town'],
+                'invoice_province' => $post['invoice_province'],
+                'invoice_post_code' => $post['invoice_post_code'],
+                'invoice_region' => $post['invoice_region'],
+                'send_street' => $post['send_street'],
+                'send_province' => $post['send_province'],
+                'send_post_code' => $post['send_post_code'],
+                'send_region' => $post['send_region'],
+                'description' => $post['description'],
+                'customer_type' => $post['customer_type']
+            ],
+            [
+                'company_name' => 'max:255',
+                'contact_person' => 'max:255',
+                'phone_number' => 'required|min:11|numeric',
+                'extra_phone_number' => 'required|min:11|numeric',
+                'email' => 'email',
+                'extra_email' => 'email',
+                'nip' => 'max:20',
+                'bank_account' => 'max:25',
+                'website' => 'max:35',
+                'fb_link' => 'max:35',
+                'invoice_post_code' => 'max:10',
+                'invoice_street' => 'max:35',
+                'invoice_town' => 'max:35',
+                'invoice_province' => 'max:35',
+                'invoice_post_code' => 'max:35',
+                'invoice_region' => 'max:35',
+                'send_street' => 'max:35',
+                'send_province' => 'max:35',
+                'send_post_code' => 'max:35',
+                'send_region' => 'max:35',
+                'description' => 'max:35',
+                'customer_type' => 'max:35'
+            ]
+        );
+
+        return dd($validator->errors()->all());
+
+
         $duplicates =
         Customers::where('company_name', 'like', ! empty($post['company_name']) ? '%' . $post['company_name'] . '%' : false)
             ->orWhere('contact_person', 'like', ! empty($post['contact_person']) ? '%' . $post['contact_person'] . '%' : false)

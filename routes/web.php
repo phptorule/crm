@@ -30,16 +30,3 @@ Route::any('{catchall}', function() {
 		return view('template');
 	}
 })->where('catchall', '(.*)');
-
-
-
-
-//Route::get('pdfview',array('as'=>'pdfview','uses'=>'PdfController@pdfview'));
-
-
-//Route::post('submitpdf','PdfController@downloadPDF')->name('submitpdf');
-
-//Route::post('submitpdf',['uses'=>'PdfController@downloadPDF', 'as'=>'submitpdf']);
-
-//Route::post('submitpdf',['uses'=>'PdfController@downloadPDF', 'as'=>'submitpdf']);
-
