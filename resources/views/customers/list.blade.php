@@ -5,7 +5,7 @@
         </div>
 
         <div class="header-title">
-            <h1>@{{ Page.title() }}</h1>
+            <h4>@{{ Page.title() }}</h4>
         </div>
     </section>
 
@@ -84,7 +84,6 @@
                      <div class="row">
                            <div class="col-sm-12">
                               <div class="form-group">
-                                 <label>Szukaj</label>
                                  <input type="text" class="form-control" name="search_input" placeholder="Szukaj" ng-model="searchInput" />
                               </div>
                            </div>

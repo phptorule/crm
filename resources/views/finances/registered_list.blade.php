@@ -5,7 +5,7 @@
         </div>
 
         <div class="header-title">
-            <h1>@{{ Page.title() }}</h1>
+            <h4>@{{ Page.title() }}</h4>
         </div>
     </section>
 
@@ -13,15 +13,14 @@
       <div class="col-sm-12">
          <div class="panel panel-bd">
             <div class="panel-heading">
-               <div class="btn-group" id="buttonexport">
-                     <h4>Wystawione faktury</h4>
-               </div>
+               <h4>Zarejestrowane faktury</h4>
             </div>
+
             <div class="panel-body">
             <!-- Plugin content:powerpoint,txt,pdf,png,word,xl -->
                <div class="btn-group">
                   <div class="buttonexport" id="buttonlist">
-                     <a class="btn btn-add" href="/finances/add"> <i class="fa fa-plus"></i> Utwórz fakturę
+                     <a class="btn btn-add" href="/finances/register"> <i class="fa fa-plus"></i> Zarejestruj fakturę
                      </a>
                   </div>
                   <button class="btn btn-exp btn-sm dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bars"></i> Export Table Data</button>
@@ -83,7 +82,6 @@
                      <div class="row">
                            <div class="col-sm-12">
                               <div class="form-group">
-                                 <label>Szukaj</label>
                                  <input type="text" class="form-control" name="search_input" placeholder="Szukaj" ng-model="searchInput" />
                               </div>
                            </div>

@@ -5,7 +5,7 @@
         </div>
 
         <div class="header-title">
-            <h1>@{{ Page.title() }}</h1>
+            <h4>@{{ Page.title() }}</h4>
         </div>
     </section>
 
@@ -15,11 +15,9 @@
         </button>
 
         <div class="col-sm-12">
-            <div class="panel panel-bd lobidrag">
+            <div class="panel panel-bd">
                 <div class="panel-heading">
-                    <div class="btn-group" id="buttonlist">
-                        <h3>Informacje podstawowe</h3>
-                    </div>
+                    <h4>Informacje podstawowe</h4>
 
                     <div class="custom_panel_block" ng-show="customer_id">
                         <div class="custom_panel_item pull-right" ng-show="customer_id">
@@ -155,11 +153,9 @@
         </div>
 
         <div class="col-sm-12">
-            <div class="panel panel-bd lobidrag">
+            <div class="panel panel-bd">
                 <div class="panel-heading">
-                    <div class="btn-group" id="buttonlist">
-                        <h3>Informacje adresowe</h3>
-                    </div>
+                    <h4>Informacje adresowe</h4>
 
                     <div class="custom_panel_block" ng-show="customer_id">
                         <div class="custom_panel_item pull-right" ng-show="customer_id">
@@ -251,11 +247,9 @@
         </div>
 
         <div class="col-sm-12">
-            <div class="panel panel-bd lobidrag">
+            <div class="panel panel-bd">
                 <div class="panel-heading">
-                    <div class="btn-group" id="buttonlist">
-                        <h3>Inne</h3>
-                    </div>
+                    <h4>Inne</h4>
 
                     <div class="custom_panel_block" ng-show="customer_id">
                         <div class="custom_panel_item pull-right" ng-show="customer_id">
@@ -304,11 +298,9 @@
         </div>
 
         <div class="col-sm-12" ng-show="customer_id">
-            <div class="panel panel-bd lobidrag">
+            <div class="panel panel-bd">
                 <div class="panel-heading">
-                    <div class="btn-group" id="buttonlist">
-                        <h3>Komentarze i notatki</h3>
-                    </div>
+                    <h4>Komentarze i notatki</h4>
                 </div>
 
                 <div class="panel-body">

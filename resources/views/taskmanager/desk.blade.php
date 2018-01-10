@@ -7,7 +7,7 @@
                 </div>
 
                 <div class="header-title">
-                    <h1 ng-click="desk_title = ! desk_title" class="pointer" ng-show="desk_title">@{{desk.name}}</h1>
+                    <h4 ng-click="desk_title = ! desk_title" class="pointer" ng-show="desk_title">@{{desk.name}}</h4>
 
                     <div class="input-group input-group-unstyled" ng-show=" ! desk_title">
                         <input type="text" focus-me="! desk_title" class="form-control" ng-enter="saveDeskTitle()" ng-model="desk.name">

@@ -625,19 +625,19 @@ a.sidebar-toggle .pe-7s-angle-left-circle {
     border-top: 1px solid #ddd;
 }
 .content-header .header-icon {
-    font-size: 48px;
-    color: #2278cf;
-    width: 68px;
+    font-size: 40px;
+    color: #d1d1d1;
+    width: 40px;
     float: left;
     margin-top: -10px;
     line-height: 0;
 }
 .content-header .header-title {
-    margin-left: 68px;
+    margin-left: 50px;
 }
-.content-header .header-title h1 {
+
+.content-header .header-title h4 {
     margin: 0;
-    font-size: 24px;
     color: #222;
     font-weight: 600;
 }
@@ -1134,17 +1134,6 @@ a.sidebar-toggle .pe-7s-angle-left-circle {
     list-style: none;
     padding: 5px 0 10px;
     margin: 0;
-    padding-left: 35px;
-    background-color: #ececec;
-}
-.sidebar-menu .treeview-menu:before {
-    width: 2px;
-    bottom: 0;
-    background: rgba(59, 70, 72, 0.5);
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 33px;
 }
 .sidebar-menu .treeview-menu .treeview-menu {
     padding-left: 20px;
@@ -1154,7 +1143,7 @@ a.sidebar-toggle .pe-7s-angle-left-circle {
     position: relative;
 }
 .sidebar-menu .treeview-menu > li > a {
-    padding: 5px 5px 5px 20px;
+    padding: 5px 5px 5px 55px;
     display: block;
     color: #707070;
     letter-spacing: 0.3px;
@@ -1170,12 +1159,13 @@ a.sidebar-toggle .pe-7s-angle-left-circle {
 }
 .sidebar-menu .treeview-menu > li > a.active
 {
+    background-color: #ececec;
     color: #2278cf;
 }
 .sidebar-menu .treeview-menu > li:hover > a {
     color: #2278cf;
 }
-.sidebar-menu .treeview-menu > li::before {
+/*.sidebar-menu .treeview-menu > li::before {
     left: 0;
     top: 13px;
     width: 15px;
@@ -1183,7 +1173,7 @@ a.sidebar-toggle .pe-7s-angle-left-circle {
     position: absolute;
     display: inline-block;
     border: 1px solid rgba(59, 70, 72, 0.5);
-}
+}*/
 .sidebar-menu .treeview-menu > li > a > .fa,
 .sidebar-menu .treeview-menu > li > a > .glyphicon,
 .sidebar-menu .treeview-menu > li > a > .ion {
@@ -5501,7 +5491,11 @@ button.toast-close-button {
 }
 
 .menu_line {
-    border-bottom: 2px solid rgba(59, 70, 72, 0.5);
+    display: block;
+    height: 2px;
+    background-color: #ececec;
+    margin: 5px 0px;
+    margin-left: 55px;
 }
 
 .sidebar-menu .treeview-menu > .menu_line::before {
