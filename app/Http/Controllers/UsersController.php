@@ -67,7 +67,7 @@ class UsersController extends Controller
 
     public function getCurrentTeam() {
 
-        if($_COOKIE['current_team']){
+        if(isset($_COOKIE['current_team'])){
             session(['current_team' => $_COOKIE['current_team']]);
         }
 
@@ -88,6 +88,11 @@ class UsersController extends Controller
     }
 
     public function getTeamUsers($post = []) {
+
+        if(isset($_COOKIE['current_team'])){
+            session(['current_team' => $_COOKIE['current_team']]);
+        }
+        
         $team = Teams::find(session('current_team'));
         return $team->users()->get();
     }
