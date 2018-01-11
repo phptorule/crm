@@ -20,7 +20,7 @@
 
             <div class="col-sm-6">
                 <div class="desk_switcher pull-right">
-                    <div uib-dropdown class="m-b-5" auto-close="outsideClick">
+                    <div uib-dropdown auto-close="outsideClick">
                         <button class="btn btn-add" uib-dropdown-toggle>
                             Choose your desk
                         </button>
@@ -241,7 +241,7 @@
                                     <div class="card_block checklists" ng-repeat="checklist in checklists">
                                         <div class="checklist_header">
                                             <h4 ng-show=" ! showChecklistTitle[checklist.id]">
-                                                <i class="fa fa-check-square-o"></i> <span class="checklist_title pointer" ng-click="showChecklistTitle[checklist.id] = ! showChecklistTitle[checklist.id]">@{{checklist.title}}</span>
+                                                <i class="fa fa-check-square-o"></i> <div class="checklist_title pointer" ng-click="showChecklistTitle[checklist.id] = ! showChecklistTitle[checklist.id]">@{{checklist.title}}</div>
                                             </h4>
 
                                             <div class="delete_card_item">
@@ -487,7 +487,7 @@
 
                                     <div class="card_comments">
                                         <div class="form-group">
-                                            <h4><i class="fa fa-comments-o"></i> Add comment</h4>
+                                            <h4>Add comment</h4>
                                             <textarea class="form-control resize" ng-model="comment_text"></textarea>
                                         </div>
 
@@ -512,7 +512,7 @@
 
                                 <div class="col-sm-4 card_settings_block">
                                     <div class="form-group">
-                                        <button class="btn btn-success" ng-If="card.done == 0" ng-click="changeDone()">Mark as done</button>
+                                        <button class="btn btn-add" ng-If="card.done == 0" ng-click="changeDone()">Mark as done</button>
                                         <button class="btn btn-add" ng-If="card.done == 1" ng-click="changeDone()">Mark as undone</button>
                                     </div>
 

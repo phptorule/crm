@@ -4565,11 +4565,32 @@ table.text-center th {
     border: 1px solid #589fe6;
     margin-bottom: 5px;
 }
+
+.list_button_group {
+    margin-bottom: 20px;
+}
+
+.list_button_group .btn-add,
+.list_button_group .export_button {
+    width: 100%;
+}
+
+.list_button_group .export_button {
+    background-color: transparent;
+    border: 1px solid #d1d1d1;
+    color: #a0a0a0;
+}
+
+.list_button_group .export_button:hover {
+    background-color: transparent;
+    border: 1px solid #e6e6e6;
+    color: #d1d1d1;
+}
+
 .btn-add {
     background: #2278cf;
     color: #fbfbfb !important;
     border: 1px solid #2278cf;
-    ;
 }
 .btn-add:hover {
     background: #589fe6;
@@ -5284,6 +5305,12 @@ button.toast-close-button {
 
 .view_customer a {
     margin: 0;
+    font-weight: 600;
+}
+
+.view_customer a:hover {
+    color: #2278cf;
+    text-decoration: underline;
 }
 
 .assign-list {
@@ -5528,7 +5555,7 @@ button.toast-close-button {
     position: absolute;
     z-index: 1;
     right: 5px;
-    top: 10px;
+    top: 5px;
     height: 20px;
     line-height: 14px;
     padding: 3px;
@@ -5843,6 +5870,13 @@ button.toast-close-button {
 
 .card_info .btn.btn-add {
     margin-top: 0;
+}
+
+.card_info span,
+.card_info p,
+.card_info .comment_author,
+.card_info .comment_text {
+    color: #959595;
 }
 
 .custom_pop_up.add_users {
@@ -6200,5 +6234,14 @@ button.toast-close-button {
 }
 
 .checklist_header:hover .delete_card_item {
+    display: inline-block;
+}
+
+.search_input {
+    background: url('../img/search_icon2.png') no-repeat scroll 10px 10px;
+    padding-left: 30px;
+}
+
+.checklist_title {
     display: inline-block;
 }
