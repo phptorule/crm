@@ -5,7 +5,7 @@
         </div>
 
         <div class="header-title">
-            <h1>@{{ Page.title() }}</h1>
+            <h4>@{{ Page.title() }}</h4>
         </div>
     </section>
 
@@ -14,11 +14,9 @@
             <a class="btn btn-add classic_button pull-right" ng-If="finances_id" href="/pdf/@{{finances_id}}" target="_blank">Export to PDF</a>
 
             <div class="col-sm-12">
-                <div class="panel panel-bd lobidrag">
+                <div class="panel panel-bd">
                     <div class="panel-heading">
-                        <div class="btn-group" id="buttonlist">
-                            <h3>Informacje podstawowe</h3>
-                        </div>
+                        <h4>Informacje podstawowe</h4>
 
                         <div class="custom_panel_block" ng-show="finances_id">
                             <div class="custom_panel_item pull-right">
@@ -140,11 +138,9 @@
             </div>
 
             <div class="col-sm-12">
-                <div class="panel panel-bd lobidrag">
+                <div class="panel panel-bd">
                     <div class="panel-heading">
-                        <div class="btn-group" id="buttonlist">
-                            <h3>Informacje adresowe</h3>
-                        </div>
+                        <h4>Informacje adresowe</h4>
 
                         <div class="custom_panel_block" ng-show="finances_id">
                             <div class="custom_panel_item pull-right">
@@ -245,11 +241,9 @@
         </form>
 
         <div class="col-sm-12">
-            <div class="panel panel-bd lobidrag">
+            <div class="panel panel-bd">
                 <div class="panel-heading">
-                    <div class="btn-group" id="buttonlist">
-                        <h3>Produkty i usługi</h3>
-                    </div>
+                    <h4>Produkty i usługi</h4>
 
                     <div class="custom_panel_block" ng-show="finances_id">
                         <div class="custom_panel_item pull-right">

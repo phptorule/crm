@@ -1,15 +1,21 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta charset="utf-8">
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link href="/css/bootstrap.min.css" rel="stylesheet" >
+        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
         <link href="/css/app.css" rel="stylesheet" type="text/css"/>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.5/jspdf.min.js"></script>
         <script src="https://code.jquery.com/jquery-1.12.3.min.js"></script>
-        <script type="text/javascript">
-            window.close();
-        </script>
+        <style>
+            #container{ font-family: DejaVu Sans, sans-serif; font-size: 12px;}
+            .customers_table td {
+                padding: 5px;
+                vertical-align: top;
+                text-transform: uppercase;
+                font-weight: 400;
+            }
+        </style>
     </head>
 
     <body>
@@ -25,7 +31,7 @@
                         </tr>
 
                         <tr>
-                            <td class="text-right">Adres:</td>
+                            <td class="text-right pdf_adress">Adres:</td>
                             <td>{{$team['teams_invoice_street']}}, {{$team['teams_invoice_postcode']}}, <br /> {{$team['teams_invoice_town']}}</td>
                         </tr>
 
@@ -152,22 +158,6 @@
             </div>
         </div>
 
-
-        <?php
-        /*
-            function getUrl() {
-              $url  = @( $_SERVER["HTTPS"] != 'on' ) ? 'http://www.'.$_SERVER["SERVER_NAME"] :  'https://'.$_SERVER["SERVER_NAME"];
-              $url .= ( $_SERVER["SERVER_PORT"] != 80 ) ? ":".$_SERVER["SERVER_PORT"] : "";
-              $url .= $_SERVER["REQUEST_URI"];
-              return $url;
-            } 
-
-            $curlconnect = curl_init();
-            curl_setopt($curlconnect, CURLOPT_URL, 'http://www.spurdoc.com/api/make?url='.urlencode(getUrl()));
-            $result = curl_exec($curlconnect);
-            echo $result;
-        */
-        ?>
     </body>
 </html>
 

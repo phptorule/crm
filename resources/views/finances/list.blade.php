@@ -5,7 +5,7 @@
         </div>
 
         <div class="header-title">
-            <h1>@{{ Page.title() }}</h1>
+            <h4>@{{ Page.title() }}</h4>
         </div>
     </section>
 
@@ -19,12 +19,12 @@
             </div>
             <div class="panel-body">
             <!-- Plugin content:powerpoint,txt,pdf,png,word,xl -->
-               <div class="btn-group">
+               <div class="btn-group list_button_group">
                   <div class="buttonexport" id="buttonlist">
                      <a class="btn btn-add" href="/finances/add"> <i class="fa fa-plus"></i> Utwórz fakturę
                      </a>
                   </div>
-                  <button class="btn btn-exp btn-sm dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bars"></i> Export Table Data</button>
+                  <button class="btn export_button dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bars"></i> Export Table Data</button>
                   <ul class="dropdown-menu exp-drop" role="menu">
                      <li>
                         <a href="#" onclick="$('#dataTableExample1').tableExport({type:'json',escape:'false'});">
@@ -83,8 +83,7 @@
                      <div class="row">
                            <div class="col-sm-12">
                               <div class="form-group">
-                                 <label>Szukaj</label>
-                                 <input type="text" class="form-control" name="search_input" placeholder="Szukaj" ng-model="searchInput" />
+                                 <input type="text" class="form-control search_input" name="search_input" placeholder="Szukaj" ng-model="searchInput" />
                               </div>
                            </div>
                      </div>
@@ -136,8 +135,8 @@
                            <td>@{{ finances.users.users_first_name + ' ' + finances.users.users_last_name }}</td>
 
                            <td class="view_customer">
-                              <a href="/finances/add/@{{ finances.finances_id }}" class="btn btn-success btn-labeled m-b-5">
-                                 <span class="btn-label"><i class="glyphicon glyphicon-info-sign"></i></span>Otwórz
+                              <a href="/finances/add/@{{ finances.finances_id }}">
+                                 Otwórz
                               </a>
                            </td>
                         </tr>

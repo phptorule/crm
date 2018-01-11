@@ -625,19 +625,19 @@ a.sidebar-toggle .pe-7s-angle-left-circle {
     border-top: 1px solid #ddd;
 }
 .content-header .header-icon {
-    font-size: 48px;
-    color: #2278cf;
-    width: 68px;
+    font-size: 40px;
+    color: #d1d1d1;
+    width: 40px;
     float: left;
     margin-top: -10px;
     line-height: 0;
 }
 .content-header .header-title {
-    margin-left: 68px;
+    margin-left: 50px;
 }
-.content-header .header-title h1 {
+
+.content-header .header-title h4 {
     margin: 0;
-    font-size: 24px;
     color: #222;
     font-weight: 600;
 }
@@ -1134,17 +1134,6 @@ a.sidebar-toggle .pe-7s-angle-left-circle {
     list-style: none;
     padding: 5px 0 10px;
     margin: 0;
-    padding-left: 35px;
-    background-color: #ececec;
-}
-.sidebar-menu .treeview-menu:before {
-    width: 2px;
-    bottom: 0;
-    background: rgba(59, 70, 72, 0.5);
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 33px;
 }
 .sidebar-menu .treeview-menu .treeview-menu {
     padding-left: 20px;
@@ -1154,7 +1143,7 @@ a.sidebar-toggle .pe-7s-angle-left-circle {
     position: relative;
 }
 .sidebar-menu .treeview-menu > li > a {
-    padding: 5px 5px 5px 20px;
+    padding: 5px 5px 5px 55px;
     display: block;
     color: #707070;
     letter-spacing: 0.3px;
@@ -1170,12 +1159,13 @@ a.sidebar-toggle .pe-7s-angle-left-circle {
 }
 .sidebar-menu .treeview-menu > li > a.active
 {
+    background-color: #ececec;
     color: #2278cf;
 }
 .sidebar-menu .treeview-menu > li:hover > a {
     color: #2278cf;
 }
-.sidebar-menu .treeview-menu > li::before {
+/*.sidebar-menu .treeview-menu > li::before {
     left: 0;
     top: 13px;
     width: 15px;
@@ -1183,7 +1173,7 @@ a.sidebar-toggle .pe-7s-angle-left-circle {
     position: absolute;
     display: inline-block;
     border: 1px solid rgba(59, 70, 72, 0.5);
-}
+}*/
 .sidebar-menu .treeview-menu > li > a > .fa,
 .sidebar-menu .treeview-menu > li > a > .glyphicon,
 .sidebar-menu .treeview-menu > li > a > .ion {
@@ -4575,11 +4565,32 @@ table.text-center th {
     border: 1px solid #589fe6;
     margin-bottom: 5px;
 }
+
+.list_button_group {
+    margin-bottom: 20px;
+}
+
+.list_button_group .btn-add,
+.list_button_group .export_button {
+    width: 100%;
+}
+
+.list_button_group .export_button {
+    background-color: transparent;
+    border: 1px solid #d1d1d1;
+    color: #a0a0a0;
+}
+
+.list_button_group .export_button:hover {
+    background-color: transparent;
+    border: 1px solid #e6e6e6;
+    color: #d1d1d1;
+}
+
 .btn-add {
     background: #2278cf;
     color: #fbfbfb !important;
     border: 1px solid #2278cf;
-    ;
 }
 .btn-add:hover {
     background: #589fe6;
@@ -5294,6 +5305,12 @@ button.toast-close-button {
 
 .view_customer a {
     margin: 0;
+    font-weight: 600;
+}
+
+.view_customer a:hover {
+    color: #2278cf;
+    text-decoration: underline;
 }
 
 .assign-list {
@@ -5501,7 +5518,11 @@ button.toast-close-button {
 }
 
 .menu_line {
-    border-bottom: 2px solid rgba(59, 70, 72, 0.5);
+    display: block;
+    height: 2px;
+    background-color: #ececec;
+    margin: 5px 0px;
+    margin-left: 55px;
 }
 
 .sidebar-menu .treeview-menu > .menu_line::before {
@@ -5534,7 +5555,7 @@ button.toast-close-button {
     position: absolute;
     z-index: 1;
     right: 5px;
-    top: 10px;
+    top: 5px;
     height: 20px;
     line-height: 14px;
     padding: 3px;
@@ -5561,12 +5582,15 @@ button.toast-close-button {
     border-radius: 5px;
 }
 
+/*
 .customers_table td {
     padding: 5px;
     vertical-align: top;
     text-transform: uppercase;
     font-weight: 700;
+    border: 1px solid red;
 }
+*/
 
 .pdf_line {
     border-bottom: 3px solid #d9edf7;
@@ -5846,6 +5870,13 @@ button.toast-close-button {
 
 .card_info .btn.btn-add {
     margin-top: 0;
+}
+
+.card_info span,
+.card_info p,
+.card_info .comment_author,
+.card_info .comment_text {
+    color: #959595;
 }
 
 .custom_pop_up.add_users {
@@ -6203,5 +6234,14 @@ button.toast-close-button {
 }
 
 .checklist_header:hover .delete_card_item {
+    display: inline-block;
+}
+
+.search_input {
+    background: url('../img/search_icon2.png') no-repeat scroll 10px 10px;
+    padding-left: 30px;
+}
+
+.checklist_title {
     display: inline-block;
 }

@@ -66,12 +66,19 @@ class UsersController extends Controller
     }
 
     public function getCurrentTeam() {
+
+        if(isset($_COOKIE['current_team'])){
+            session(['current_team' => $_COOKIE['current_team']]);
+        }
+
         $current_team = array();
         $current_team = Teams::where(['teams_id' => session('current_team')])->first();
         return $current_team;
     }
 
     public function saveTeam($post = []) {
+        
+        setcookie("current_team", $post['current_team'], time()+86400);
         session(['current_team' => $post['current_team']]);
     }
 
@@ -81,6 +88,11 @@ class UsersController extends Controller
     }
 
     public function getTeamUsers($post = []) {
+
+        if(isset($_COOKIE['current_team'])){
+            session(['current_team' => $_COOKIE['current_team']]);
+        }
+        
         $team = Teams::find(session('current_team'));
         return $team->users()->get();
     }

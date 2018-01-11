@@ -34,41 +34,22 @@ class TaskManagerController extends Controller
     {
         $tasks = TasksLists::where('desc_id', $post['desk_id'])->orderBy('position')->get();
 
-        foreach ($tasks as $task)
-        {
+        foreach ($tasks as $task){
             $task->cards = $task->cards()->get();
+            $cards_preview = array();
+            $card_obj = new cards();
 
             foreach ($task->cards as $card) {
-                $card->assign_to_card = $card->users->contains('users_id', Auth::user()->users_id);
-
-                foreach ($card->checkLists as $checklist) {
-                    $all_checkboxes[$card->cards_id][] = $checklist->checkBoxes->count();
-                    $total_checked_checkboxes[$card->cards_id][] =  $checklist->checkBoxes->where('status', 1)->count();
-                }
-
-                if ( ! empty($all_checkboxes[$card->cards_id])) {
-                    $card->all_checkboxes = array_sum($all_checkboxes[$card->cards_id]);
-                }else {
-                    $card->all_checkboxes = NULL;
-                }
-
-                if ( ! empty($total_checked_checkboxes[$card->cards_id])) {
-                    $card->checked_checkboxes = array_sum($total_checked_checkboxes[$card->cards_id]);
-                }else {
-                    $card->checked_checkboxes = NULL;
-                }
-
-                if( ! empty($card->deadline)) {
-                    $card->deadline_preview = date("M d", strtotime($card->deadline));
-                }else {
-                    $card->deadline_preview = NULL;
-                }
-
-                $card->comments_amount = $card->cardComments()->get()->count();
+                $card->card_preview = $card_obj->getCardPreview($card->cards_id);
             }
         }
 
         return $tasks;
+    }
+
+    public function getCardPreview($post = []){
+        $card_obj = new cards();
+        return $card_obj->getCardPreview($post['cards_id']);
     }
 
     public function saveDesk($post = [])
@@ -124,12 +105,14 @@ class TaskManagerController extends Controller
     /* TASK LIST ACTIONS */
     public function addTaskList($post = [])
     {
+        $last_position = TasksLists::where('desc_id', $post['desk_id'])->max('position');
         $list = new TasksLists();
         $list->name = $post['task_name'];
         $list->user_id = Auth::user()->users_id;
         $list->position = '0';
         $list->desc_id = $post['desk_id'];
         $list->teams_id = session('current_team');
+        $list->position = $last_position + 1;
         $list->save();
     }
 

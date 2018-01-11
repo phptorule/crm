@@ -5,7 +5,7 @@
         </div>
 
         <div class="header-title">
-            <h1>@{{ Page.title() }}</h1>
+            <h4>@{{ Page.title() }}</h4>
         </div>
     </section>
 
@@ -16,11 +16,9 @@
 
         <form class="no-transition" name="form" method="post" novalidate="novalidate">
             <div class="col-sm-12">
-                <div class="panel panel-bd lobidrag">
+                <div class="panel panel-bd">
                     <div class="panel-heading">
-                        <div class="btn-group" id="buttonlist">
-                            <h3>Informacje podstawowe</h3>
-                        </div>
+                        <h4>Informacje podstawowe</h4>
 
                         <div class="custom_panel_block" ng-show="registered_id">
                             <div class="custom_panel_item pull-right">
@@ -176,11 +174,9 @@
             </div>
 
             <div class="col-sm-12">
-                <div class="panel panel-bd lobidrag">
+                <div class="panel panel-bd">
                     <div class="panel-heading">
-                        <div class="btn-group" id="buttonlist">
-                            <h3>Informacje konta bankowego</h3>
-                        </div>
+                        <h4>Informacje konta bankowego</h4>
 
                         <div class="custom_panel_block" ng-show="registered_id">
                             <div class="custom_panel_item pull-right">
@@ -256,11 +252,9 @@
             </div>
 
             <div class="col-sm-12">
-                <div class="panel panel-bd lobidrag">
+                <div class="panel panel-bd">
                     <div class="panel-heading">
-                        <div class="btn-group" id="buttonlist">
-                            <h3>Inne</h3>
-                        </div>
+                        <h4>Inne</h4>
 
                         <div class="custom_panel_block" ng-show="registered_id">
                             <div class="custom_panel_item pull-right">

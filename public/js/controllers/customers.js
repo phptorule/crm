@@ -278,17 +278,6 @@
             Page.setTitle('Lista Kontrahentów');
             Page.setIcon('fa fa-list');
         }
-
-
-
-        $scope.search = function(value) {
-
-            request.send('/customers/searchCustomer', {'value': value}, function(data) {
-
-
-            });
-
-        };
     };
 })();
 

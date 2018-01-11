@@ -7,7 +7,10 @@
     "require": {
         "php": ">=5.6.4",
         "barryvdh/laravel-dompdf": "^0.8.1",
+        "barryvdh/laravel-snappy": "^0.4.0",
+        "codedge/laravel-fpdf": "^1.2",
         "doctrine/dbal": "v2.4.2",
+        "dompdf/dompdf": "^0.8.2",
         "fabpot/goutte": "^3.2",
         "guzzlehttp/guzzle": "^6.2",
         "laravel/framework": "5.4.*",

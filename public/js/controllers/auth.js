@@ -25,7 +25,8 @@
 						else
 						{
 							$timeout(function() {
-								$window.location.href = "/";
+								$window.location.reload();
+								//$route.reload();
 							}, 2000);
 						}
 					}

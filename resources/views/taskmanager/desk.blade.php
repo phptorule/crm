@@ -7,7 +7,7 @@
                 </div>
 
                 <div class="header-title">
-                    <h1 ng-click="desk_title = ! desk_title" class="pointer" ng-show="desk_title">@{{desk.name}}</h1>
+                    <h4 ng-click="desk_title = ! desk_title" class="pointer" ng-show="desk_title">@{{desk.name}}</h4>
 
                     <div class="input-group input-group-unstyled" ng-show=" ! desk_title">
                         <input type="text" focus-me="! desk_title" class="form-control" ng-enter="saveDeskTitle()" ng-model="desk.name">
@@ -20,7 +20,7 @@
 
             <div class="col-sm-6">
                 <div class="desk_switcher pull-right">
-                    <div uib-dropdown class="m-b-5" auto-close="outsideClick">
+                    <div uib-dropdown auto-close="outsideClick">
                         <button class="btn btn-add" uib-dropdown-toggle>
                             Choose your desk
                         </button>
@@ -104,24 +104,24 @@
                                 </p>
 
                                 <div class="preview_card">
-                                    <div class="cards_preview_item" ng-show="card.assign_to_card" title="You are subscribed to this card">
+                                    <div class="cards_preview_item" ng-show="card.card_preview.assign_to_card" title="You are subscribed to this card">
                                         <i class="fa fa-user"></i>
                                     </div>
 
-                                    <div class="cards_preview_item" ng-show="card.description" title="This card has a description">
+                                    <div class="cards_preview_item" ng-show="card.card_preview.description" title="This card has a description">
                                         <i class="fa fa-align-left"></i>
                                     </div>
 
-                                    <div class="cards_preview_item" ng-show="card.comments_amount" title="Comments">
-                                        <i class="fa fa-comment"></i> @{{ card.comments_amount }}
+                                    <div class="cards_preview_item" ng-show="card.card_preview.comments_amount" title="Comments">
+                                        <i class="fa fa-comment"></i> @{{ card.card_preview.comments_amount }}
                                     </div>
 
-                                    <div class="cards_preview_item" ng-show="card.deadline" title="Deadline">
-                                        <i class="fa fa-calendar-check-o"></i> @{{ card.deadline_preview }}
+                                    <div class="cards_preview_item" ng-show="card.card_preview.deadline" title="Deadline">
+                                        <i class="fa fa-calendar-check-o"></i> @{{ card.card_preview.deadline_preview }}
                                     </div>
 
-                                    <div class="cards_preview_item" ng-show="card.all_checkboxes" title="Checklist items">
-                                        <i class="fa fa-check-square-o"></i> @{{ card.checked_checkboxes}}/@{{card.all_checkboxes }}
+                                    <div class="cards_preview_item" ng-show="card.card_preview.all_checkboxes" title="Checklist items">
+                                        <i class="fa fa-check-square-o"></i> @{{ card.card_preview.checked_checkboxes}}/@{{card.card_preview.all_checkboxes }}
                                     </div>
                                 </div>
 
@@ -241,7 +241,7 @@
                                     <div class="card_block checklists" ng-repeat="checklist in checklists">
                                         <div class="checklist_header">
                                             <h4 ng-show=" ! showChecklistTitle[checklist.id]">
-                                                <i class="fa fa-check-square-o"></i> <span class="checklist_title pointer" ng-click="showChecklistTitle[checklist.id] = ! showChecklistTitle[checklist.id]">@{{checklist.title}}</span>
+                                                <i class="fa fa-check-square-o"></i> <div class="checklist_title pointer" ng-click="showChecklistTitle[checklist.id] = ! showChecklistTitle[checklist.id]">@{{checklist.title}}</div>
                                             </h4>
 
                                             <div class="delete_card_item">
@@ -487,7 +487,7 @@
 
                                     <div class="card_comments">
                                         <div class="form-group">
-                                            <h4><i class="fa fa-comments-o"></i> Add comment</h4>
+                                            <h4>Add comment</h4>
                                             <textarea class="form-control resize" ng-model="comment_text"></textarea>
                                         </div>
 
@@ -512,7 +512,7 @@
 
                                 <div class="col-sm-4 card_settings_block">
                                     <div class="form-group">
-                                        <button class="btn btn-success" ng-If="card.done == 0" ng-click="changeDone()">Mark as done</button>
+                                        <button class="btn btn-add" ng-If="card.done == 0" ng-click="changeDone()">Mark as done</button>
                                         <button class="btn btn-add" ng-If="card.done == 1" ng-click="changeDone()">Mark as undone</button>
                                     </div>
 
