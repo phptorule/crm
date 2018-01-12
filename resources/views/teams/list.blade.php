@@ -5,7 +5,7 @@
         </div>
 
         <div class="header-title">
-            <h1>@{{ Page.title() }}</h1>
+            <h4>@{{ Page.title() }}</h4>
         </div>
     </section>
 
