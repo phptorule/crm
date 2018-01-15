@@ -100,6 +100,7 @@
                 }
                 else
                 {
+                    console.log($scope.customers);
                     $scope.customers.users_ids = $scope.checked_ids;
                     request.send('/customers/save', $scope.customers, function(data) {
                         if (data)

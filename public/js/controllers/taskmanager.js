@@ -75,6 +75,7 @@
 
         $scope.addTaskList = function() {
             request.send('/TaskManager/addTaskList', {'task_name': $scope.task_name, 'desk_id': $scope.desk.id}, function(data) {
+                $scope.task_name = '';
                 $scope.getDeskLists($scope.desk);
             });
         };
@@ -151,8 +152,14 @@
             });
         };
 
+        $scope.editListTitle = function(task) {
+            $scope.title = {};
+            $scope.title[task.id] = ! $scope.title[task.id];
+        };
+
         $scope.addNewCard = function(task) {
             $scope.showCreateNewCard = {};
+            $scope.title = {};
             $scope.showCreateNewCard[task.id] = ! $scope.showCreateNewCard[task.id];
         };
 
@@ -308,6 +315,8 @@
         $scope.temp_checkbox_deadline = {};
         $scope.showCheckboxDeadline = false;
         $scope.checklist_title = '';
+
+        console.log($scope.card);
 
         $scope.initCard = function() {
             $scope.getTeamUsers();

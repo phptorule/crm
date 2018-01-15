@@ -56,7 +56,7 @@
                         <div class="panel-heading">
                             <div class="row">
                                 <div class="list_title col-sm-10">
-                                    <h4 ng-click="title[task.id] = ! title[task.id]" ng-show=" ! title[task.id]">@{{task.name}}</h4>
+                                    <h4 ng-click="editListTitle(task)" ng-show=" ! title[task.id]">@{{task.name}}</h4>
                                     <div class="input-group input-group-unstyled" ng-show="title[task.id]">
                                         <input type="text" focus-me="! title[task.id]" class="form-control" ng-enter="saveTaskTitle(task)" ng-model="task.name">
                                         <div class="btn btn-add save_title" ng-click="saveTaskTitle(task)">
@@ -108,7 +108,7 @@
                                         <i class="fa fa-user"></i>
                                     </div>
 
-                                    <div class="cards_preview_item" ng-show="card.card_preview.description" title="This card has a description">
+                                    <div class="cards_preview_item" ng-show="card.description" title="This card has a description">
                                         <i class="fa fa-align-left"></i>
                                     </div>
 
@@ -116,7 +116,7 @@
                                         <i class="fa fa-comment"></i> @{{ card.card_preview.comments_amount }}
                                     </div>
 
-                                    <div class="cards_preview_item" ng-show="card.card_preview.deadline" title="Deadline">
+                                    <div class="cards_preview_item" ng-show="card.card_preview.deadline_preview" title="Deadline">
                                         <i class="fa fa-calendar-check-o"></i> @{{ card.card_preview.deadline_preview }}
                                     </div>
 
@@ -223,15 +223,20 @@
                                     <div class="card_block description">
                                         <h4>Description:</h4>
                                         <div class="card_description">
-                                            <div class="form-group">
-                                                <p class="title_pointer" ng-show="show_description && card.description" ng-click="makeDescriptionCopy()">@{{card.description}}</p>
-                                                <textarea class="form-control resize" ng-show=" ! show_description || ! card.description" ng-model="temp_description"></textarea>
+                                            <div class="description_add" ng-show="! card.description && show_description">
+                                                <a href="javascript:void(0);" ng-click="show_description = ! show_description"><i class="fa fa-align-left"></i> Dodaj opys</a>
                                             </div>
 
-                                            <div class="form-group">
-                                                <button class="btn btn-add" ng-show=" ! show_description || ! card.description" ng-click="saveCardDescription()">Save</button>
-                                                <button class="btn btn-danger" ng-show=" ! show_description && card.description" ng-click="resetCardDescription()">Cancel</button>
-                                                <button class="btn btn-add" ng-show="show_description && card.description" ng-click="makeDescriptionCopy()">Edit</button>
+                                            <div class="description_area" ng-show="card.description || ! show_description">
+                                                <div class="form-group">
+                                                    <p class="pointer" ng-show="show_description && card.description" ng-click="makeDescriptionCopy()">@{{card.description}}</p>
+                                                    <textarea class="form-control resize" ng-show=" ! show_description" ng-model="temp_description"></textarea>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <button class="btn btn-add" ng-show=" ! show_description" ng-click="saveCardDescription()">Save</button>
+                                                    <button class="btn btn-danger" ng-show=" ! show_description" ng-click="resetCardDescription()">Cancel</button>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -495,7 +500,7 @@
                                             <button class="btn btn-add" ng-click="saveComment()">Save</button>
                                         </div>
 
-                                        <p ng-show="card.comments">Comments: </p>
+                                        <p ng-show="comments">Comments: </p>
                                         <div ng-repeat="comment in comments">
                                             <div class="card_comment_block">
                                                 <div class="comment_author">

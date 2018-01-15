@@ -70,7 +70,6 @@ class TaskManagerController extends Controller
 
     public function deleteDesk($post = [])
     {
-
         $desks = Descs::find($post['desk_id']);
         $tasklists = $desks->tasks()->get();
 
@@ -89,7 +88,7 @@ class TaskManagerController extends Controller
                     $checklist->checkBoxes()->delete();
                 }
 
-                $card->cardComments()->delete();   
+                $card->cardComments()->delete();
                 $card->checkLists()->delete();
                 $card->usersRelation()->delete();
                 $card->delete();
@@ -152,12 +151,11 @@ class TaskManagerController extends Controller
 
     public function removeUserList($post = [])
     {
-        $user_list = ListsUsers::where('lists_id',$post['lists_id'])->where('users_id',$post['users_id'])->delete();
+        $user_list = ListsUsers::where('lists_id', $post['lists_id'])->where('users_id', $post['users_id'])->delete();
     }
 
     public function deleteList($post = [])
     {
-
         $task = TasksLists::find($post['id']);
         $cards = $task->cards()->get();
 
@@ -174,7 +172,7 @@ class TaskManagerController extends Controller
                 $checklist->checkBoxes()->delete();
             }
 
-            $card->cardComments()->delete();   
+            $card->cardComments()->delete();
             $card->checkLists()->delete();
             $card->usersRelation()->delete();
             $card->delete();
@@ -203,7 +201,6 @@ class TaskManagerController extends Controller
 
     public function deleteCard($post = [])
     {
-
         $card = Cards::findOrFail($post['cards_id']);
         $checklists = $card->checkLists()->get();
 
@@ -217,13 +214,13 @@ class TaskManagerController extends Controller
             $checklist->checkBoxes()->delete();
         }
 
-        $card->cardComments()->delete();   
+        $card->cardComments()->delete();
         $card->checkLists()->delete();
         $card->usersRelation()->delete();
         $card->delete();
     }
 
-     public function saveCardDescription($post = []){
+    public function saveCardDescription($post = []){
         $card = Cards::find($post['cards_id']);
         $card->description = $post['description'];
         $card->save();
@@ -231,7 +228,7 @@ class TaskManagerController extends Controller
 
     public function addUserToCard($post = [])
     {
-        if(!empty($post['users_id'])){
+        if( ! empty($post['users_id'])){
             $card = Cards::find($post['cards_id']);
             $card->users()->syncWithoutDetaching($post['users_id']);
 
@@ -288,7 +285,7 @@ class TaskManagerController extends Controller
 
     public function saveChecklist($post = [])
     {
-        if(!empty($post['title'])) {
+        if( ! empty($post['title'])) {
             $checklists = new Checklists();
             $checklists->title = $post['title'];
             $checklists->users_id = Auth::user()->users_id;
@@ -321,7 +318,6 @@ class TaskManagerController extends Controller
 
     public function deleteChecklist($post = [])
     {
-
         $checklist = Checklists::findOrFail($post['checklist_id']);
         $checkboxes = $checklist->checkBoxes()->get();
 
@@ -416,8 +412,13 @@ class TaskManagerController extends Controller
     public function getComments($post = [])
     {
         $card = Cards::find($post['cards_id']);
+        $comments = $card->cardComments()->orderBy('created_at', 'desc')->get();
 
-        return $card->cardComments()->orderBy('created_at', 'desc')->get();
+        foreach ($comments as $item) {
+            $item->users = Users::find($item['users_id']);
+        }
+
+        return $comments;
     }
 
     public function saveComment($post = [])
