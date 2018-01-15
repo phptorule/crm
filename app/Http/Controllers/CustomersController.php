@@ -50,10 +50,10 @@ class CustomersController extends Controller
                 'extra_phone_number' => (isset($post['extra_phone_number'])) ? $post['extra_phone_number'] : NULL,
                 'email' => (isset($post['email'])) ? $post['email'] : NULL,
                 'extra_email' => (isset($post['extra_email'])) ? $post['extra_email'] : NULL,
-                'nip' => (isset($post['extra_email'])) ? $post['extra_email'] : NULL,
-                'bank_account' => (isset($post['nip'])) ? $post['nip'] : NULL,
-                'website' => (isset($post['bank_account'])) ? $post['bank_account'] : NULL,
-                'fb_link' => (isset($post['website'])) ? $post['website'] : NULL,
+                'nip' => (isset($post['nip'])) ? $post['nip'] : NULL,
+                'bank_account' => (isset($post['bank_account'])) ? $post['bank_account'] : NULL,
+                'website' => (isset($post['website'])) ? $post['website'] : NULL,
+                'fb_link' => (isset($post['fb_link'])) ? $post['fb_link'] : NULL,
                 'invoice_post_code' => (isset($post['invoice_post_code'])) ? $post['invoice_post_code'] : NULL,
                 'invoice_street' => (isset($post['invoice_street'])) ? $post['invoice_street'] : NULL,
                 'invoice_town' => (isset($post['invoice_town'])) ? $post['invoice_town'] : NULL,
@@ -70,10 +70,10 @@ class CustomersController extends Controller
             [
                 'company_name' => 'max:255',
                 'contact_person' => 'max:255',
-                'phone_number' => 'required|min:11|numeric',
-                'extra_phone_number' => 'required|min:11|numeric',
-                'email' => 'email',
-                'extra_email' => 'email',
+                //'phone_number' => 'required|min:11|numeric',
+                //'extra_phone_number' => 'min:11|numeric',
+                //'email' => 'email',
+                //'extra_email' => 'email',
                 'nip' => 'max:20',
                 'bank_account' => 'max:25',
                 'website' => 'max:35',
@@ -93,7 +93,7 @@ class CustomersController extends Controller
             ]
         );
 
-        //return dd($validator->errors()->all());
+        //dd($validator->errors()->all());
         if($validator->errors()->all()){
             return $validator->errors()->all();
         }else{
@@ -148,12 +148,17 @@ class CustomersController extends Controller
                 {
                     $customer->users()->sync($post['users_ids']);
                 }
+                else
+                {
+                    $customer->users()->sync(Auth::user()->users_id);
+                }
+
                 $customer->teams()->syncWithoutDetaching(session('current_team'));
                 $this->message(__('Customer was successfully saved'), 'success');
                 return $customer->customer_id;
             }
         }
-        
+
 	}
 
     public function delete($post = [])

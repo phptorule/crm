@@ -44,31 +44,31 @@
                                     <input type="text" class="form-control" name="company_name" ng-show="edit_general || ! customer_id" ng-model="customers.company_name" required maxlength="35" />
                                 </div>
 
-                                <div class="form-group">
+                                <div class="form-group" ng-show="customers.contact_person || edit_general">
                                     <label>Osoba kontaktowa</label>
                                     <span class="form-span" ng-model="customers.contact_person" ng-show=" ! edit_general && customer_id">@{{ customers.contact_person }}</span>
                                     <input type="text" class="form-control" name="contact_person" ng-show="edit_general || ! customer_id" ng-model="customers.contact_person" maxlength="35" />
                                 </div>
 
-                                <div class="form-group">
+                                <div class="form-group" ng-show="customers.phone_number || edit_general">
                                     <label>Telefon</label>
                                     <span class="form-span" ng-model="customers.phone_number" ng-show=" ! edit_general && customer_id">@{{ customers.phone_number }}</span>
                                     <input type="text" class="form-control" name="phone_number" ng-show="edit_general || ! customer_id" ng-model="customers.phone_number" />
                                 </div>
 
-                                <div class="form-group">
+                                <div class="form-group" ng-show="customers.extra_phone_number || edit_general">
                                     <label>Telefon dodatkowy</label>
                                     <span class="form-span" ng-model="customers.extra_phone_number" ng-show=" ! edit_general && customer_id">@{{ customers.extra_phone_number }}</span>
                                     <input type="text" class="form-control" name="extra_phone_number" ng-show="edit_general || ! customer_id" ng-model="customers.extra_phone_number" />
                                 </div>
 
-                                <div class="form-group">
+                                <div class="form-group" ng-show="customers.email || edit_general">
                                     <label>Email</label>
                                     <span class="form-span" ng-model="customers.email" ng-show=" ! edit_general && customer_id">@{{ customers.email }}</span>
                                     <input type="text" class="form-control" name="email" ng-show="edit_general || ! customer_id" ng-model="customers.email" />
                                 </div>
 
-                                <div class="form-group">
+                                <div class="form-group" ng-show="customers.extra_email || edit_general">
                                     <label>Email dodatkowy</label>
                                     <span class="form-span" ng-model="customers.extra_email" ng-show=" ! edit_general && customer_id">@{{ customers.extra_email }}</span>
                                     <input type="text" class="form-control" name="extra_email" ng-show="edit_general || ! customer_id" ng-model="customers.extra_email" />
@@ -76,13 +76,13 @@
                             </div>
 
                             <div class="col-sm-6">
-                                <div class="form-group">
+                                <div class="form-group" ng-show="customers.nip || edit_general">
                                     <label>Numer NIP</label>
                                     <span class="form-span" ng-model="customers.nip" ng-show=" ! edit_general && customer_id">@{{ customers.nip }}</span>
                                     <input type="text" class="form-control" name="nip" ng-show="edit_general || ! customer_id" ng-model="customers.nip" maxlength="20" />
                                 </div>
 
-                                <div class="form-group">
+                                <div class="form-group" ng-show="users || edit_general">
                                     <label>Przypisany do</label>
                                     <ul class="assign-list">
                                         <li class="form-span" ng-show=" ! edit_general && customer_id" ng-repeat="user in users">@{{ user.users_first_name + ' ' + user.users_last_name }}</li>
@@ -113,25 +113,26 @@
                                     </div>
                                 </div>
 
-                                <div class="form-group">
+                                <div class="form-group" ng-show="customers.bank_account || edit_general">
                                     <label>Konto bankowe</label>
                                     <span class="form-span" ng-model="customers.bank_account" ng-show=" ! edit_general && customer_id">@{{ customers.bank_account }}</span>
                                     <input type="text" class="form-control" name="bank_account" ng-show="edit_general || ! customer_id" ng-model="customers.bank_account" maxlength="35" />
                                 </div>
 
-                                <div class="form-group">
+                                <div class="form-group" ng-show="customers.website || edit_general">
                                     <label>Strona WWW</label>
                                     <span class="form-span" ng-model="customers.website" ng-show=" ! edit_general && customer_id">@{{ customers.website }}</span>
                                     <input type="text" class="form-control" name="website" ng-show="edit_general || ! customer_id" ng-model="customers.website" maxlength="35" />
                                 </div>
 
-                                <div class="form-group">
+                                <div class="form-group" ng-show="customers.fb_link || edit_general">
                                     <label>Facebook Id</label>
                                     <span class="form-span" ng-model="customers.fb_link" ng-show=" ! edit_general && customer_id">@{{ customers.fb_link }}</span>
                                     <input type="text" class="form-control" name="fb_link" ng-show="edit_general || ! customer_id" ng-model="customers.fb_link" maxlength="35" />
                                 </div>
                             </div>
                         </div>
+
                         <div class="row" ng-show="customer_id">
                             <div class="col-sm-6">
                                 <div class="form-group">
@@ -177,31 +178,31 @@
                         <div class="row">
                             <div class="col-sm-6">
                                 <h4>Adres do faktury</h4>
-                                <div class="form-group">
+                                <div class="form-group" ng-show="customers.invoice_street || edit_address">
                                     <label>Ulica</label>
                                     <span class="form-span" ng-model="customers.invoice_street" ng-show=" ! edit_address && customer_id">@{{ customers.invoice_street }}</span>
                                     <input type="text" class="form-control" name="invoice_street" ng-show="edit_address || ! customer_id" ng-model="customers.invoice_street" maxlength="35" />
                                 </div>
 
-                                <div class="form-group">
+                                <div class="form-group" ng-show="customers.invoice_town || edit_address">
                                     <label>Miejscowosc</label>
                                     <span class="form-span" ng-model="customers.invoice_town" ng-show=" ! edit_address && customer_id">@{{ customers.invoice_town }}</span>
                                     <input type="text" class="form-control" name="invoice_town" ng-show="edit_address || ! customer_id" ng-model="customers.invoice_town" maxlength="35" />
                                 </div>
 
-                                <div class="form-group">
+                                <div class="form-group" ng-show="customers.invoice_province || edit_address">
                                     <label>Wojewodztwo</label>
                                     <span class="form-span" ng-model="customers.invoice_province" ng-show=" ! edit_address && customer_id">@{{ customers.invoice_province }}</span>
                                     <input type="text" class="form-control" name="invoice_province" ng-show="edit_address || ! customer_id" ng-model="customers.invoice_province" maxlength="35" />
                                 </div>
 
-                                <div class="form-group">
+                                <div class="form-group" ng-show="customers.invoice_post_code || edit_address">
                                     <label>Kod</label>
                                     <span class="form-span" ng-model="customers.invoice_post_code" ng-show=" ! edit_address && customer_id">@{{ customers.invoice_post_code }}</span>
                                     <input type="text" class="form-control" name="invoice_post_code" ng-show="edit_address || ! customer_id" ng-model="customers.invoice_post_code" maxlength="10" />
                                 </div>
 
-                                <div class="form-group">
+                                <div class="form-group" ng-show="customers.invoice_region || edit_address">
                                     <label>Kraj</label>
                                     <span class="form-span" ng-model="customers.invoice_region" ng-show=" ! edit_address && customer_id">@{{ customers.invoice_region }}</span>
                                     <input type="text" class="form-control" name="invoice_region" ng-show="edit_address || ! customer_id" ng-model="customers.invoice_region" maxlength="35" />
@@ -210,31 +211,31 @@
 
                             <div class="col-sm-6">
                                 <h4>Adres do wysylki</h4>
-                                <div class="form-group">
+                                <div class="form-group" ng-show="customers.send_street || edit_address">
                                     <label>Ulica</label>
                                     <span class="form-span" ng-model="customers.send_street" ng-show=" ! edit_address && customer_id">@{{ customers.send_street }}</span>
                                     <input type="text" class="form-control" name="send_street" ng-show="edit_address || ! customer_id" ng-model="customers.send_street" maxlength="35" />
                                 </div>
 
-                                <div class="form-group">
+                                <div class="form-group" ng-show="customers.send_town || edit_address">
                                     <label>Miejscowosc</label>
                                     <span class="form-span" ng-model="customers.send_town" ng-show=" ! edit_address && customer_id">@{{ customers.send_town }}</span>
                                     <input type="text" class="form-control" name="send_town" ng-show="edit_address || ! customer_id" ng-model="customers.send_town" maxlength="35" />
                                 </div>
 
-                                <div class="form-group">
+                                <div class="form-group" ng-show="customers.send_province || edit_address">
                                     <label>Wojewodztwo</label>
                                     <span class="form-span" ng-model="customers.send_province" ng-show=" ! edit_address && customer_id">@{{ customers.send_province }}</span>
                                     <input type="text" class="form-control" name="send_province" ng-show="edit_address || ! customer_id" ng-model="customers.send_province" maxlength="35" />
                                 </div>
 
-                                <div class="form-group">
+                                <div class="form-group" ng-show="customers.send_post_code || edit_address">
                                     <label>Kod</label>
                                     <span class="form-span" ng-model="customers.send_post_code" ng-show=" ! edit_address && customer_id">@{{ customers.send_post_code }}</span>
                                     <input type="text" class="form-control" name="send_post_code" ng-show="edit_address || ! customer_id" ng-model="customers.send_post_code" maxlength="10" />
                                 </div>
 
-                                <div class="form-group">
+                                <div class="form-group" ng-show="customers.send_region || edit_address">
                                     <label>Kraj</label>
                                     <span class="form-span" ng-model="customers.send_region" ng-show=" ! edit_address && customer_id">@{{ customers.send_region }}</span>
                                     <input type="text" class="form-control" name="send_region" ng-show="edit_address || ! customer_id" ng-model="customers.send_region" maxlength="35" />
@@ -270,7 +271,7 @@
                     <form class="no-transition" name="form_rest" method="post" novalidate="novalidate">
                         <div class="row">
                             <div class="col-sm-12">
-                                <div class="form-group">
+                                <div class="form-group" ng-show="customers.description || edit_rest">
                                     <label>Opis</label>
                                     <span class="form-span" ng-model="customers.description" ng-show=" ! edit_rest && customer_id">@{{ customers.description }}</span>
                                     <textarea class="form-control" rows="1" name="description" ng-show="edit_rest || ! customer_id" ng-model="customers.description"></textarea>

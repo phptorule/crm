@@ -5262,8 +5262,8 @@ button.toast-close-button {
 
 .custom_panel_block {
     position: absolute;
-    right: 70px;
-    top: 6px;
+    right: 10px;
+    top: 10px;
 }
 
 .custom_panel_item a:hover {

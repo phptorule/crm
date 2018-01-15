@@ -16,8 +16,6 @@
 					}
 				}
 
-				console.log(field, name, object_field);
-
 				if (field.$valid)
 				{
 					return true;
