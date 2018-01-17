@@ -71,6 +71,12 @@ class Cards extends Model
             $card_preview->deadline_preview = NULL;
         }
 
+        if( ! empty($card->description)) {
+            $card_preview->description = true;
+        }else {
+            $card_preview->description = NULL;
+        }
+
         $card_preview->comments_amount = $card->cardComments()->get()->count();
         return $card_preview;
     }
