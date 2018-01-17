@@ -120,7 +120,7 @@
                                     </div>
                                 </div>
 
-                                <div class="form-group" ng-show="user || edit_general">
+                                <div class="form-group" ng-show="user || edit_general || ! finances_id">
                                     <label>Przypisany do</label><span class="req_field"> *</span>
                                     <div class="row">
                                         <div class="col-sm-6">
@@ -171,31 +171,31 @@
                         <div class="row">
                             <div class="col-sm-6">
                                 <h4>Adres do faktury</h4>
-                                <div class="form-group" ng-show="finances.finances_invoice_street || edit_address">
+                                <div class="form-group" ng-show="finances.finances_invoice_street || edit_address || ! finances_id">
                                     <label>Ulica</label><span class="req_field"> *</span>
                                     <span class="form-span" ng-show=" ! edit_address && finances_id">@{{ finances.finances_invoice_street }}</span>
                                     <input type="text" class="form-control" ng-show="edit_address || ! finances_id" name="finances_invoice_street" ng-model="finances.finances_invoice_street" required />
                                 </div>
 
-                                <div class="form-group" ng-show="finances.finances_invoice_town || edit_address">
+                                <div class="form-group" ng-show="finances.finances_invoice_town || edit_address || ! finances_id">
                                     <label>Miejscowosc</label>
                                     <span class="form-span" ng-show=" ! edit_address && finances_id">@{{ finances.finances_invoice_town }}</span>
                                     <input type="text" class="form-control" ng-show="edit_address || ! finances_id" ng-model="finances.finances_invoice_town" />
                                 </div>
 
-                                <div class="form-group" ng-show="finances.finances_invoice_province || edit_address">
+                                <div class="form-group" ng-show="finances.finances_invoice_province || edit_address || ! finances_id">
                                     <label>Wojewodztwo</label>
                                     <span class="form-span" ng-show=" ! edit_address && finances_id">@{{ finances.finances_invoice_province }}</span>
                                     <input type="text" class="form-control" ng-show="edit_address || ! finances_id" ng-model="finances.finances_invoice_province"  />
                                 </div>
 
-                                <div class="form-group" ng-show="finances.finances_invoice_post_code || edit_address">
+                                <div class="form-group" ng-show="finances.finances_invoice_post_code || edit_address || ! finances_id">
                                     <label>Kod</label>
                                     <span class="form-span" ng-show=" ! edit_address && finances_id">@{{ finances.finances_invoice_post_code }}</span>
                                     <input type="text" class="form-control" ng-show="edit_address || ! finances_id" ng-model="finances.finances_invoice_post_code" />
                                 </div>
 
-                                <div class="form-group" ng-show="finances.finances_invoice_region || edit_address">
+                                <div class="form-group" ng-show="finances.finances_invoice_region || edit_address || ! finances_id">
                                     <label>Kraj</label>
                                     <span class="form-span" ng-show=" ! edit_address && finances_id">@{{ finances.finances_invoice_region }}</span>
                                     <input type="text" class="form-control" ng-show="edit_address || ! finances_id" ng-model="finances.finances_invoice_region" />
@@ -204,31 +204,31 @@
 
                             <div class="col-sm-6">
                                 <h4>Adres do wysylki</h4>
-                                <div class="form-group" ng-show="finances.finances_send_street || edit_address">
+                                <div class="form-group" ng-show="finances.finances_send_street || edit_address || ! finances_id">
                                     <label>Ulica</label><span class="req_field"> *</span>
                                     <span class="form-span" ng-show=" ! edit_address && finances_id">@{{ finances.finances_send_street }}</span>
                                     <input type="text" class="form-control" ng-show="edit_address || ! finances_id" name="finances_send_street" ng-model="finances.finances_send_street" required />
                                 </div>
 
-                                <div class="form-group" ng-show="finances.finances_send_town || edit_address">
+                                <div class="form-group" ng-show="finances.finances_send_town || edit_address || ! finances_id">
                                     <label>Miejscowosc</label>
                                     <span class="form-span" ng-show=" ! edit_address && finances_id">@{{ finances.finances_send_town }}</span>
                                     <input type="text" class="form-control" ng-show="edit_address || ! finances_id" ng-model="finances.finances_send_town" />
                                 </div>
 
-                                <div class="form-group" ng-show="finances.finances_send_province || edit_address">
+                                <div class="form-group" ng-show="finances.finances_send_province || edit_address || ! finances_id">
                                     <label>Wojewodztwo</label>
                                     <span class="form-span" ng-show=" ! edit_address && finances_id">@{{ finances.finances_send_province }}</span>
                                     <input type="text" class="form-control" ng-show="edit_address || ! finances_id" ng-model="finances.finances_send_province" />
                                 </div>
 
-                                <div class="form-group" ng-show="finances.finances_send_post_code || edit_address">
+                                <div class="form-group" ng-show="finances.finances_send_post_code || edit_address || ! finances_id">
                                     <label>Kod</label>
                                     <span class="form-span" ng-show=" ! edit_address && finances_id">@{{ finances.finances_send_post_code }}</span>
                                     <input type="text" class="form-control" ng-show="edit_address || ! finances_id" ng-model="finances.finances_send_post_code" />
                                 </div>
 
-                                <div class="form-group" ng-show="finances.finances_send_region || edit_address">
+                                <div class="form-group" ng-show="finances.finances_send_region || edit_address || ! finances_id">
                                     <label>Kraj</label>
                                     <span class="form-span" ng-show=" ! edit_address && finances_id">@{{ finances.finances_send_region }}</span>
                                     <input type="text" class="form-control" ng-show="edit_address || ! finances_id" ng-model="finances.finances_send_region" />

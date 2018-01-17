@@ -316,8 +316,6 @@
         $scope.showCheckboxDeadline = false;
         $scope.checklist_title = '';
 
-        console.log($scope.card);
-
         $scope.initCard = function() {
             $scope.getTeamUsers();
             $scope.getChecklists();

@@ -38,7 +38,7 @@
                     <div class="panel-body">
                         <div class="row">
                             <div class="col-sm-6">
-                                <div class="form-group" ng-show="finances.registered_finances_number || edit_general">
+                                <div class="form-group" ng-show="finances.registered_finances_number || edit_general || ! registered_id">
                                     <label>Numer faktury</label><span class="req_field"> *</span>
                                     <div class="row">
                                         <div class="col-sm-6">
@@ -52,7 +52,7 @@
                                     </div>
                                 </div>
 
-                                <div class="form-group" ng-show="finances.finances_customer_name || edit_general">
+                                <div class="form-group" ng-show="finances.finances_customer_name || edit_general || ! registered_id">
                                     <label>Klient</label><span class="req_field"> *</span>
                                     <div class="row">
                                         <div class="col-sm-6">
@@ -66,7 +66,7 @@
                                     </div>
                                 </div>
 
-                                <div class="form-group" ng-show="finances.registered_subject || edit_general">
+                                <div class="form-group" ng-show="finances.registered_subject || edit_general || ! registered_id">
                                     <label>Temat</label>
                                     <div class="row">
                                         <div class="col-sm-6">
@@ -76,7 +76,7 @@
                                     </div>
                                 </div>
 
-                                <div class="form-group" ng-show="finances.registered_finances_netto || edit_general">
+                                <div class="form-group" ng-show="finances.registered_finances_netto || edit_general || ! registered_id">
                                     <label>Cena netto</label>
                                     <div class="row">
                                         <div class="col-sm-6">
@@ -86,7 +86,7 @@
                                     </div>
                                 </div>
 
-                                <div class="form-group" ng-show="finances.registered_finances_brutto || edit_general">
+                                <div class="form-group" ng-show="finances.registered_finances_brutto || edit_general || ! registered_id">
                                     <label>Cena brutto</label>
                                     <div class="row">
                                         <div class="col-sm-6">
@@ -126,7 +126,7 @@
                                     </div>
                                 </div>
 
-                                <div class="form-group" ng-show="finances.finances_issue_date || edit_general">
+                                <div class="form-group" ng-show="finances.finances_issue_date || edit_general || ! registered_id">
                                     <label>Data wystawienia</label>
                                     <div class="row">
                                         <div class="col-sm-6">
@@ -141,7 +141,7 @@
                                     </div>
                                 </div>
 
-                                <div class="form-group" ng-show="finances.finances_payment_date || edit_general">
+                                <div class="form-group" ng-show="finances.finances_payment_date || edit_general || ! registered_id">
                                     <label>Termin platności</label><span class="req_field"> *</span>
                                     <div class="row">
                                         <div class="col-sm-6">
@@ -156,7 +156,7 @@
                                     </div>
                                 </div>
 
-                                <div class="form-group" ng-show="user || edit_general">
+                                <div class="form-group" ng-show="user || edit_general || ! registered_id">
                                     <label>Przypisany do</label><span class="req_field"> *</span>
                                     <div class="row">
                                         <div class="col-sm-6">
@@ -196,25 +196,25 @@
                     <div class="panel-body">
                         <div class="row">
                             <div class="col-sm-6">
-                                <div class="form-group" ng-show="finances.registered_bank_account || edit_bank">
+                                <div class="form-group" ng-show="finances.registered_bank_account || edit_bank || ! registered_id">
                                     <label>Konto bankowe</label>
                                     <span class="form-span" ng-show=" ! edit_bank && registered_id">@{{ finances.registered_bank_account }}</span>
                                     <input type="text" class="form-control" ng-show="edit_bank || ! registered_id" ng-model="finances.registered_bank_account" required />
                                 </div>
 
-                                <div class="form-group" ng-show="finances.registered_order_title || edit_bank">
+                                <div class="form-group" ng-show="finances.registered_order_title || edit_bank || ! registered_id">
                                     <label>Tytuł zamówienia</label>
                                     <span class="form-span" ng-show=" ! edit_bank && registered_id">@{{ finances.registered_order_title }}</span>
                                     <input type="text" class="form-control" ng-show="edit_bank || ! registered_id" ng-model="finances.registered_order_title" />
                                 </div>
 
-                                <div class="form-group" ng-show="finances.registered_bank_nip || edit_bank">
+                                <div class="form-group" ng-show="finances.registered_bank_nip || edit_bank || ! registered_id">
                                     <label>NIP</label>
                                     <span class="form-span" ng-show=" ! edit_bank && registered_id">@{{ finances.registered_bank_nip }}</span>
                                     <input type="text" class="form-control" ng-show="edit_bank || ! registered_id" ng-model="finances.registered_bank_nip" />
                                 </div>
 
-                                <div class="form-group" ng-show="finances.registered_bank_name || edit_bank">
+                                <div class="form-group" ng-show="finances.registered_bank_name || edit_bank || ! registered_id">
                                     <label>Bank</label>
                                     <span class="form-span" ng-show=" ! edit_bank && registered_id">@{{ finances.registered_bank_name }}</span>
                                     <input type="text" class="form-control" ng-show="edit_bank || ! registered_id" ng-model="finances.registered_bank_name"  />
@@ -222,25 +222,25 @@
                             </div>
 
                             <div class="col-sm-6">
-                                <div class="form-group" ng-show="finances.registered_bank_street || edit_bank">
+                                <div class="form-group" ng-show="finances.registered_bank_street || edit_bank || ! registered_id">
                                     <label>Ulica</label>
                                     <span class="form-span" ng-show=" ! edit_bank && registered_id">@{{ finances.registered_bank_street }}</span>
                                     <input type="text" class="form-control" ng-show="edit_bank || ! registered_id" ng-model="finances.registered_bank_street" required />
                                 </div>
 
-                                <div class="form-group" ng-show="finances.registered_bank_town || edit_bank">
+                                <div class="form-group" ng-show="finances.registered_bank_town || edit_bank || ! registered_id">
                                     <label>Miejscowosc</label>
                                     <span class="form-span" ng-show=" ! edit_bank && registered_id">@{{ finances.registered_bank_town }}</span>
                                     <input type="text" class="form-control" ng-show="edit_bank || ! registered_id" ng-model="finances.registered_bank_town" />
                                 </div>
 
-                                <div class="form-group" ng-show="finances.registered_bank_postcode || edit_bank">
+                                <div class="form-group" ng-show="finances.registered_bank_postcode || edit_bank || ! registered_id">
                                     <label>Kod</label>
                                     <span class="form-span" ng-show=" ! edit_bank && registered_id">@{{ finances.registered_bank_postcode }}</span>
                                     <input type="text" class="form-control" ng-show="edit_bank || ! registered_id" ng-model="finances.registered_bank_postcode" />
                                 </div>
 
-                                <div class="form-group" ng-show="finances.registered_bank_region || edit_bank">
+                                <div class="form-group" ng-show="finances.registered_bank_region || edit_bank || ! registered_id">
                                     <label>Kraj</label>
                                     <span class="form-span" ng-show=" ! edit_bank && registered_id">@{{ finances.registered_bank_region }}</span>
                                     <input type="text" class="form-control" ng-show="edit_bank || ! registered_id" ng-model="finances.registered_bank_region" />
@@ -274,7 +274,7 @@
                     <div class="panel-body">
                         <div class="row">
                             <div class="col-sm-12">
-                                <div class="form-group" ng-show="finances.registered_description || edit_rest">
+                                <div class="form-group" ng-show="finances.registered_description || edit_rest || ! registered_id">
                                     <label>Opis</label>
                                     <span class="form-span" ng-model="finances.registered_description" ng-show=" ! edit_rest && registered_id">@{{ finances.registered_description }}</span>
                                     <textarea class="form-control" rows="1" ng-show="edit_rest || ! registered_id" ng-model="finances.registered_description"></textarea>
@@ -330,19 +330,6 @@
                                 </tr>
                             </tbody>
                        </table>
-
-                       <!--footer class="table-footer">
-                            <div class="row">
-                                <div class="col-md-offset-6 col-md-6 text-right pagination-container">
-                                    <pagination
-                                        ng-model="currentPage"
-                                        total-items="todos.length"
-                                        max-size="maxSize"
-                                        boundary-links="true">
-                                    </pagination>
-                                </div>
-                            </div>
-                        </footer-->
                     </div>
                 </div>
             </div>
