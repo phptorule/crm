@@ -108,7 +108,7 @@
                                         <i class="fa fa-user"></i>
                                     </div>
 
-                                    <div class="cards_preview_item" ng-show="card.description" title="This card has a description">
+                                    <div class="cards_preview_item" ng-show="card.card_preview.description" title="This card has a description">
                                         <i class="fa fa-align-left"></i>
                                     </div>
 

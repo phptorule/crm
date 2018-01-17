@@ -111,7 +111,6 @@
 
         $scope.initRegisteredList = function() {
             request.send('/finances/getRegisteredList', {}, function(data) {
-                console.log(data);
                 $scope.pagesList = data;
             });
         };
@@ -471,7 +470,6 @@
         };
 
         $scope.replaceComma = function(index) {
-            //console.log(e.keyCode);
             $scope.productsList[index].products_cost = $scope.productsList[index].products_cost.replace(/,/g,'.');
         };
 

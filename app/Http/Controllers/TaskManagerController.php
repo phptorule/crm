@@ -40,6 +40,7 @@ class TaskManagerController extends Controller
             $card_obj = new cards();
 
             foreach ($task->cards as $card) {
+                $card->users;
                 $card->card_preview = $card_obj->getCardPreview($card->cards_id);
             }
         }

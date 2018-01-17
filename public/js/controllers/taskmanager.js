@@ -51,6 +51,7 @@
             $scope.desk = desk;
 
             request.send('/TaskManager/getDeskLists', {'desk_id': $scope.desk.id}, function(data) {
+                console.log(data);
                 $scope.tasks = data;
                 $scope.cards = data.cards;
 
