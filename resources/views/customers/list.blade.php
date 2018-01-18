@@ -14,7 +14,7 @@
          <div class="panel panel-bd">
             <div class="panel-heading">
                <div class="btn-group" id="buttonexport">
-                     <h4>Lista kontrahentów</h4>
+                     <h4>@{{ page_title }}</h4>
                </div>
             </div>
 
@@ -22,7 +22,7 @@
             <!-- Plugin content:powerpoint,txt,pdf,png,word,xl -->
                <div class="btn-group list_button_group">
                   <div class="buttonexport" id="buttonlist">
-                     <a class="btn btn-add" href="/customers/add"> <i class="fa fa-plus"></i> Utwórz Kontrahenta
+                     <a class="btn btn-add" href="/customers/add/@{{ customer_group_url_text }}"> <i class="fa fa-plus"></i> @{{ create_group_customer_text }}
                      </a>
                   </div>
 
@@ -136,7 +136,7 @@
                            <td>@{{ customer.created_at }}</td>
                            <td>@{{ customer.website }}</td>
                            <td class="view_customer">
-                              <a href="/customers/add/@{{ customer.customer_id }}">
+                              <a href="/customers/add/@{{ customer_group_url_text }}/@{{ customer.customer_id }}/">
                                  Otwórz
                               </a>
                            </td>

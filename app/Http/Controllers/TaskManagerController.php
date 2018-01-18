@@ -17,6 +17,7 @@ use App\Checkboxes;
 use App\ListsUsers;
 use App\Descs;
 use App\CheckboxesUsers;
+use App\Labels;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
@@ -26,7 +27,6 @@ class TaskManagerController extends Controller
     public function getDesks()
     {
         $desks = Descs::where('team_id', session('current_team'))->get();
-
         return $desks;
     }
 
@@ -417,6 +417,7 @@ class TaskManagerController extends Controller
 
         foreach ($comments as $item) {
             $item->users = Users::find($item['users_id']);
+            $item->comment_date = date('Y-d-m H:m', strtotime($item->created_at));
         }
 
         return $comments;
@@ -435,6 +436,16 @@ class TaskManagerController extends Controller
         return $card_commnets;
     }
     /* END COMMENTS ACTIONS */
+
+
+    /* LABELS */
+
+    public function getLabels()
+    {
+
+    }
+
+    /* END LABELS*/
 
 
     public function getTeamUsers($post = [])

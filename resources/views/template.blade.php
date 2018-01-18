@@ -64,7 +64,7 @@
                             <li class="dropdown dropdown-user" style="background-color=cc()">
 
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" >
-                                    <div  class="user_avatar" style="width:45px;height:45px;background-color:RGB(@{{ user.icon_color}})">
+                                    <div  class="user_avatar" style="background-color:RGB(@{{ user.icon_color}})">
                                         <span class="icon_name">@{{user.users_first_name.slice(0,1)}}</span>
                                     </div>
                                     <!--<img src="/img/avatar5.png" class="img-circle" width="45" height="45" alt="user">-->
@@ -86,8 +86,8 @@
                     <ul class="sidebar-menu">
                         <li ng-class="{'active': activeSidebar()}">
                             <a href="/">
-                                <i class="fa fa-tachometer"></i>
-                                <span>{{ __("Dashbaord") }}</span>
+                                <i class="fa fa-home"></i>
+                                <span>Pulpit</span>
                             </a>
                         </li>
 
@@ -98,9 +98,9 @@
                             </a>
                         </li-->
 
-                        <li class="nav-title" ng-show="sidebar.plugins.length">
+                        <!-- <li class="nav-title" ng-show="sidebar.plugins.length">
                             <span>{{ __("Plugins") }}</span>
-                        </li>
+                        </li> -->
 
                         <li class="treeview" ng-show="sidebar.plugins.indexOf('Customers') != -1">
                             <a href="javascript:void(0)">
@@ -111,8 +111,9 @@
                                 </span>
                             </a>
                             <ul class="treeview-menu">
-                                <li><a href="/customers/add" ng-class="getClass('/customers/add/')">Utwórz Kontrahenta</a></li>
-                                <li><a href="/customers/list" ng-class="getClass('/customers/list/')">Lista kontrahentów</a></li>
+                                <li><a href="/customers/list/clients" ng-class="getClass('/customers/list/clients')">Klienci</a></li>
+                                <li><a href="/customers/list/designers" ng-class="getClass('/customers/list/designers')">Projektanci</a></li>
+                                <li><a href="/customers/list/offices" ng-class="getClass('/customers/list/offices')">Urzędy</a></li>
                             </ul>
                         </li>
 
@@ -148,9 +149,9 @@
                 </section>
             </div>
 
-            <footer class="main-footer">
+            <!-- <footer class="main-footer">
                 <strong>Copyright &copy; 2016-2017 <a href="#">Thememinister</a>.</strong> All rights reserved.
-            </footer>
+            </footer> -->
         </div>
 
         <script src="/js/vendor.js"></script>

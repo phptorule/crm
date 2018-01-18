@@ -24,6 +24,14 @@
         $scope.desk_id = '';
         $scope.task_name = '';
         $scope.card_name = {};
+        $scope.customers_list = '0';
+        $scope.customers = [];
+        $scope.showCustomerLink = false;
+
+        $scope.initTaskManager = function() {
+            $scope.getDesks();
+            $scope.getCustomers();
+        };
 
         $scope.getDesks = function() {
             request.send('/TaskManager/getDesks', {}, function(data) {
@@ -33,11 +41,37 @@
             });
         };
 
-        $scope.saveDeskTitle = function() {
-            request.send('/TaskManager/saveDeskTitle', $scope.desk, function(data) {
-
+        $scope.getCustomers = function() {
+            request.send('/customers/getCustomersList', {}, function(data) {
+                $scope.customers = data;
             });
+        };
 
+        $scope.selectCustomer = function(customer_id) {
+            for (var k in $scope.customers) {
+                if ($scope.customers[k].customer_id == customer_id) {
+                    $scope.customer_name = $scope.customers[k].company_name;
+                    $scope.customer_id = customer_id;
+
+                    if ($scope.customers[k].customer_group == '1') {
+                        $scope.customer_url_text = 'clients';
+                    }
+
+                    if ($scope.customers[k].customer_group == '2') {
+                        $scope.customer_url_text = 'designers';
+                    }
+
+                    if ($scope.customers[k].customer_group == '3') {
+                        $scope.customer_url_text = 'offices';
+                    }
+                }
+            }
+
+            $scope.showCustomerLink = true;
+        };
+
+        $scope.saveDeskTitle = function() {
+            request.send('/TaskManager/saveDeskTitle', $scope.desk);
             $scope.desk_title = ! $scope.desk_title;
         };
 
@@ -51,7 +85,6 @@
             $scope.desk = desk;
 
             request.send('/TaskManager/getDeskLists', {'desk_id': $scope.desk.id}, function(data) {
-                console.log(data);
                 $scope.tasks = data;
                 $scope.cards = data.cards;
 
@@ -315,12 +348,15 @@
         $scope.checkbox_deadline = {};
         $scope.temp_checkbox_deadline = {};
         $scope.showCheckboxDeadline = false;
+        $scope.customer_is_designer = false;
+        $scope.customer_is_officeman = false;
         $scope.checklist_title = '';
 
         $scope.initCard = function() {
             $scope.getTeamUsers();
             $scope.getChecklists();
             $scope.getComments();
+            $scope.getLabels();
             $scope.updateUserList();
         };
 
@@ -710,6 +746,56 @@
 
         ////////////////////////////////////
 
+        /* LABELS */
+
+        $scope.getLabels = function() {
+
+        };
+
+        $scope.addLabelDescription = function(color) {
+            request.send('/TaskManager/getTeamUsers', {'cards_id': $scope.card.cards_id}, function(data) {
+                $scope.team_users = data;
+                if($scope.team_users){
+                    $scope.users_list = $scope.team_users[0].users_id.toString();
+                }
+            });
+        };
+
+        /* END LABELS*/
+
+        ////////////////////////////////////
+
+        /* */
+
+        $scope.selectCustomer = function(group) {
+            var modalInstance = $uibModal.open({
+                animation: true,
+                templateUrl: 'SelectCustomer.html',
+                controller: 'ModalSelectCustomerCtrl',
+                resolve: {
+                    items: function() {
+                        return group;
+                    }
+                }
+            });
+
+            modalInstance.result.then(function(response) {
+                if (response.customer_group == '2') {
+                    $scope.customer_is_designer = true;
+                    $scope.customer_designer = response;
+                }
+
+                if (response.customer_group == '3') {
+                    $scope.customer_is_officeman = true;
+                    $scope.customer_officeman = response;
+                }
+            }, function () {
+
+            });
+        };
+
+        /* */
+
         $scope.getTeamUsers = function() {
             request.send('/TaskManager/getTeamUsers', {'cards_id': $scope.card.cards_id}, function(data) {
                 $scope.team_users = data;
@@ -813,6 +899,50 @@
                 });
             };
         }
+
+        $scope.cancel = function() {
+            $uibModalInstance.dismiss('cancel');
+        };
+    };
+})();
+
+(function () {
+    'use strict';
+
+    angular.module('app').controller('ModalSelectCustomerCtrl', ['$rootScope', '$scope', '$uibModal', '$uibModalInstance', '$filter', 'request', 'validate', 'logger', 'langs', 'items', ModalSelectCustomerCtrl]);
+
+    function ModalSelectCustomerCtrl($rootScope, $scope, $uibModal, $uibModalInstance, $filter, request, validate, logger, langs, items) {
+        $scope.customers = [];
+
+        $scope.initList = function() {
+            if (items == 'designers') {
+                $scope.getDesignersList();
+                $scope.modal_title = 'Dodaj projektanta';
+                $scope.modal_add_customer = 'Utwórz projektanta';
+            }
+
+            if (items == 'offices') {
+                $scope.getOfficesList();
+                $scope.modal_title = 'Dodaj urzędnika';
+                $scope.modal_add_customer = 'Utwórz urzędnika';
+            }
+        };
+
+        $scope.getDesignersList = function() {
+            request.send('/customers/getDesignersList', {}, function(data) {
+                $scope.customers = data;
+            });
+        };
+
+        $scope.getOfficesList = function() {
+            request.send('/customers/getOfficesList', {}, function(data) {
+                $scope.customers = data;
+            });
+        };
+
+        $scope.getCustomer = function(customer) {
+            $uibModalInstance.close(customer);
+        };
 
         $scope.cancel = function() {
             $uibModalInstance.dismiss('cancel');

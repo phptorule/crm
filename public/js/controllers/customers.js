@@ -13,12 +13,15 @@
         $scope.customers = {};
         $scope.customers.customer_type = '0';
         $scope.check = 1;
-
         $scope.not_checked_users = [];
         $scope.checked_users = [];
         $scope.checked_ids = [];
+        $scope.page_title = '';
+        $scope.create_group_customer_text = '';
+        $scope.customer_group_url_text = '';
 
-        $scope.customer_id = $location.path().split('/')[3];
+        $scope.customer_group = $location.path().split('/')[3];
+        $scope.customer_id = $location.path().split('/')[4];
 
         $scope.initAdd = function() {
             request.send('/customers/get', {'customer_id': ($scope.customer_id || 0)}, function(data) {
@@ -38,9 +41,35 @@
         };
 
         $scope.initList = function() {
-            request.send('/customers/getList', {}, function(data) {
-                $scope.print(data);
-            });
+            if ($scope.customer_group == 'clients') {
+                $scope.page_title = 'Lista klientów';
+                $scope.create_group_customer_text = 'Utwórz klienta';
+                $scope.customer_group_url_text = 'clients';
+
+                request.send('/customers/getClientsList', {}, function(data) {
+                    $scope.print(data);
+                });
+            }
+
+            if ($scope.customer_group == 'designers') {
+                $scope.page_title = 'Lista projektantów';
+                $scope.create_group_customer_text = 'Utwórz projektanta';
+                $scope.customer_group_url_text = 'designers';
+
+                request.send('/customers/getDesignersList', {}, function(data) {
+                    $scope.print(data);
+                });
+            }
+
+            if ($scope.customer_group == 'offices') {
+                $scope.page_title = 'Lista urzędów';
+                $scope.create_group_customer_text = 'Utwórz urzęd';
+                $scope.customer_group_url_text = 'offices';
+
+                request.send('/customers/getOfficesList', {}, function(data) {
+                    $scope.print(data);
+                });
+            }
         };
 
         $scope.print = function(data) {
@@ -72,6 +101,18 @@
 			{
                 if ( ! $scope.customer_id)
                 {
+                    if ($scope.customer_group == 'clients') {
+                        $scope.customers.customer_group = '1';
+                    }
+
+                    if ($scope.customer_group == 'designers') {
+                        $scope.customers.customer_group = '2';
+                    }
+
+                    if ($scope.customer_group == 'offices') {
+                        $scope.customers.customer_group = '3';
+                    }
+
                     $scope.customers.check = check;
                     $scope.customers.users_ids = $scope.checked_ids;
                     request.send('/customers/save', $scope.customers, function(data) {
@@ -85,14 +126,8 @@
                             else
                             {
                                 $timeout(function() {
-                                    $window.location.href = "/customers/add/" + data;
+                                    $window.location.href = "/customers/add/" + $scope.customer_group + "/" + data;
                                 }, 1000);
-                                /*$scope.$on('$locationChangeStart', function( event ) {
-                                    var answer = confirm("Are you sure you want to leave this page?")
-                                    if (!answer) {
-                                        event.preventDefault();
-                                    }
-                                });*/
                             }
 
                         }
@@ -100,7 +135,6 @@
                 }
                 else
                 {
-                    console.log($scope.customers);
                     $scope.customers.users_ids = $scope.checked_ids;
                     request.send('/customers/save', $scope.customers, function(data) {
                         if (data)

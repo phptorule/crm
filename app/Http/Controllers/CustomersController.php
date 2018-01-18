@@ -27,15 +27,49 @@ class CustomersController extends Controller
         return $customer;
     }
 
-    public function getList()
+    public function getClientsList()
     {
         $team = Teams::find(session('current_team'));
-        $customers = $team->customers()->get();
+        $customers = $team->customers()->where('customer_group', '1')->get();
 
         foreach ($customers as $customer)
         {
             $customer->users_ids = $customer->users()->get()->pluck('users_id')->toArray();
         }
+
+        return $customers;
+    }
+
+    public function getDesignersList()
+    {
+        $team = Teams::find(session('current_team'));
+        $customers = $team->customers()->where('customer_group', '2')->get();
+
+        foreach ($customers as $customer)
+        {
+            $customer->users_ids = $customer->users()->get()->pluck('users_id')->toArray();
+        }
+
+        return $customers;
+    }
+
+    public function getOfficesList()
+    {
+        $team = Teams::find(session('current_team'));
+        $customers = $team->customers()->where('customer_group', '3')->get();
+
+        foreach ($customers as $customer)
+        {
+            $customer->users_ids = $customer->users()->get()->pluck('users_id')->toArray();
+        }
+
+        return $customers;
+    }
+
+    public function getCustomersList()
+    {
+        $team = Teams::find(session('current_team'));
+        $customers = $team->customers()->get();
 
         return $customers;
     }
@@ -120,12 +154,13 @@ class CustomersController extends Controller
             {
                 $customer = Customers::firstOrNew(['customer_id' => empty($post['customer_id']) ? 0 : $post['customer_id']]);
 
+                $customer->customer_group = empty($post['customer_group']) ? '' : $post['customer_group'];
                 $customer->company_name = $post['company_name'];
                 $customer->contact_person = empty($post['contact_person']) ? '' : $post['contact_person'];
                 $customer->customer_type = empty($post['customer_type']) ? 0 : $post['customer_type'];
-                $customer->phone_number = empty($post['phone_number']) ? 0 : $post['phone_number'];
-                $customer->extra_phone_number = empty($post['extra_phone_number']) ? 0 : $post['extra_phone_number'];
-                $customer->bank_account = empty($post['bank_account']) ? 0 : $post['bank_account'];
+                $customer->phone_number = empty($post['phone_number']) ? '' : $post['phone_number'];
+                $customer->extra_phone_number = empty($post['extra_phone_number']) ? '' : $post['extra_phone_number'];
+                $customer->bank_account = empty($post['bank_account']) ? '' : $post['bank_account'];
                 $customer->nip = empty($post['nip']) ? '' : $post['nip'];
                 $customer->email = empty($post['email']) ? '' : $post['email'];
                 $customer->extra_email = empty($post['extra_email']) ? '' : $post['extra_email'];
@@ -188,6 +223,10 @@ class CustomersController extends Controller
     public function getComment($post = [])
     {
         $customers_comments = CustomersComments::where([['customer_id', '=', $post['customer_id']], ['teams_id', '=', session('current_team')]])->get();
+
+        foreach ($customers_comments as $item) {
+            $item->comment_date = date('Y-d-m H:m', strtotime($item->created_at));
+        }
 
         return $customers_comments;
     }
