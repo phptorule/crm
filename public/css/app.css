@@ -6244,7 +6244,8 @@ button.toast-close-button {
 .checklist_title,
 .checklist_header h4,
 .add_customer,
-.desk_switcher {
+.desk_switcher,
+.inline_title {
     display: inline-block;
 }
 

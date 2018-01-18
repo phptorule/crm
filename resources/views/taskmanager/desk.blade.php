@@ -237,12 +237,12 @@
 
                                     <div class="assign_customer_block" ng-show="customer_is_designer">
                                         <h4>
-                                            <div>Projektant</div>
-                                        </h4>
+                                            <div class="inline_title">Projektant</div>
 
-                                        <div class="delete_card_item">
-                                            <i class="fa fa-trash-o" ng-click="customer_is_designer = ! customer_is_designer"></i>
-                                        </div>
+                                            <div class="delete_card_item">
+                                                <i class="fa fa-trash-o" ng-click="customer_is_designer = ! customer_is_designer"></i>
+                                            </div>
+                                        </h4>
 
                                         <div class="customer_description">
                                             <div class="row">
