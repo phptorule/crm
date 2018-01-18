@@ -17,7 +17,7 @@ Route::get('/pdf/{id?}',['uses'=>'PdfController@pdf', 'as'=>'pdf'])->where('id',
 
 Route::get('/template/{file}/', function($file) { return view($file); });
 
-Route::get('/view/{filder}/{file?}/{param?}', function($folder, $file = '', $param = '') {
+Route::get('/view/{filder}/{file?}/{param?}/{value?}', function($folder, $file = '', $param = '', $value = '') {
 	return view($folder.(empty($file) ? '' : '.'.$file));
 })->middleware('auth.views');
 

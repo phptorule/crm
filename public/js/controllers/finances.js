@@ -46,9 +46,7 @@
         $scope.products.products_shipping_price = 0;
         $scope.productsList = [];
         $scope.productsList.push($scope.products);
-
         $scope.class = "closed";
-
 
 		$scope.init = function() {
 			if ( ! $rootScope.user.users_id) {
@@ -648,7 +646,7 @@
         $scope.maxSize = 5;
 
     	$scope.initList = function() {
-            request.send('/customers/getList', {}, function(data) {
+            request.send('/customers/getCustomersList', {}, function(data) {
             	$scope.customers = data;
             });
         };

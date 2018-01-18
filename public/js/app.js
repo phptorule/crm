@@ -17,6 +17,7 @@
         });
 
         var routes = [
+            ':folder/:file/:param/:value',
             ':folder/:file/:param',
             ':folder/:file/',
             ':file'
@@ -26,7 +27,12 @@
             var url = '/' + route;
             var config = {
                 templateUrl: function(params) {
-                    if (params.folder && params.file && params.param)
+
+                    if (params.folder && params.file && params.param && params.value)
+                    {
+                        return '/view/' + params.folder + '/' + params.file + '/' + params.param + '/' + params.value;
+                    }
+                    else if (params.folder && params.file && params.param)
                     {
                         return '/view/' + params.folder + '/' + params.file + '/' + params.param;
                     }
@@ -194,7 +200,7 @@
         };
 
         $scope.getClass = function (path) {
-            if ( ! $location.path().split('/')[3])
+            if ( ! $location.path().split('/')[4])
             {
                 return ($location.path() === path) ? 'active' : '';
             }

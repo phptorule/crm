@@ -1,49 +1,64 @@
-<div data-ng-controller="TaskManagerCtrl" ng-init="getDesks()">
+<div data-ng-controller="TaskManagerCtrl" ng-init="initTaskManager()">
     <section class="content-header">
-        <div class="row">
-            <div class="col-sm-6">
-                <div class="header-icon">
-                    <i class="@{{ Page.icon() }}"></i>
+        <div class="header-icon">
+            <i class="@{{ Page.icon() }}"></i>
+        </div>
+
+        <div class="header-title">
+            <h4 ng-show="desk_title"><span class="pointer" ng-click="desk_title = ! desk_title">@{{desk.name}}</span></h4>
+
+            <div class="input-group input-group-unstyled" ng-show=" ! desk_title">
+                <input type="text" focus-me="! desk_title" class="form-control" ng-enter="saveDeskTitle()" ng-model="desk.name">
+                <div class="btn btn-add save_title" ng-click="saveDeskTitle()">
+                    Save
+                </div>
+            </div>
+        </div>
+
+        <div class="task_manager_header pull-right">
+            <div class="add_customer">
+                <div ng-show="! showCustomerLink">
+                    <select class="form-control" ng-model="customers_list">
+                        <option value='0' disabled="disabled">Dodaj kontrahenta</option>
+                        <option ng-repeat="customer in customers" value="@{{ customer.customer_id }}">@{{ customer.company_name }}</option>
+                    </select>
+
+                    <button class="btn btn-add" ng-click="selectCustomer(customers_list)">Dodaj</button>
                 </div>
 
-                <div class="header-title">
-                    <h4 ng-click="desk_title = ! desk_title" class="pointer" ng-show="desk_title">@{{desk.name}}</h4>
+                <div class="add_customer_link" ng-show="showCustomerLink">
+                    <a href="/customers/add/@{{ customer_url_text }}/@{{ customer_id }}/">@{{ customer_name }}</a>
 
-                    <div class="input-group input-group-unstyled" ng-show=" ! desk_title">
-                        <input type="text" focus-me="! desk_title" class="form-control" ng-enter="saveDeskTitle()" ng-model="desk.name">
-                        <div class="btn btn-add save_title" ng-click="saveDeskTitle()">
-                            Save
-                        </div>
+                    <div class="delete_card_item">
+                        <i class="fa fa-trash-o" ng-click="showCustomerLink = ! showCustomerLink"></i>
                     </div>
                 </div>
             </div>
 
-            <div class="col-sm-6">
-                <div class="desk_switcher pull-right">
-                    <div uib-dropdown auto-close="outsideClick">
-                        <button class="btn btn-add" uib-dropdown-toggle>
-                            Choose your desk
-                        </button>
+            <div class="desk_switcher">
+                <div uib-dropdown auto-close="outsideClick">
+                    <button class="btn btn-add" uib-dropdown-toggle>
+                        Choose your desk
+                    </button>
 
-                        <div uib-dropdown-menu class="custom_pop_up">
-                            <ul>
-                                <li ng-repeat="desk in desks"><a href="#" ng-click="getDeskLists(desk)"><i class="fa fa-trello"></i> @{{desk.name}}</a></li>
-                            </ul>
+                    <div uib-dropdown-menu class="custom_pop_up">
+                        <ul>
+                            <li ng-repeat="desk in desks"><a href="#" ng-click="getDeskLists(desk)"><i class="fa fa-trello"></i> @{{desk.name}}</a></li>
+                        </ul>
 
-                            <div class="create_desk text-center">
-                                <span>Create new desk</span>
-                                <div class="input-group input-group-unstyled">
-                                    <a href=""><input type="text" class="form-control" ng-model="create_desk_name" ng-enter="saveDesk(create_desk_name)"></a>
-                                    <div class="btn btn-add save_title" ng-click="saveDesk(create_desk_name)">
-                                        Save
-                                    </div>
+                        <div class="create_desk text-center">
+                            <span>Create new desk</span>
+                            <div class="input-group input-group-unstyled">
+                                <input type="text" class="form-control" ng-model="create_desk_name" ng-enter="saveDesk(create_desk_name)" />
+                                <div class="btn btn-add save_title" ng-click="saveDesk(create_desk_name)">
+                                    Save
                                 </div>
                             </div>
                         </div>
                     </div>
-
-                    <button class="btn btn-danger" ng-click="deleteDesk()">Delete desk</button>
                 </div>
+
+                <button class="btn btn-danger" ng-click="deleteDesk()">Delete desk</button>
             </div>
         </div>
     </section>
@@ -219,6 +234,46 @@
                                     </div>
 
                                     <hr ng-show="card.users != '' && card.users || card.deadline">
+
+                                    <div class="assign_customer_block" ng-show="customer_is_designer">
+                                        <h4>
+                                            <div>Projektant</div>
+                                        </h4>
+
+                                        <div class="delete_card_item">
+                                            <i class="fa fa-trash-o" ng-click="customer_is_designer = ! customer_is_designer"></i>
+                                        </div>
+
+                                        <div class="customer_description">
+                                            <div class="row">
+                                                <div class="col-sm-6">
+                                                    <div class="form-group">
+                                                        <label>Osoba kontaktowa</label>
+                                                        <span class="form-span">@{{ customer_designer.contact_person }}</span>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label>Nazwa firmy</label>
+                                                        <span class="form-span">@{{ customer_designer.company_name }}</span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-sm-6">
+                                                    <div class="form-group">
+                                                        <label>Telefon</label>
+                                                        <span class="form-span">@{{ customer_designer.phone_number }}</span>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label>Email</label>
+                                                        <span class="form-span">@{{ customer_designer.email }}</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <hr ng-show="customer_is_designer">
 
                                     <div class="card_block description">
                                         <h4>Description:</h4>
@@ -504,7 +559,7 @@
                                         <div ng-repeat="comment in comments">
                                             <div class="card_comment_block">
                                                 <div class="comment_author">
-                                                    @{{comment.users.users_first_name + ' ' + comment.users.users_last_name + ' (' + comment.created_at + ')'}}
+                                                    @{{comment.users.users_first_name + ' ' + comment.users.users_last_name  + ' (' + comment.comment_date + ')'}}
                                                 </div>
 
                                                 <div class="comment_text">
@@ -563,7 +618,89 @@
                                         </div>
 
                                         <div uib-dropdown class="m-b-5" auto-close="outsideClick">
-                                            <a href="javascript:void(0);" class="btn card_nav dropdown-toggle" uib-dropdown-toggle><i class="glyphicon glyphicon-calendar"></i> Deadline</a>
+                                            <a href="javascript:void(0);" class="btn card_nav dropdown-toggle" uib-dropdown-toggle><i class="fa fa-calendar"></i> Deadline</a>
+
+                                            <div uib-dropdown-menu class="custom_pop_up">
+                                                <div class="custom_pop_up_header text-center">
+                                                    <span>Add deadline</span>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <div class="input-group custom-datapicker-input">
+                                                        <input type="text" class="form-control" uib-datepicker-popup="yyyy/MM/dd" ng-model="card_deadline.date" is-open="date[0].opened" show-button-bar="false" datepicker-options="dateOptions" />
+                                                        <span class="input-group-btn">
+                                                            <button type="button" class="btn btn-default" ng-click="calendarOpen(0)"><i class="glyphicon glyphicon-calendar"></i></button>
+                                                        </span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                   <div class="row">
+                                                        <div class="col-sm-6">
+                                                            <label>Hours:</label>
+                                                            <select class="form-control" ng-model="card_deadline.hour">
+                                                                <option ng-repeat="h in range(23)" value="@{{ h }}">@{{ h }}</option>
+                                                            </select>
+                                                        </div>
+
+                                                        <div class="col-sm-6">
+                                                            <label>Minutes:</label>
+                                                            <select class="form-control" ng-model="card_deadline.minute">
+                                                                <option ng-repeat="m in range(59)" value="@{{ m }}">@{{ m }}</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <button type="button" aria-hidden="true" class="btn btn-primary" ng-click="saveCardDeadline()">
+                                                    Save
+                                                </button>
+                                            </div>
+                                        </div>
+
+                                        <div uib-dropdown class="m-b-5" auto-close="outsideClick">
+                                            <a href="javascript:void(0);" class="btn card_nav dropdown-toggle" uib-dropdown-toggle><i class="fa fa-tag"></i> Label</a>
+
+                                            <div uib-dropdown-menu class="custom_pop_up">
+                                                <div class="custom_pop_up_header text-center">
+                                                    <span>Add label</span>
+                                                </div>
+
+                                                <ul class="label_picker">
+                                                    <li>
+                                                        <a href="javascript:void(0);" title="Dodaj opys" ng-click="addLabelDescription(green)"><i class="fa fa-pencil"></i></a>
+                                                        <span class="card_label green_label"></span>
+                                                    </li>
+                                                    <li>
+                                                        <a href="javascript:void(0);" title="Dodaj opys" ng-click="addLabelDescription(yellow)"><i class="fa fa-pencil"></i></a>
+                                                        <span class="card_label yellow_label"></span>
+                                                    </li>
+                                                    <li>
+                                                        <a href="javascript:void(0);" title="Dodaj opys" ng-click="addLabelDescription(orange)"><i class="fa fa-pencil"></i></a>
+                                                        <span class="card_label orange_label"></span>
+                                                    </li>
+                                                    <li>
+                                                        <a href="javascript:void(0);" title="Dodaj opys" ng-click="addLabelDescription(red)"><i class="fa fa-pencil"></i></a>
+                                                        <span class="card_label red_label"></span>
+                                                    </li>
+                                                    <li>
+                                                        <a href="javascript:void(0);" title="Dodaj opys" ng-click="addLabelDescription(blue)"><i class="fa fa-pencil"></i></a>
+                                                        <span class="card_label blue_label"></span>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+
+                                        <div class="m-b-5">
+                                            <a href="javascript:void(0);" class="btn card_nav dropdown-toggle" ng-click="selectCustomer('designers')"><i class="fa fa-user-plus"></i> Dodaj projektanta</a>
+                                        </div>
+
+                                        <div class="m-b-5">
+                                            <a href="javascript:void(0);" class="btn card_nav dropdown-toggle" ng-click="selectCustomer('offices')"><i class="fa fa-user-plus"></i> Dodaj urzędnika</a>
+                                        </div>
+
+                                        <div uib-dropdown class="m-b-5" auto-close="outsideClick">
+                                            <a href="javascript:void(0);" class="btn card_nav dropdown-toggle" uib-dropdown-toggle><i class="fa fa-flag"></i> Wniosek o wydanie decyzji</a>
 
                                             <div uib-dropdown-menu class="custom_pop_up">
                                                 <div class="custom_pop_up_header text-center">
@@ -649,6 +786,211 @@
         <div class="modal-footer">
             <button type="button" class="btn btn-danger pull-left" ng-click="cancel()">Anuluj</button>
         </div>
+    </script>
+
+    <script type="text/ng-template" id="SelectCustomer.html">
+        <div class="modal-header modal-header-primary" ng-init="initList()">
+           <button type="button" class="close" ng-click="cancel()" aria-hidden="true">×</button>
+           <h3><i class="fa fa-user m-r-5"></i> @{{ modal_title }}</h3>
+        </div>
+
+        <div class="modal-body">
+           <div class="row">
+                <div class="col-md-12">
+                    <div class="modal_content_header">
+                        <form>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label>Szukaj</label>
+                                        <input type="text" class="form-control" name="search_input" placeholder="Szukaj" ng-model="searchInput" />
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <button class="btn btn-add pull-right" ng-click="addCustomer()">
+                                        <i class="fa fa-plus"></i> @{{ modal_add_customer }}
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table id="customers_table" class="table table-bordered table-striped table-hover">
+                            <thead>
+                                <tr class="info">
+                                    <th>Nazwa firmy</th>
+                                    <th>Numer NIP</th>
+                                    <th>Miejscowosc</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="customer in customers | filter:searchInput">
+                                    <td><a href="javascript:void(0);" ng-click="getCustomer(customer)">@{{ customer.company_name }}</a></td>
+                                    <td>@{{ customer.nip }}</td>
+                                    <td>@{{ customer.invoice_town }}</td>
+                                </tr>
+                            </tbody>
+                       </table>
+
+                       <!--footer class="table-footer">
+                            <div class="row">
+                                <div class="col-md-offset-6 col-md-6 text-right pagination-container">
+                                    <pagination
+                                        ng-model="currentPage"
+                                        total-items="todos.length"
+                                        max-size="maxSize"
+                                        boundary-links="true">
+                                    </pagination>
+                                </div>
+                            </div>
+                        </footer-->
+                    </div>
+                </div>
+            </div>
+       </div>
+
+       <div class="modal-footer">
+          <button type="button" class="btn btn-danger pull-right" ng-click="cancel()">Anuluj</button>
+       </div>
+    </script>
+
+    <script type="text/ng-template" id="CreateCustomer.html">
+        <div class="modal-header modal-header-primary" ng-init="initList()">
+           <button type="button" class="close" ng-click="cancel()" aria-hidden="true">×</button>
+           <h3><i class="fa fa-user m-r-5"></i> Utwórz Kontrahenta</h3>
+        </div>
+
+        <div class="modal-body">
+           <div class="row">
+                <div class="col-md-12">
+                    <form class="no-transition" name="form" method="post" novalidate="novalidate">
+                        <div class="row">
+                            <div class="col-sm-12 mb-30">
+                                <h3 class="modal_h3">Informacje podstawowe</h3>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label>Nazwa firmy</label><span class="req_field"> *</span>
+                                            <input type="text" class="form-control" name="company_name" ng-model="customers.company_name" required />
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label>Numer NIP</label>
+                                            <input type="text" class="form-control" name="nip" ng-model="customers.nip" />
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label>Osoba kontaktowa</label>
+                                            <input type="text" class="form-control" name="contact_person" ng-model="customers.contact_person" />
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label>Telefon</label>
+                                            <input type="text" class="form-control" name="phone_number" ng-model="customers.phone_number" />
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label>Email</label>
+                                            <input type="text" class="form-control" name="email" ng-model="customers.email" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-12 mb-30">
+                                <h3 class="modal_h3">Informacje adresowe do faktury</h3>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label>Ulica</label>
+                                            <input type="text" class="form-control" name="invoice_street" ng-model="customers.invoice_street" />
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label>Skrytka Pocztowa do faktury</label>
+                                            <input type="text" class="form-control" name="invoice_mailbox" ng-model="customers.invoice_mailbox" />
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label>Miejscowosc</label>
+                                            <input type="text" class="form-control" name="invoice_town" ng-model="customers.invoice_town" />
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label>Wojewodztwo</label>
+                                            <input type="text" class="form-control" name="invoice_province" ng-model="customers.invoice_province"  />
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label>Kod</label>
+                                            <input type="text" class="form-control" name="invoice_post_code" ng-model="customers.invoice_post_code" />
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label>Kraj</label>
+                                            <input type="text" class="form-control" name="invoice_region" ng-model="customers.invoice_region" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-12">
+                                <h3 class="modal_h3">Informacje adresowe do wysylki</h3>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label>Ulica - Adres wysylki</label>
+                                            <input type="text" class="form-control" name="send_street" ng-model="customers.send_street" />
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label>Skrytka Pocztowa do wysylki</label>
+                                            <input type="text" class="form-control" name="send_mailbox" ng-model="customers.send_mailbox" />
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label>Miejscowosc - Adres wysylki</label>
+                                            <input type="text" class="form-control" name="send_town" ng-model="customers.send_town" />
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label>Wojewodztwo - Adres wysylki</label>
+                                            <input type="text" class="form-control" name="send_province" ng-model="customers.send_province" />
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label>Kod - Adres wysylki</label>
+                                            <input type="text" class="form-control" name="send_post_code" ng-model="customers.send_post_code" />
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label>Kraj - Adres wysylki</label>
+                                            <input type="text" class="form-control" name="send_region" ng-model="customers.send_region" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-12 text-right">
+                                <button type="submit" class="btn btn-add" ng-click="saveCustomer()">{{ __('Dodaj nowego kontrahenta') }}</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+       </div>
+
+       <div class="modal-footer">
+          <button type="button" class="btn btn-danger pull-right" ng-click="cancel()">Anuluj</button>
+       </div>
     </script>
 
 </div>

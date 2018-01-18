@@ -488,7 +488,7 @@ hr {
     margin-bottom: 0;
     margin-left: 250px;
     border: none;
-    min-height: 60px;
+    height: 50px;
     border-radius: 0;
     background-color: #585858;
     border-bottom: 1px solid #585858;
@@ -547,7 +547,7 @@ hr {
 .main-header .sidebar-toggle {
     float: left;
     background-image: none;
-    padding: 15px 14px;
+    padding: 11px 14px;
     font-size: 26px;
     line-height: 26px;
     margin-right: 7px;
@@ -584,7 +584,7 @@ a.sidebar-toggle .pe-7s-angle-left-circle {
 .main-header .logo {
     display: block;
     float: left;
-    height: 60px;
+    height: 50px;
     font-size: 20px;
     line-height: 60px;
     text-align: center;
@@ -614,12 +614,13 @@ a.sidebar-toggle .pe-7s-angle-left-circle {
 .content-header {
     position: relative;
     z-index: 10;
-    padding: 20px 30px;
     background-color: #fff;
     border-bottom: 1px solid #e1e6ef;
     margin-bottom: 0px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
     margin-bottom: 5px;
+    height: 55px;
+    line-height: 55px;
 }
 .content-header hr {
     border-top: 1px solid #ddd;
@@ -627,13 +628,15 @@ a.sidebar-toggle .pe-7s-angle-left-circle {
 .content-header .header-icon {
     font-size: 40px;
     color: #d1d1d1;
-    width: 40px;
-    float: left;
-    margin-top: -10px;
-    line-height: 0;
+    position: absolute;
+    z-index: 1;
+    top: -5px;
+    left: 20px;
+
 }
 .content-header .header-title {
-    margin-left: 50px;
+    margin-left: 5px;
+    display: inline-block;
 }
 
 .content-header .header-title h4 {
@@ -862,7 +865,7 @@ a.sidebar-toggle .pe-7s-angle-left-circle {
 /*--- Searchbox ---*/
 
 .navbar > a > .pe-7s-search {
-    margin-top: 19px;
+    margin-top: 15px;
     font-size: 21px;
     font-weight: 500;
     margin-left: -5px;
@@ -5181,7 +5184,7 @@ button.toast-close-button {
 
 .nav.navbar-nav .nav-username {
     color: #fff;
-    padding: 15px 5px;
+    padding: 11px 5px;
     font-size: 16px;
     line-height: 26px;
 }
@@ -5944,7 +5947,7 @@ button.toast-close-button {
     right: 0;
     overflow-x: auto;
     overflow-y: hidden;
-    padding: 100px 10px 0 10px;
+    padding: 80px 10px 0 10px;
 }
 
 #task_manager {
@@ -6109,13 +6112,13 @@ button.toast-close-button {
 .user_avatar {
     display: inline-block;
     text-align: center;
-    width: 45px;
-    height: 45px;
-    line-height: 45px;
+    width: 35px;
+    height: 35px;
+    line-height: 35px;
     border-radius: 50%;
     color: #fff;
     margin-right: 5px;
-    font-size: 24px;
+    font-size: 20px;
 }
 
 .user_avatar.preview {
@@ -6225,10 +6228,6 @@ button.toast-close-button {
     padding: 10px;
 }
 
-.checklist_header h4 {
-    display: inline-block;
-}
-
 .checklist_header .delete_card_item {
     display: none;
 }
@@ -6242,6 +6241,90 @@ button.toast-close-button {
     padding-left: 30px;
 }
 
-.checklist_title {
+.checklist_title,
+.checklist_header h4,
+.add_customer,
+.desk_switcher {
     display: inline-block;
+}
+
+.add_customer .form-control {
+    width: 65%;
+    display: inline-block;
+    padding-top: 2px;
+}
+
+.add_customer_link {
+    margin-right: 40px;
+}
+
+.add_customer_link a {
+    margin-right: 5px;
+}
+
+.label_picker {
+    list-style: none;
+    padding: 0;
+}
+
+.label_picker li {
+    padding-right: 38px;
+    position: relative;
+}
+
+.label_picker a {
+    position: absolute;
+    right: 0;
+    top: 0;
+    display: block;
+    width: 30px;
+    height: 30px;
+    border-radius: 2px;
+    text-align: center;
+    line-height: 30px;
+}
+
+.label_picker a:hover {
+    background-color: #d1d1d1;
+}
+
+.card_label {
+    display: block;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 14px;
+    margin: 0 0 4px;
+    min-height: 30px;
+    line-height: 30px;
+    width: 180px;
+    padding-left: 10px;
+}
+
+.label_picker .card_label {
+    color: #fff;
+}
+
+.card_label.green_label {
+    background-color: #61bd4f;
+}
+
+.card_label.yellow_label {
+    background-color: #f2d600;
+}
+
+.card_label.orange_label {
+    background-color: #ffab4a;
+}
+
+.card_label.red_label {
+    background-color: #eb5a46;
+}
+
+.card_label.blue_label {
+    background-color: #0079bf;
+}
+
+.task_manager_header {
+    padding-right: 20px;
+    line-height: 51px;
 }

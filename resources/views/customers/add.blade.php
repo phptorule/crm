@@ -312,7 +312,7 @@
                                     <div class="comment_box" ng-repeat="comment in comments">
                                         <p>@{{ comment.comment_text }}</p>
                                         <p>
-                                            <span>Autor: @{{ comment.author + ' (' + comment.created_at + ')' }} </span>
+                                            <span>Autor: @{{ comment.author + ' (' + comment.comment_date + ')' }} </span>
                                         </p>
                                     </div>
                                 </div>
