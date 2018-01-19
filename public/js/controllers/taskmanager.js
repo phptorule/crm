@@ -81,6 +81,12 @@
             });
         };
 
+        $scope.removeCustomerFromDesk = function(customer_id) {
+            request.send('/TaskManager/removeCustomerFromDesk', {'id': $scope.desk.id, 'customer_id': customer_id}, function(data) {
+                $scope.getDeskCustomer();
+            });
+        };
+
         $scope.getDeskCustomer = function(customer_id) {
             request.send('/customers/get', {'customer_id': customer_id}, function(data) {
                 if (data.customer_id == customer_id) {

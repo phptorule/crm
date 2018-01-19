@@ -30,7 +30,7 @@
                     <a href="/customers/add/@{{ customer_url_text }}/@{{ customer_id }}/">@{{ customer_name }}</a>
 
                     <div class="delete_card_item">
-                        <i class="fa fa-trash-o" ng-click="showCustomerLink = ! showCustomerLink"></i>
+                        <i class="fa fa-trash-o" ng-click="removeCustomerFromDesk()"></i>
                     </div>
                 </div>
             </div>

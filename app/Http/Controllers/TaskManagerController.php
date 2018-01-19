@@ -465,6 +465,13 @@ class TaskManagerController extends Controller
         $desk->save();
     }
 
+    public function removeCustomerFromDesk($post = [])
+    {
+        $desk = Descs::find($post['id']);
+        $desk->customer_id = '';
+        $desk->save();
+    }
+
     public function getCustomers($post = [])
     {
         $card = Cards::find($post['cards_id']);
