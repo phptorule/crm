@@ -200,10 +200,8 @@
         };
 
         $scope.getClass = function (path) {
-            if ( ! $location.path().split('/')[4])
-            {
-                return ($location.path() === path) ? 'active' : '';
-            }
+            console.log(path);
+            return ($location.path() === path) ? 'active' : '';
         }
 
         $scope.scrollClass = function() {

@@ -1,11 +1,11 @@
 <div data-ng-controller="CustomersCtrl" data-ng-init="initList()">
     <section class="content-header">
         <div class="header-icon">
-            <i class="@{{ Page.icon() }}"></i>
+            <i class="fa fa-users"></i>
         </div>
 
         <div class="header-title">
-            <h4>@{{ Page.title() }}</h4>
+            <h4>@{{ page_title }}</h4>
         </div>
     </section>
 
@@ -112,7 +112,7 @@
                   <table id="customers_table" class="table table-bordered table-striped table-hover">
                      <thead>
                         <tr class="info">
-                           <th>Nazwa firmy</th>
+                           <th>@{{ customer_name }}</th>
                            <th>Telefon</th>
                            <th>Email</th>
                            <th>Address</th>

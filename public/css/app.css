@@ -603,7 +603,9 @@ a.sidebar-toggle .pe-7s-angle-left-circle {
 }
 .main-header .logo .logo-lg img,
 .main-header .logo .logo-mini img {
-    height: 52px;
+    height: 45px;
+    vertical-align: top;
+    margin-top: 3px;
 }
 .main-header .logo .logo-mini {
     display: none;
@@ -630,7 +632,7 @@ a.sidebar-toggle .pe-7s-angle-left-circle {
     color: #d1d1d1;
     position: absolute;
     z-index: 1;
-    top: -5px;
+    top: 0;
     left: 20px;
 
 }
@@ -6245,7 +6247,8 @@ button.toast-close-button {
 .checklist_header h4,
 .add_customer,
 .desk_switcher,
-.inline_title {
+.inline_title,
+.inline_block {
     display: inline-block;
 }
 
@@ -6328,4 +6331,18 @@ button.toast-close-button {
 .task_manager_header {
     padding-right: 20px;
     line-height: 51px;
+}
+
+.add_list_link {
+    width: 270px;
+    margin-right: 20px;
+}
+
+.add_list_link a {
+    color: #7d7d7d;
+}
+
+.add_list_link a:hover {
+    color: #4d4d4d;
+    text-decoration: underline;
 }

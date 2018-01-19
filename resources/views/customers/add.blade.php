@@ -39,7 +39,7 @@
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="form-group">
-                                    <label>Nazwa firmy</label><span class="req_field"> *</span>
+                                    <label>@{{ customer_name }}</label><span class="req_field"> *</span>
                                     <span class="form-span" ng-model="customers.company_name" ng-show=" ! edit_general && customer_id">@{{ customers.company_name }}</span>
                                     <input type="text" class="form-control" name="company_name" ng-show="edit_general || ! customer_id" ng-model="customers.company_name" required maxlength="35" />
                                 </div>

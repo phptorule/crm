@@ -34,7 +34,7 @@
                         <img src="/img/mini-logo.png" alt="">
                     </span>
                     <span class="logo-lg">
-                        <img src="/img/logo.jpg" alt="">
+                        <img src="/img/logo.jpg" class="tmsys_logo" alt="">
                     </span>
                 </a>
 
@@ -134,7 +134,7 @@
                             </ul>
                         </li>
 
-                        <li class="treeview no-treeview" ng-show="sidebar.plugins.indexOf('Task Manager') != -1">
+                        <li class="treeview" ng-show="sidebar.plugins.indexOf('Task Manager') != -1" ng-class="getClass('/taskmanager/desk/')">
                             <a href="/taskmanager/desk">
                                 <i class="fa fa-briefcase"></i>
                                 <span>Projekty</span>

@@ -27,6 +27,7 @@
         $scope.customers_list = '0';
         $scope.customers = [];
         $scope.showCustomerLink = false;
+        $scope.addNewList = false;
 
         $scope.initTaskManager = function() {
             $scope.getDesks();

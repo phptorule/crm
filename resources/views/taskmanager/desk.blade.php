@@ -1,7 +1,7 @@
 <div data-ng-controller="TaskManagerCtrl" ng-init="initTaskManager()">
     <section class="content-header">
         <div class="header-icon">
-            <i class="@{{ Page.icon() }}"></i>
+            <i class="fa fa-briefcase"></i>
         </div>
 
         <div class="header-title">
@@ -23,7 +23,7 @@
                         <option ng-repeat="customer in customers" value="@{{ customer.customer_id }}">@{{ customer.company_name }}</option>
                     </select>
 
-                    <button class="btn btn-add" ng-click="selectCustomer(customers_list)">Dodaj</button>
+                    <button class="btn btn-add" ng-click="selectCustomer(customers_list)">Zapisz</button>
                 </div>
 
                 <div class="add_customer_link" ng-show="showCustomerLink">
@@ -38,7 +38,7 @@
             <div class="desk_switcher">
                 <div uib-dropdown auto-close="outsideClick">
                     <button class="btn btn-add" uib-dropdown-toggle>
-                        Choose your desk
+                        Wybierz Projekt
                     </button>
 
                     <div uib-dropdown-menu class="custom_pop_up">
@@ -47,7 +47,7 @@
                         </ul>
 
                         <div class="create_desk text-center">
-                            <span>Create new desk</span>
+                            <span>Stworzyć nowy projekt</span>
                             <div class="input-group input-group-unstyled">
                                 <input type="text" class="form-control" ng-model="create_desk_name" ng-enter="saveDesk(create_desk_name)" />
                                 <div class="btn btn-add save_title" ng-click="saveDesk(create_desk_name)">
@@ -58,7 +58,7 @@
                     </div>
                 </div>
 
-                <button class="btn btn-danger" ng-click="deleteDesk()">Delete desk</button>
+                <button class="btn btn-danger" ng-click="deleteDesk()">Zarchiwizować projekt</button>
             </div>
         </div>
     </section>
@@ -89,7 +89,7 @@
                                             </button>
 
                                             <div class="form-group">
-                                                <span>Users</span>
+                                                <span>Użytkownicy</span>
 
                                                 <select class="form-control" name="assign_to" ng-model="users_list">
                                                     <option ng-repeat="user in team_users" value="@{{ user.users_id }}">@{{user.users_first_name + ' ' + user.users_last_name}}</option>
@@ -160,7 +160,11 @@
                     </div>
                 </div>
 
-                <div class="task_manager_list add_list">
+                <div class="add_list_link inline_block" ng-show="! addNewList">
+                    <a href="javascript:void(0);" ng-click="addNewList = ! addNewList">Add new list</a>
+                </div>
+
+                <div class="task_manager_list add_list" ng-show="addNewList">
                     <div class="panel panel-bd">
                         <div class="panel-heading">
                             <div class="form-group">
@@ -168,6 +172,7 @@
                             </div>
 
                             <button class="btn btn-add" ng-click="addTaskList()">Add list</button>
+                            <button class="btn btn-danger" ng-click="addNewList = ! addNewList">Anuluj</button>
                         </div>
                     </div>
                 </div>
@@ -371,16 +376,16 @@
                                                     <div class="row">
                                                         <div class="col-sm-6">
                                                             <button class="btn btn-add" ng-click="saveCheckboxDescription(checkbox)">Zapisz</button>
-                                                            <button class="btn btn-danger" ng-click="resetCheckboxDescription(checkbox)">Cancel</button>
+                                                            <button class="btn btn-danger" ng-click="resetCheckboxDescription(checkbox)">Anuluj</button>
                                                         </div>
 
                                                         <div class="col-sm-6">
                                                             <div uib-dropdown auto-close="outsideClick">
-                                                                <button class="btn btn-add" uib-dropdown-toggle><i class="fa fa-user"></i> Users</button>
+                                                                <button class="btn btn-add" uib-dropdown-toggle><i class="fa fa-user"></i> Użytkownicy</button>
 
                                                                 <div uib-dropdown-menu class="custom_pop_up">
                                                                     <div class="custom_pop_up_header text-center">
-                                                                        <span>Users</span>
+                                                                        <span>Użytkownicy</span>
                                                                     </div>
 
                                                                    <div class="form-group">
@@ -443,7 +448,7 @@
                                                 <div class="checkbox_settings add_checkbox">
                                                     <div class="row">
                                                         <div class="col-sm-6" ng-show="checkbox.users != '' ">
-                                                            <h5>Users:</h5>
+                                                            <h5>Użytkownicy:</h5>
                                                             <div ng-repeat="user in checkbox.users">
                                                                 <div uib-dropdown class="m-b-5" auto-close="outsideClick" ng-show="user != ''">
                                                                     <span class="card_user" uib-dropdown-toggle>
@@ -470,7 +475,7 @@
                                             </div>
 
                                             <div class="checkbox_settings" ng-show=" ! editCheckbox[checkbox.id]">
-                                                <span ng-show="checkbox.users != '' ">Users: </span>
+                                                <span ng-show="checkbox.users != '' ">Użytkownicy: </span>
                                                 <div  class="user_avatar preview" ng-repeat="users in checkbox.users" title="@{{users.users_first_name + ' ' + users.users_last_name}}" style="background-color:RGB(@{{ user.icon_color}})">
                                                     <span class="icon_name">@{{users.users_first_name.slice(0,1)}}</span>
                                                 </div>
@@ -480,7 +485,7 @@
                                         </div>
 
                                         <div class="m-t-20">
-                                            <a href="javascript:void(0);" ng-show=" ! showCheckBox[checklist.id]" ng-click="createNewCheckbox(checklist)">Add new item</a>
+                                            <a href="javascript:void(0);" ng-show=" ! showCheckBox[checklist.id]" ng-click="createNewCheckbox(checklist)">Dodaj checkboxa</a>
                                         </div>
 
                                         <div ng-show="showCheckBox[checklist.id]" class="dev_add_checkbox">
@@ -489,15 +494,15 @@
                                             </div>
 
                                             <button class="btn btn-add" ng-click="addCheckbox(checklist)">Add</button>
-                                            <button class="btn btn-danger" ng-click="showCheckBox[checklist.id] = ! showCheckBox[checklist.id]">Cancel</button>
+                                            <button class="btn btn-danger" ng-click="showCheckBox[checklist.id] = ! showCheckBox[checklist.id]">Anuluj</button>
 
                                             <div class="pull-right">
                                                 <div uib-dropdown class="m-b-5" auto-close="outsideClick" class="dropdown_left">
-                                                    <a href="javascript:void(0);" class="btn card_nav dropdown-toggle" uib-dropdown-toggle><i class="fa fa-user"></i> Users</a>
+                                                    <a href="javascript:void(0);" class="btn card_nav dropdown-toggle" uib-dropdown-toggle><i class="fa fa-user"></i> Użytkownicy</a>
 
                                                    <div uib-dropdown-menu class="custom_pop_up">
                                                         <div class="custom_pop_up_header text-center">
-                                                            <span>Users</span>
+                                                            <span>Użytkownicy</span>
                                                         </div>
 
                                                        <div class="form-group">
@@ -558,7 +563,7 @@
                                             <div class="checkbox_settings add_checkbox">
                                                 <div class="row">
                                                     <div class="col-sm-6" ng-show="checked_users != '' ">
-                                                        <h5>Users:</h5>
+                                                        <h5>Użytkownicy:</h5>
                                                         <div ng-repeat="user in checked_users">
                                                             <div uib-dropdown class="m-b-5" auto-close="outsideClick" ng-show="user != ''">
                                                                 <span class="card_user" uib-dropdown-toggle>
@@ -595,7 +600,7 @@
                                             <button class="btn btn-add" ng-click="saveComment()">Zapisz</button>
                                         </div>
 
-                                        <p ng-show="comments">Comments: </p>
+                                        <p ng-show="comments">Komentarze: </p>
                                         <div ng-repeat="comment in comments">
                                             <div class="card_comment_block">
                                                 <div class="comment_author">
@@ -612,19 +617,19 @@
 
                                 <div class="col-sm-4 card_settings_block">
                                     <div class="form-group">
-                                        <button class="btn btn-add" ng-If="card.done == 0" ng-click="changeDone()">Mark as done</button>
-                                        <button class="btn btn-add" ng-If="card.done == 1" ng-click="changeDone()">Mark as undone</button>
+                                        <button class="btn btn-add" ng-If="card.done == 0" ng-click="changeDone()">Zaznacz jako zrobione</button>
+                                        <button class="btn btn-add" ng-If="card.done == 1" ng-click="changeDone()">Zaznacz jako nie zrobione</button>
                                     </div>
 
-                                    <h4>Add</h4>
+                                    <h4>Dodaj</h4>
 
                                     <div class="form-group">
                                         <div uib-dropdown class="m-b-5" auto-close="outsideClick">
-                                            <a href="javascript:void(0);" class="btn card_nav dropdown-toggle" uib-dropdown-toggle><i class="fa fa-user"></i> Users</a>
+                                            <a href="javascript:void(0);" class="btn card_nav dropdown-toggle" uib-dropdown-toggle><i class="fa fa-user"></i> Użytkownicy</a>
 
                                             <div uib-dropdown-menu class="custom_pop_up">
                                                 <div class="custom_pop_up_header text-center">
-                                                    <span>Users</span>
+                                                    <span>Użytkownicy</span>
                                                 </div>
 
                                                 <div class="form-group">
@@ -634,17 +639,17 @@
                                                 </div>
 
                                                 <button type="button" class="btn btn-add" ng-click="addUserToCard(users_list);">
-                                                   Add user
+                                                   Dodaj użytkownika
                                                 </button>
                                              </div>
                                         </div>
 
                                         <div uib-dropdown class="m-b-5" auto-close="outsideClick">
-                                            <a href="javascript:void(0);" class="btn card_nav dropdown-toggle" uib-dropdown-toggle><i class="fa fa-check-square-o"></i> Checklist</a>
+                                            <a href="javascript:void(0);" class="btn card_nav dropdown-toggle" uib-dropdown-toggle><i class="fa fa-check-square-o"></i> Lista</a>
 
                                             <div uib-dropdown-menu class="custom_pop_up">
                                                 <div class="custom_pop_up_header text-center">
-                                                    <span>Add checklist</span>
+                                                    <span>Dodaj listę</span>
                                                 </div>
 
                                                 <div class="form-group">
@@ -658,11 +663,11 @@
                                         </div>
 
                                         <div uib-dropdown class="m-b-5" auto-close="outsideClick">
-                                            <a href="javascript:void(0);" class="btn card_nav dropdown-toggle" uib-dropdown-toggle><i class="fa fa-calendar"></i> Deadline</a>
+                                            <a href="javascript:void(0);" class="btn card_nav dropdown-toggle" uib-dropdown-toggle><i class="fa fa-calendar"></i> Termin</a>
 
                                             <div uib-dropdown-menu class="custom_pop_up">
                                                 <div class="custom_pop_up_header text-center">
-                                                    <span>Add deadline</span>
+                                                    <span>Dodaj termin</span>
                                                 </div>
 
                                                 <div class="form-group">
@@ -699,11 +704,11 @@
                                         </div>
 
                                         <div uib-dropdown class="m-b-5" auto-close="outsideClick">
-                                            <a href="javascript:void(0);" class="btn card_nav dropdown-toggle" uib-dropdown-toggle><i class="fa fa-tag"></i> Label</a>
+                                            <a href="javascript:void(0);" class="btn card_nav dropdown-toggle" uib-dropdown-toggle><i class="fa fa-tag"></i> Etykieta</a>
 
                                             <div uib-dropdown-menu class="custom_pop_up">
                                                 <div class="custom_pop_up_header text-center">
-                                                    <span>Add label</span>
+                                                    <span>Dodaj etykietę</span>
                                                 </div>
 
                                                 <ul class="label_picker">
@@ -784,7 +789,7 @@
                                     <hr />
 
                                     <div class="delete_card">
-                                        <a href="javascript:void(0);" class="btn btn-danger card_nav" ng-click="deleteCard()">Delete card</a>
+                                        <a href="javascript:void(0);" class="btn btn-danger card_nav" ng-click="deleteCard()">Zarchiwizuj</a>
                                     </div>
                                 </div>
                             </div>
