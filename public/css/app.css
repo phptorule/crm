@@ -6122,10 +6122,10 @@ button.toast-close-button {
 }
 
 .user_avatar.preview {
-    width: 35px;
-    height: 35px;
-    line-height: 35px;
-    font-size: 20px;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    font-size: 15px;
 }
 
 .input-group-unstyled .input-group-addon {

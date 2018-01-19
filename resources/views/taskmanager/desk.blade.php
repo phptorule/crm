@@ -10,7 +10,7 @@
             <div class="input-group input-group-unstyled" ng-show=" ! desk_title">
                 <input type="text" focus-me="! desk_title" class="form-control" ng-enter="saveDeskTitle()" ng-model="desk.name">
                 <div class="btn btn-add save_title" ng-click="saveDeskTitle()">
-                    Save
+                    Zapisz
                 </div>
             </div>
         </div>
@@ -51,7 +51,7 @@
                             <div class="input-group input-group-unstyled">
                                 <input type="text" class="form-control" ng-model="create_desk_name" ng-enter="saveDesk(create_desk_name)" />
                                 <div class="btn btn-add save_title" ng-click="saveDesk(create_desk_name)">
-                                    Save
+                                    Zapisz
                                 </div>
                             </div>
                         </div>
@@ -75,7 +75,7 @@
                                     <div class="input-group input-group-unstyled" ng-show="title[task.id]">
                                         <input type="text" focus-me="! title[task.id]" class="form-control" ng-enter="saveTaskTitle(task)" ng-model="task.name">
                                         <div class="btn btn-add save_title" ng-click="saveTaskTitle(task)">
-                                            Save
+                                            Zapisz
                                         </div>
                                     </div>
                                 </div>
@@ -97,7 +97,7 @@
                                             </div>
 
                                             <button type="button" class="btn btn-add" ng-click="saveUserToList(users_list,task.id);">
-                                                Add user
+                                                Dodaj użytkownika
                                             </button>
 
                                             <div ng-repeat="user in users">
@@ -185,7 +185,7 @@
             <div class="input-group input-group-unstyled">
                 <input type="text" focus-me="! card_title" ng-show="! card_title" ng-enter="saveCardTitle()" class="form-control" ng-model="card.name">
                 <div class="btn btn-add save_title" ng-show=" ! card_title" ng-click="saveCardTitle()">
-                    Save
+                    Zapisz
                 </div>
             </div>
         </div>
@@ -224,7 +224,7 @@
                                             </div>
 
                                             <div class="col-sm-5 deadline_block" ng-show="card.deadline">
-                                                <h4>Deadline to:</h4>
+                                                <h4>Termin do:</h4>
                                                 <span>@{{card.deadline}}</span>
                                                 <div class="delete_card_item">
                                                     <i class="fa fa-trash-o" ng-click="removeCardDeadline()"></i>
@@ -240,7 +240,7 @@
                                             <div class="inline_title">Projektant</div>
 
                                             <div class="delete_card_item">
-                                                <i class="fa fa-trash-o" ng-click="customer_is_designer = ! customer_is_designer"></i>
+                                                <i class="fa fa-trash-o" ng-click="deleteCustomerFromCard(customer_designer)"></i>
                                             </div>
                                         </h4>
 
@@ -275,11 +275,51 @@
 
                                     <hr ng-show="customer_is_designer">
 
+                                    <div class="assign_customer_block" ng-show="customer_is_officeman">
+                                        <h4>
+                                            <div class="inline_title">Urzędnik</div>
+
+                                            <div class="delete_card_item">
+                                                <i class="fa fa-trash-o" ng-click="deleteCustomerFromCard(customer_officeman)"></i>
+                                            </div>
+                                        </h4>
+
+                                        <div class="customer_description">
+                                            <div class="row">
+                                                <div class="col-sm-6">
+                                                    <div class="form-group">
+                                                        <label>Osoba kontaktowa</label>
+                                                        <span class="form-span">@{{ customer_officeman.contact_person }}</span>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label>Nazwa firmy</label>
+                                                        <span class="form-span">@{{ customer_officeman.company_name }}</span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-sm-6">
+                                                    <div class="form-group">
+                                                        <label>Telefon</label>
+                                                        <span class="form-span">@{{ customer_officeman.phone_number }}</span>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label>Email</label>
+                                                        <span class="form-span">@{{ customer_officeman.email }}</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <hr ng-show="customer_is_officeman">
+
                                     <div class="card_block description">
-                                        <h4>Description:</h4>
+                                        <h4>Opis:</h4>
                                         <div class="card_description">
                                             <div class="description_add" ng-show="! card.description && show_description">
-                                                <a href="javascript:void(0);" ng-click="show_description = ! show_description"><i class="fa fa-align-left"></i> Dodaj opys</a>
+                                                <a href="javascript:void(0);" ng-click="show_description = ! show_description"><i class="fa fa-align-left"></i> Dodaj opis</a>
                                             </div>
 
                                             <div class="description_area" ng-show="card.description || ! show_description">
@@ -289,8 +329,8 @@
                                                 </div>
 
                                                 <div class="form-group">
-                                                    <button class="btn btn-add" ng-show=" ! show_description" ng-click="saveCardDescription()">Save</button>
-                                                    <button class="btn btn-danger" ng-show=" ! show_description" ng-click="resetCardDescription()">Cancel</button>
+                                                    <button class="btn btn-add" ng-show=" ! show_description" ng-click="saveCardDescription()">Zapisz</button>
+                                                    <button class="btn btn-danger" ng-show=" ! show_description" ng-click="resetCardDescription()">Anuluj</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -311,7 +351,7 @@
                                             <div class="input-group input-group-unstyled" ng-show="showChecklistTitle[checklist.id]">
                                                 <input type="text" class="form-control" focus-me="showChecklistTitle[checklist.id]" ng-enter="saveChecklistTitle(checklist)" ng-model="checklist.title">
                                                 <div class="btn btn-add save_title" ng-click="saveChecklistTitle(checklist)">
-                                                    Save
+                                                    Zapisz
                                                 </div>
                                             </div>
                                         </div>
@@ -330,7 +370,7 @@
                                                 <div class="chekbox_settings_buttons">
                                                     <div class="row">
                                                         <div class="col-sm-6">
-                                                            <button class="btn btn-add" ng-click="saveCheckboxDescription(checkbox)">Save</button>
+                                                            <button class="btn btn-add" ng-click="saveCheckboxDescription(checkbox)">Zapisz</button>
                                                             <button class="btn btn-danger" ng-click="resetCheckboxDescription(checkbox)">Cancel</button>
                                                         </div>
 
@@ -392,7 +432,7 @@
                                                                     </div>
 
                                                                     <button type="button" class="btn btn-primary" ng-click="addTempCheckboxDeadline(checkbox)">
-                                                                        Save
+                                                                        Zapisz
                                                                     </button>
                                                                 </div>
                                                             </div>
@@ -509,7 +549,7 @@
                                                         </div>
 
                                                         <button type="button" class="btn btn-primary" ng-click="addTempCheckboxDeadline()">
-                                                            Save
+                                                            Zapisz
                                                         </button>
                                                     </div>
                                                 </div>
@@ -547,12 +587,12 @@
 
                                     <div class="card_comments">
                                         <div class="form-group">
-                                            <h4>Add comment</h4>
+                                            <h4>Dodaj komentarz</h4>
                                             <textarea class="form-control resize" ng-model="comment_text"></textarea>
                                         </div>
 
                                         <div class="form-group">
-                                            <button class="btn btn-add" ng-click="saveComment()">Save</button>
+                                            <button class="btn btn-add" ng-click="saveComment()">Zapisz</button>
                                         </div>
 
                                         <p ng-show="comments">Comments: </p>
@@ -612,7 +652,7 @@
                                                 </div>
 
                                                 <button type="button" aria-hidden="true" class="btn btn-primary" ng-click="saveChecklist()">
-                                                    Save
+                                                    Zapisz
                                                 </button>
                                             </div>
                                         </div>
@@ -653,7 +693,7 @@
                                                 </div>
 
                                                 <button type="button" aria-hidden="true" class="btn btn-primary" ng-click="saveCardDeadline()">
-                                                    Save
+                                                    Zapisz
                                                 </button>
                                             </div>
                                         </div>
@@ -668,23 +708,23 @@
 
                                                 <ul class="label_picker">
                                                     <li>
-                                                        <a href="javascript:void(0);" title="Dodaj opys" ng-click="addLabelDescription(green)"><i class="fa fa-pencil"></i></a>
+                                                        <a href="javascript:void(0);" title="Dodaj opis" ng-click="addLabelDescription(green)"><i class="fa fa-pencil"></i></a>
                                                         <span class="card_label green_label"></span>
                                                     </li>
                                                     <li>
-                                                        <a href="javascript:void(0);" title="Dodaj opys" ng-click="addLabelDescription(yellow)"><i class="fa fa-pencil"></i></a>
+                                                        <a href="javascript:void(0);" title="Dodaj opis" ng-click="addLabelDescription(yellow)"><i class="fa fa-pencil"></i></a>
                                                         <span class="card_label yellow_label"></span>
                                                     </li>
                                                     <li>
-                                                        <a href="javascript:void(0);" title="Dodaj opys" ng-click="addLabelDescription(orange)"><i class="fa fa-pencil"></i></a>
+                                                        <a href="javascript:void(0);" title="Dodaj opis" ng-click="addLabelDescription(orange)"><i class="fa fa-pencil"></i></a>
                                                         <span class="card_label orange_label"></span>
                                                     </li>
                                                     <li>
-                                                        <a href="javascript:void(0);" title="Dodaj opys" ng-click="addLabelDescription(red)"><i class="fa fa-pencil"></i></a>
+                                                        <a href="javascript:void(0);" title="Dodaj opis" ng-click="addLabelDescription(red)"><i class="fa fa-pencil"></i></a>
                                                         <span class="card_label red_label"></span>
                                                     </li>
                                                     <li>
-                                                        <a href="javascript:void(0);" title="Dodaj opys" ng-click="addLabelDescription(blue)"><i class="fa fa-pencil"></i></a>
+                                                        <a href="javascript:void(0);" title="Dodaj opis" ng-click="addLabelDescription(blue)"><i class="fa fa-pencil"></i></a>
                                                         <span class="card_label blue_label"></span>
                                                     </li>
                                                 </ul>
@@ -735,7 +775,7 @@
                                                 </div>
 
                                                 <button type="button" aria-hidden="true" class="btn btn-primary" ng-click="saveCardDeadline()">
-                                                    Save
+                                                    Zapisz
                                                 </button>
                                             </div>
                                         </div>
