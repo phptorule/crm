@@ -25,6 +25,18 @@
 
         $scope.initAdd = function() {
             request.send('/customers/get', {'customer_id': ($scope.customer_id || 0)}, function(data) {
+                if ($scope.customer_group == 'clients') {
+                    $scope.customer_name = 'Nazwa firmy';
+                }
+
+                if ($scope.customer_group == 'designers') {
+                    $scope.customer_name = 'Nazwa firmy';
+                }
+
+                if ($scope.customer_group == 'offices') {
+                    $scope.customer_name = 'Nazwa urzędu';
+                }
+
                 if ($scope.customer_id)
                 {
                     $scope.customers = data;
@@ -45,6 +57,7 @@
                 $scope.page_title = 'Lista klientów';
                 $scope.create_group_customer_text = 'Utwórz klienta';
                 $scope.customer_group_url_text = 'clients';
+                $scope.customer_name = 'Nazwa firmy';
 
                 request.send('/customers/getClientsList', {}, function(data) {
                     $scope.print(data);
@@ -55,6 +68,7 @@
                 $scope.page_title = 'Lista projektantów';
                 $scope.create_group_customer_text = 'Utwórz projektanta';
                 $scope.customer_group_url_text = 'designers';
+                $scope.customer_name = 'Nazwa firmy';
 
                 request.send('/customers/getDesignersList', {}, function(data) {
                     $scope.print(data);
@@ -65,6 +79,7 @@
                 $scope.page_title = 'Lista urzędów';
                 $scope.create_group_customer_text = 'Utwórz urzęd';
                 $scope.customer_group_url_text = 'offices';
+                $scope.customer_name = 'Nazwa urzędu';
 
                 request.send('/customers/getOfficesList', {}, function(data) {
                     $scope.print(data);

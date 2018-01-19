@@ -450,7 +450,7 @@ class TaskManagerController extends Controller
     public function addCustomerToCard($post = [])
     {
         $card = Cards::find($post['cards_id']);
-        $card->customers()->sync($post['customer_id']);
+        $card->customers()->syncWithoutDetaching($post['customer_id']);
     }
 
     public function getCustomers($post = [])
