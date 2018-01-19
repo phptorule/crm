@@ -160,7 +160,7 @@ class CustomersController extends Controller
                 $customer->customer_type = empty($post['customer_type']) ? 0 : $post['customer_type'];
                 $customer->phone_number = empty($post['phone_number']) ? '' : $post['phone_number'];
                 $customer->extra_phone_number = empty($post['extra_phone_number']) ? '' : $post['extra_phone_number'];
-                $customer->bank_account = empty($post['bank_account']) ? '' : $post['bank_account'];
+                $customer->bank_account = empty($post['bank_account']) ? 0 : $post['bank_account'];
                 $customer->nip = empty($post['nip']) ? '' : $post['nip'];
                 $customer->email = empty($post['email']) ? '' : $post['email'];
                 $customer->extra_email = empty($post['extra_email']) ? '' : $post['extra_email'];

@@ -19,4 +19,9 @@ class Customers extends Model
     {
         return $this->belongsToMany('App\Users', 'customers_users', 'customer_id', 'users_id');
     }
+
+    public function cards()
+    {
+        return $this->belongsToMany('App\Cards', 'cards_customers', 'customer_id', 'cards_id');
+    }
 }

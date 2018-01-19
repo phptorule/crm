@@ -356,6 +356,7 @@
             $scope.getTeamUsers();
             $scope.getChecklists();
             $scope.getComments();
+            $scope.getCustomers();
             $scope.getLabels();
             $scope.updateUserList();
         };
@@ -388,16 +389,16 @@
         $scope.removeUserFromCard = function(user_id) {
             $scope.checkbox = {};
 
-                for (var k in $scope.checkboxes) {
-                    for (var l in $scope.checkboxes[k]) {
-                        $scope.checkbox[k] = $scope.checkboxes[k][l].id;
-                    }
+            for (var k in $scope.checkboxes) {
+                for (var l in $scope.checkboxes[k]) {
+                    $scope.checkbox[k] = $scope.checkboxes[k][l].id;
                 }
+            }
 
-            /*request.send('/TaskManager/removeUserFromCard', {'users_id': user_id, 'cards_id': $scope.card.cards_id}, function(data) {
+            request.send('/TaskManager/removeUserFromCard', {'users_id': user_id, 'cards_id': $scope.card.cards_id}, function(data) {
                 $scope.getTeamUsers();
                 $scope.card.users = data;
-            });*/
+            });
         };
 
         $scope.saveCardDeadline = function() {
@@ -457,6 +458,36 @@
         $scope.changeDone = function() {
             request.send('/TaskManager/changeDone', {'cards_id': $scope.card.cards_id}, function(data) {
                 $scope.card.done = data;
+            });
+        };
+
+        $scope.getCustomers = function() {
+            request.send('/TaskManager/getCustomers', {'cards_id': $scope.card.cards_id}, function(data) {
+                for (var k in data) {
+                    if (data[k].customer_group == '2') {
+                        $scope.customer_designer = data[k];
+                        $scope.customer_is_designer = true;
+                    }
+
+                    if (data[k].customer_group == '3') {
+                        $scope.customer_officeman = data[k];
+                        $scope.customer_is_officeman = true;
+                    }
+                }
+
+                console.log($scope.customer_designer);
+            });
+        };
+
+        $scope.deleteCustomerFromCard = function(customer) {
+            request.send('/TaskManager/deleteCustomerFromCard', {'cards_id': $scope.card.cards_id, 'customer_id': customer.customer_id}, function(data) {
+                if (customer.customer_group == '2') {
+                    $scope.customer_is_designer = false;
+                }
+
+                if (customer.customer_group == '3') {
+                    $scope.customer_is_officeman = false;
+                }
             });
         };
 
@@ -780,16 +811,25 @@
             });
 
             modalInstance.result.then(function(response) {
+                console.log(response);
                 if (response.customer_group == '2') {
                     $scope.customer_is_designer = true;
                     $scope.customer_designer = response;
+                    $scope.addCustomerToCard(response.customer_id);
                 }
 
                 if (response.customer_group == '3') {
                     $scope.customer_is_officeman = true;
                     $scope.customer_officeman = response;
+                    $scope.addCustomerToCard(response.customer_id);
                 }
             }, function () {
+
+            });
+        };
+
+        $scope.addCustomerToCard = function(customer_id) {
+            request.send('/TaskManager/addCustomerToCard', {'customer_id': customer_id, 'cards_id': $scope.card.cards_id}, function(data) {
 
             });
         };

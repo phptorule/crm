@@ -447,6 +447,24 @@ class TaskManagerController extends Controller
 
     /* END LABELS*/
 
+    public function addCustomerToCard($post = [])
+    {
+        $card = Cards::find($post['cards_id']);
+        $card->customers()->sync($post['customer_id']);
+    }
+
+    public function getCustomers($post = [])
+    {
+        $card = Cards::find($post['cards_id']);
+
+        return $card->customers()->get();
+    }
+
+    public function deleteCustomerFromCard($post = [])
+    {
+        $card = Cards::find($post['cards_id']);
+        $card->customers()->detach($post['customer_id']);
+    }
 
     public function getTeamUsers($post = [])
     {

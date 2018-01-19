@@ -40,6 +40,9 @@ class Cards extends Model
         return $this->hasMany('App\CardsComments', 'cards_id');
     }
 
+    public function customers() {
+        return $this->belongsToMany('App\Customers', 'cards_customers', 'cards_id', 'customer_id');
+    }
 
     public function getCardPreview($card_id)
     {
