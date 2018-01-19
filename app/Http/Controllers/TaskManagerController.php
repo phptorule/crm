@@ -417,7 +417,7 @@ class TaskManagerController extends Controller
 
         foreach ($comments as $item) {
             $item->users = Users::find($item['users_id']);
-            $item->comment_date = date('Y-d-m H:m', strtotime($item->created_at));
+            $item->comment_date = date('Y-d-m H:i', strtotime($item->created_at));
         }
 
         return $comments;
@@ -435,7 +435,7 @@ class TaskManagerController extends Controller
 
         foreach ($card_comments as $item) {
             $item->users = Users::find($item['users_id']);
-            $item->comment_date = date('Y-d-m H:m', strtotime($item->created_at));
+            $item->comment_date = date('Y-d-m H:i', strtotime($item->created_at));
         }
 
         return $card_comments;
