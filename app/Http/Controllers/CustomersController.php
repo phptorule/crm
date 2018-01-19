@@ -35,6 +35,7 @@ class CustomersController extends Controller
         foreach ($customers as $customer)
         {
             $customer->users_ids = $customer->users()->get()->pluck('users_id')->toArray();
+            $customer->join_date = date('Y-d-m', strtotime($customer->created_at));
         }
 
         return $customers;
@@ -48,6 +49,7 @@ class CustomersController extends Controller
         foreach ($customers as $customer)
         {
             $customer->users_ids = $customer->users()->get()->pluck('users_id')->toArray();
+            $customer->join_date = date('Y-d-m', strtotime($customer->created_at));
         }
 
         return $customers;
@@ -61,6 +63,7 @@ class CustomersController extends Controller
         foreach ($customers as $customer)
         {
             $customer->users_ids = $customer->users()->get()->pluck('users_id')->toArray();
+            $customer->join_date = date('Y-d-m', strtotime($customer->created_at));
         }
 
         return $customers;

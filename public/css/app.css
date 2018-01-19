@@ -4518,7 +4518,7 @@ table.text-center th {
 
 #toTop {
     position: fixed;
-    bottom: 10px;
+    bottom: 50px;
     right: 15px;
     cursor: pointer;
     display: none;
@@ -4532,6 +4532,7 @@ table.text-center th {
     width: 34px;
     border-radius: 50%;
     color: #fff;
+    display: none ! important;
 }
 .back-top:hover {
     color: #fff;

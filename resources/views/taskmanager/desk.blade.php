@@ -17,20 +17,20 @@
 
         <div class="task_manager_header pull-right">
             <div class="add_customer">
-                <div ng-show="! showCustomerLink">
+                <div ng-show="! customer_name">
                     <select class="form-control" ng-model="customers_list">
                         <option value='0' disabled="disabled">Dodaj kontrahenta</option>
                         <option ng-repeat="customer in customers" value="@{{ customer.customer_id }}">@{{ customer.company_name }}</option>
                     </select>
 
-                    <button class="btn btn-add" ng-click="selectCustomer(customers_list)">Zapisz</button>
+                    <button class="btn btn-add" ng-click="addCustomerToDesk(customers_list)">Zapisz</button>
                 </div>
 
-                <div class="add_customer_link" ng-show="showCustomerLink">
+                <div class="add_customer_link" ng-show="customer_name">
                     <a href="/customers/add/@{{ customer_url_text }}/@{{ customer_id }}/">@{{ customer_name }}</a>
 
                     <div class="delete_card_item">
-                        <i class="fa fa-trash-o" ng-click="showCustomerLink = ! showCustomerLink"></i>
+                        <i class="fa fa-trash-o" ng-click="removeCustomerFromDesk()"></i>
                     </div>
                 </div>
             </div>
