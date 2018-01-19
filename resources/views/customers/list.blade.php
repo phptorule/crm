@@ -133,7 +133,7 @@
                               <span ng-show="customer.customer_type == '1'">Vendor</span>
                               <span ng-show="customer.customer_type == '2'">V.I.P.</span>
                            </td>
-                           <td>@{{ customer.created_at }}</td>
+                           <td>@{{ customer.join_date }}</td>
                            <td>@{{ customer.website }}</td>
                            <td class="view_customer">
                               <a href="/customers/add/@{{ customer_group_url_text }}/@{{ customer.customer_id }}/">

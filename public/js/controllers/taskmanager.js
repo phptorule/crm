@@ -75,27 +75,31 @@
             });
         };*/
 
-        $scope.selectCustomer = function(customer_id) {
-            for (var k in $scope.customers) {
-                if ($scope.customers[k].customer_id == customer_id) {
-                    $scope.customer_name = $scope.customers[k].company_name;
+        $scope.addCustomerToDesk = function(customer_id) {
+            request.send('/TaskManager/addCustomerToDesk', {'id': $scope.desk.id, 'customer_id': customer_id}, function(data) {
+                $scope.getDeskCustomer(customer_id);
+            });
+        };
+
+        $scope.getDeskCustomer = function(customer_id) {
+            request.send('/customers/get', {'customer_id': customer_id}, function(data) {
+                if (data.customer_id == customer_id) {
+                    $scope.customer_name = data.company_name;
                     $scope.customer_id = customer_id;
 
-                    if ($scope.customers[k].customer_group == '1') {
+                    if (data.customer_group == '1') {
                         $scope.customer_url_text = 'clients';
                     }
 
-                    if ($scope.customers[k].customer_group == '2') {
+                    if (data.customer_group == '2') {
                         $scope.customer_url_text = 'designers';
                     }
 
-                    if ($scope.customers[k].customer_group == '3') {
+                    if (data.customer_group == '3') {
                         $scope.customer_url_text = 'offices';
                     }
                 }
-            }
-
-            $scope.showCustomerLink = true;
+            });
         };
 
         $scope.saveDeskTitle = function() {
@@ -111,6 +115,7 @@
 
         $scope.getDeskLists = function(desk) {
             $scope.desk = desk;
+            $scope.customer_name = '';
 
             request.send('/TaskManager/getDeskLists', {'desk_id': $scope.desk.id}, function(data) {
                 $scope.tasks = data;
@@ -121,6 +126,8 @@
                     $scope.all += data[k].cards.length;
                 }
             });
+
+            $scope.getDeskCustomer($scope.desk.customer_id);
         };
 
         $scope.saveUserToList = function(user_id, list_id) {
