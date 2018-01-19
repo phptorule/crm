@@ -48,6 +48,33 @@
             });
         };
 
+        /*$scope.selectCustomer = function() {
+            var modalInstance = $uibModal.open({
+                animation: true,
+                templateUrl: 'SelectCustomer.html',
+                controller: 'ModalSelectCustomerCtrl',
+                resolve: {
+                    items: function() {
+                        return 'all';
+                    }
+                }
+            });
+
+            modalInstance.result.then(function(response) {
+                if (response.customer_group == '2') {
+                    $scope.customer_is_designer = true;
+                    $scope.customer_designer = response;
+                }
+
+                if (response.customer_group == '3') {
+                    $scope.customer_is_officeman = true;
+                    $scope.customer_officeman = response;
+                }
+            }, function () {
+
+            });
+        };*/
+
         $scope.selectCustomer = function(customer_id) {
             for (var k in $scope.customers) {
                 if ($scope.customers[k].customer_id == customer_id) {
@@ -476,7 +503,7 @@
                     }
                 }
 
-                console.log($scope.customer_designer);
+                //console.log($scope.customer_designer);
             });
         };
 
@@ -762,12 +789,14 @@
 
         $scope.getComments = function() {
             request.send('/TaskManager/getComments', {'cards_id': $scope.card.cards_id}, function(data) {
+                //console.log(data);
                 $scope.comments = data;
             });
         };
 
         $scope.saveComment = function() {
             request.send('/TaskManager/saveComment', {'text': $scope.comment_text, 'cards_id': $scope.card.cards_id}, function(data) {
+                //console.log(data);
                 $scope.comments = data;
                 $scope.comment_text = '';
                 $scope.getCardPreview($scope.card.cards_id);
@@ -812,7 +841,7 @@
             });
 
             modalInstance.result.then(function(response) {
-                console.log(response);
+                //console.log(response);
                 if (response.customer_group == '2') {
                     $scope.customer_is_designer = true;
                     $scope.customer_designer = response;
@@ -966,6 +995,12 @@
                 $scope.getOfficesList();
                 $scope.modal_title = 'Dodaj urzędnika';
                 $scope.modal_add_customer = 'Utwórz urzędnika';
+            }
+
+            if (items == 'all') {
+                request.send('/customers/getCustomersList', {}, function(data) {
+                    $scope.customers = data;
+                });
             }
         };
 

@@ -200,7 +200,6 @@
         };
 
         $scope.getClass = function (path) {
-            console.log(path);
             return ($location.path() === path) ? 'active' : '';
         }
 

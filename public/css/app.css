@@ -5879,9 +5879,13 @@ button.toast-close-button {
 
 .card_info span,
 .card_info p,
-.card_info .comment_author,
-.card_info .comment_text {
+.card_info .comment_author {
     color: #959595;
+}
+
+.description_area p,
+.card_info .comment_text {
+    color: #4d4d4d;
 }
 
 .custom_pop_up.add_users {

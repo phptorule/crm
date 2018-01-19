@@ -431,9 +431,14 @@ class TaskManagerController extends Controller
         $comments->text = $post['text'];
         $comments->save();
 
-        $card_commnets = CardsComments::where('cards_id', $post['cards_id'])->orderBy('created_at', 'desc')->get();
+        $card_comments = CardsComments::where('cards_id', $post['cards_id'])->orderBy('created_at', 'desc')->get();
 
-        return $card_commnets;
+        foreach ($card_comments as $item) {
+            $item->users = Users::find($item['users_id']);
+            $item->comment_date = date('Y-d-m H:m', strtotime($item->created_at));
+        }
+
+        return $card_comments;
     }
     /* END COMMENTS ACTIONS */
 

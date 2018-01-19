@@ -206,7 +206,7 @@
                                         <div class="row">
                                             <div class="col-sm-5 users_block" ng-show="card.users != '' && card.users">
                                                 <ul>
-                                                    <h4>Users:</h4>
+                                                    <h4>Użytkownicy:</h4>
                                                     <li ng-repeat="user in card.users">
                                                         <div uib-dropdown class="m-b-5" auto-close="outsideClick">
                                                             <a href="javascript:void(0);" class="card_user dropdown-toggle" uib-dropdown-toggle>@{{ user.users_first_name + ' ' + user.users_last_name }} <i class="fa fa-pencil"></i></a>
@@ -396,13 +396,13 @@
                                                                     </div>
 
                                                                    <button type="button" class="btn btn-add" ng-click="addCheckboxUser(checkbox, card_users_list)">
-                                                                       Add user
+                                                                       Dodaj użytkownika
                                                                     </button>
                                                                 </div>
                                                             </div>
 
                                                             <div uib-dropdown auto-close="outsideClick">
-                                                                <button class="btn btn-add" uib-dropdown-toggle><i class="glyphicon glyphicon-calendar"></i> Deadline</button>
+                                                                <button class="btn btn-add" uib-dropdown-toggle><i class="glyphicon glyphicon-calendar"></i> Termin</button>
 
                                                                 <div uib-dropdown-menu class="custom_pop_up checkbox_deadline">
                                                                     <div class="custom_pop_up_header text-center">
@@ -480,7 +480,7 @@
                                                     <span class="icon_name">@{{users.users_first_name.slice(0,1)}}</span>
                                                 </div>
 
-                                                <span ng-show="checkbox.deadline">Deadline: @{{checkbox.deadline}}</span>
+                                                <span ng-show="checkbox.deadline">Termin: @{{checkbox.deadline}}</span>
                                             </div>
                                         </div>
 
@@ -493,7 +493,7 @@
                                                 <input type="text" class="form-control" ng-enter="addCheckbox(checklist)" ng-model="add_checkbox_title[checklist.id]">
                                             </div>
 
-                                            <button class="btn btn-add" ng-click="addCheckbox(checklist)">Add</button>
+                                            <button class="btn btn-add" ng-click="addCheckbox(checklist)">Zapisz</button>
                                             <button class="btn btn-danger" ng-click="showCheckBox[checklist.id] = ! showCheckBox[checklist.id]">Anuluj</button>
 
                                             <div class="pull-right">
@@ -513,7 +513,7 @@
                                                         </div>
 
                                                        <button type="button" class="btn btn-add" ng-click="addUserToList(add_checkbox_users_list)">
-                                                           Add user
+                                                           Dodaj użytkownika
                                                         </button>
                                                     </div>
                                                 </div>
@@ -577,7 +577,7 @@
                                                     </div>
 
                                                     <div class="col-sm-6" ng-show="showCheckboxDeadline">
-                                                        <h5>Deadline:</h5>
+                                                        <h5>Termin:</h5>
                                                         <span>@{{temp_checkbox_deadline}}</span>
                                                         <div class="delete_card_item">
                                                             <i class="fa fa-trash-o" ng-click="removeTempCheckboxDeadline()"></i>
@@ -749,7 +749,7 @@
 
                                             <div uib-dropdown-menu class="custom_pop_up">
                                                 <div class="custom_pop_up_header text-center">
-                                                    <span>Add deadline</span>
+                                                    <span></span>
                                                 </div>
 
                                                 <div class="form-group">
@@ -762,21 +762,16 @@
                                                 </div>
 
                                                 <div class="form-group">
-                                                   <div class="row">
-                                                        <div class="col-sm-6">
-                                                            <label>Hours:</label>
-                                                            <select class="form-control" ng-model="card_deadline.hour">
-                                                                <option ng-repeat="h in range(23)" value="@{{ h }}">@{{ h }}</option>
-                                                            </select>
-                                                        </div>
-
-                                                        <div class="col-sm-6">
-                                                            <label>Minutes:</label>
-                                                            <select class="form-control" ng-model="card_deadline.minute">
-                                                                <option ng-repeat="m in range(59)" value="@{{ m }}">@{{ m }}</option>
-                                                            </select>
-                                                        </div>
+                                                    <div class="input-group custom-datapicker-input">
+                                                        <input type="text" class="form-control" uib-datepicker-popup="yyyy/MM/dd" ng-model="card_deadline.date" is-open="date[1].opened" show-button-bar="false" datepicker-options="dateOptions" />
+                                                        <span class="input-group-btn">
+                                                            <button type="button" class="btn btn-default" ng-click="calendarOpen(1)"><i class="glyphicon glyphicon-calendar"></i></button>
+                                                        </span>
                                                     </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <input type="text" class="form-control" />
                                                 </div>
 
                                                 <button type="button" aria-hidden="true" class="btn btn-primary" ng-click="saveCardDeadline()">
@@ -800,7 +795,7 @@
        </div>
 
        <div class="modal-footer">
-          <button type="button" class="btn btn-danger pull-right" ng-click="cancel()">Close</button>
+          <button type="button" class="btn btn-danger pull-right" ng-click="cancel()">Anuluj</button>
        </div>
     </script>
 
