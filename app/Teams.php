@@ -34,14 +34,47 @@ class Teams extends Model
         return $this->belongsToMany('App\FinancesRegistered', 'finances_registered_teams', 'teams_id', 'registered_id');
     }
 
-    public function tasks()
-    {
-        return $this->hasMany('App\TasksLists', 'teams_id')->orderBy('position');
-    }
-
     public function descs()
     {
         return $this->hasMany('App\Descs', 'team_id');
     }
 
+    public function labels()
+    {
+        return $this->hasMany('App\Labels', 'teams_id');
+    }
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::created(function($team) {
+            $team->defaultLabels($team);
+        });
+
+        static::deleting(function($team) {
+            //
+        });
+    }
+
+    public function defaultLabels($team)
+    {
+        $labels = [
+            [
+                'label_color' => 'green'
+            ], [
+                'label_color' => 'yellow'
+            ], [
+                'label_color' => 'orange'
+            ], [
+                'label_color' => 'red'
+            ], [
+                'label_color' => 'blue'
+            ]
+        ];
+
+        foreach ($labels as $label) {
+           $team->labels()->create($label);
+        }
+    }
 }

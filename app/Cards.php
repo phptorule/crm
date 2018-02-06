@@ -2,11 +2,9 @@
 
 namespace App;
 
-
 use App\Users;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
-
 use Illuminate\Database\Eloquent\Model;
 
 class Cards extends Model
@@ -44,9 +42,12 @@ class Cards extends Model
         return $this->belongsToMany('App\Customers', 'cards_customers', 'cards_id', 'customer_id');
     }
 
+    public function labels() {
+        return $this->belongsToMany('App\Labels', 'cards_labels', 'cards_id', 'label_id');
+    }
+
     public function getCardPreview($card_id)
     {
-
         $card = Cards::find($card_id);
         $card_preview = new Cards();
         $card_preview->assign_to_card = $card->users->contains('users_id', Auth::user()->users_id);
@@ -81,6 +82,7 @@ class Cards extends Model
         }
 
         $card_preview->comments_amount = $card->cardComments()->get()->count();
+        $card_preview->labels = $card->labels()->get();
         return $card_preview;
     }
 

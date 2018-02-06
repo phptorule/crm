@@ -611,8 +611,6 @@
             Page.setIcon('fa fa-th-list');
         }
 
-
-
         ///////////////
 
         $scope.print = function() {

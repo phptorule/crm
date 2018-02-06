@@ -18,12 +18,13 @@
         <div class="task_manager_header pull-right">
             <div class="add_customer">
                 <div ng-show="! customer_name">
-                    <select class="form-control" ng-model="customers_list">
+                    <button class="btn btn-add" ng-click="selectCustomer(customers_list)">Додати клієнта</button>
+                    <!-- <select class="form-control" ng-model="customers_list">
                         <option value='0' disabled="disabled">Dodaj kontrahenta</option>
                         <option ng-repeat="customer in customers" value="@{{ customer.customer_id }}">@{{ customer.company_name }}</option>
                     </select>
 
-                    <button class="btn btn-add" ng-click="addCustomerToDesk(customers_list)">Zapisz</button>
+                    <button class="btn btn-add" ng-click="addCustomerToDesk(customers_list)">Zapisz</button> -->
                 </div>
 
                 <div class="add_customer_link" ng-show="customer_name">
@@ -66,99 +67,13 @@
     <div class="task_manager_board">
         <form class="no-transition" id="task_manager" name="form" method="post" novalidate="novalidate">
             <div class="outer">
-                <div class="sortable-outer task_manager_list" id="item-@{{task.id}} " ng-repeat="task in tasks">
-                    <div class="panel panel-bd">
-                        <div class="panel-heading">
-                            <div class="row">
-                                <div class="list_title col-sm-10">
-                                    <h4 ng-click="editListTitle(task)" ng-show=" ! title[task.id]">@{{task.name}}</h4>
-                                    <div class="input-group input-group-unstyled" ng-show="title[task.id]">
-                                        <input type="text" focus-me="! title[task.id]" class="form-control" ng-enter="saveTaskTitle(task)" ng-model="task.name">
-                                        <div class="btn btn-add save_title" ng-click="saveTaskTitle(task)">
-                                            Zapisz
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="list_settings col-sm-2 pull-right">
-                                    <div uib-dropdown class="m-b-5" auto-close="outsideClick">
-                                        <a href="javascript:void(0);" class="dropdown-toggle" uib-dropdown-toggle ng-click="getListTeamUsers(task.id)"><i class="fa fa-cog" aria-hidden="true"></i></a>
-                                        <div uib-dropdown-menu class="custom_pop_up">
-                                            <button type="button" value="Delete list" class="btn btn-danger" ng-click="deleteList(task)">
-                                                Delete list
-                                            </button>
-
-                                            <div class="form-group">
-                                                <span>Użytkownicy</span>
-
-                                                <select class="form-control" name="assign_to" ng-model="users_list">
-                                                    <option ng-repeat="user in team_users" value="@{{ user.users_id }}">@{{user.users_first_name + ' ' + user.users_last_name}}</option>
-                                                </select>
-                                            </div>
-
-                                            <button type="button" class="btn btn-add" ng-click="saveUserToList(users_list,task.id);">
-                                                Dodaj użytkownika
-                                            </button>
-
-                                            <div ng-repeat="user in users">
-                                                <span>@{{ user.users_first_name + ' ' + user.users_last_name }}</span>
-                                                <div class="delete_card_item">
-                                                    <i class="fa fa-trash-o" ng-click="removeUserList(user.users_id,task.id)"></i>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="panel-body inner">
-                            <div class="sortable-inner task_manager_card" ng-repeat="card in task.cards" ng-class="{card_done: card.done == 1}" ng-click="selectCard(card)" ng-init="initSortable()">
-                                <p>
-                                    @{{ card.name }} <i class="fa fa-check" ng-If="card.done == 1"></i>
-                                </p>
-
-                                <div class="preview_card">
-                                    <div class="cards_preview_item" ng-show="card.card_preview.assign_to_card" title="You are subscribed to this card">
-                                        <i class="fa fa-user"></i>
-                                    </div>
-
-                                    <div class="cards_preview_item" ng-show="card.card_preview.description" title="This card has a description">
-                                        <i class="fa fa-align-left"></i>
-                                    </div>
-
-                                    <div class="cards_preview_item" ng-show="card.card_preview.comments_amount" title="Comments">
-                                        <i class="fa fa-comment"></i> @{{ card.card_preview.comments_amount }}
-                                    </div>
-
-                                    <div class="cards_preview_item" ng-show="card.card_preview.deadline_preview" title="Deadline">
-                                        <i class="fa fa-calendar-check-o"></i> @{{ card.card_preview.deadline_preview }}
-                                    </div>
-
-                                    <div class="cards_preview_item" ng-show="card.card_preview.all_checkboxes" title="Checklist items">
-                                        <i class="fa fa-check-square-o"></i> @{{ card.card_preview.checked_checkboxes}}/@{{card.card_preview.all_checkboxes }}
-                                    </div>
-                                </div>
-
-                                <div class="preview_users text-right">
-                                    <div ng-repeat="user in card.users" class="user_avatar preview" style="background-color: rgb(@{{ user.icon_color}})" title="@{{user.users_first_name + ' ' + user.users_last_name}}">
-                                        <span class="icon_name">@{{ user.users_first_name.slice(0,1) }}</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="panel-footer" ng-click="addNewCard(task)" ng-show=" ! showCreateNewCard[task.id]">
-                            <span >Add a card</span>
-                        </div>
-
-                        <div class="panel-footer" ng-class="{active: showCreateNewCard[task.id]}" ng-show="showCreateNewCard[task.id]">
-                            <input type="text" class="form-control" ng-enter="createCard(task)" ng-model="card_name[task.id]" />
-                            <button class="btn btn-add" ng-click="createCard(task)">Add card</button>
-                            <a class="cancel_button" href="javascript:void(0);" ng-click="showCreateNewCard[task.id] = ! showCreateNewCard[task.id]"><i class="fa fa-times"></i></a>
-                        </div>
-                    </div>
-                </div>
+                <task-list tl-id="task.id"
+                           tl-title="task.title"
+                           tl-cards="task.cards"
+                           ng-repeat="task in tasks"
+                           ng-init="initSortable()">
+                           <task-card></task-card>
+                </task-list>
 
                 <div class="add_list_link inline_block" ng-show="! addNewList">
                     <a href="javascript:void(0);" ng-click="addNewList = ! addNewList">Add new list</a>
@@ -168,7 +83,7 @@
                     <div class="panel panel-bd">
                         <div class="panel-heading">
                             <div class="form-group">
-                                <input type="text" class="form-control" ng-enter="addTaskList()" placeholder="Enter list name" ng-model="task_name" />
+                                <input type="text" class="form-control" ng-enter="addTaskList()" placeholder="Enter list name" ng-model="task_title" />
                             </div>
 
                             <button class="btn btn-add" ng-click="addTaskList()">Add list</button>
@@ -234,6 +149,12 @@
                                                 <div class="delete_card_item">
                                                     <i class="fa fa-trash-o" ng-click="removeCardDeadline()"></i>
                                                 </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="card_labels" >
+                                                <span class="card_label preview inline_block @{{label.label_color}}_label" ng-repeat="label in card.labels">@{{label.label_description}}</span>
                                             </div>
                                         </div>
                                     </div>
@@ -597,19 +518,30 @@
                                         </div>
 
                                         <div class="form-group">
-                                            <button class="btn btn-add" ng-click="saveComment()">Zapisz</button>
+                                            <button class="btn btn-add m-b-20" ng-click="saveComment()">Zapisz</button>
                                         </div>
 
-                                        <p ng-show="comments">Komentarze: </p>
-                                        <div ng-repeat="comment in comments">
-                                            <div class="card_comment_block">
-                                                <div class="comment_author">
-                                                    @{{comment.users.users_first_name + ' ' + comment.users.users_last_name  + ' (' + comment.comment_date + ')'}}
+                                        <h4 ng-show="comments != ''">Komentarze: </h4>
+
+                                        <div class="card_comment_block" ng-repeat="comment in comments">
+                                            <div class="card_comment_header">
+                                                <div class="comment_author pull-left">
+                                                    @{{comment.users.users_first_name + ' ' + comment.users.users_last_name}}
                                                 </div>
 
-                                                <div class="comment_text">
-                                                    @{{comment.text}}
+                                                <div class="comment_date pull-right">
+                                                    <div class="inline_block m-r-15">
+                                                        @{{comment.comment_time}}
+                                                    </div>
+
+                                                    <div class="inline_block">
+                                                        @{{comment.comment_date}}
+                                                    </div>
                                                 </div>
+                                            </div>
+
+                                            <div class="comment_text">
+                                                @{{comment.text}}
                                             </div>
                                         </div>
                                     </div>
@@ -706,33 +638,30 @@
                                         <div uib-dropdown class="m-b-5" auto-close="outsideClick">
                                             <a href="javascript:void(0);" class="btn card_nav dropdown-toggle" uib-dropdown-toggle><i class="fa fa-tag"></i> Etykieta</a>
 
-                                            <div uib-dropdown-menu class="custom_pop_up">
+                                            <div uib-dropdown-menu class="custom_pop_up card_labels_block">
                                                 <div class="custom_pop_up_header text-center">
                                                     <span>Dodaj etykietę</span>
                                                 </div>
 
-                                                <ul class="label_picker">
-                                                    <li>
-                                                        <a href="javascript:void(0);" title="Dodaj opis" ng-click="addLabelDescription(green)"><i class="fa fa-pencil"></i></a>
-                                                        <span class="card_label green_label"></span>
-                                                    </li>
-                                                    <li>
-                                                        <a href="javascript:void(0);" title="Dodaj opis" ng-click="addLabelDescription(yellow)"><i class="fa fa-pencil"></i></a>
-                                                        <span class="card_label yellow_label"></span>
-                                                    </li>
-                                                    <li>
-                                                        <a href="javascript:void(0);" title="Dodaj opis" ng-click="addLabelDescription(orange)"><i class="fa fa-pencil"></i></a>
-                                                        <span class="card_label orange_label"></span>
-                                                    </li>
-                                                    <li>
-                                                        <a href="javascript:void(0);" title="Dodaj opis" ng-click="addLabelDescription(red)"><i class="fa fa-pencil"></i></a>
-                                                        <span class="card_label red_label"></span>
-                                                    </li>
-                                                    <li>
-                                                        <a href="javascript:void(0);" title="Dodaj opis" ng-click="addLabelDescription(blue)"><i class="fa fa-pencil"></i></a>
-                                                        <span class="card_label blue_label"></span>
+                                                <ul class="label_picker" ng-show=" ! editLabel">
+                                                    <li ng-repeat="label in labels">
+                                                        <a href="javascript:void(0);" title="Dodaj opis" ng-click="editLabelDescription(label)"><i class="fa fa-pencil"></i></a>
+                                                        <span class="card_label pointer" ng-class="getLabelColor(label.label_color)" ng-click="addLabelToCard(label)">@{{label.label_description}} <i class="fa fa-check" ng-if="label.checked == '1'"></i></span>
                                                     </li>
                                                 </ul>
+
+                                                <div class="edit_label_description text-center" ng-show="editLabel">
+                                                    <span class="card_label @{{edited_label.label_color}}_label text-center">@{{edited_label.label_description}}</span>
+
+                                                    <div class="form-group">
+                                                        <input type="text" class="form-control" ng-model="label_description" />
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <button class="btn btn-add" ng-click="saveLabelDescription(edited_label)">Zapisz</button>
+                                                        <button class="btn btn-danger" ng-click="cancelLabelEdit()">Anuluj</button>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
 
@@ -754,7 +683,7 @@
 
                                                 <div class="form-group">
                                                     <div class="input-group custom-datapicker-input">
-                                                        <input type="text" class="form-control" uib-datepicker-popup="yyyy/MM/dd" ng-model="card_deadline.date" is-open="date[0].opened" show-button-bar="false" datepicker-options="dateOptions" />
+                                                        <input type="text" class="form-control" uib-datepicker-popup="yyyy/MM/dd" ng-model="card.decision_done" is-open="date[0].opened" show-button-bar="false" datepicker-options="dateOptions" />
                                                         <span class="input-group-btn">
                                                             <button type="button" class="btn btn-default" ng-click="calendarOpen(0)"><i class="glyphicon glyphicon-calendar"></i></button>
                                                         </span>
@@ -763,7 +692,7 @@
 
                                                 <div class="form-group">
                                                     <div class="input-group custom-datapicker-input">
-                                                        <input type="text" class="form-control" uib-datepicker-popup="yyyy/MM/dd" ng-model="card_deadline.date" is-open="date[1].opened" show-button-bar="false" datepicker-options="dateOptions" />
+                                                        <input type="text" class="form-control" uib-datepicker-popup="yyyy/MM/dd" ng-model="card.decision_approve" is-open="date[1].opened" show-button-bar="false" datepicker-options="dateOptions" />
                                                         <span class="input-group-btn">
                                                             <button type="button" class="btn btn-default" ng-click="calendarOpen(1)"><i class="glyphicon glyphicon-calendar"></i></button>
                                                         </span>
@@ -771,10 +700,10 @@
                                                 </div>
 
                                                 <div class="form-group">
-                                                    <input type="text" class="form-control" />
+                                                    <input type="text" class="form-control" ng-model="card.case_number" />
                                                 </div>
 
-                                                <button type="button" aria-hidden="true" class="btn btn-primary" ng-click="saveCardDeadline()">
+                                                <button type="button" aria-hidden="true" class="btn btn-primary" ng-click="saveCardDecision()">
                                                     Zapisz
                                                 </button>
                                             </div>
@@ -847,7 +776,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-sm-6">
+                                <div class="col-sm-6" ng-show="showAddCustomer">
                                     <button class="btn btn-add pull-right" ng-click="addCustomer()">
                                         <i class="fa fa-plus"></i> @{{ modal_add_customer }}
                                     </button>
@@ -860,11 +789,12 @@
                         <table id="customers_table" class="table table-bordered table-striped table-hover">
                             <thead>
                                 <tr class="info">
-                                    <th>Nazwa firmy</th>
+                                    <th>@{{ group_company_name }}</th>
                                     <th>Numer NIP</th>
                                     <th>Miejscowosc</th>
                                 </tr>
                             </thead>
+
                             <tbody>
                                 <tr ng-repeat="customer in customers | filter:searchInput">
                                     <td><a href="javascript:void(0);" ng-click="getCustomer(customer)">@{{ customer.company_name }}</a></td>
@@ -912,7 +842,7 @@
                                 <div class="row">
                                     <div class="col-sm-6">
                                         <div class="form-group">
-                                            <label>Nazwa firmy</label><span class="req_field"> *</span>
+                                            <label>@{{ group_company_name }}</label><span class="req_field"> *</span>
                                             <input type="text" class="form-control" name="company_name" ng-model="customers.company_name" required />
                                         </div>
 
