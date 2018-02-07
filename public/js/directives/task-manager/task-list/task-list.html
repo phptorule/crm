@@ -1,0 +1,97 @@
+<div class="sortable-outer task_manager_list" id="item-{{tlId}}">
+    <div class="panel panel-bd">
+        <div class="panel-heading">
+            <div class="row">
+                <div class="list_title col-sm-10">
+                    <h4 ng-click="editTaskListTitle(tlId, tlTitle)" ng-show=" ! taskListTitle[tlId]">{{tlTitle}}</h4>
+                    <div class="input-group input-group-unstyled" ng-show="taskListTitle[tlId]">
+                        <input type="text" focus-me="! title[task.id]" class="form-control" ng-enter="saveTaskListTitle(tlId, task.title)" ng-model="task.title">
+                        <div class="btn btn-add save_title" ng-click="saveTaskListTitle(tlId, task.title)">
+                            Zapisz
+                        </div>
+                    </div>
+                </div>
+
+                <div class="list_settings col-sm-2 pull-right">
+                    <div uib-dropdown class="m-b-5" auto-close="outsideClick">
+                        <a href="javascript:void(0);" class="dropdown-toggle" uib-dropdown-toggle ng-click="getListTeamUsers()"><i class="fa fa-cog" aria-hidden="true"></i></a>
+                        <div uib-dropdown-menu class="custom_pop_up">
+                            <button type="button" value="Delete list" class="btn btn-danger" ng-click="deleteList(tlId)">
+                                Delete list
+                            </button>
+
+                            <div class="form-group">
+                                <span>Użytkownicy</span>
+
+                                <select class="form-control" name="assign_to" ng-model="users_list">
+                                    <option ng-repeat="user in team_users" value="{{ user.users_id }}">{{user.users_first_name + ' ' + user.users_last_name}}</option>
+                                </select>
+                            </div>
+
+                            <button type="button" class="btn btn-add" ng-click="saveUserToList(users_list, task.id);">
+                                Dodaj użytkownika
+                            </button>
+
+                            <div ng-repeat="user in users">
+                                <span>{{user.users_first_name + ' ' + user.users_last_name}}</span>
+                                <div class="delete_card_item">
+                                    <i class="fa fa-trash-o" ng-click="removeUserList(user.users_id, task.id)"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel-body inner">
+            <div class="sortable-inner task_manager_card" ng-repeat="card in tlCards" ng-class="{card_done: card.done == 1}" ng-click="selectCard(card)">
+                <p>
+                    {{card.name}} <i class="fa fa-check" ng-If="card.done == 1"></i>
+                </p>
+
+                <div class="preview_card">
+                    <div class="cards_preview_item" ng-show="card.card_preview.assign_to_card" title="You are subscribed to this card">
+                        <i class="fa fa-user"></i>
+                    </div>
+
+                    <div class="cards_preview_item" ng-show="card.card_preview.description" title="This card has a description">
+                        <i class="fa fa-align-left"></i>
+                    </div>
+
+                    <div class="cards_preview_item" ng-show="card.card_preview.comments_amount" title="Comments">
+                        <i class="fa fa-comment"></i> {{ card.card_preview.comments_amount }}
+                    </div>
+
+                    <div class="cards_preview_item" ng-show="card.card_preview.deadline_preview" title="Deadline">
+                        <i class="fa fa-calendar-check-o"></i> {{ card.card_preview.deadline_preview }}
+                    </div>
+
+                    <div class="cards_preview_item" ng-show="card.card_preview.all_checkboxes" title="Checklist items">
+                        <i class="fa fa-check-square-o"></i> {{ card.card_preview.checked_checkboxes}}/{{card.card_preview.all_checkboxes }}
+                    </div>
+                </div>
+
+                <div class="preview_users">
+                    <div class="labels pull-left">
+                        <div class="card_preview_labels {{label.label_color}}_label" title="{{label.label_description}}" ng-repeat="label in card.card_preview.labels"></div>
+                    </div>
+
+                    <div class="user_avatar preview pull-right" ng-repeat="user in card.users" style="background-color: rgb({{ user.icon_color}})" title="{{user.users_first_name + ' ' + user.users_last_name}}">
+                        <span class="icon_name">{{ user.users_first_name.slice(0,1) }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel-footer" ng-click="addNewCard(tlId)" ng-show=" ! showAddNewCard[tlId]">
+            <span >Add a card</span>
+        </div>
+
+        <div class="panel-footer" ng-class="{active: showAddNewCard[tlId]}" ng-show="showAddNewCard[tlId]">
+            <input type="text" class="form-control" ng-enter="createCard(tlId, card_name)" ng-model="card_name" />
+            <button class="btn btn-add" ng-click="createCard(tlId, card_name)">Add card</button>
+            <a class="cancel_button" href="javascript:void(0);" ng-click="showAddNewCard[tlId] = ! showAddNewCard[tlId]"><i class="fa fa-times"></i></a>
+        </div>
+    </div>
+</div>

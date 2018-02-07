@@ -192,6 +192,8 @@
         <script src="/js/custom.js" type="text/javascript"></script>
         <script src="/js/dashboard.js" type="text/javascript"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.5/jspdf.min.js"></script>
+        <script src="/js/directives/task-manager/task-list/task-list.js" type="text/javascript"></script>
+        <script src="/js/directives/parse-url/parse-url.js" type="text/javascript"></script>
     </body>
 </html>
 

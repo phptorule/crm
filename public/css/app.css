@@ -5255,6 +5255,10 @@ button.toast-close-button {
     margin-bottom: 20px;
 }
 
+.card_info .comment_link {
+    color: #2278cf;
+}
+
 .custom_panel_item {
     display: inline-block;
 }
@@ -5884,8 +5888,12 @@ button.toast-close-button {
 
 .card_info span,
 .card_info p,
-.card_info .comment_author {
+.card_info .card_comment_header {
     color: #959595;
+}
+
+.card_comment_header {
+    height: 25px;
 }
 
 .description_area p,
@@ -6071,6 +6079,7 @@ button.toast-close-button {
 
 .card_comment_block {
     margin-bottom: 30px;
+    margin-left: 70px;
 }
 
 .card_comment_block .comment_author {
@@ -6130,6 +6139,10 @@ button.toast-close-button {
     color: #fff;
     margin-right: 5px;
     font-size: 20px;
+}
+
+.user_avatar span {
+    color: #fff;
 }
 
 .user_avatar.preview {
@@ -6302,9 +6315,9 @@ button.toast-close-button {
 }
 
 .card_label {
+    position: relative;
     display: block;
     border-radius: 3px;
-    cursor: pointer;
     font-size: 14px;
     margin: 0 0 4px;
     min-height: 30px;
@@ -6313,27 +6326,74 @@ button.toast-close-button {
     padding-left: 10px;
 }
 
-.label_picker .card_label {
+.card_labels {
+    margin: 0 15px;
+}
+
+.card_label.preview {
+    display: inline-block;
+    min-width: 40px;
+    width: auto;
+    margin-right: 10px;
+    color: #fff;
+    padding-right: 10px;
+}
+
+.card_preview_labels {
+    width: 40px;
+    height: 7px;
+    border-radius: 3px;
+    display: inline-block;
+    margin-right: 3px;
+}
+
+.card_label i {
+    position: absolute;
+    z-index: 1;
+    right: 10px;
+    top: 7px;
+}
+
+.label_picker .card_label:hover {
+    opacity: 0.8;
+}
+
+.label_picker .card_label,
+.edit_label_description .card_label {
     color: #fff;
 }
 
-.card_label.green_label {
+.edit_label_description .card_label {
+    padding: 0;
+}
+
+.card_label.green_label,
+.card_preview_labels.green_label,
+.card_label_preview.green_label {
     background-color: #61bd4f;
 }
 
-.card_label.yellow_label {
+.card_label.yellow_label,
+.card_preview_labels.yellow_label,
+.card_label_preview.yellow_label {
     background-color: #f2d600;
 }
 
-.card_label.orange_label {
+.card_label.orange_label,
+.card_preview_labels.orange_label,
+.card_label_preview.orange_label {
     background-color: #ffab4a;
 }
 
-.card_label.red_label {
+.card_label.red_label,
+.card_preview_labels.red_label,
+.card_label_preview.red_label {
     background-color: #eb5a46;
 }
 
-.card_label.blue_label {
+.card_label.blue_label,
+.card_preview_labels.blue_label,
+.card_label_preview.blue_label {
     background-color: #0079bf;
 }
 
@@ -6354,4 +6414,21 @@ button.toast-close-button {
 .add_list_link a:hover {
     color: #4d4d4d;
     text-decoration: underline;
+}
+
+.card_labels_block {
+    width: 240px;
+}
+
+.edit_label_description .card_label,
+.edit_label_description .form-control {
+    width: 100%;
+}
+
+.edit_label_description .card_label {
+    margin-bottom: 20px;
+}
+
+.preview_users {
+    min-height: 30px;
 }

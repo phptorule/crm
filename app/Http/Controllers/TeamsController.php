@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Teams;
 use App\Users;
+use App\Labels;
 use App\Services\UsersService;
 use App\Notifications\TeamsInvite;
 use Illuminate\Http\Request;
@@ -37,6 +38,24 @@ class TeamsController extends Controller
     public function getLeaderTeams($post = [])
     {
         return Auth::user()->teams()->wherePivot('teams_leader', TRUE)->get();
+    }
+
+    public function getTeamLabels()
+    {
+        $team = Teams::where('teams_id', session('current_team'))->first();
+
+        return $team->labels()->get();
+    }
+
+    public function addLabelDescription($post = [])
+    {
+        $label = Labels::where('label_id', $post['label_id'])->first();
+        $label->label_description = ! empty($post['label_description']) ? $post['label_description'] : '';
+        $label->save();
+
+        $team = Teams::where('teams_id', session('current_team'))->first();
+
+        return $team->labels()->get();
     }
 
     public function save($post = [])
@@ -142,7 +161,6 @@ class TeamsController extends Controller
         }
 
 		$this->message(__('Team was successfully saved'), 'success');
-        //return $this->get();
 		return $team->teams_id;
     }
 

@@ -32,7 +32,7 @@ class TaskManagerController extends Controller
 
     public function getDeskLists($post = [])
     {
-        $tasks = TasksLists::where('desc_id', $post['desk_id'])->orderBy('position')->get();
+        $tasks = TasksLists::where('desk_id', $post['desk_id'])->orderBy('position')->get();
 
         foreach ($tasks as $task){
             $task->cards = $task->cards()->get();
@@ -105,22 +105,19 @@ class TaskManagerController extends Controller
     /* TASK LIST ACTIONS */
     public function addTaskList($post = [])
     {
-        $last_position = TasksLists::where('desc_id', $post['desk_id'])->max('position');
+        $last_position = TasksLists::where('desk_id', $post['desk_id'])->max('position');
         $list = new TasksLists();
-        $list->name = $post['task_name'];
+        $list->title = $post['task_title'];
         $list->user_id = Auth::user()->users_id;
         $list->position = '0';
-        $list->desc_id = $post['desk_id'];
-        $list->teams_id = session('current_team');
+        $list->desk_id = $post['desk_id'];
         $list->position = $last_position + 1;
         $list->save();
     }
 
-
     public function savePosition($post = [])
     {
         $mass = explode(" ", $post['id']);
-
         foreach ($mass as $value) {
            $new_value = explode("=", $value);
            $list_value[] = $new_value[1];
@@ -136,7 +133,7 @@ class TaskManagerController extends Controller
     public function saveTaskTitle($post = [])
     {
         $task = TasksLists::find($post['task_id']);
-        $task->name = $post['task_name'];
+        $task->title = $post['task_title'];
         $task->save();
     }
 
@@ -196,8 +193,13 @@ class TaskManagerController extends Controller
         $card->save();
 
         $task = TasksLists::find($post['task_id']);
+        $cards = $task->cards()->get();
 
-        return $task->cards()->get();
+        foreach ($cards as $card) {
+            $card->card_preview = $card->getCardPreview($card->cards_id);
+        }
+
+        return $cards;
     }
 
     public function deleteCard($post = [])
@@ -219,11 +221,19 @@ class TaskManagerController extends Controller
         $card->checkLists()->delete();
         $card->usersRelation()->delete();
         $card->delete();
+
+        $cards = Cards::where('task_id', $post['task_id'])->get();
+
+        foreach ($cards as $card) {
+            $card->card_preview = $card->getCardPreview($card->cards_id);
+        }
+
+        return $cards;
     }
 
     public function saveCardDescription($post = []){
         $card = Cards::find($post['cards_id']);
-        $card->description = $post['description'];
+        $card->description = ! empty($post['description']) ? $post['description']: '';
         $card->save();
     }
 
@@ -417,7 +427,8 @@ class TaskManagerController extends Controller
 
         foreach ($comments as $item) {
             $item->users = Users::find($item['users_id']);
-            $item->comment_date = date('Y-d-m H:i', strtotime($item->created_at));
+            $item->comment_date = date('Y-d-m', strtotime($item->created_at));
+            $item->comment_time = date('H:i', strtotime($item->created_at));
         }
 
         return $comments;
@@ -445,12 +456,46 @@ class TaskManagerController extends Controller
 
     /* LABELS */
 
-    public function getLabels()
+    public function getCardLabels($post = [])
     {
-
+        $card = Cards::where('cards_id', $post['cards_id'])->first();
+        return $card->labels()->get();
     }
 
-    /* END LABELS*/
+    public function addLabelToCard($post = [])
+    {
+        $card = Cards::where('cards_id', $post['cards_id'])->first();
+
+        $card->labels()->syncWithoutDetaching($post['label_id']);
+
+        return $card->labels()->get();
+    }
+
+    public function removeLabelFromCard($post = [])
+    {
+        $card = Cards::where('cards_id', $post['cards_id'])->first();
+
+        $card->labels()->detach($post['label_id']);
+
+        return $card->labels()->get();
+    }
+
+    /* END LABELS */
+
+
+    /* DECISION */
+
+    public function saveCardDecision($post = [])
+    {
+        $card = Cards::find($post['cards_id']);
+
+        $card->case_number = ! empty($post['case_number']) ? $post['case_number'] : '';
+        $card->decision_done = ! empty($post['decision_done']) ? $post['decision_done'] : '';
+        $card->decision_approve = ! empty($post['decision_approve']) ? $post['decision_approve'] : '';
+        $card->save();
+    }
+
+    /* END DECISION*/
 
     public function addCustomerToCard($post = [])
     {
@@ -534,7 +579,7 @@ class TaskManagerController extends Controller
         $team->users = $users_in_list->users()->get();
         $b = [];
         foreach ($team->users as $list_users) {
-            if(!empty($list_users->users_id)){
+            if( ! empty($list_users->users_id)){
                 $b[] = $list_users->users_id;
             }
         }
@@ -550,7 +595,7 @@ class TaskManagerController extends Controller
             }
         }
 
-        if(!empty($users_not_checked)){
+        if( ! empty($users_not_checked)){
             $team->users_not_checked = $users_not_checked;
         }
 

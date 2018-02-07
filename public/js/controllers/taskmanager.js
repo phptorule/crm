@@ -1,7 +1,6 @@
 (function () {
     'use strict';
 
-
     angular.module('app').controller('TaskManagerCtrl', ['$rootScope', '$scope', '$uibModal', '$filter', '$location', '$timeout', '$window', 'request', 'validate', 'logger', 'langs', 'plugins', 'Page', TaskManagerCtrl]);
 
     function TaskManagerCtrl($rootScope, $scope, $uibModal, $filter, $location, $timeout, $window, request, validate, logger, langs, plugins, Page) {
@@ -22,7 +21,7 @@
         $scope.desk_name = '';
         $scope.create_desk_name = '';
         $scope.desk_id = '';
-        $scope.task_name = '';
+        $scope.task_title = '';
         $scope.card_name = {};
         $scope.customers_list = '0';
         $scope.customers = [];
@@ -42,13 +41,28 @@
             });
         };
 
+        $scope.getDeskLists = function(desk) {
+            $scope.desk = desk;
+
+            request.send('/TaskManager/getDeskLists', {'desk_id': $scope.desk.id}, function(data) {
+                $scope.tasks = data;
+
+                for (var k in data)
+                {
+                    $scope.all += data[k].cards.length;
+                }
+            });
+
+            $scope.getDeskCustomer($scope.desk.customer_id);
+        };
+
         $scope.getCustomers = function() {
             request.send('/customers/getCustomersList', {}, function(data) {
                 $scope.customers = data;
             });
         };
 
-        /*$scope.selectCustomer = function() {
+        $scope.selectCustomer = function() {
             var modalInstance = $uibModal.open({
                 animation: true,
                 templateUrl: 'SelectCustomer.html',
@@ -61,29 +75,23 @@
             });
 
             modalInstance.result.then(function(response) {
-                if (response.customer_group == '2') {
-                    $scope.customer_is_designer = true;
-                    $scope.customer_designer = response;
-                }
-
-                if (response.customer_group == '3') {
-                    $scope.customer_is_officeman = true;
-                    $scope.customer_officeman = response;
-                }
+                $scope.addCustomerToDesk(response.customer_id);
             }, function () {
 
             });
-        };*/
+        };
 
         $scope.addCustomerToDesk = function(customer_id) {
             request.send('/TaskManager/addCustomerToDesk', {'id': $scope.desk.id, 'customer_id': customer_id}, function(data) {
+                $scope.getDesks();
                 $scope.getDeskCustomer(customer_id);
             });
         };
 
         $scope.removeCustomerFromDesk = function(customer_id) {
             request.send('/TaskManager/removeCustomerFromDesk', {'id': $scope.desk.id, 'customer_id': customer_id}, function(data) {
-                $scope.getDeskCustomer();
+                $scope.getDesks();
+                $scope.getDeskCustomer(customer_id);
             });
         };
 
@@ -105,6 +113,9 @@
                         $scope.customer_url_text = 'offices';
                     }
                 }
+                else {
+                    $scope.customer_name = '';
+                }
             });
         };
 
@@ -117,68 +128,6 @@
             request.send('/TaskManager/saveDesk', {'desc_name': desc_name}, function(data) {
                 $scope.getDesks();
             });
-        };
-
-        $scope.getDeskLists = function(desk) {
-            $scope.desk = desk;
-            $scope.customer_name = '';
-
-            request.send('/TaskManager/getDeskLists', {'desk_id': $scope.desk.id}, function(data) {
-                $scope.tasks = data;
-                $scope.cards = data.cards;
-
-                for (var k in data)
-                {
-                    $scope.all += data[k].cards.length;
-                }
-            });
-
-            $scope.getDeskCustomer($scope.desk.customer_id);
-        };
-
-        $scope.saveUserToList = function(user_id, list_id) {
-            request.send('/TaskManager/saveUserToList', {'users_id': user_id, 'lists_id': list_id}, function(data) {
-                $scope.getListTeamUsers(list_id);
-            });
-        };
-
-        $scope.removeUserList = function(user_id, list_id) {
-            request.send('/TaskManager/removeUserList', {'users_id': user_id, 'lists_id': list_id}, function(data) {
-                $scope.getListTeamUsers(list_id);
-            });
-        };
-
-        $scope.addTaskList = function() {
-            request.send('/TaskManager/addTaskList', {'task_name': $scope.task_name, 'desk_id': $scope.desk.id}, function(data) {
-                $scope.task_name = '';
-                $scope.getDeskLists($scope.desk);
-            });
-        };
-
-        $scope.createCard = function(task) {
-            request.send('/TaskManager/createCard', {'card_name': $scope.card_name[task.id], 'task_id': task.id}, function(data) {
-                task.cards = data;
-            });
-
-            $scope.card_name[task.id] = '';
-            $scope.showCreateNewCard[task.id] = ! $scope.showCreateNewCard[task.id];
-        };
-
-        $scope.getListTeamUsers = function(list_id) {
-            request.send('/TaskManager/getListTeamUsers', {'list_id': list_id}, function(data) {
-                $scope.list.this_lists_id = list_id;
-                $scope.users = data.users;
-                $scope.team_users = data.users_not_checked;
-                $scope.users_list = $scope.team_users[0].users_id.toString();
-            });
-        };
-
-        $scope.saveTaskTitle = function(task) {
-            request.send('/TaskManager/saveTaskTitle', {'task_id': task.id, 'task_name': task.name}, function(data) {
-
-            });
-
-            $scope.title[task.id] = ! $scope.title[task.id];
         };
 
         $scope.deleteDesk = function() {
@@ -202,61 +151,12 @@
             }, function () {
 
             });
-        }
+        };
 
-        $scope.deleteList = function(task) {
-            var modalInstance = $uibModal.open({
-                animation: true,
-                size: 'sm',
-                templateUrl: 'ConfirmWindow.html',
-                controller: 'ModalConfirmWindowCtrl',
-                resolve: {
-                    items: function () {
-                        return {
-                            'deleted_item': 'task',
-                            'task': task
-                        };
-                    }
-                }
-            });
-
-            modalInstance.result.then(function(response) {
+        $scope.addTaskList = function() {
+            request.send('/TaskManager/addTaskList', {'task_title': $scope.task_title, 'desk_id': $scope.desk.id}, function(data) {
+                $scope.task_title = '';
                 $scope.getDeskLists($scope.desk);
-            }, function () {
-
-            });
-        };
-
-        $scope.editListTitle = function(task) {
-            $scope.title = {};
-            $scope.title[task.id] = ! $scope.title[task.id];
-        };
-
-        $scope.addNewCard = function(task) {
-            $scope.showCreateNewCard = {};
-            $scope.title = {};
-            $scope.showCreateNewCard[task.id] = ! $scope.showCreateNewCard[task.id];
-        };
-
-        $scope.selectCard = function(card) {
-            var modalInstance = $uibModal.open({
-                animation: true,
-                templateUrl: 'SelectCard.html',
-                controller: 'ModalSelectCardCtrl',
-                resolve: {
-                    items: card
-                }
-            });
-
-            modalInstance.result.then(function(response) {
-                $scope.getDeskLists($scope.desk);
-            }, function () {
-
-            });
-        };
-
-        $scope.savePosition = function(id, position) {
-            request.send('/TaskManager/savePosition',{'id': id, 'position': position}, function(data) {
             });
         };
 
@@ -278,6 +178,10 @@
                     });
                 });
             }
+        };
+
+        $scope.savePosition = function(id, position) {
+            request.send('/TaskManager/savePosition', {'id': id, 'position': position});
         };
 
         $scope.$watch('$viewContentLoaded', function(){
@@ -333,7 +237,6 @@
             }
         };
     }]);
-
 })();
 
 (function () {
@@ -392,21 +295,22 @@
         $scope.customer_is_designer = false;
         $scope.customer_is_officeman = false;
         $scope.checklist_title = '';
+        $scope.labels = {};
+        $scope.card.labels = [];
+        $scope.editLabel = false;
 
         $scope.initCard = function() {
             $scope.getTeamUsers();
             $scope.getChecklists();
             $scope.getComments();
             $scope.getCustomers();
-            $scope.getLabels();
+            $scope.getTeamLabels();
+            //$scope.getCardLabels();
             $scope.updateUserList();
         };
 
         $scope.saveCardTitle = function() {
-            request.send('/TaskManager/saveCardTitle', {'card_id': $scope.card.cards_id,'card_name': $scope.card.name}, function(data) {
-
-            });
-
+            request.send('/TaskManager/saveCardTitle', {'card_id': $scope.card.cards_id,'card_name': $scope.card.name});
             $scope.card_title = true;
         };
 
@@ -415,6 +319,19 @@
             request.send('/TaskManager/saveCardDescription', $scope.card, function(data) {
                 $scope.getCardPreview($scope.card.cards_id);
             });
+
+            $scope.show_description = true;
+        };
+
+        $scope.makeDescriptionCopy = function() {
+            $scope.old_description = angular.copy($scope.temp_description);
+            $scope.show_description = ! $scope.show_description;
+        };
+
+        $scope.resetCardDescription = function() {
+            if ($scope.card.description != '') {
+                $scope.card.description = $scope.old_description;
+            }
 
             $scope.show_description = true;
         };
@@ -456,17 +373,6 @@
             });
         };
 
-        $scope.makeDescriptionCopy = function() {
-            $scope.old_description = angular.copy($scope.temp_description);
-            $scope.show_description = ! $scope.show_description;
-        };
-
-        $scope.resetCardDescription = function() {
-            $scope.card.description = $scope.old_description;
-            $scope.temp_description = $scope.old_description;
-            $scope.show_description = true;
-        };
-
         $scope.deleteCard = function() {
             var modalInstance = $uibModal.open({
                 animation: true,
@@ -484,7 +390,7 @@
             });
 
             modalInstance.result.then(function(response) {
-                $uibModalInstance.close();
+                $uibModalInstance.close(response);
             }, function () {
 
             });
@@ -515,8 +421,6 @@
                         $scope.customer_is_officeman = true;
                     }
                 }
-
-                //console.log($scope.customer_designer);
             });
         };
 
@@ -802,14 +706,12 @@
 
         $scope.getComments = function() {
             request.send('/TaskManager/getComments', {'cards_id': $scope.card.cards_id}, function(data) {
-                //console.log(data);
                 $scope.comments = data;
             });
         };
 
         $scope.saveComment = function() {
             request.send('/TaskManager/saveComment', {'text': $scope.comment_text, 'cards_id': $scope.card.cards_id}, function(data) {
-                //console.log(data);
                 $scope.comments = data;
                 $scope.comment_text = '';
                 $scope.getCardPreview($scope.card.cards_id);
@@ -822,24 +724,102 @@
 
         /* LABELS */
 
-        $scope.getLabels = function() {
+        $scope.getTeamLabels = function() {
+            request.send('/teams/getTeamLabels', {}, function(data) {
+                $scope.labels = data;
 
+                $scope.getCardLabels();
+            });
         };
 
-        $scope.addLabelDescription = function(color) {
-            request.send('/TaskManager/getTeamUsers', {'cards_id': $scope.card.cards_id}, function(data) {
-                $scope.team_users = data;
-                if($scope.team_users){
-                    $scope.users_list = $scope.team_users[0].users_id.toString();
+        $scope.getCardLabels = function() {
+            request.send('/TaskManager/getCardLabels', {'cards_id': $scope.card.cards_id}, function(data) {
+                $scope.card.labels = data;
+
+                for (var k in $scope.labels) {
+                    for (var l in data) {
+                        if ($scope.labels[k].label_id == data[l].label_id) {
+                            $scope.labels[k].checked = '1';
+                        }
+                    }
                 }
             });
+        };
+
+        $scope.getLabelColor = function(color) {
+            if (color == 'green') {
+                return 'green_label';
+            }
+
+            if (color == 'yellow') {
+                return 'yellow_label';
+            }
+
+            if (color == 'orange') {
+                return 'orange_label';
+            }
+
+            if (color == 'red') {
+                return 'red_label';
+            }
+
+            if (color == 'blue') {
+                return 'blue_label';
+            }
+        };
+
+        $scope.editLabelDescription = function(label) {
+            $scope.editLabel = true;
+            $scope.edited_label = label;
+        };
+
+        $scope.cancelLabelEdit = function() {
+            $scope.editLabel = false;
+            $scope.label_description = '';
+        };
+
+        $scope.saveLabelDescription = function(label) {
+            request.send('/teams/addLabelDescription', {'label_id': label.label_id, 'label_description': $scope.label_description}, function(data) {
+                $scope.labels = data;
+            });
+
+            $scope.label_description = '';
+            $scope.editLabel = false;
+        };
+
+        $scope.addLabelToCard = function(label) {
+            if ( ! label.checked || label.checked == '0') {
+                label.checked = '1';
+                request.send('/TaskManager/addLabelToCard', {'label_id': label.label_id, 'cards_id': $scope.card.cards_id}, function(data) {
+                    $scope.card.labels = data;
+                    $scope.getCardPreview($scope.card.cards_id);
+                });
+            }else {
+                label.checked = '0';
+                request.send('/TaskManager/removeLabelFromCard', {'label_id': label.label_id, 'cards_id': $scope.card.cards_id}, function(data) {
+                    $scope.card.labels = data;
+                    $scope.getCardPreview($scope.card.cards_id);
+                });
+            }
         };
 
         /* END LABELS*/
 
         ////////////////////////////////////
 
-        /* */
+        /* DECISION */
+
+        $scope.saveCardDecision = function() {
+            request.send('/TaskManager/saveCardDecision', {'cards_id': $scope.card.cards_id, 'case_number': $scope.card.case_number, 'decision_done': $scope.card.decision_done, 'decision_approve': $scope.card.decision_approve}, function(data) {
+
+            });
+        };
+
+        /* END DECISION*/
+
+        ////////////////////////////////////
+
+        /* CUSTOMERS */
 
         $scope.selectCustomer = function(group) {
             var modalInstance = $uibModal.open({
@@ -854,7 +834,6 @@
             });
 
             modalInstance.result.then(function(response) {
-                //console.log(response);
                 if (response.customer_group == '2') {
                     $scope.customer_is_designer = true;
                     $scope.customer_designer = response;
@@ -877,7 +856,7 @@
             });
         };
 
-        /* */
+        /* END CUSTOMERS */
 
         $scope.getTeamUsers = function() {
             request.send('/TaskManager/getTeamUsers', {'cards_id': $scope.card.cards_id}, function(data) {
@@ -953,7 +932,7 @@
 
         if (items.deleted_item == 'task') {
             $scope.delete = function() {
-                request.send('/TaskManager/deleteList', {'id': items.task.id}, function(data) {
+                request.send('/TaskManager/deleteList', {'id': items.task_id}, function(data) {
                     $uibModalInstance.close();
                 });
             };
@@ -977,8 +956,8 @@
 
         if (items.deleted_item == 'card') {
             $scope.delete = function() {
-                request.send('/TaskManager/deleteCard', {'cards_id': items.card.cards_id}, function(data) {
-                    $uibModalInstance.close();
+                request.send('/TaskManager/deleteCard', {'cards_id': items.card.cards_id, 'task_id': items.card.task_id}, function(data) {
+                    $uibModalInstance.close(data);
                 });
             };
         }
@@ -996,21 +975,26 @@
 
     function ModalSelectCustomerCtrl($rootScope, $scope, $uibModal, $uibModalInstance, $filter, request, validate, logger, langs, items) {
         $scope.customers = [];
+        $scope.showAddCustomer = true;
 
         $scope.initList = function() {
             if (items == 'designers') {
                 $scope.getDesignersList();
                 $scope.modal_title = 'Dodaj projektanta';
                 $scope.modal_add_customer = 'Utwórz projektanta';
+                $scope.group_company_name = 'Nazwa firmy';
             }
 
             if (items == 'offices') {
                 $scope.getOfficesList();
                 $scope.modal_title = 'Dodaj urzędnika';
                 $scope.modal_add_customer = 'Utwórz urzędnika';
+                $scope.group_company_name = 'Nazwa urzędu';
             }
 
             if (items == 'all') {
+                $scope.modal_title = 'Dodaj kontrahenta';
+                $scope.showAddCustomer = false;
                 request.send('/customers/getCustomersList', {}, function(data) {
                     $scope.customers = data;
                 });
@@ -1033,8 +1017,87 @@
             $uibModalInstance.close(customer);
         };
 
+        $scope.addCustomer = function() {
+            var modalInstance = $uibModal.open({
+                animation: true,
+                templateUrl: 'CreateCustomer.html',
+                controller: 'ModalCreateCustomerCtrl',
+                resolve: {
+                    items: function () {
+                        return items;
+                    }
+                }
+            });
+
+            modalInstance.result.then(function(response) {
+                //$uibModalInstance.close(response);
+                $scope.customers = response;
+            }, function () {
+
+            });
+        };
+
         $scope.cancel = function() {
             $uibModalInstance.dismiss('cancel');
+        };
+    };
+})();
+
+(function () {
+    'use strict';
+
+    angular.module('app').controller('ModalCreateCustomerCtrl', ['$rootScope', '$scope', '$uibModalInstance', '$filter', 'request', 'validate', 'logger', 'langs', 'items', ModalCreateCustomerCtrl]);
+
+    function ModalCreateCustomerCtrl($rootScope, $scope, $uibModalInstance, $filter, request, validate, logger, langs, items) {
+        $scope.customers = {};
+
+        $scope.cancel = function() {
+            $uibModalInstance.dismiss('cancel');
+        };
+
+        if (items == 'designers') {
+            $scope.group_company_name = 'Nazwa firmy';
+            $scope.customers.customer_group = '2';
+        }
+
+        if (items == 'offices') {
+            $scope.group_company_name = 'Nazwa urzędu';
+            $scope.customers.customer_group = '3';
+        }
+
+        $scope.saveCustomer = function() {
+            var error = 1;
+            error *= validate.check($scope.form.company_name, 'Nazwa firmy');
+            if (error)
+            {
+                request.send('/customers/save', $scope.customers, function(data) {
+                    if (data)
+                    {
+                        $scope.getCustomer(data);
+                    }
+                });
+            }
+        };
+
+        $scope.getCustomer = function(customer_id) {
+            if (items == 'designers') {
+                request.send('/customers/getDesignersList', {'customer_id': customer_id}, function(data) {
+                    if (data)
+                    {
+                        $uibModalInstance.close(data);
+                    }
+                });
+            }
+
+            if (items == 'offices') {
+                request.send('/customers/getOfficesList', {'customer_id': customer_id}, function(data) {
+                    if (data)
+                    {
+                        $uibModalInstance.close(data);
+                    }
+                });
+            }
+
         };
     };
 })();
