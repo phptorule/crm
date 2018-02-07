@@ -5255,6 +5255,10 @@ button.toast-close-button {
     margin-bottom: 20px;
 }
 
+.card_info .comment_link {
+    color: #2278cf;
+}
+
 .custom_panel_item {
     display: inline-block;
 }
@@ -6336,9 +6340,11 @@ button.toast-close-button {
 }
 
 .card_preview_labels {
-    width: 50px;
-    height: 6px;
+    width: 40px;
+    height: 7px;
     border-radius: 3px;
+    display: inline-block;
+    margin-right: 3px;
 }
 
 .card_label i {
@@ -6421,4 +6427,8 @@ button.toast-close-button {
 
 .edit_label_description .card_label {
     margin-bottom: 20px;
+}
+
+.preview_users {
+    min-height: 30px;
 }

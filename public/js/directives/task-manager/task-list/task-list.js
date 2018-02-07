@@ -48,13 +48,6 @@
 		            });
 		        };
 
-		        $scope.addTaskList = function() {
-		            request.send('/TaskManager/addTaskList', {'task_title': $scope.task_title, 'desk_id': $scope.desk.id}, function(data) {
-		                $scope.task_title = '';
-		                $scope.getDeskLists($scope.desk);
-		            });
-		        };
-
 		        $scope.deleteList = function(id) {
 		            var modalInstance = $uibModal.open({
 		                animation: true,
@@ -91,10 +84,9 @@
 
 		            $scope.card_name = '';
 		            $scope.showAddNewCard[task_id] = ! $scope.showAddNewCard[task_id];
-		        };
+				};
 
 		        $scope.selectCard = function(card) {
-		            //console.log(card);
 		            var modalInstance = $uibModal.open({
 		                animation: true,
 		                templateUrl: 'SelectCard.html',

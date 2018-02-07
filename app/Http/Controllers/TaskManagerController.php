@@ -111,7 +111,6 @@ class TaskManagerController extends Controller
         $list->user_id = Auth::user()->users_id;
         $list->position = '0';
         $list->desk_id = $post['desk_id'];
-        $list->teams_id = session('current_team');
         $list->position = $last_position + 1;
         $list->save();
     }
@@ -119,7 +118,6 @@ class TaskManagerController extends Controller
     public function savePosition($post = [])
     {
         $mass = explode(" ", $post['id']);
-
         foreach ($mass as $value) {
            $new_value = explode("=", $value);
            $list_value[] = $new_value[1];

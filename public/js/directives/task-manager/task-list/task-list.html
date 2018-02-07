@@ -74,7 +74,7 @@
 
                 <div class="preview_users">
                     <div class="labels pull-left">
-                        <div class="card_preview_labels @{{label.label_color}}_label" ng-repeat="label in card.card_preview.labels">label</div>
+                        <div class="card_preview_labels {{label.label_color}}_label" title="{{label.label_description}}" ng-repeat="label in card.card_preview.labels"></div>
                     </div>
 
                     <div class="user_avatar preview pull-right" ng-repeat="user in card.users" style="background-color: rgb({{ user.icon_color}})" title="{{user.users_first_name + ' ' + user.users_last_name}}">

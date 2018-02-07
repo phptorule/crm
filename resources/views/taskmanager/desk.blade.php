@@ -540,7 +540,7 @@
                                                 </div>
                                             </div>
 
-                                            <div class="comment_text">
+                                            <div parse-url="{target: '_blank'}" class="comment_text" ng-model="comment.text">
                                                 @{{comment.text}}
                                             </div>
                                         </div>

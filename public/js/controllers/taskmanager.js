@@ -51,8 +51,6 @@
                 {
                     $scope.all += data[k].cards.length;
                 }
-
-                console.log($scope.tasks);
             });
 
             $scope.getDeskCustomer($scope.desk.customer_id);
@@ -153,10 +151,13 @@
             }, function () {
 
             });
-        }
+        };
 
-        $scope.savePosition = function(id, position) {
-            request.send('/TaskManager/savePosition', {'id': id, 'position': position});
+        $scope.addTaskList = function() {
+            request.send('/TaskManager/addTaskList', {'task_title': $scope.task_title, 'desk_id': $scope.desk.id}, function(data) {
+                $scope.task_title = '';
+                $scope.getDeskLists($scope.desk);
+            });
         };
 
         $scope.initSortable = function() {
@@ -177,6 +178,10 @@
                     });
                 });
             }
+        };
+
+        $scope.savePosition = function(id, position) {
+            request.send('/TaskManager/savePosition', {'id': id, 'position': position});
         };
 
         $scope.$watch('$viewContentLoaded', function(){
@@ -300,7 +305,7 @@
             $scope.getComments();
             $scope.getCustomers();
             $scope.getTeamLabels();
-            $scope.getCardLabels();
+            //$scope.getCardLabels();
             $scope.updateUserList();
         };
 
@@ -722,6 +727,8 @@
         $scope.getTeamLabels = function() {
             request.send('/teams/getTeamLabels', {}, function(data) {
                 $scope.labels = data;
+
+                $scope.getCardLabels();
             });
         };
 
@@ -785,14 +792,15 @@
                 label.checked = '1';
                 request.send('/TaskManager/addLabelToCard', {'label_id': label.label_id, 'cards_id': $scope.card.cards_id}, function(data) {
                     $scope.card.labels = data;
+                    $scope.getCardPreview($scope.card.cards_id);
                 });
             }else {
                 label.checked = '0';
                 request.send('/TaskManager/removeLabelFromCard', {'label_id': label.label_id, 'cards_id': $scope.card.cards_id}, function(data) {
                     $scope.card.labels = data;
+                    $scope.getCardPreview($scope.card.cards_id);
                 });
             }
-            $scope.getCardPreview($scope.card.cards_id);
         };
 
         /* END LABELS*/
